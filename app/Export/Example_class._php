@@ -1,0 +1,35 @@
+<?php
+namespace App\Exports;
+use App\Report;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+class ReportExport implements ShouldAutoSize, FromView, WithColumnFormatting, WithEvents
+{
+    use Exportable;
+    protected $id;
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+    public function view(): View
+    {
+        $report = Report::find($this->id);
+        return view('exports.report', [
+            'report' => $report,
+        ]);
+    }
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $event->sheet->getDelegate()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+                 //all get event now
+            },
+        ];
+    }
+}

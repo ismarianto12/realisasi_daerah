@@ -1,0 +1,426 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : SAKILA TGSAL
+ Source Server Type    : MySQL
+ Source Server Version : 50564
+ Source Host           : 103.219.112.2:3306
+ Source Schema         : sakila_2020_db
+
+ Target Server Type    : MySQL
+ Target Server Version : 50564
+ File Encoding         : 65001
+
+ Date: 27/08/2020 16:53:14
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tmpegawai
+-- ----------------------------
+DROP TABLE IF EXISTS `tmpegawai`;
+CREATE TABLE `tmpegawai`  (
+  `pegawaiid` int(11) NOT NULL AUTO_INCREMENT,
+  `satuankerjaid` int(11) NOT NULL,
+  `jabatanid` int(11) NULL DEFAULT NULL,
+  `pegawaistatusid` int(11) NOT NULL COMMENT '1 = PNS, 2 = TKS',
+  `d_masuk` date NOT NULL,
+  `d_keluar` date NOT NULL,
+  `nip` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `n_pegawai` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `telp` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `alamat` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `dinasid` int(11) NOT NULL,
+  `bidangid` int(11) NOT NULL,
+  `d_kontrak` date NOT NULL,
+  PRIMARY KEY (`pegawaiid`) USING BTREE,
+  INDEX `jabatanid`(`jabatanid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 538 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tmpegawai
+-- ----------------------------
+INSERT INTO `tmpegawai` VALUES (49, 1, 5, 1, '2007-01-11', '0000-00-00', '19701006 199103 1 001', 'Drs. H. Dadang Sofyan, MM', '081211588899', 'Serpong', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (51, 1, 6, 1, '2006-01-05', '0000-00-00', '19690720 199701 1 002', 'HELMI KAMALUDIN, S.Sos', '081219991337', 'serpong\n', 3, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (52, 1, 5, 1, '1999-07-09', '0000-00-00', '19711206 200501 2 010', 'Rr. EDTRIN P. DESATWATI,SE.M.Si', '081234567', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (53, 1, 6, 1, '1998-01-08', '0000-00-00', '19690830 200212 2 002', 'RITA VIRGANTINI, S. Sos. M. Si', '08123456567', 'serpong\n', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (54, 1, 6, 1, '2006-01-12', '0000-00-00', '19690416 200312 1 002', 'BUDI SETIADI,SE', '081234567', 'serpong\n', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (56, 1, 6, 1, '2006-01-12', '0000-00-00', '19770415 200501 1 015', 'SAPRUDIN, S. IP', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (58, 1, 5, 1, '2006-01-11', '0000-00-00', '19780326 199803 2 001', 'SRI LAKSMI HANDAYANI ', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (59, 1, 5, 1, '2007-01-04', '0000-00-00', '196406082007011009', 'NURHASAN, S. IP', '0812345678', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (60, 1, 5, 1, '2007-01-05', '0000-00-00', '19720206 200701 1 011', 'ROKIB, S. IP', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (62, 1, 6, 1, '2006-01-12', '0000-00-00', '19880524 201001 1 002', 'HERLY EPENDI, S. Sos., M. Si', '081234567', 'serpong\n', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (64, 1, 5, 1, '2006-01-20', '0000-00-00', '19740218 201001 2 001', 'MIA S. ANDRIANI, S. IP', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (65, 1, 6, 1, '2006-01-12', '0000-00-00', '19741021 200112 2 002', 'HILDA FITRIA, S. IP', '081236567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (66, 1, 6, 1, '2006-01-03', '0000-00-00', '19861026 201001 2 005', 'TRI NURINA TRISTANTI. SE', '0812345678', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (75, 1, 11, 2, '2014-05-05', '0000-00-00', '-', 'DADAN DARMAWAN, S. Pd', '0812346678', 'serpong', 3, 0, '2018-01-19');
+INSERT INTO `tmpegawai` VALUES (77, 1, 11, 2, '2014-01-15', '0000-00-00', '-', 'M. ROSLI', '081291629479', 'serpong', 3, 3, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (79, 1, 11, 2, '2015-05-04', '0000-00-00', '-', 'SABUR, SE', '081297402625', 'serpong', 13, 1, '2022-01-20');
+INSERT INTO `tmpegawai` VALUES (81, 1, 11, 2, '2015-08-04', '0000-00-00', '-', 'MOCHAMAD AKBARSYAH, S. IP', '081234567', 'serpong', 3, 0, '2020-01-31');
+INSERT INTO `tmpegawai` VALUES (83, 1, 11, 2, '2014-01-06', '0000-00-00', '-', 'SRI WAHYUNI', '081234567', 'serpong', 3, 0, '2020-01-16');
+INSERT INTO `tmpegawai` VALUES (84, 1, 11, 2, '2014-01-06', '0000-00-00', '-', 'MADROHIM O\'O', '081234567', 'serpong', 13, 1, '2019-01-31');
+INSERT INTO `tmpegawai` VALUES (85, 1, 11, 2, '2015-04-06', '0000-00-00', '-', 'SOLIHIN', '081234567', 'serpong', 3, 0, '2019-01-07');
+INSERT INTO `tmpegawai` VALUES (87, 1, 11, 2, '2015-01-05', '0000-00-00', '-', 'MOH. SARNATA', '0812345678', 'serpong', 3, 0, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (88, 1, 11, 2, '2014-01-06', '0000-00-00', '-', 'KURNIADI', '081234567', 'serpong\n', 3, 0, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (92, 1, 11, 2, '2015-01-07', '0000-00-00', '--', 'HERLY SUSANTO', '081234567', 'serpong', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (95, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'IDRIS', '081234567', 'serpong', 3, 0, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (96, 1, 5, 1, '2012-01-02', '0000-00-00', '19701006 199103 1 001', 'BAMBANG NOERTJAHJO, SE. Ak', '081211588899', 'serpong', 4, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (97, 1, 7, 1, '2009-01-05', '0000-00-00', '19780209 200212 1 007', 'MAULANA PRAYOGA, ST. MIDS ', '081385203839', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (98, 1, 6, 1, '2010-01-04', '0000-00-00', '19711009 200212 1 005', 'HARIS JAYA PRAWIRA, S. IP', '081911149817', 'serpong\n', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (100, 1, 6, 1, '2010-01-04', '0000-00-00', '19711018 200012 1 002 ', 'SEVERUL CAHYO KUNTADI, S.Pd', '081234567', 'serpong', 3, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (101, 1, 7, 1, '2010-01-04', '0000-00-00', '19740410 199901 2 001', 'TATI SURYATI, SH. MT', ' 0811914835', 'serpong', 3, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (102, 1, 6, 1, '2008-01-07', '0000-00-00', '19750919 200312 1 005', 'IRFAN SANTOSO, S.Sos, MM', '082210449998', 'serpong', 3, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (103, 1, 6, 1, '2009-01-05', '0000-00-00', '19780209 200212 1 007', 'MAULANA PRAYOGA, ST. MIDS ', '081385203839', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (104, 1, 6, 1, '2010-01-04', '0000-00-00', '19750601 200112 1 004', 'SAPTO PRATOLO, SE. M.Si', '081310078910', 'serpong\n', 3, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (106, 1, 6, 1, '2009-01-05', '0000-00-00', '19800625 200604 1 008', 'MUHAMAD HARI KURNIAWAN, SH', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (108, 1, 6, 1, '2012-01-02', '0000-00-00', '19790708 201001 1 007', 'TB. ASEP NURDIN, S. Kom., M. Kom', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (110, 1, 6, 1, '2004-12-06', '0000-00-00', '19860624 200412 2 002', 'ISNARNI PANCA DEWI, S. STP., MH', '01822344567', 'serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (116, 1, 6, 1, '2002-12-02', '0000-00-00', '19720224 200212 1 004', 'NANA MULYANA, SE', '08567112800', 'serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (120, 1, 5, 1, '2010-01-04', '0000-00-00', '19860314 201001 2 010', 'MIRA MUCHILA, S. Sos', '082123179467', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (122, 1, 3, 1, '2014-11-03', '0000-00-00', '19680510 201411 1 001', 'JAJANG JAFAR', '08129670195', 'Tangerang', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (123, 1, 6, 1, '2005-01-03', '0000-00-00', '19730111 200501 2 005', 'ETI SUHERTI, SE', '081234567', 'Tangerang', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (124, 1, 5, 1, '2010-01-04', '0000-00-00', '19850323 201001 1 014', 'REZA FADHILLAH HERNAWAN, S. Sos', '0812345678', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (125, 1, 4, 1, '2010-01-04', '0000-00-00', '19760301 201001 1 005', 'MULYADI, A. Md', '081314551669', 'serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (126, 1, 4, 1, '2014-02-03', '0000-00-00', '19901017 201402 2 001', 'MALYDA PUSPITASARI, A. Md. Pjk', '085779417009', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (127, 1, 3, 1, '2007-01-01', '0000-00-00', '19670708 200701 1 017', 'HASAN SAID', '081382996363', 'serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (128, 1, 6, 1, '2006-04-03', '0000-00-00', '19830225 200604 2 009', 'NURUL ROHMAH SYARIEF, SE', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (129, 1, 6, 1, '2007-01-01', '0000-00-00', '19620804 200701 1 004', 'Drs. WAHJUDIN', '08129809562', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (130, 1, 6, 1, '2005-01-03', '0000-00-00', '19711215 200501 2 010', 'EUIS SUCIATI, S. IP', '081234567', 'serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (131, 1, 6, 1, '2006-04-03', '0000-00-00', '19640905 200604 1 004', 'H. M. SYAFEI, S. IP', '081284841964', 'serpong', 3, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (132, 1, 5, 1, '2010-01-04', '0000-00-00', '19810216 201001 1 007', 'FAIDLUR RAHMAN,SE', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (133, 1, 6, 1, '2011-01-03', '0000-00-00', '19840607 201101 1 002', 'BUCHORI MUSLIM, S. Sos', '081282789987', 'serpong\n', 2, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (136, 1, 5, 1, '2010-01-04', '0000-00-00', '19830113 201001 1 005', 'LUCKY TRISYAHNURA, S. Sos', '081298001619', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (139, 1, 4, 1, '2007-01-01', '0000-00-00', '19760713 200701 1 009', 'HASBIALLAH', '08129990313', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (141, 1, 6, 1, '2006-04-03', '0000-00-00', '19690627 200604 1 004', 'SUNI FAIRANSYAH, S. AP', '081212249434', 'serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (143, 1, 5, 2, '2008-01-07', '0000-00-00', '-', 'ARIEF ADISAPUTRA, S.Kom', '-', 'serpong', 13, 4, '2017-12-31');
+INSERT INTO `tmpegawai` VALUES (144, 1, 5, 1, '2008-01-07', '0000-00-00', '19730723 200801 1 003', 'YOSEP WIJAYA, S. IP', '081234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (145, 1, 5, 1, '2010-01-04', '0000-00-00', '19720806 201001 1 003 ', 'KARTIKO, S. Sos', '081234567', 'serpong\n', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (147, 1, 4, 1, '2007-01-01', '0000-00-00', '19750228 200701 1 012', 'EDY SUHAIDY', '08159974681', 'serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (149, 1, 6, 1, '2010-01-04', '0000-00-00', '19810323 201001 1 008', 'PENNY ALAMSYAH HARAHAP, S. Kom', '085714126607', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (150, 1, 6, 1, '2010-01-04', '0000-00-00', '19851025 201001 1 008', 'VINKY PRADIKTA RACHMAN, SH', '085691505578', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (153, 1, 5, 1, '1999-01-04', '0000-00-00', '19720818 199901 1 001', 'IIN ISMAIL, A. Md', '08128742523', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (155, 1, 5, 1, '2014-02-03', '0000-00-00', '19810916 201402 1 001', 'BUDI PRIHARTANTO, ST', '082393906456', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (156, 1, 4, 1, '2001-01-01', '2017-03-07', '19710201 201001 1 004', 'BUNBUN ZAEPULOH', '087870946781', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (159, 1, 6, 1, '2007-01-01', '0000-00-00', '19661117 200701 1 003', 'SRU WAHYUDI, SE', '08128316928', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (160, 1, 6, 1, '2011-01-03', '0000-00-00', '19841216 201101 2 003', 'YAOMI MARYAM, S. Sos', '08129932444', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (162, 1, 5, 1, '2005-01-03', '0000-00-00', '19671002 200501 1 003', 'MUHIT, S. IP', '081262226294', 'serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (163, 1, 3, 1, '2014-12-01', '0000-00-00', '19850626201412 1 002', 'YOGI AYUDYA TAUFIK FAUZI', '0981234567', 'serpong', 3, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (164, 1, 11, 2, '2011-01-03', '0000-00-00', '--', 'IMAN HIDAYAT, S. Sos', '08170866641', 'serpong', 3, 2, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (165, 1, 11, 2, '2013-01-07', '0000-00-00', '-', 'MARIA ULFAH, A. Md', '085814070305', 'serpong', 13, 4, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (166, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'FAUZI ISMAIL, S. Kom', '085219904445', 'serpong', 13, 6, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (169, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'IBNU MAS\'UD, S. Kom', '082122756641', 'serpong', 13, 1, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (173, 1, 7, 1, '2013-01-07', '0000-00-00', '--', 'RONI ABRIANTO, ST', '081295592500', 'serpong', 13, 4, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (174, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'MUHAMAD MUNAJAT, SE', '082297174878', 'serpong', 13, 4, '2017-12-31');
+INSERT INTO `tmpegawai` VALUES (176, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'MAYSELLA DWI ANGGRAENI, S. Sos', '08976478830', 'serpong', 3, 6, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (178, 1, 11, 2, '2015-01-05', '0000-00-00', '--', '123654852', '081234567', 'serpong', 0, 0, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (180, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'MHD. DEFKY KURNIAWAN S. LUBIS, SH', '081288637306', 'serpong', 3, 6, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (181, 1, 11, 2, '2012-01-02', '0000-00-00', '--', 'RISKA KARTINI, S. Sos', '081234567', 'serpong', 3, 0, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (182, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'NATALINA SIBARANI, SH', '081287838620', 'serpong', 13, 3, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (183, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'TOTO DARYANTO', '081281233369', 'serpong', 13, 3, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (185, 1, 11, 2, '2013-01-07', '0000-00-00', '--', 'MANSYURUDDIN', '081234567', 'serpong', 13, 3, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (186, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'SOPIYAN HADI, ST ', '081212101779', 'serpong', 3, 2, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (189, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'SAMPAN AJI PRATOMO', '081290689494', 'serpong', 13, 2, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (190, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'NADIF HAMZAH , SH', '081297966196', 'serpong', 13, 4, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (194, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'INDRA WANGSA WIDARTA, A. Md', '085659055000', 'serpong', 13, 2, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (195, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'YANI MARLIYANI, S. Pd', '081321201646', 'serpong', 13, 2, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (196, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'DEWI RIA ARISANTI, SKM', '081288307717', 'serpong', 13, 5, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (197, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'MARUP INAYATULLAH, SH', '085946457694', 'serpong', 3, 2, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (198, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'SOLAHUDIN , S. Pdi', '08881819046', 'serpong', 13, 2, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (199, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'MAHMUD, ST', '082114923923', 'serpong', 3, 2, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (200, 1, 11, 2, '2015-06-01', '0000-00-00', '--', 'EVI KUSNIADI, ST', '081288635598', 'serpong', 3, 2, '2017-01-02');
+INSERT INTO `tmpegawai` VALUES (203, 1, 11, 2, '2014-10-06', '0000-00-00', '--', 'M. NURDIN, S. Kom', '082112420037', 'serpong', 2, 4, '2019-01-31');
+INSERT INTO `tmpegawai` VALUES (204, 1, 11, 2, '2014-01-06', '0000-00-00', '-', 'OKI HIDAYANTI, SH', '085945593171', 'serpong', 13, 1, '2015-01-05');
+INSERT INTO `tmpegawai` VALUES (205, 1, 11, 2, '2015-09-07', '0000-00-00', '--', 'GUGUN GUNAWAN , S. Kom', '081234567', 'serpong', 13, 3, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (206, 1, 11, 2, '2015-06-01', '0000-00-00', '--', 'HAMDANI, S. IP', '081285581977', 'serpong', 13, 6, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (207, 1, 11, 2, '2015-03-02', '0000-00-00', '--', 'YAYAN GUSTIAWAN, SE', '081297493268', 'serpong', 8, 2, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (208, 1, 11, 2, '2013-01-07', '0000-00-00', '-', 'HERI GUNAWAN, S. IP', '081286154313', 'serpong', 3, 2, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (209, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'ENDAH NURLITA, A. Md', '081234567', 'serpong', 13, 4, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (210, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'AR123', '081234567', 'serpong', 3, 5, '2018-01-31');
+INSERT INTO `tmpegawai` VALUES (211, 1, 11, 2, '2014-01-06', '0000-00-00', '--', 'M. NASIR ', '081384227557', 'serpong', 3, 2, '2016-01-04');
+INSERT INTO `tmpegawai` VALUES (212, 1, 11, 1, '2014-07-07', '0000-00-00', '-', 'ROJALIH', '085711343258', 'serpong', 3, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (213, 1, 11, 2, '2015-03-02', '0000-00-00', '--', 'YOGAS SETYAWAN NURKAMAL, S. IP', '085722340877', 'serpong', 3, 3, '2018-09-03');
+INSERT INTO `tmpegawai` VALUES (214, 1, 11, 2, '2014-10-06', '0000-00-00', '--', 'VICTOR NALAMBAS SIREGAR, SE', '082310161010', 'serpong', 13, 6, '2018-01-16');
+INSERT INTO `tmpegawai` VALUES (215, 1, 11, 2, '2014-03-03', '0000-00-00', '--', 'PRANAWIJAYA, S. Sos', '081234567', 'serpong', 3, 0, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (216, 1, 10, 1, '2014-05-05', '0000-00-00', '198805242010011002', 'HERLY EPENDI, S.Sos., M.Si', '081380373673', 'serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (217, 1, 11, 2, '2015-03-02', '0000-00-00', '--', 'ARYO NOOR SUWENDHO, A. Md', '087777494990', 'serpong', 3, 3, '2018-08-31');
+INSERT INTO `tmpegawai` VALUES (219, 1, 11, 2, '2015-08-03', '0000-00-00', '--', 'RAHARJO PRIYO NUGROHO, SH', '087738289766', 'serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (220, 1, 11, 2, '2015-01-05', '0000-00-00', '--', 'MERLIE ENDARWATI, SHI', '082282222078', 'serpong', 13, 4, '2017-01-31');
+INSERT INTO `tmpegawai` VALUES (222, 1, 11, 2, '2014-05-05', '0000-00-00', '--', 'FINDA YULIANTI', '082211232013', 'serpong', 3, 6, '2018-01-02');
+INSERT INTO `tmpegawai` VALUES (223, 1, 1, 1, '2016-01-01', '2016-01-02', '-', 'Muhamad Janujay', '08970383853', 'alamat.', 1, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (225, 1, 9, 1, '2017-03-02', '2017-03-02', '9898989', 'ENDANG SUDRAJAT', '081293330819', 'D', 1, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (226, 1, 8, 1, '0000-00-00', '0000-00-00', '198404252010011008', 'PANJI IRAWAN', '021', '-', 1, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (227, 1, 7, 1, '0000-00-00', '0000-00-00', '19690611 199803 1 013', 'H. Murtado, SE', '081285579116', '-', 7, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (231, 1, 10, 1, '0000-00-00', '0000-00-00', '4536576879809', 'Pencetak SK Ketenagakerjaan', '-', '-', 0, 0, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (237, 1, 10, 1, '2017-03-01', '2017-03-14', '197008012007011021', 'HASMY KAHFI', '087879582269', 'Tangerang Selatan', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (238, 1, 10, 1, '0000-00-00', '0000-00-00', '196705102007011017', 'TAUFIK RAHMAN', '08119754844', 'Tangerang Selatan', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (239, 1, 4, 1, '2017-03-01', '2017-03-14', '198511', 'MOHAMAD HUDORI, SE', '081280803160', 'Tangerang Selatan', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (241, 1, 2, 1, '2017-03-01', '2017-03-14', '1982019731', 'FIRMAN RESAMA OKTAVIA SE MSI', '087808880529', 'BSD', 2, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (245, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'TAUFIEQ RIEFKIE, S. Sos', '-', 'serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (246, 1, 3, 1, '2017-03-01', '2017-03-15', '19820830 201001 1    009', 'ARIF AFWAN TAUFANI, SE., M. Si', '081389898910', 'tangsel\n', 2, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (247, 1, 3, 1, '2017-03-01', '2017-03-15', '19820830 201001 1  009', 'ARIF AFWAN TAUFANI SE MSI', '081389898910', 'TANGSEL', 7, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (248, 1, 4, 1, '2017-03-01', '2017-03-15', '48484894894', 'PUTUT DWI CAHYONO SE', '0818979440', 'bsd', 2, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (249, 1, 10, 2, '2017-03-01', '2017-03-15', '-', 'IMAM KURNIAWAN, SE', '081283456344', 'Bsd\n', 13, 5, '2018-01-01');
+INSERT INTO `tmpegawai` VALUES (250, 1, 2, 1, '2017-03-15', '2017-03-15', '19710504 200604 1 011', 'HERMAN SUSILO', '081219318604', 'sds', 2, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (252, 1, 3, 1, '2017-03-01', '2017-03-14', '19810101 5215441', 'Firman Resama Oktavia, SE', '087808880529', 'BSD', 6, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (253, 1, 2, 1, '2017-03-01', '2017-03-12', '1972010121', 'Ir. DEDEN SUPRIATNA, MM', '082112090996', 'bsd', 5, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (254, 1, 10, 2, '0000-00-00', '0000-00-00', '-', 'IMRON ROSADI, S.pd', '081298103553', 'BSD', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (255, 1, 10, 1, '2017-03-01', '2017-03-14', '197901011236512021', 'RIDWAN ARIFIN', '081315662244', 'bsd', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (256, 1, 10, 2, '2017-03-01', '2017-03-13', '-', 'ADE IRAWAN ANTARIKSHA', '081312389969', 'bsd', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (257, 1, 10, 2, '2017-04-24', '2017-04-30', '-', 'SUBKI', '081389898910', 'Tangsel\n', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (258, 1, 10, 1, '0000-00-00', '0000-00-00', '198408282015031002', 'ERIK GUSTAMAN', '08112106343', 'Tangsel', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (259, 1, 10, 2, '0000-00-00', '0000-00-00', '-', 'ARIA ZAKARA', '089677260793', 'BSD', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (260, 1, 2, 1, '0000-00-00', '0000-00-00', '909090909090', 'TIM TEKNIS', '085722776632', 'alamat', 3, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (261, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pembinaan PAUD dan Pendidikan Non Formal pada Dinas Pendidikan dan Kebudayaan', '-', '-', 4, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (262, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Kelembagaan dan Sarana dan Prasarana pada Dinas Pendidikan dan Kebudayaan', '-', '-', 4, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (265, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bagian Pembangunan pada Sekretariat Daerah', '-', '-', 9, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (266, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Subagian Bina Pekerjaan Umum, Penataan Ruang dan Perumahan, Permukiman dan Pertanahan pada Se', '-', '-', 9, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (267, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Bina Teknik dan Jasa Konstruksi pada Dinas Pekerjaan Umum', '-', '-', 9, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (268, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Bina Jasa Konstruksi pada Dinas Pekerjaan Umum', '-', '-', 9, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (269, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penetapan dan Penagihan Pajak Daerah II pada Badan Pendapatan Daerah', '081315685234', '-', 24, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (270, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Penempatan Kerja dan Perluasan Kesempatan Kerja pada Dinas Ketenagakerjaan', '-', '-', 10, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (271, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penempatan Tenaga Kerja dan Transmigrasi pada Dinas Ketenagakerjaan', '-', '-', 4, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (272, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pembinaan Usaha Kepariwisataan dan Pemasaran pada Dinas Pariwisata', '081288982901', '-', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (273, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pembinaan Usaha Kepariwisataan pada Dinas Pariwisata', '085777222482', '-', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (274, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perdagangan pada Dinas Perindustrian dan Perdagangan', '081385809572', '-', 14, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (275, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perdagangan Dalam Negeri pada Dinas Perindustrian dan Perdagangan', '081385809572', '-', 14, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (276, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Tata Ruang pada Dinas Bangunan dan Penataan Ruang', '081298298709', '-', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (277, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perencanaan Tata Ruang pada Dinas Bangunan dan Penataan Ruang', '08159399043', '-', 20, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (278, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengembangan Industri Kecil dan Menengah pada Dinas Perindustrian dan Perdagangan', '081284484701', '-', 14, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (279, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perindustrian pada Dinas Perindustrian dan Perdagangan', '0811914368', '-', 14, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (280, 1, 10, 1, '2017-05-26', '0000-00-00', '197201202007011010', 'DEDE ROHYADI, S.IP', '08120356676', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (281, 1, 10, 1, '2017-05-26', '0000-00-00', '198204022011011001', 'BUCHORI MUSLIM, S.Sos', '081282789987', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (282, 1, 10, 1, '0000-00-00', '0000-00-00', '198111092014111001', 'ZEKY YAMANI', '085334748881', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (284, 1, 8, 1, '0000-00-00', '0000-00-00', '198209302010012009', 'ELLYA MUFIDAH, S, I. KOM', '081231091339', 'Jakarta Selatan', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (285, 1, 9, 1, '0000-00-00', '0000-00-00', '198807122011012002', 'ANNISA ANDILARAS, A. MD', '08', 'Serpong Utara', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (286, 1, 9, 1, '0000-00-00', '0000-00-00', '196203111993031005', 'H. SUJANA', '081310785519', 'Tiga Raksa', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (287, 1, 9, 1, '0000-00-00', '0000-00-00', '196908172007011024', 'AGUS PURNADI, SIP', '08129270957', 'Tangerang', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (288, 1, 9, 1, '0000-00-00', '0000-00-00', '198009212010011005', 'DANIS PRIYO UTOMO, A.MD', '085219905370', 'Setu', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (289, 1, 5, 1, '0000-00-00', '0000-00-00', '196211281984031010', 'SUKATEMAN', '-', 'Tangerang', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (290, 1, 5, 1, '0000-00-00', '0000-00-00', '196301121987031001', 'DRS. YUSWO BAHTIYAR, M.SI', '-', 'Tangerang', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (291, 1, 8, 1, '0000-00-00', '0000-00-00', '196702101985101001', 'SURYANTO, SH', '-', 'Tangerang', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (292, 1, 8, 1, '0000-00-00', '0000-00-00', '198308192015032002', 'PUPUT PURNAWATI, S. SOS', '-', 'Tangerang', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (293, 1, 8, 1, '0000-00-00', '0000-00-00', '198804032011012003', 'IRNA APRIYANTI, S.SOS', '-', 'Tangerang', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (294, 1, 8, 1, '0000-00-00', '0000-00-00', '198405312002121004', 'AGUNG HANAFI, S.KOM', '-', 'Ciputat', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (295, 1, 9, 1, '0000-00-00', '0000-00-00', '198307162010012012', 'YULIA WININGSIH, S.SOS', '087771230621', 'Ciputat Timur', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (296, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'bapenda', '081213462307', '-', 24, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (297, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'SUNI BAPL', '081212249434', '-', 24, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (298, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'EDY BAPL', '08159974681', '-', 24, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (299, 1, 1, 1, '0000-00-00', '0000-00-00', '9898989', 'arsip', '021', 'asdf', 16, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (300, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'Bidang Data', '-', '-', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (301, 1, 1, 1, '2017-07-01', '2017-07-11', '098765', 'satpolpp', '0811101371', 'BSD', 22, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (302, 1, 1, 1, '2017-07-01', '2017-07-11', '5102', 'AGUSTIANI KARTIKA SE MM', '02180503020', 'BSD', 23, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (303, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'PEP', '-', 'serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (304, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'Bendahara', '-', 'serpong', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (305, 1, 5, 1, '0000-00-00', '0000-00-00', '988888888877777', 'timteknisbap', '081', '-', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (306, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perumahan Dinas Perumahan, Kawasan Permukiman dan Pertanahan ', '081219091796', 'Serpong', 23, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (307, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Sanitasi Lingkungan Air Minum dan Penataan Bangunan', '-', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (308, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pengendalian Pencemaran dan Kerusakan Lingkungan', '081387773840', 'Serpong', 19, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (309, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengendalian dan Pemanfaatan Ruang', '081219503932', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (310, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perumahan Tapak', '081368681174', 'Serpong', 23, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (311, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penataan Bangunan', '08113929770', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (312, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pembinaan dan Pengawasan Lingkungan', '085885434660', 'Serpong', 19, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (313, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pembinaan Pendidikan Anak Usia Dini dan Pendidikan Non Formal', '087808107277', 'Serpong', 16, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (314, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penyelenggaraan Pelatihan pada Dinas Ketenagakerjaan', '081298826540', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (316, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Penempatan Kerja dan Perluasan Kesempatan Kerja pada Dinas Ketenagakerjaan.', '08129285825', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (317, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Kelembagaan Pelatihan pada Dinas Ketenagakerjaan.', '085710422825', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (318, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perlindungan Tenaga Kerja pada Dinas Ketenagakerjaan.', '081317014437', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (319, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengembangan Sumber Daya Manusia Teknologi Informasi Komunikasi dan Kerjasama Smart Cit', '08568871352', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (320, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pengelolaan Teknologi Informasi Komunikasi dan Persandian', '08122736990', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (321, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Tata Teknis Perparkiran dan Terminal pada Dinas Perhubungan.', '081398620239', 'Serpong', 15, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (322, 1, 9, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengembangan dan Pelayanan Angkutan pada Dinas Perhubungan.', '085269355551', 'Serpong', 15, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (324, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Kelembagaan dan Sarana dan Prasarana', '-', 'Serpong', 16, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (325, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pembinaan Sekolah Dasar (SD) ', '-', 'Serpong', 16, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (326, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pembinaan Sekolah Menengah Pertama (SMP)', '-', 'Serpong', 16, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (327, 1, 7, 1, '0000-00-00', '0000-00-00', '- ', 'Kepala Bidang Pelayanan Kesehatan pada Dinas Kesehatan Provinsi Banten', '-', 'Serang', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (328, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pelayanan Kesehatan Rujukan pada Dinas Kesehatan', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (329, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pelayanan Kesehatan Rujukan pada Dinas Kesehatan', '081319671907', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (330, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Sumber Daya Kesehatan pada Dinas Kesehatan', '0816639312', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (331, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Farmalkes, Obat Publik, dan Pengawasan Pangan pada Dinas Kesehatan', '081380245515', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (332, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Promosi Kesehatan, Kesehatan Lingkungan dan Kesehatan Kerja dan Olah Raga pada Dinas Ke', '085959607727', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (333, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pelayanan Kesehatan pada Dinas Kesehatan', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (334, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Verifikasi Promkeslingkesjaor pada Dinas Kesehatan', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (336, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Fisik dan Prasarana pada Bappeda', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (337, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perencanaan dan Pengendalian Pembangunan Tata Ruang dan Lingkungan Hidup pada Bappeda', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (339, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Sanitasi Lingkungan, Air Minum dan Penataan Bangunan ', '-', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (340, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Sumber Daya Air', '-', 'Serpong', 21, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (341, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Lalu Lintas', '-', 'Serpong', 21, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (342, 1, 4, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Tata Lingkungan', '-', 'Serpong', 19, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (343, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pencegahan dan Pemberdayaan Masyarakat', '-', 'Serpong', 17, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (344, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengendalian dan Pemanfaatan Ruang', '-', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (345, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penataan Bangunan', '08113929770', 'Serpong', 20, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (346, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pembangunan dan Pemanfaatan Infrastruktur SDA', '-', 'Serpong', 21, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (347, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Rekayasa Lalu Lintas ', '-', 'Serpong', 15, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (348, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perencanaan dan Kajian Dampak Lingkungan', '-', 'Serpong', 19, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (349, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengawasan dan Pengendalian ', '-', 'Serpong', 17, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (351, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Asset ', '-', 'Serpong', 24, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (352, 1, 4, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Bina Marga', '-', 'Serpong', 21, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (353, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pertamanan ', '-', 'Serpong', 19, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (354, 1, 4, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang PJU dan Pemakaman', '-', 'Serpong', 23, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (355, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pemakaman ', '-', 'Serpong', 23, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (356, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pembangunan PJU', '-', 'Serpong', 23, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (357, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perumahan', '-', 'Serpong', 23, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (358, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Kelembagaan, Pembangunan dan penilaian Koperasi pada Dinas Koperasi, Usaha Kecil dan M', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (359, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penilaian Koperasi Pada Dinas Koperasi, Usaha Kecil dan Menengah', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (360, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Promosi, Pengembangan dan Penguatan UKM Pada Dinas Koperasi, Usaha Kecil dan Menengah', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (361, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Standarisasi dan Sertifikasi UMKM pada Dinas Koperasi, Usaha Kecil dan Menengah', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (362, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perikanan ', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (363, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Perikanan Budidaya pada Dinas Ketahanan Pangan , Pertanian dan Perikanan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (364, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Penguatan Daya Saing Produk Perikanan pada Dinas Ketahanan Pangan, Pertanian dan Perika', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (365, 1, 4, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Pertanian dan Peternakan pada Dinas Ketahanan Pangan, Pertanian dan Perikanan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (366, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Peternakan pada Dinas Ketahanan Pangan, Pertanian dan Perikanan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (367, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Peternakan pada Dinas Ketahanan Pangan, Pertanian dan Perikanan', '-', 'Serpong\n', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (368, 1, 8, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Seksi Pengembangan Industri Kecil dan Menengah pada Dinas Perindustrian dan Perdagangan', '081284484701', 'Serpong\n', 14, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (369, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Dinas Perhubungan', '-', 'Serpong', 15, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (370, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Dinas Ketenagakerjaan', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (371, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Timteknis Pengesahan Rencana Tapak', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (372, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua TimTeknis Izin Usaha Toko Modern ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (373, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Tempat Praktik Dokter Hewan Bersama', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (374, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penggunaan Pemanfaatan Tanah ', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (375, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Operasional Rumah Sakit', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (376, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Pendidikan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (377, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Klinik Utama', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (378, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Klinik Pratama', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (379, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Mendirikan Rumah Sakit ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (380, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Mendirikan Klinik Utama', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (381, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Mendirikan Klinik Pratama', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (382, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Mendirikan Bangunan', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (383, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pendirian Kelompok Belajar', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (384, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Pendidikan Anak Usia Dini ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (385, 1, 2, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pendirian Lembaga Kursus dan Pelatihan ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (386, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pendirian Pusat Kegiatan Belajar Masyarakat ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (387, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Taman Bacaan Masyarakat ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (389, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Puskesmas', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (390, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Klinik Hemodialisa', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (391, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Radiologi', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (392, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Laboratorium Klinik Pratama', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (393, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Operasional Apotek', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (394, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pedagang Eceran Obat', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (395, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Usaha Mikro Obat Tradisional ', '-', 'Serpong', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (396, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Optikal', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (397, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Toko Alat Kesehatan', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (398, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pest Control', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (399, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Sertifikat Produksi Pangan Industri Rumah Tangga ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (400, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Sertifikat Laik Higiene Sanitasi ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (401, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Perbekalan Kesehatan Rumah Tangga ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (402, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Rekomendasi Izin  Rumah Sakit Kelas B', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (403, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Izin Penyelenggaraan Laboratorium Klinik Madya', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (404, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Izin Pedagang Besar Farmasi ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (405, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Izin Penyalur Alat Kesehatan', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (406, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Kalibrasi Alat Kesehatan ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (407, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Izin Produksi Kosmetik', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (408, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Izin Usaha Kecil Obat Tradisional', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (410, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Jasa Konstruksi ', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (411, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Reklame', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (412, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasional Jasa Pelayanan Prosesi Pemakaman/Pengabuan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (413, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penggalian Jenazah/Kerangka', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (414, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Penerangan Jalan Umum', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (415, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Bursa Kerja Luar Negeri ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (417, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Tenaga Kerja', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (418, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Pembuangan Limbah Cair', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (419, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (420, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Tempat Penyimpanan Sementara Limbah Bahan Berbahaya dan Beracun ', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (421, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Fasilitas Tempat Khusus Parkir', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (423, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Pendidikan dan Pelatihan Mengemudi', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (424, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Analisis Dampak Lalu Lintas', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (425, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Komunikasi dan Informatika', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (426, 1, 2, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis non Perizinan Komunikasi dan Informatika', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (427, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Simpan Pinjam', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (428, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Pembukaan Kantor Cabang/Cabang Pembantu/Kantor Kas Koperasi Simpan Pinjam ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (429, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Mikro dan Kecil ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (430, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Surat Izin Usaha Perikanan (SIUP) Bidang Pembudidayaan Ikan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (431, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Surat Izin Usaha Perikanan (SIUP) Pengolahan dan Pemasaran Hasil Perikanan ', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (432, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Depo/Toko Obat Ikan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (433, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Tanda Daftar Usaha Pariwisata ', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (434, 1, 3, 1, '0000-00-00', '0000-00-00', '- ', 'Ketua Tim Teknis Surat Izin Praktik Dokter Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (435, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Surat Izin Praktik Dokter Hewan Tenaga Asing', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (436, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Klinik Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (437, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Rumah Sakit Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (438, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Laboratorium Kesehatan Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (439, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Depo/Toko Obat Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (440, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Peternakan  ', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (441, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Rumah Potong Hewan', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (442, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Surat Tanda Pendaftaran Waralaba ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (443, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Tanda Daftar Gudang ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (444, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis  Izin Usaha Pengelolaan Pasar Tradisional ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (445, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Pusat Perbelanjaan', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (446, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Surat Izin Tempat Usaha ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (447, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Usaha Industri ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (448, 1, 3, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Perluasan Industri ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (450, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perizinan Pembangunan pada Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu Kota', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (451, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perizinan Ekonomi pada Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu ', '-', 'Serpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (452, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perizinan Ketenagakerjaan pada Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (453, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perizinan Kesejahteraan Rakyat pada Dinas Penanaman Modal dan Pelayanan Terpadu Satu P', '-', 'Serpong', 13, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (454, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Perizinan Sosial Budaya pada Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (455, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Kesehatan Masyarakat Pada Dinas Kesehatan', '082122568882', 'Serpong', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (456, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'Tim Gambar', '-', 'Serpong', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (458, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Kepala Bidang Penerangan Jalan Umum  dan Pemakaman pada Dinas Perumahan, Kawasan Pemukiman, dan Pert', '-', 'Serpong', 23, 4, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (459, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Lembaga Penempatan Tenaga Kerja Swasta', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (460, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Perpanjangan Izin Mempekerjakan Tenaga Kerja Asing', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (461, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Lembaga Pelatihan Kerja', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (462, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penampungan Tenaga Kerja', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (463, 1, 6, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Trayek Angkutan Perkotaan', '-', '-', 15, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (464, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Operasi Angkutan Khusus', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (465, 1, 7, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Instalasi Kabel Rumah/Gedung', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (466, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Warung Internet', '-', 'Serpong\n', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (467, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Warung Telekomunikasi', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (468, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Izin Penyelenggaraan Instalasi Kabel Optik', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (469, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Menara Telekomunikasi Bersama', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (470, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Penyelenggaraan Penyiaran Radio/Televisi di Daerah', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (471, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Penyelenggaraan Amatir Radio/Radio Antar Penduduk ', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (472, 1, 5, 1, '0000-00-00', '0000-00-00', '-', 'Ketua Tim Teknis Rekomendasi Pest Control', '-', 'Serpong', 13, 6, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (481, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'HASBILLAH', '-', 'Serpong', 13, 5, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (482, 1, 1, 1, '0000-00-00', '0000-00-00', '111', 'Petugas Cetak SK', '022', '-', 13, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (483, 1, 1, 1, '2018-03-16', '2018-03-16', '091', 'kasidinasterkait2', '0982', 'ad', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (484, 1, 1, 1, '2018-04-02', '2025-04-18', '1234', 'kasidinasterkait1', '087776493587', 'diserpong', 13, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (485, 1, 2, 1, '0000-00-00', '0000-00-00', 'asdasd', 'asdasda', '087776493587', 'asd', 13, 2, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (486, 1, 2, 1, '0000-00-00', '0000-00-00', '123124124124', 'Kasi 1', '08', 'alamat', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (487, 1, 8, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakhotel2', 'Kasi 2', '08', 'paaa', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (488, 1, 10, 1, '0000-00-00', '0000-00-00', 'Pemeriksa Pajak Hotel 3', 'kasi 3', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (489, 1, 7, 1, '0000-00-00', '0000-00-00', '1010123012022', 'Korwil Pendataan 1', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (490, 1, 10, 1, '0000-00-00', '0000-00-00', 'timteknispajakhotel', 'Tim Teknis Bapenda ', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (491, 1, 7, 1, '2019-05-20', '0000-00-00', 'pajakhotel4', 'Kabid', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (492, 1, 2, 1, '0000-00-00', '0000-00-00', '1231', 'Cetak SK Pajak', '08', 'adad', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (493, 1, 8, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakhiburan', 'Pemeriksa Pajak Hiburan 1', '08', '1', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (494, 1, 8, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakhiburan2', 'Pemeriksa Pajak Hiburan 2', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (495, 1, 6, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakhiburan3', 'Pemeriksa Pajak Hiburan 3', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (496, 1, 7, 1, '0000-00-00', '0000-00-00', 'korwilpajakhiburan', 'Korwil Pajak Hiburan', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (497, 1, 8, 1, '0000-00-00', '0000-00-00', 'timteknispajakhiburan', 'Tim Teknis Pajak Hiburan', '08', 'ada', 20, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (498, 1, 2, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakhiburan4', 'Pemeriksa Pajak Hiburan 4', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (499, 1, 6, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakparkir1', 'Pemeriksa pajak parkir 1', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (500, 1, 1, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakparkir2', 'pemeriksa pajak parkir 2', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (501, 1, 9, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakparikir3', 'Pemeriksa Pajak Parkir 3', '07', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (502, 1, 9, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakparkir4', 'Pemeriksa Pajak Parkir 4', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (503, 1, 7, 1, '0000-00-00', '0000-00-00', 'korwilpajakparki', 'Korwil Pajak Parkir', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (504, 1, 6, 1, '0000-00-00', '0000-00-00', 'timteknispajakparkir', 'Timteknis Pajak Parkir', '08', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (505, 1, 8, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakrestoran', 'pemeriksapajakrestoran1', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (506, 1, 9, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakrestoran2', 'Pemeriksa Pajak Restoran 2', '08', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (507, 1, 6, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakrestoran3', 'Permeriksa Pajak Restoran 3', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (508, 1, 5, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakrestoran4', 'Pemeriksa Pajak Restoran 4', '08', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (509, 1, 3, 1, '0000-00-00', '0000-00-00', 'korwilpajakrestoran', 'Korwil Pajak Restoran', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (510, 1, 4, 1, '0000-00-00', '0000-00-00', 'timteknispajakrestoran', 'Timteknis Pajak Restoran', '08', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (511, 1, 10, 1, '0000-00-00', '0000-00-00', 'pemeriksapajakrestoran1', 'Pemeriksa Pajak Restoran 1', '08', 'ada\n', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (512, 1, 1, 1, '0000-00-00', '0000-00-00', 'arsippajak', 'arsip bapenda', '08', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (513, 1, 10, 1, '0000-00-00', '0000-00-00', 'Petugas Sidak Pamulang', 'Petugas Sidak Pamulang', '123124124124', '1212412', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (514, 1, 1, 1, '2019-08-06', '0000-00-00', 'petugaspenjadwalansidak', 'Petugas Penjadwalan Sidak Pajak', '087776493587', 'ada', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (515, 1, 10, 1, '0000-00-00', '0000-00-00', '000000111', 'Bapenda penetapan', '089', 'alamat', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (516, 1, 5, 1, '0000-00-00', '0000-00-00', '197808262001121002', 'Puguh Istianto', '087871545562', '-', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (517, 1, 8, 1, '0000-00-00', '0000-00-00', '198002142010011005', 'Adityawarman AN', '081315685234', '-', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (518, 1, 7, 1, '0000-00-00', '0000-00-00', '198208072001121002', 'Faisal Rachman', '081213462307', '-', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (519, 1, 6, 1, '0000-00-00', '0000-00-00', '198501112003122001', 'rahayusayekti', '081382575381', '-', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (520, 1, 1, 1, '0000-00-00', '0000-00-00', 'sidakciputat', 'Sidak Ciputat', '08', '-', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (521, 1, 7, 1, '0000-00-00', '0000-00-00', '197200321944032001', 'Sidak Serpong', '081229588164', 'Jl. Anggrek No. 21', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (522, 1, 10, 1, '2019-04-01', '0000-00-00', '199010152019032002', 'Vina Alfiyani', '089654822243', 'Jl. Kenari Raya No. 16', 25, 1, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (523, 1, 10, 1, '0000-00-00', '0000-00-00', 'pemeriksa', 'pemeriksasidak', '08', 'asda', 25, 7, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (529, 1, 0, 2, '0000-00-00', '0000-00-00', 'korwilpendataan2', 'Korwil Pendataan 2', '08', 'ada', 25, 1, '2023-09-30');
+INSERT INTO `tmpegawai` VALUES (530, 1, 0, 2, '2020-03-01', '2020-03-25', '10123812010', 'Korwil Pendataan 3', '08', 'ada', 25, 1, '2024-09-30');
+INSERT INTO `tmpegawai` VALUES (531, 1, 10, 1, '0000-00-00', '0000-00-00', '0000000', 'bapenda penerbitan', '000000000', 'alamat', 25, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (532, 1, 8, 1, '2020-01-22', '2020-01-22', '234234', '2342', '087777576875', 'ada', 15, 3, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (533, 1, 10, 1, '0000-00-00', '0000-00-00', '-', 'Korwil Penagihan1', '-', '-', 25, 7, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (534, 1, 0, 2, '2020-03-10', '2020-03-31', '11010182801029', 'Korwil Penagihan2', '083918321', 'asd', 25, 7, '2020-03-27');
+INSERT INTO `tmpegawai` VALUES (535, 1, 10, 1, '2020-03-18', '2020-03-18', '1913010390', 'Korwil Penagihan3', '07813718378', 'padang sidempuan', 25, 7, '2020-03-18');
+INSERT INTO `tmpegawai` VALUES (536, 1, 10, 1, '2020-03-24', '2020-03-25', '11010182801029', 'Penagihan3', '0813712831273', 'bapenda', 25, 7, '0000-00-00');
+INSERT INTO `tmpegawai` VALUES (537, 1, 0, 2, '2020-04-18', '2020-04-17', '-', 'korwilpenagihan3', '9789', 'sf', 25, 7, '2020-04-22');
+
+SET FOREIGN_KEY_CHECKS = 1;

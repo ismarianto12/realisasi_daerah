@@ -1,0 +1,10 @@
+
+#!/bin/sh
+
+cd /var/www/html/simral_tangsel/lib/jasper_report
+touch jasper.log
+java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp ".:/var/www/html/simral_tangsel/lib/jasper_report/JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1
+
+java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp ".:/home/webapp/simral_adminframe/app/Libraries/jasper_report/JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1
+
+java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp "D:\xampp\htdocs\sierpekade_v0_1\app\Libraries\jasper_report\JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1

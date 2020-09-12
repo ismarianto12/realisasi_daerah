@@ -1,0 +1,142 @@
+SELECT
+     "DPA" AS rekening_dpa,
+     vw_trx_belanja_spj_dpa.type_dpa AS dpa_dpa_type_dpa,
+     vw_trx_belanja_spj_dpa.no_dpa AS dpa_dpa_no_dpa,
+     sikd_rek_rincian_obj.kd_rek_rincian_obj AS sikd_rek_rincian_obj_kd_rek_rincian_obj,
+     sikd_rek_rincian_obj.nm_rek_rincian_obj AS sikd_rek_rincian_obj_nm_rek_rincian_obj,
+     if(dpa_dpa.jns_dpa = "DpaSkpkdPenerimaan", "PENERIMAAN PEMBIAYAAN", "PENDAPATAN")  AS dpa_dpa_nama_dpa,
+     sikd_satker.sikd_satker_type AS sikd_satker_type,
+     dpa_mata_anggaran.`jml_pagu_dpa` AS dpa_mata_anggaran_jumlah,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0) AS jml_trm_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0) AS jml_spj_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_sd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_sd_periode_ini
+FROM
+     `vw_trx_belanja_spj_dpa` vw_trx_belanja_spj_dpa 
+     INNER JOIN `dpa_dpa` dpa_dpa ON vw_trx_belanja_spj_dpa.`id_dpa_dpa` = dpa_dpa.`id_dpa_dpa`
+     INNER JOIN `sikd_satker` sikd_satker ON dpa_dpa.`sikd_satker_id` = sikd_satker.`id_sikd_satker`
+     INNER JOIN `apbd_apbd` apbd_apbd ON vw_trx_belanja_spj_dpa.`apbd_apbd_id` = apbd_apbd.`id_apbd_apbd`
+ 	 AND IF(apbd_apbd.`tgl_berlaku_apbd_p`!='0000-00-00' and apbd_apbd.`tgl_berlaku_apbd_p`<=$P{TANGGAL2}, vw_trx_belanja_spj_dpa.status = '1', vw_trx_belanja_spj_dpa.status = '0')
+     INNER JOIN `dpa_mata_anggaran` dpa_mata_anggaran ON vw_trx_belanja_spj_dpa.`id_dpa_dpa` = dpa_mata_anggaran.`dpa_dpa_id`
+     INNER JOIN `sikd_rek_rincian_obj` sikd_rek_rincian_obj ON dpa_mata_anggaran.`sikd_rek_rincian_obj_id` = sikd_rek_rincian_obj.`id_sikd_rek_rincian_obj`
+     LEFT OUTER JOIN `vw_trx_pendapatan_spj_pdpt` vw_trx_pendapatan_spj_pdpt 
+         ON vw_trx_pendapatan_spj_pdpt.`kd_rekening` = dpa_mata_anggaran.`kd_rekening`
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_satker_id` = dpa_dpa.`sikd_satker_id`
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_sub_satker_id` = dpa_dpa.`sikd_sub_satker_id`
+WHERE
+     vw_trx_belanja_spj_dpa.`sikd_satker_id` = $P{ID_SKPD}
+ AND vw_trx_belanja_spj_dpa.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+ AND dpa_dpa.`jns_dpa` IN ("DpaSkpdPendapatan", "DpaSkpkdPendapatan", "DpaSkpkdPenerimaan")
+GROUP BY
+     sikd_rek_rincian_obj_kd_rek_rincian_obj
+
+UNION
+SELECT
+     "Non DPA" AS rekening_dpa,
+     "" AS dpa_dpa_type_dpa,
+     vw_trx_pendapatan_spj_non_dpa.no_dpa AS dpa_dpa_no_dpa,
+     sikd_rek_rincian_obj.kd_rek_rincian_obj AS sikd_rek_rincian_obj_kd_rek_rincian_obj,
+     sikd_rek_rincian_obj.nm_rek_rincian_obj AS sikd_rek_rincian_obj_nm_rek_rincian_obj,
+     "PENDAPATAN" AS dpa_dpa_nama_dpa,
+     sikd_satker.sikd_satker_type AS sikd_satker_type,
+     0 AS dpa_mata_anggaran_jumlah,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0) AS jml_trm_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0) AS jml_spj_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_sd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_sd_periode_ini
+FROM
+     `vw_trx_pendapatan_spj_non_dpa` vw_trx_pendapatan_spj_non_dpa
+     INNER JOIN `sikd_satker` sikd_satker ON vw_trx_pendapatan_spj_non_dpa.`sikd_satker_id` = sikd_satker.`id_sikd_satker`
+     INNER JOIN `sikd_rek_rincian_obj` sikd_rek_rincian_obj ON vw_trx_pendapatan_spj_non_dpa.`sikd_rek_rincian_obj_id` = sikd_rek_rincian_obj.`id_sikd_rek_rincian_obj`
+        AND sikd_rek_rincian_obj.`id_sikd_rek_rincian_obj` NOT IN
+            (select d.`sikd_rek_rincian_obj_id`
+             from  `vw_trx_belanja_spj_dpa` a 
+                    INNER JOIN `dpa_dpa` b ON a.`id_dpa_dpa` = b.`id_dpa_dpa`
+                    INNER JOIN `apbd_apbd` c ON a.`apbd_apbd_id` = c.`id_apbd_apbd`
+ 	 		AND IF(c.`tgl_berlaku_apbd_p`!='0000-00-00' and c.`tgl_berlaku_apbd_p`<=$P{TANGGAL2}, a.status = '1', a.status = '0')
+                    INNER JOIN `dpa_mata_anggaran` d ON a.`id_dpa_dpa` = d.`dpa_dpa_id`
+             where  a.`sikd_satker_id` = $P{ID_SKPD}
+               AND a.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+            ) 
+     INNER JOIN `vw_trx_pendapatan_spj_pdpt` vw_trx_pendapatan_spj_pdpt 
+         ON vw_trx_pendapatan_spj_non_dpa.`kd_rekening` = vw_trx_pendapatan_spj_pdpt.`kd_rekening`
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_satker_id` = $P{ID_SKPD}
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+WHERE
+     vw_trx_pendapatan_spj_non_dpa.`sikd_satker_id` = $P{ID_SKPD}
+ AND vw_trx_pendapatan_spj_non_dpa.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+ AND sikd_rek_rincian_obj.kd_rek_rincian_obj LIKE '4%'
+GROUP BY
+     sikd_rek_rincian_obj_kd_rek_rincian_obj
+
+UNION
+SELECT
+     "Non DPA" AS rekening_dpa,
+     "" AS dpa_dpa_type_dpa,
+     vw_trx_pendapatan_spj_non_dpa.no_dpa AS dpa_dpa_no_dpa,
+     sikd_rek_rincian_obj.kd_rek_rincian_obj AS sikd_rek_rincian_obj_kd_rek_rincian_obj,
+     sikd_rek_rincian_obj.nm_rek_rincian_obj AS sikd_rek_rincian_obj_nm_rek_rincian_obj,
+     "PENERIMAAN PEMBIAYAAN" AS dpa_dpa_nama_dpa,
+     sikd_satker.sikd_satker_type AS sikd_satker_type,
+     0 AS dpa_mata_anggaran_jumlah,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0) AS jml_trm_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` < $P{TANGGAL1},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0) AS jml_spj_sd_periode_lalu,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` >= $P{TANGGAL1} AND vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_pd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_trx` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_trm`,0)),0)AS jml_trm_sd_periode_ini,
+     ifnull(SUM(if(vw_trx_pendapatan_spj_pdpt.`tgl_str` <= $P{TANGGAL2},vw_trx_pendapatan_spj_pdpt.`jumlah_str`,0)),0)AS jml_spj_sd_periode_ini
+FROM
+     `vw_trx_pendapatan_spj_non_dpa` vw_trx_pendapatan_spj_non_dpa
+     INNER JOIN `sikd_satker` sikd_satker ON vw_trx_pendapatan_spj_non_dpa.`sikd_satker_id` = sikd_satker.`id_sikd_satker`
+     INNER JOIN `sikd_rek_rincian_obj` sikd_rek_rincian_obj ON vw_trx_pendapatan_spj_non_dpa.`sikd_rek_rincian_obj_id` = sikd_rek_rincian_obj.`id_sikd_rek_rincian_obj`
+        AND sikd_rek_rincian_obj.`id_sikd_rek_rincian_obj` NOT IN
+            (select d.`sikd_rek_rincian_obj_id`
+             from  `vw_trx_belanja_spj_dpa` a 
+                    INNER JOIN `dpa_dpa` b ON a.`id_dpa_dpa` = b.`id_dpa_dpa`
+                    INNER JOIN `apbd_apbd` c ON a.`apbd_apbd_id` = c.`id_apbd_apbd`
+ 	 		AND IF(c.`tgl_berlaku_apbd_p`!='0000-00-00' and c.`tgl_berlaku_apbd_p`<=$P{TANGGAL2}, a.status = '1', a.status = '0')
+                    INNER JOIN `dpa_mata_anggaran` d ON a.`id_dpa_dpa` = d.`dpa_dpa_id`
+             where  a.`sikd_satker_id` = $P{ID_SKPD}
+               AND a.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+            ) 
+     INNER JOIN `vw_trx_pendapatan_spj_pdpt` vw_trx_pendapatan_spj_pdpt 
+         ON vw_trx_pendapatan_spj_non_dpa.`kd_rekening` = vw_trx_pendapatan_spj_pdpt.`kd_rekening`
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_satker_id` = $P{ID_SKPD}
+        AND vw_trx_pendapatan_spj_pdpt.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+WHERE
+     vw_trx_pendapatan_spj_non_dpa.`sikd_satker_id` = $P{ID_SKPD}
+ AND vw_trx_pendapatan_spj_non_dpa.`sikd_sub_satker_id` LIKE $P{ID_SUB_SKPD}
+ AND sikd_rek_rincian_obj.kd_rek_rincian_obj LIKE '61%'
+GROUP BY
+     sikd_rek_rincian_obj_kd_rek_rincian_obj
+
+ORDER BY
+     dpa_dpa_no_dpa ASC,
+     rekening_dpa ASC,
+     sikd_rek_rincian_obj_kd_rek_rincian_obj ASC
+
+
+
+
+     ================
+
+     id masing report excel 
+
+     '41201' jasa umum 
+     '41202' jasa usaha 
+     '41203' retribusi perizinan tertentu
+
+
+     SELECT
+     *
+     FROM
+          sikd_rek_obj
+          INNER JOIN
+          sikd_rek_rincian_obj
+          ON 
+               sikd_rek_obj.id_sikd_rek_obj = sikd_rek_rincian_obj.sikd_rek_obj_id 
+               where sikd_rek_obj.id_sikd_rek_obj = '41203'
