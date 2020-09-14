@@ -119,7 +119,7 @@ class KodekelompokController extends Controller
     {
         $title   = 'Menampilkan | ' . $this->title;
         $route   = $this->route;
-        $toolbar = Access::getToolbar($this->permission, ['r', 'u', 'd']);
+        $toolbar = ['r', 'u', 'd'];
         $tmrekening_akun_kelompok = Tmrekening_akun_kelompok::with('tmrekening_akun:id,kd_rek_akun,nm_rek_akun')->whereid($id)->firstOrFail();
         return view($this->view . 'show', compact('title', 'route', 'toolbar', 'id', 'tmrekening_akun_kelompok'));
     }
@@ -128,7 +128,7 @@ class KodekelompokController extends Controller
     {
         $title   = 'Edit | ' . $this->title;
         $route   = $this->route;
-        $toolbar = Access::getToolbar($this->permission, ['r', 'save']);
+        $toolbar = ['r', 'save'];
 
         $tmrekening_akun_kelompok = Tmrekening_akun_kelompok::findOrFail($id);
         $tmrekening_akun = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->whereid($tmrekening_akun_kelompok->tmrekening_akun_id)->firstOrFail();

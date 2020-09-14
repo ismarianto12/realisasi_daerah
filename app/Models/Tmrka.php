@@ -15,7 +15,7 @@ class Tmrka extends Model
 {
 
     public    $incrementing = false;
-    protected $fillable     = ['id', 'tmrapbd_id', 'tmsikd_satker_id', 'tmsikd_sub_skpd_id', 'tmsikd_bidang_id', 'rka_type', 'no_rka', 'judul_rka', 'status_rka', 'nip_ka_satker', 'nm_ka_satker', 'tgl_pengesahan_satker', 'keterangan', 'sumber_id'];
+    protected $fillable     = ['id', 'tmrapbd_id', 'tanggal_lapor', 'tmsikd_satker_id', 'tmsikd_sub_skpd_id', 'tmsikd_bidang_id', 'rka_type', 'no_rka', 'judul_rka', 'status_rka', 'nip_ka_satker', 'nm_ka_satker', 'tgl_pengesahan_satker', 'keterangan', 'sumber_id'];
 
     public static function boot()
     {
@@ -69,6 +69,7 @@ class Tmrka extends Model
                 'tmrkas.tmsikd_satker_id',
                 'tmrkas.tmsikd_sub_skpd_id',
                 'tmrkas.tmsikd_bidang_id',
+
                 'tmrkas.rka_type',
                 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
                 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
@@ -152,8 +153,11 @@ class Tmrka extends Model
             )->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;
     }
     // set report data in model  
-    public static function list_report($where)
+    public static function list_report($where, $par = NULL)
     {
+        //get 
+        // tgl_pelaporan
+        //tmsikd_satker_id
         return Tmrka::where($where)
             ->join('tmrka_mata_anggarans', 'tmrkas.id', '=', 'tmrka_mata_anggarans.tmrka_id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrka_mata_anggarans.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id')
@@ -196,14 +200,12 @@ class Tmrka extends Model
                         FROM tmrka_mata_anggarans AS rincian 
                         WHERE rincian.tmrka_id = tmrkas.id 
                         AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 4) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
-            )->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;
+            )
+            // ->where('tgl_pelaporan >', $par['dari'])
+            // ->where('tgl_pelaporan >', $par['sampai'])
+            ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;
     }
-
-
-
-
-
-
+  
     public static function getPermission($id)
     {
         $r = Tmrka::whereid($id)

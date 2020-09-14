@@ -1,10 +1,8 @@
-
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">Rincian Anggaran Pendapatan </h2>
-                <h5 class="text-white op-7 mb-2">Level </h5>
+                <h2 class="text-white pb-2 fw-bold">@yield('title')</h2>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-white btn-border btn-round mr-2">Anggaran Pendapatan Daerah .</a> 
@@ -16,8 +14,7 @@
 
 <br /><br />
 <div class="container">
-        <div class="row">
-            <div class="col-md-5">
+        <div class="row"> 
                 <a class="btn btn-outline-secondary btn-sm" title="Toggle Navigator" id="btnToggleNav"><i class="fa fa-arrow-left"></i></a>
                 <div class="btn-group">
                     <a onclick="javascript:history.go(-1)" class="btn btn-outline-secondary btn-sm"
@@ -49,8 +46,7 @@
                         id="txtSave"></span></a>
                 @endif
                 <span id="btnExtra"></span>
-            </div>
-            <div class="col-md-7 pt-2">
+            <div class="col-md-7">
                 <h5 class="float-right" style="font-weight:300;line-height:1.2;color:#606676">
                     <strong>{{ $title }}</strong>
                     @if(in_array('r', $toolbar) && count($toolbar) == 1 || count($toolbar) == 0)

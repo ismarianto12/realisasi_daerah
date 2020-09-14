@@ -4,6 +4,10 @@
  <h3> PER REKENING JENIS</h3>	
    TAHUN ANGGARAN  {{ $tahun['tahun'] }}	
    PERIODE : {{ $dari }}  S/D {{ $sampai }} 
+  <br /><br />
+  @if ($tmsikd_satker_id)
+   [{{ $kode }}] - {{  $satker_name  }}  
+  @endif  
  </center>  
  <table style="border-collapse: collapse; width: 100%;" border="1" cellspacing="1">
    <thead>
@@ -36,49 +40,58 @@
    </tr>
    </thead> 
    <tbody>  
-     @foreach ($render_data->groupBy('kd_rek_jenis') as $c) 
-      @php 
-          $ls = $render_data->where('tmrekening_akun_kelompok_jenis_id',$ls[0]['id']); 
-      @endphp     
-       <tr>
-         <td>{{ $ls[0]['kd_rek_jenis'] }} </td>
-         <td>{{ $ls[0]['nm_rek_jenis'] }}</td>
-         <td>{{ $ls[0]['jml_rek_jenis'] }} </td>   
-         <td>{{ $ls[0]['jml_rek_jenis'] }}</td>
-         <td>{{ $ls[0]['jml_rek_jenis'] }}</td>
-         <td>{{ $ls[0]['jml_rek_jenis'] }}</td>
-         <td>{{ $ls[0]['jml_rek_jenis'] }}</td>
-         <td>{{ $ls[0]['jml_rek_jenis'] }}</td>
-      </tr> 
-       @foreach ($ls->groupBy('kd_rek_obj') as $obj) 
-       @php
-         //  dd($obj)
-       @endphp
-       <tr>
-        <td>{{ $obj[0]['kd_rek_obj'] }} </td>
-        <td>{{ $obj[0]['nm_rek_obj'] }}</td>
-        <td>{{ $obj[0]['jml_rek_obj'] }} </td>   
-        <td>{{ $obj[0]['jml_rek_obj'] }}</td>
-        <td>{{ $obj[0]['jml_rek_obj'] }}</td>
-        <td>{{ $obj[0]['jml_rek_obj'] }}</td>
-        <td>{{ $obj[0]['jml_rek_obj'] }}</td>
-        <td>{{ $obj[0]['jml_rek_obj'] }}</td>
-     </tr>  
-     @endforeach  
-     @foreach ($obj as $item) 
-     <tr>
-      <td>{{ $item->kd_rek_rincian_obj }} </td>
-      <td>{{ $item['nm_rek_rincian_obj'] }}</td>
-      <td>{{ $item->jml_rek_rincian_obj }} </td>   
-      <td>{{ $item->jml_rek_rincian_obj }}</td>
-      <td>{{ $item->jml_rek_rincian_obj }}</td>
-      <td>{{ $item->jml_rek_rincian_obj }}</td>
-      <td>{{ $item->jml_rek_rincian_obj }}</td>
-      <td>{{ $item->jml_rek_rincian_obj }}</td>
-   </tr>  
-   @endforeach
+ 
+@foreach ($render->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs') as $list)  
+      @php  
+       $kelompok = $kolompokjenis->where('id',$list[0]['kd_rek_jenis'])->first(); 
+       $rek_obj  = $jenisobject->where('id',$list[0]['kd_rek_obj'])->first();
+       $rinacian = $objectrincian->where('id',$list[0]['kd_rek_rincian_obj'])->first();
+      @endphp;
+      <tr> 
+        <td>{{ $list[0]['kd_rek_jenis'] }}</td>
+        <td>{{ $list[0]['nm_rek_jenis'] }}</td>
+        <td>{{ $list[0]['jml_rek_jenis'] }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>  
+    </tr>
+    
+    <tr> 
+      <td>{{ $list[0]['kd_rek_obj'] }}</td>
+      <td>{{ $list[0]['nm_rek_obj'] }}</td>
+      <td>{{ $list[0]['jml_rek_obj'] }}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>  
+  </tr> 
 
-   @endforeach
-     
+     <tr> 
+      <td>{{ $list[0]['kd_rek_rincian_obj'] }}</td>
+      <td>{{ $list[0]['nm_rek_rincian_obj'] }}</td>
+      <td>{{ $list[0]['jml_rek_rincian_obj'] }}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>  
+  </tr>  
+
+  <tr> 
+    <td>{{ $list[0]['kd_rek_rincian_objek_sub'] }}</td>
+    <td>{{ $list[0]['nm_rek_rincian_objek_sub'] }}</td>
+    <td>{{ $list[0]['jumlah'] }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>  
+</tr>
+ @endforeach  
+
+
     </tbody> 
    </table>

@@ -1,5 +1,5 @@
 @extends('layouts.template')
-
+@section('title','Rekening Kode Jenis')  
 @section('content')
 <div class="page bg-light">
     @include('layouts._includes.toolbar')

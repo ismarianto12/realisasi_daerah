@@ -7,7 +7,6 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="http://demo.themekita.com/atlantis/livepreview/examples/assets/img/icon.ico"
         type="image/x-icon" />
-
     <!-- Fonts and icons -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -399,7 +398,6 @@
                         </div>
                     </div>
                     <ul class="nav nav-primary">
-
                         <li class="nav-item active">
                             <a data-toggle="collapse" href="#base">
                                 <i class="fas fa-layer-group"></i>
@@ -444,7 +442,9 @@
                         </ul>
                     </nav>
                     <div class="copyright ml-auto">
-                        2018, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
+                    @php
+                      echo date('Y')   
+                    @endphp, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
                     </div>
                 </div>
             </footer>

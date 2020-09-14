@@ -11,6 +11,8 @@ Route::get('/logout', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', 'HomeController@index')->name('home');
+    
+    Route::get('page/{id}', 'HomeController@page')->name('page');
 
     Route::resource('bidang', 'TmbidangController');
     Route::get('bidang_datatable', 'TmbidangController@api')->name('bidang_datatable');

@@ -1,4 +1,4 @@
-@extends('layouts.page')
+@extends('layouts.template')
 
 @section('content')
 <div class="page bg-light">
@@ -63,6 +63,9 @@
 @endsection
 
 @section('script')
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}"></script>
+
 <script type="text/javascript">
     $('#btnCreate').on('click', function(){
         if($('#tmrekening_akun_id').val() == 0 || $('#tmrekening_akun_kelompok_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_id').val() == 0) {
@@ -80,7 +83,7 @@
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('setupsikd.rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+            url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
@@ -106,7 +109,7 @@
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('setupsikd.rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+            url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){

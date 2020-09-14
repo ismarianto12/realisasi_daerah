@@ -1,4 +1,4 @@
-@extends('layouts.page')
+@extends('layouts.template')
 
 @section('content')
 <div class="page bg-light">
@@ -94,7 +94,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group m-0">
+                            {{--  <div class="form-group m-0">
                                 <label for="sikd_rek_utang_id" class="col-form-label s-12 col-md-2"><strong>Rek. Utang :</strong></label>
                                 <div class="col-md-8 p-0 mb-2">
                                     <select name="sikd_rek_utang_id" id="sikd_rek_utang_id" placeholder="" class="form-control r-0 s-12 select2">
@@ -104,7 +104,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div>  --}}
                         </div>
                     </div>
                 </div>

@@ -164,6 +164,7 @@ class kodesubrincianobjekController extends Controller
         $toolbar    = ['r', 'save'];
 
         $tmrekening_akun_kelompok_jenis_objek_rincian_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::with('tmrekening_akun_kelompok_jenis_objek_rincian.tmrekening_akun_kelompok_jenis_objek.tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok.tmrekening_akun')->whereid($id)->firstOrFail();
+        $tmrekening_akun_kelompok_jenis_objek_rincian_id  = $id;
 
         $rek        = new Tmrekening_akun_kelompok_jenis_objek_rincian();
         $rekAkruals = $rek->rekAkruals();
@@ -173,6 +174,7 @@ class kodesubrincianobjekController extends Controller
         $tmsikd_rekening_lras       = Tmsikd_rekening_lra::select('id', 'kd_rek_lra', 'nm_rek_lra')->orderBy('kd_rek_lra')->get();
         $tmsikd_rekening_laks       = Tmsikd_rekening_lak::select('id', 'kd_rek_lak', 'nm_rek_lak')->orderBy('kd_rek_lak')->get();
         $tmsikd_rekening_neracas    = Tmsikd_Rekening_neraca::select('id', 'kd_rek_neraca', 'nm_rek_neraca')->orderBy('kd_rek_neraca')->get();
+        $tmrekening_akun_kelompok_jenis_objek_rincian = []; ///Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')->whereid($tmrekening_akun_kelompok_jenis_objek_rincian_id)->firstOrFail();
 
         return view($this->view . 'form_edit', compact(
             'id',
@@ -185,7 +187,10 @@ class kodesubrincianobjekController extends Controller
             'tmsikd_rekening_lras',
             'tmsikd_rekening_laks',
             'tmsikd_rekening_neracas',
-            'tmrekening_akun_kelompok_jenis_objek_rincian_sub'
+            'tmrekening_akun_kelompok_jenis_objek_rincian_sub',
+            'tmrekening_akun_kelompok_jenis_objek_rincian_id',
+            'tmrekening_akun_kelompok_jenis_objek_rincian'
+            
         ));
     }
 

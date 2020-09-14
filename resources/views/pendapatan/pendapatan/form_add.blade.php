@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.page')
 @section('content')
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
@@ -28,7 +28,7 @@
                                 <label class="col-md-8">: @if($tmsikd_sub_skpds !=null){{ '[ '.$tmsikd_sub_skpds->kode.' ] '.$tmsikd_sub_skpds->nama }}@endif</label>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3">Bidang Urusan </label>
+                                <label class="col-md-3">Bidang Urusan <small> * ) jika ada </small>  </label>
                                 <label class="col-md-8">: [ {{ ($tmsikd_bidangs['kd_bidang']) ? $tmsikd_bidangs['kd_bidang'] : '' }} ] &nbsp; {{ ($tmsikd_bidangs['nm_bidang']) ? $tmsikd_bidangs['nm_bidang'] : ''  }}</label>
                             </div>
                         </div>
@@ -37,13 +37,13 @@
             </div>
             <div class="card mt-2">
                 <div class="card-header no-b">
-                    <h6>List Rekening Mata Anggaran Kegiatan</h6>
+                    <h6>List Rekening Mata Anggaran</h6>
                 </div>
-                <div class="card-body p-2">
+                <div class="card-body">
                     <div class="form-row form-inline">
                         <div class="col-md-12 centered">
                             <div class="form-group">
-                                <label for="rekJeni_id" class="col-md-3">Rek Jenis <span class="text-danger ml-1">*</span>&nbsp;:</label>
+                                <label for="rekJeni_id" class="col-md-3">Rek Jenis <span class="text-danger">*</span>&nbsp;:</label>
                                 <div class="col-md-8">
                                     <select name="rekJeni_id" id="rekJeni_id" placeholder="" class="form-control select2s r-0 s-12" autocomplete="off" onchange="selectOnChange('rekJeni_id')">
                                         @foreach($rekJenis as $key=>$rekJeni)
@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="rekObj_id" class="col-md-3">Rek Objek <span class="text-danger ml-1">*</span>&nbsp;:</label>
+                                <label for="rekObj_id" class="col-md-3">Rek Objek <span class="text-danger">*</span>&nbsp;:</label>
                                 <div class="col-md-8">
                                     <select name="rekObj_id" id="rekObj_id" placeholder=""  class="form-control select2s col-md-4" autocomplete="off" onchange="selectOnChange('rekObj_id')">
                                         @foreach($rekObjs as $key=>$rekObj)
@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <label for="tmsikd_sumber_anggaran_id" class="col-md-3">Tanggal Pelaporan :</label>
                                 <div class="col-md-8">
-                                    <input type="date" class="form-control" name="tgl_pelaporan">
+                                    <input type="date" class="form-control" name="tanggal_lapor" id="tanggal_lapor" required>
                                 </div>
                             </div>
 
@@ -100,6 +100,8 @@
                         </div>
                     </div>
                     </div>
+
+                    <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal tidak di muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap hapus dan entri kembali </div>
                     <table class="table table-striped mb-0 mt-2">
                         <thead>
                             <tr>

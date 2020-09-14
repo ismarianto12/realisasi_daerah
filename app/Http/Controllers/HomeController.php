@@ -20,6 +20,13 @@ class HomeController extends Controller
         //print_r($request->session()->get('year'));
         $tahun = $request->session()->get('year');
         $data  = null;
-        return view($this->view . 'home', compact('data','tahun'));
+        return view($this->view . 'home', compact('data', 'tahun'));
+    }
+
+    function page($params)
+    {
+        if ($params == '') abort('404', 'halaman yang anda cari tidak di temukan');
+        $page = $params;
+        return view('layouts.iframe', compact('page'));
     }
 }

@@ -1,8 +1,7 @@
 @extends('layouts.template')
 
- 
-@section('content')
- 
+@section('title','Report Pendapatan')
+@section('content') 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -51,7 +50,23 @@
                         </select>
                     </div>
                 </div>
-                
+
+                <div class="form-group form-show-validation row">
+                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja                        
+                        <span
+                            class="required-label">*</span></label>
+                    <div class="col-sm-6">
+                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required onchange="selectOnChange('tmsikd_satker_id')">
+                            @foreach($tmsikd_satkers as $tmsikd_satker)
+                                <option value="{{ $tmsikd_satker->id }}"@if($tmsikd_satker_id == $tmsikd_satker->id) selected="selected"@endif>
+                                    [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                </option>
+                            @endforeach
+                        </select> 
+                    </div>
+                </div>
+ 
+             
                 <div class="form-group form-show-validation row">
                     @php
                         $monthname = [

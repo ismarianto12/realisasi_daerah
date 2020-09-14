@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class Menu_app
 {
-    private static function set_menu($module_name = NULL, $title = NULL, $css_class = NULL)
+    private static function set_menu($module_name = NULL, $title = NULL, $css_class = NULL, $target = NULL)
     {
         $structure = NULL;
         if ($module_name !== NULL || $module_name !== '')
             if ($css_class === NULL) {
-                $structure = "<li><a href='" . Url($module_name) . "'><span class='sub-item'></span>" . $title . "</a></li>";
+                $structure = "<li><a href='" . Url($module_name) . "' ".$target."><span class='sub-item'></span>" . $title . "</a></li>";
             } else {
                 $structure = "<li class='" . $css_class . "'><a href='" . Url($module_name) . "'><span class='sub-item'></span>" . $title . "</a></li>";
             }
@@ -113,12 +113,12 @@ class Menu_app
                     $menu .= '<li class="nav-item">
             <a data-toggle="collapse" href="#laporan">
                 <i class="fas fa-book"></i>
-                <p>Retribusi</p>
+                <p>Pendapatan Daerah</p>
                 <span class="caret"></span>
             </a>
             <div class="collapse" id="laporan">
                 <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('pendapatan', 'Pelaporan Retribusi');
+                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Pendapatan (PAD)','','target="content"');
                     $menu .= '
               </ul>
             </div>
@@ -131,8 +131,8 @@ class Menu_app
         </a>
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('tmtarget', 'Laporan Penerimaan');
-                    $menu .= self::set_menu('tmtarget', 'Grafik Penerimaan');
+                    $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan');
+                    $menu .= self::set_menu('grafik_penerimaan', 'Grafik Penerimaan');
                     $menu .= '
           </ul>
         </div>

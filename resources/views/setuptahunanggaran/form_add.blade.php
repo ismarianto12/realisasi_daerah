@@ -1,4 +1,4 @@
-@extends('layouts.page')
+@extends('layouts.template')
 @section('content')
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
