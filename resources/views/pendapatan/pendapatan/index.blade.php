@@ -3,7 +3,18 @@
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
-       
+        {{-- @if ($r->count() > 1)
+            <div role='alert' class='alert alert-danger alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>×</span>
+                </button>
+                <strong>Error ! </strong> Duplikat Kegiatan<ol class='pl-3 m-0'></ol>
+                Hapus kegiatan yang tidak memiliki sumber data ?  
+                <a class="text-danger" title="Hapus Data" id="btnDelete" href="#" onclick="javascript:confirm_del_include()">
+                    <strong>Ya</strong>
+                </a>
+            </div>
+        @endif --}}
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">

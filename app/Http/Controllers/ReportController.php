@@ -27,7 +27,6 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
-use App\Libraries\Sikd_list_option;
 use App\Helpers\Properti_app;
 
 
@@ -46,7 +45,7 @@ class ReportController extends Controller
 
     public function index(Request $request)
     {
-       
+
         $title   = 'Tambahs | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'save'];
@@ -56,25 +55,25 @@ class ReportController extends Controller
 
         //jika akses satker berbeda 
         if ($satker_id == '' && $level_id != 3) {
+            $satker_id = isset($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         } else {
             if ($request->tmsikd_satker_id != $satker_id) {
-                return abort(403,'Akses tidak sesuai dengan satker id');
+                return abort(403, 'Akses tidak sesuai dengan satker id');
             }
         }
 
-        $tahun_id           = $request->tahun_id;
+        $tahun_id           = ($request->tahun_id) ? $request->tahun_id : 0;
         $tmrapbd_id         = $request->tmrapbd_id;
         $tmsikd_satker_id   = $request->tmsikd_satker_id;
         $tmsikd_sub_skpd_id = $request->tmsikd_sub_skpd_id;
         $tmsikd_bidang_id   = $request->tmsikd_bidang_id;
-        if ($tmsikd_bidang_id == null || $tmsikd_bidang_id == "") return abort(403, "Terdapat data yang tidak terparsing dengan benar.");
 
         // 
-        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->whereid($tahun_id)->first();
-        $tmsikd_satkers   = Tmsikd_satker::select('id', 'nama', 'kode')->whereid($tmsikd_satker_id)->first();
-        $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->whereid($tmsikd_sub_skpd_id)->first();
-        $tmsikd_bidangs   = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->whereid($tmsikd_bidang_id)->first();
-        $tmrapbds         = Tmrapbd::select('id', 'jenis')->whereid($tmrapbd_id)->first();
+        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        $tmsikd_satkers   = Tmsikd_satker::select('id', 'nama', 'kode')->get();
+        $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->get();
+        $tmsikd_bidangs   = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
+        $tmrapbds         = Tmrapbd::select('id', 'jenis')->get();
 
         // Sumber Anggaran
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
@@ -88,32 +87,21 @@ class ReportController extends Controller
         $rekRincians    = Sikd_list_option::getListRekRincians($rekObj_id);
         $rekRincian_id  = $request->rekRincian_id;
 
-        // List Rincian Sub
-        $tmrka = Tmrka::firstOrCreate([
-            'tmrapbd_id'         => ($tmrapbd_id) ? $tmrapbd_id : NULL,
-            'tmsikd_satker_id'   => ($tmsikd_satker_id) ? $tmsikd_satker_id : NULL,
-            'tmsikd_sub_skpd_id' => ($tmsikd_sub_skpd_id) ? $tmsikd_sub_skpd_id : 0,
-            'tmsikd_bidang_id'   => ($tmsikd_bidang_id)  ? $tmsikd_bidang_id : NULL,
-            'rka_type'           => ($this->type) ? $this->type : NULL,
-            'tanggal_lapor'      => date('Y-m-d'),
-        ]);
-        $tmrka_id = $tmrka->id;
         $par = [
             'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rekRincian_id,
             'tmrekening_akun_kelompok_jenis_objek_id'         => $rekObj_id,
             'tmsikd_satkers_id'                               => $request->tmsikd_satker_id,
-            'rekjenis_id'=>$request->rekJeni_id,
+            'rekjenis_id'                                     => $request->rekJeni_id,
             //   'tmrka_id' => $tmrka_id
         ];
-        $satker          = Tmsikd_satker::find($request->tmsikd_satker_id);
-        $satker_nm       = ($satker->nama) ? $satker->nama : 'Kosong'; 
+        $satker          = Tmsikd_satker::find($satker_id);
+        $satker_nm       = ($satker['nama']) ? $satker['nama'] : 'Kosong';
         $listRincianSubs = Tmrka_mata_anggaran::getInputListDataSetRincSub($par);
         return view($this->view . 'index', compact(
             'title',
             'route',
             'toolbar',
             'tahun_id',
-            'tmrka_id',
             'tmrapbd_id',
             'tmsikd_satker_id',
             'tmsikd_sub_skpd_id',
@@ -132,9 +120,7 @@ class ReportController extends Controller
             'rekRincian_id',
             'listRincianSubs',
             'tmsikd_sumber_anggarans'
-        ));   
-          
-
+        ));
     }
 
     public function action(Request $request)
@@ -217,13 +203,17 @@ class ReportController extends Controller
         $where = [
             'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
             'tmrkas.tmsikd_satker_id'   => $request->tmsikd_satker_id,
-            //'tmrkas.tmsikd_sub_skpd_id' => $request->tmsikd_sub_skpd_id,
-            //'tmrkas.tmsikd_bidang_id'   => $request->tmsikd_bidang_id,
-            'tmrkas.rka_type'           => $this->type
-        ];
-        $r  = Tmrka::reportretribusi($where)->orderBy('kd_rek_rincian_obj')->get();
+            'tmrkas.rka_type'           => $this->type,
+            'tmrekening_akun_kelompok_jenis.kd_rek_jenis' => $request->rekJeni_id,
+            'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj' => $request->rekObj_id,
+            'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj' => $request->rekRincian_id,
+        ]; 
+        $r  = Tmrka::list_report($where)->orderBy('kd_rek_rincian_obj')->get();
 
         return DataTables::of($r)
+            ->editColumn('id', function ($p) {
+                return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
+            })
             ->editColumn('kd_rek_jenis', function ($p) {
                 return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
             })
@@ -236,14 +226,16 @@ class ReportController extends Controller
             ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
             })
+            ->editColumn('tgl_lapor', function ($p) {
+                return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+            })
             ->editColumn('volume', function ($p) {
                 return ($p->volume == 0 ? '' : Html_number::decimal($p->volume));
             })
             ->editColumn('jumlah', function ($p) {
                 return Html_number::decimal($p->jumlah);
             })
-            ->addIndexColumn()
-            ->rawColumns(['id', 'kd_rek_rincian_obj', 'kd_rek_obj', 'kd_rek_jenis', 'kd_rek_rincian_objek_sub'])
+            ->rawColumns(['id', 'kd_rek_rincian_obj', 'kd_rek_obj', 'kd_rek_jenis', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
             ->toJson();
     }
 }

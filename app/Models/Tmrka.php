@@ -155,9 +155,6 @@ class Tmrka extends Model
     // set report data in model  
     public static function list_report($where, $par = NULL)
     {
-        //get 
-        // tgl_pelaporan
-        //tmsikd_satker_id
         return Tmrka::where($where)
             ->join('tmrka_mata_anggarans', 'tmrkas.id', '=', 'tmrka_mata_anggarans.tmrka_id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrka_mata_anggarans.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id')
@@ -205,7 +202,7 @@ class Tmrka extends Model
             // ->where('tgl_pelaporan >', $par['sampai'])
             ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;
     }
-  
+
     public static function getPermission($id)
     {
         $r = Tmrka::whereid($id)
