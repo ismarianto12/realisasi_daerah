@@ -61,9 +61,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
     Route::get('result_data', 'ReportController@action')->name('result_data');
 
-     Route::prefix('user')->namespace('User')->name('user.')->group(function(){
-        Route::resource('level', 'Tmuser_levelController');
-     }); 
+     Route::prefix('akses')->name('akses.')->group(function(){
+        Route::resource('level', 'TmuserlevelController');
+        Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
+    });  
+
      Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
         Route::resource('kodeakun', 'KodeakunController');
         Route::resource('kodekelompok', 'KodekelompokController');
@@ -78,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
     });
 
-    Route::prefix('pendapatan')->namespace('pendapatan')->name('pendpatan.')->group(function () {
+    Route::prefix('s')->namespace('s')->name('s.')->group(function () {
         Route::post('target', 'PendapatanTargetController@api')->name('target');
     }); 
 

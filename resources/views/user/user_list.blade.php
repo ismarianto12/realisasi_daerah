@@ -1,7 +1,6 @@
 @extends('layouts.template')
 @section('title','List Data Pegawai')
-@section('content')
-
+@section('content') 
 
 <script>
     $(function(){

@@ -1,13 +1,12 @@
 @extends('layouts.template')
 @section('title','Level akses')
-@section('content')  
+@section('content')
 <script>
     $(function(){
     $('#datauser').on('click', '.edit', function() {
         var access = $(this).attr('to');
         $('.show_form').load(access).slideDown();
-    });
-
+    }); 
 });  
 </script>
 
@@ -40,24 +39,16 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Active</th>
-                                <th>Telp</th>
-                                <th>Level</th>
-                                <th>SKPD</th>
+                                <th>Level Akses</th>
+                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Active</th>
-                                <th>Telp</th>
-                                <th>Level</th>
-                                <th>SKPD</th>
+                                <th>Level Akses</th>
+                                <th>Keterangan</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -91,7 +82,8 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ Url('user_datatable') }}",
+                method: 'POST',
+                url: "{{ route($route.'level_api') }}",
             },
             columns: [
             {
@@ -99,48 +91,25 @@
                 orderable:false,
             },
             {
-                data : 'username',
+                data : 'description',
             },
-            {
-                data : 'realname',
-            },
-            {
-                "data" : 'c_status',
+              {
+                "data" : 'mapping_sie',
                 "render": function (data, type, row) {
-                    if (row.c_status == 1) {
+                    if (row.mapping_sie == 1) {
                         return '<b>Aktif</b>';
-                    } else if (row.c_status == 2) {
+                    } else if (row.mapping_sie == 2) {
                         return 'Non Aktif';
                     } 
                },
-            },
-            {
-                data : 'telp',
-            },
-            {    
-                "data": "tmuser_level_id",
-                "render": function (data, type, row) {
-                if (row.tmuser_level_id == 1) {
-                    return 'Administrator';
-                } else if (row.tmuser_level_id == 2) {
-                    return 'User';
-                } else {
-                    return 'Satker User';
-                }
-                }, 
-            },
-            {
-                data : 'nama_satker',
-                orderable :false,
-            },
+            }, 
             {
                 data : 'action',
                 orderable :false,
             }
             ],
             'responsive' : true,
-        }); 
-
+        });  
     });
 ///section add data
   $(function(){
@@ -165,7 +134,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: '{{ Url("user/destroy") }}',
+                    url: '{{ Url("level/destroy") }}',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -197,4 +166,3 @@
 }); 
 </script>
 @endsection
- 

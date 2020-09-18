@@ -147,7 +147,7 @@ class Menu_app
                 ';
                     $menu .= self::set_menu('pegawai', 'Master Pegawai');
                     $menu .= self::set_menu('user', 'User & Hak akses');
-                    $menu .= self::set_menu('tmuser_level', 'Level Akses');
+                    $menu .= self::set_menu('akses/level', 'Level Akses');
 
                     $menu .= '
                       </ul>

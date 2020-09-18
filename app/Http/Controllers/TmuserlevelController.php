@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Tmuser_level;
 use Illuminate\Http\Request;
 use App\Helpers\Properti_app;
+use DataTables;
 
-class Tmuser_levelController extends Controller
+class TmuserlevelController extends Controller
 {
 
-    protected $route = 'user.level.';
-    protected $view  = 'user_level.';
+    protected $route = 'akses.';
+    protected $view  = 'level.';
 
     function __construct()
     {
-        $this->middleware('Level');
+//       $this->middleware('Level');
     }
 
     public function index()
@@ -23,7 +24,7 @@ class Tmuser_levelController extends Controller
         $load_script = Properti_app::load_js([
             asset('assets/template/js/plugin/datatables/datatables.min.js'),
         ]);
-        return view($this->view . '.index', compact('load_script', 'route'));
+        return view($this->view . 'index', compact('load_script', 'route'));
     }
 
     /**
@@ -31,6 +32,24 @@ class Tmuser_levelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function api(Request $request)
+     { 
+        $data = Tmuser_level::get();
+           return DataTables::of($data)
+            ->editColumn('nama_level',function($p){
+                return '<b>'.$p->description.'</b>';
+            })
+
+            ->addIndexColumn()
+            ->rawColumns(['nama_level','action'])
+            ->editColumn('action', function ($p) {
+                return '<button to="' . Url($this->route . '/' . $p->id . '/edit') . '" class="edit btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit </button>
+                        <button data="' . $p->id . '" class="delete btn btn-danger btn-xs"><i class="fa fa-list"></i>Delete</button>';
+            })
+            ->toJson(); 
+     }  
+
     public function create()
     {
         return view([
