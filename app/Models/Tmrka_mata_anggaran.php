@@ -78,8 +78,11 @@ class Tmrka_mata_anggaran extends Model
         if ($par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != "")
             $cond['id'] = $par['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         else
+        if ($par['tmrekening_akun_kelompok_jenis_objek_id'] == '') {
+            $cond = [];
+        } else {
             $cond['tmrekening_akun_kelompok_jenis_objek_id'] = $par['tmrekening_akun_kelompok_jenis_objek_id'];
-
+        }
         // Not In
         $tanggal_sekarang  = date('Y-m-d');
         $notIn = Tmrka_mata_anggaran::wheretanggal_lapor($tanggal_sekarang)
@@ -107,9 +110,10 @@ class Tmrka_mata_anggaran extends Model
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
             //}
-            if ($rekRincians == '' || $rekRincians == NULL) {
+            if ($rekRincians == '') {
                 return $dataSet = [];
-            } else { 
+            } else {
+
                 $idx = 0;
                 foreach ($rekRincians as $key => $rekRincian) {
                     $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
@@ -135,8 +139,9 @@ class Tmrka_mata_anggaran extends Model
                         $idx++;
                     }
                 }
-                return $dataSet;
-            }
+                
+            return $dataSet;
+            } 
         }
     }
 }

@@ -2,7 +2,7 @@
 
 @section('title', 'edit profile')
 @section('content')
- 
+
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -33,22 +33,21 @@
                     {{ $method_field }}
                     <div class="card-body">
                         <div class="form-group form-show-validation row">
-                            <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Pegawai <span
-                                    class="required-label">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cari_pgawai" placeholder="Klik Cari "
-                                    value="">
-                                <div id="nama_peg"></div>
-                                <div id="pegawai_id"></div>
-                            </div>
-                        </div>
-                        <div class="form-group form-show-validation row">
                             <label for="username" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Username <span
                                     class="required-label">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="username" aria-label="username"
                                     aria-describedby="username-addon" id="username" name="username" required
                                     value="{{ $username }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show-validation row">
+                            <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nama <span
+                                    class="required-label">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="nama" placeholder="Nama"
+                                    value="{{ $nama }}">
                             </div>
                         </div>
 
@@ -62,7 +61,7 @@
                         </div>
 
                         <div class="form-group form-show-validation row">
-                            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Ulagngi Password
+                            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Ulangi Password
                                 <span class="required-label">*</span></label>
                             <div class="col-sm-8">
                                 <input type="password" class="form-control" id="password_baru" name="password"
@@ -88,7 +87,7 @@
                             <div class="col-sm-8">
                                 <div class="input-file input-file-image">
                                     <img class="img-upload-preview img-circle" id="foto" width="100" height="100"
-                                        src="{{ $photo_user } }" alt="preview">
+                                        src="{{ $photo }}" alt="preview">
                                     <input type="file" name="photo" class="form-control form-control-file"
                                         id="uploadImg" name="uploadImg" accept="image/*" required value="">
                                     <label for="uploadImg" class="btn btn-primary btn-round btn-lg"><i
@@ -97,17 +96,7 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="form-group form-show-validation row">
-                            <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nomor
-                                Telp<span class="required-label">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" id="telp" name="telp"
-                                    placeholder="Masukan Nomor Telp" required value="{{ $telp }}">
-                            </div>
-                        </div>
-
+ 
                     </div>
                     <div class="card-action">
                         <div class="row">
@@ -118,7 +107,7 @@
                         </div>
                     </div>
                 </form>
-  
+
             </div>
         </div>
     </div>

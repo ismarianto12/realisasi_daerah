@@ -23,16 +23,20 @@ class ProfileController extends Controller
         $data       = User::find($session_id);
         $username   = $data->username;
         $nama       = $data->realname;
-        $photo_paht = asset('foto_user/' . $data->photo);
+        $photo_paht = asset('/file/foto_user/' . $data->photo);
+        if (file_exists($photo_paht)) {
+            $user_foto = $photo_paht;
+        } else {
+            $user_foto = asset('assets/template/img/profile.jpg');
+        }
         $telp       = $data->telp;
-
         return view(
             $this->view . 'index',
             [
                 'username'  => $username,
                 'nama'  => $nama,
                 'telp'  => $telp,
-                'photo' => $photo_paht,
+                'photo' => $user_foto,
                 'action' => route($this->route . 'profile.update', $session_id),
                 'method_field' => method_field('put')
             ]
@@ -84,7 +88,7 @@ class ProfileController extends Controller
             'msg' => 'data berhasil di simpan'
         ]);
     }
- 
+
     /**
      * Remove the specified resource from storage.
      *

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use App\Models\Setupsikd\Tmsikd_satker;
@@ -212,10 +213,10 @@ class UserController extends Controller
         $tmuser_level_id = $edit->tmuser_level_id;
         $jenis = $edit->jenis;
         $level = new Tmuser_level;
-        $p12 = $edit->p12; 
+        $p12 = $edit->p12;
 
 
-     //   dd($tmuser_level_id);
+        //   dd($tmuser_level_id);
 
         return view(
             $this->view . '.user_form',
