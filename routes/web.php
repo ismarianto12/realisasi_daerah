@@ -64,6 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
      Route::prefix('akses')->name('akses.')->group(function(){
         Route::resource('level', 'TmuserlevelController');
         Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
+    
+        //ganti password 
+        Route::resource('profile', 'ProfileController');  
     });  
 
      Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
