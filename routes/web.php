@@ -61,15 +61,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
     Route::get('result_data', 'ReportController@action')->name('result_data');
 
-     Route::prefix('akses')->name('akses.')->group(function(){
+    Route::prefix('akses')->name('akses.')->group(function () {
         Route::resource('level', 'TmuserlevelController');
         Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
-    
-        //ganti password 
-        Route::resource('profile', 'ProfileController');  
-    });  
 
-     Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
+        //ganti password 
+        Route::resource('profile', 'ProfileController');
+    });
+
+    Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
         Route::resource('kodeakun', 'KodeakunController');
         Route::resource('kodekelompok', 'KodekelompokController');
         Route::resource('kodejenis', 'KodejenisController');
@@ -77,17 +77,22 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('koderincianobjek', 'KoderincianobjekController');
         Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
     });
-   
+
     Route::resource('settingrek', 'SettingrekeningController');
-    Route::prefix('settingrek')->namespace('Settingrek')->name('settingrek.')->group(function () {
+    Route::prefix('settingrek')->name('settingrek.')->group(function () {
         Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
     });
 
-    Route::prefix('s')->namespace('s')->name('s.')->group(function () {
-        Route::post('target', 'PendapatanTargetController@api')->name('target');
-    }); 
+    Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
+        // Route::post('target', 'PendapatanTargetController@api')->name('target');
 
-    Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
+        // opd
+        Route::resource('satker', 'TmopdController');
+        Route::post('satker_api', 'TmopdController@api')->name('satker_api');
+        Route::post('set_active', 'TmopdController@set_active')->name('set_active');
+    });
+
+    // Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
 
     Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
         Route::post('kodeakun', 'KodeakunController@api')->name('kodeakun.api');
