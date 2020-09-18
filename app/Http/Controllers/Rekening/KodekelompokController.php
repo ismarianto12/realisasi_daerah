@@ -64,10 +64,8 @@ class KodekelompokController extends Controller
         $toolbar = ['r', 'save'];
 
         $tmrekening_akun_id = $request->tmrekening_akun_id;
-        if ($tmrekening_akun_id == null) return abort(403, "Terdapat data yang tidak terparsing dengan benar.");
-
+        if ($tmrekening_akun_id == null) return abort(403, "Terdapat data yang tidak terparsing dengan benar."); 
         $tmrekening_akun = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->whereid($tmrekening_akun_id)->firstOrFail();
-
         return view($this->view . 'form_add', compact(
             'title',
             'route',

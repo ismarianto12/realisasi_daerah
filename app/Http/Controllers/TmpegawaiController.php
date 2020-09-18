@@ -131,7 +131,7 @@ class TmpegawaiController extends Controller
             'alamat' => 'required',
             'dinasid' => 'required',
             'bidangid' => 'required',
-            'd_kontrak' => 'required',
+            'd_kontrak' => 'required'
         ];
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
@@ -202,17 +202,9 @@ class TmpegawaiController extends Controller
             'alamat',
             'dinasid',
             'bidangid',
-            'd_kontrak',
+            'd_kontrak'
         ));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $rules = [
@@ -242,12 +234,6 @@ class TmpegawaiController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         $data =  Tmpegawai::find($request->id);
