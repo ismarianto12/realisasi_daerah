@@ -102,15 +102,14 @@ class Tmrka_mata_anggaran extends Model
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
         } else {
-           // dd($par);
+            // dd($par);
             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
             //}
-            if ($rekRincians == '') {
+            if ($rekRincians == '' || $rekRincians == NULL) {
                 return $dataSet = [];
-            } else {
-
+            } else { 
                 $idx = 0;
                 foreach ($rekRincians as $key => $rekRincian) {
                     $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
@@ -136,8 +135,8 @@ class Tmrka_mata_anggaran extends Model
                         $idx++;
                     }
                 }
+                return $dataSet;
             }
-            return $dataSet;
         }
     }
 }

@@ -6,22 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
+use function PHPSTORM_META\map;
+
 class ProfileController extends Controller
 {
     protected $route = 'akses.';
     protected $view  = 'profile.';
-
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
         $session_id = Auth::user()->id;
         $data       = User::find($session_id);
@@ -29,26 +25,28 @@ class ProfileController extends Controller
         $nama       = $data->realname;
         $photo_paht = asset('foto_user/' . $data->photo);
         $telp       = $data->telp;
+
         return view(
-            $this->view,
+            $this->view . 'index',
             [
-                'user'  => $username,
+                'username'  => $username,
                 'nama'  => $nama,
                 'telp'  => $telp,
                 'photo' => $photo_paht,
+                'action' => route($this->route . 'profile.update', $session_id),
+                'method_field' => method_field('put')
             ]
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function create(Request $request)
+    {
+    }
+
+
+
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -68,23 +66,25 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $result = User::find($request->id);
+        $request->validate([
+            'realname' => 'required',
+            'telp'    => 'required',
+            'password' => 'required',
+        ]);
+        $data = new User;
+        $data->relname  = $request->realname;
+        $data->password = bcrypt($request->password);
+        $data->telp     = $request->telp;
+        $data->find($request->id)->save();
 
+        return response()->json([
+            'msg' => 'data berhasil di simpan'
+        ]);
+    }
+ 
     /**
      * Remove the specified resource from storage.
      *
