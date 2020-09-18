@@ -11,7 +11,7 @@ Route::get('/logout', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('home', 'HomeController@index')->name('home');
-    
+
     Route::get('page/{id}', 'HomeController@page')->name('page');
 
     Route::resource('bidang', 'TmbidangController');
@@ -58,11 +58,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('pendapatan_data', 'PendapatanController@api')->name('pendapatan_data');
 
     Route::resource('report_penerimaan', 'ReportController');
-    Route::post('report_data', 'PendapatanController@api')->name('report_data');
+    Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
     Route::get('result_data', 'ReportController@action')->name('result_data');
 
-
-    Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
+     Route::prefix('user')->namespace('User')->name('user.')->group(function(){
+        Route::resource('level', 'Tmuser_levelController');
+     }); 
+     Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
         Route::resource('kodeakun', 'KodeakunController');
         Route::resource('kodekelompok', 'KodekelompokController');
         Route::resource('kodejenis', 'KodejenisController');
@@ -70,6 +72,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('koderincianobjek', 'KoderincianobjekController');
         Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
     });
+   
+    Route::resource('settingrek', 'SettingrekeningController');
+    Route::prefix('settingrek')->namespace('Settingrek')->name('settingrek.')->group(function () {
+        Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
+    });
+
+    Route::prefix('pendapatan')->namespace('pendapatan')->name('pendpatan.')->group(function () {
+        Route::post('target', 'PendapatanTargetController@api')->name('target');
+    }); 
 
     Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
 

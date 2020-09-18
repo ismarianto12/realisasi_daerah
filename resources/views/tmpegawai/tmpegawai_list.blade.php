@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('title','List Data Pegawai')
-@section('content') 
+@section('content')
 <script>
     $(function(){
         $('#datauser').on('click', '.edit', function() {
@@ -8,7 +8,7 @@
             $('.show_form').load(access).slideDown();
         }); 
     });  
-    </script>   
+</script>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -19,13 +19,15 @@
             </div>
             <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-white btn-border btn-round mr-2">List data hak akses.</a>
-                <a href="#" to="{{ route('pegawai.create') }}" class="tambah btn btn-secondary btn-round">Tambah Hak Akses</a>
+                <a href="#" to="{{ route('pegawai.create') }}" class="tambah btn btn-secondary btn-round">Tambah Data
+                    Master Pegawai Akses</a>
             </div>
         </div>
     </div>
 </div>
- 
-     
+
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -33,6 +35,8 @@
                 <h4 class="card-title">Master Data Pegawai</h4>
             </div>
             <div class="card-body">
+                <div class="show_form"></div>
+
                 <div class="table-responsive">
                     <table id="pegawai" class="display table table-striped table-hover">
                         <thead>
@@ -41,7 +45,7 @@
                                 <th>Nip</th>
                                 <th>Nama</th>
                                 <th>Telp</th>
-                                <th>Alamat</th> 
+                                <th>Alamat</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,8 +59,8 @@
 </div>
 
 @foreach($load_script as $script)
-     @php echo $script @endphp
-@endforeach  
+@php echo $script @endphp
+@endforeach
 <script>
     $(function () {
             $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
@@ -119,7 +123,8 @@
         });   
 
         $(function(){
-            $('.tambah').on('click',function(){
+            $('.tambah').on('click',function(e){
+                e.preventDefault();
                 var url = $(this).attr('to');
                 $('.show_form').load(url).slideDown(); 
             });  
@@ -169,9 +174,21 @@
             });
         }); 
             
+        function del(){
+            var c = $(this).attr('id');
+            if(c == 0){
+                $.alert("Silahkan memilih data yang akan dihapus.");
+            }else{
+                $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+                    table.api().ajax.reload();
+                }, "JSON").fail(function(){
+                    reload();
+                });
+            }
+        }
+ 
 
-
-    </script>
+</script>
 
 
 

@@ -16,15 +16,17 @@ class TmpegawaiController extends Controller
     function __construct()
     {
         $this->view  = 'tmpegawai';
-        $this->route = 'tmpegawai.';
+        $this->route = 'pegawai.';
     }
 
     public function index()
     {
+        $route       = $this->route;
         $load_script = Properti_app::load_js([
+
             asset('assets/template/js/plugin/datatables/datatables.min.js'),
         ]);
-        return view($this->view . '.tmpegawai_list', compact('load_script'));
+        return view($this->view . '.tmpegawai_list', compact('load_script', 'route'));
     }
 
     /**
@@ -56,7 +58,8 @@ class TmpegawaiController extends Controller
             return DataTables::of($pegawaidata)
                 ->editColumn('action', function ($p) {
                     return '<button to="' . Url($this->route . $p->id . '.edit') . '" class="btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
-                        <button data="' . Url($this->route . '/delete/' . $p->id) . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
+                            <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
+                            ';
                 }, TRUE)
                 ->addIndexColumn()
                 ->rawColumns(['action'])
@@ -68,8 +71,8 @@ class TmpegawaiController extends Controller
     public function create()
     {
         $pegawaiid        = "";
-        $action           = route('tmpegawai.store');
-        $method_field     = method_field('post'); 
+        $action           = route('pegawai.store');
+        $method_field     = method_field('post');
         $satuankerjaid    = "";
         $jabatanid        = "";
         $pegawaistatusid  = "";
@@ -81,9 +84,11 @@ class TmpegawaiController extends Controller
         $alamat           = "";
         $dinasid          = "";
         $bidangid         = "";
+        $satker           = [];
         $d_kontrak        = "";
-
-        return view($this->route . '.tmpegawai_form', compact(
+        $jabatan          = [];
+        $c_status         = [];
+        return view($this->view . '.tmpegawai_form', compact(
             'pegawaiid',
             'action',
             'method_field',
@@ -99,6 +104,9 @@ class TmpegawaiController extends Controller
             'dinasid',
             'bidangid',
             'd_kontrak',
+            'jabatan',
+            'c_status',
+            'satker'
         ));
     }
 
@@ -181,7 +189,7 @@ class TmpegawaiController extends Controller
         $bidangid = $data->bidangid;
         $d_kontrak = $data->d_kontrak;
 
-        return view('tmpegawi.edit', compact(
+        return view($this->view . '.tmpegawai_form', compact(
             'pegawaiid',
             'satuankerjaid',
             'jabatanid',

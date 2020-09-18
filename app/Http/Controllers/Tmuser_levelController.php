@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tmuser_level;
 use Illuminate\Http\Request;
+use App\Helpers\Properti_app;
 
 class Tmuser_levelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected $route = 'user.level.';
+    protected $view  = 'user_level.';
+
+    function __construct()
+    {
+        $this->middleware('Level');
+    }
+
     public function index()
     {
-        //
+        $route       = $this->route;
+        $load_script = Properti_app::load_js([
+            asset('assets/template/js/plugin/datatables/datatables.min.js'),
+        ]);
+        return view($this->view . '.index', compact('load_script', 'route'));
     }
 
     /**
@@ -23,7 +33,11 @@ class Tmuser_levelController extends Controller
      */
     public function create()
     {
-        //
+        return view([
+            'action' => $this->route . '.store',
+            'description' => '',
+            'mapping_sie' => '',
+        ]);
     }
 
     /**
@@ -34,7 +48,10 @@ class Tmuser_levelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'description' => 'required',
+            'mapping_sie' => 'required',
+        ]);
     }
 
     /**
@@ -56,7 +73,14 @@ class Tmuser_levelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data   = Tmuser_level::find($id);
+        $method = method_field('PATCH');
+        return view([
+            'action' => $this->view . '.form_add',
+            'description' => $data->description,
+            'mapping_sie' =>  $data->mapping_site,
+            'method' => $method,
+        ]);
     }
 
     /**
@@ -77,8 +101,11 @@ class Tmuser_levelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
+        $data = Tmuser_level::FindOrfail($request->id);
+        $data->delete();
+        return response()->json(['message' => "Data rekening kode objek berhasil dihapus."]);
     }
 }

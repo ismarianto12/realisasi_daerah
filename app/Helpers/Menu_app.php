@@ -12,7 +12,7 @@ class Menu_app
         $structure = NULL;
         if ($module_name !== NULL || $module_name !== '')
             if ($css_class === NULL) {
-                $structure = "<li><a href='" . Url($module_name) . "' ".$target."><span class='sub-item'></span>" . $title . "</a></li>";
+                $structure = "<li><a href='" . Url($module_name) . "' " . $target . "><span class='sub-item'></span>" . $title . "</a></li>";
             } else {
                 $structure = "<li class='" . $css_class . "'><a href='" . Url($module_name) . "'><span class='sub-item'></span>" . $title . "</a></li>";
             }
@@ -71,7 +71,6 @@ class Menu_app
         foreach ($query as $ls) {
             switch ($ls->level_id) {
                 case 1:
-
                     $menu .= '<li class="nav-item">
                     <a data-toggle="collapse" href="#setting">
                         <i class="fas fa-list"></i>
@@ -81,14 +80,13 @@ class Menu_app
                     <div class="collapse" id="setting">
                         <ul class="nav nav-collapse">
                 ';
-                    $menu .= self::set_menu('tmtarget', 'Besaran Target');
+                    $menu .= self::set_menu('pendapatan/target', 'Besaran Target');
                     $menu .= self::set_menu('setuptahunanggaran', 'Tahun Anggaran');
+                    $menu .= self::set_menu('settingrek', 'Setting akses user rekening');
                     $menu .= '
                       </ul>
                     </div>
                 </li>';
-
-
                     $menu .= '<li class="nav-item">
                 <a data-toggle="collapse" href="#rekening">
                     <i class="fas fa-database"></i>
@@ -118,7 +116,7 @@ class Menu_app
             </a>
             <div class="collapse" id="laporan">
                 <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Pendapatan (PAD)','','target="content"');
+                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Pendapatan (PAD)', '', 'target="content"');
                     $menu .= '
               </ul>
             </div>
@@ -147,7 +145,7 @@ class Menu_app
                     <div class="collapse" id="levelakses">
                         <ul class="nav nav-collapse">
                 ';
-                    $menu .= self::set_menu('tmpegawai', 'Master Pegawai');
+                    $menu .= self::set_menu('pegawai', 'Master Pegawai');
                     $menu .= self::set_menu('user', 'User & Hak akses');
                     $menu .= self::set_menu('tmuser_level', 'Level Akses');
 
@@ -172,7 +170,6 @@ class Menu_app
                 </div>
             </li>';
                     break;
-
                 case 2:
                     $menu .= '<li class="nav-item">
                     <a data-toggle="collapse" href="#tmpegawai">
@@ -183,8 +180,9 @@ class Menu_app
                     <div class="collapse" id="tables">
                         <ul class="nav nav-collapse">
                 ';
-                    $menu .= self::set_menu('tmpegawai', 'Master Pegawai');
                     $menu .= self::set_menu('tmuser_level', 'Level Akses');
+                    $menu .= self::set_menu('pegawai', 'Master Pegawai');
+
                     $menu .= '
                       </ul>
                     </div>
@@ -201,7 +199,7 @@ class Menu_app
                     </a>
                     <div class="collapse" id="retribusi">
                         <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('report_penerimaan', 'Pelaporan Retribusi');
+                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Retribusi');
                     $menu .= '
                       </ul>
                     </div>
@@ -216,6 +214,7 @@ class Menu_app
                     <ul class="nav nav-collapse">';
                     $menu .= self::set_menu('tmtarget', 'Laporan Penerimaan');
                     $menu .= self::set_menu('tmtarget', 'Grafik Penerimaan');
+
                     $menu .= '
                   </ul>
                 </div>

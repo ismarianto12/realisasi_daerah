@@ -1,8 +1,6 @@
 @extends('layouts.template')
-@section('title','List Data Pegawai')
-@section('content')
-
-
+@section('title','Level akses')
+@section('content')  
 <script>
     $(function(){
     $('#datauser').on('click', '.edit', function() {
@@ -197,10 +195,6 @@
 
     });
 }); 
-    
 </script>
-
-
-
-
 @endsection
+ 

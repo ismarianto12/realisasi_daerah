@@ -197,13 +197,12 @@
             {data: 'nm_rek_rincian_objek_sub', name: 'nm_rek_rincian_objek_sub'},
             {data: 'volume', name: 'volume', className: 'text-right'},  
             {data: 'jumlah', name: 'jumlah', className: 'text-right'},  
-            {data: 'tgl_lapor', name: 'tgl_lapor', className: 'text-right'},  
-            
+            {data: 'tgl_lapor', name: 'tgl_lapor', className: 'text-right'},   
         ],
         rowGroup: {
             startRender: function(rows, group){
                 return $('<tr/>')
-                    .append('<td/>')
+                    .append('<td><td/>')
                     .append(group)
             },
             endRender: null,

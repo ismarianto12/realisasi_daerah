@@ -153,51 +153,50 @@ class Tmrka extends Model
             )->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;
     }
     // set report data in model  
-    public static function list_report($where, $par = NULL)
+    public static function list_report()
     {
-        return Tmrka::where($where)
+        return Tmrka::select(
+            'tmrka_mata_anggarans.*',
+            'tmrkas.id as tmrapbd_id',
+            'tmrkas.tmrapbd_id',
+            'tmrkas.tmsikd_satker_id',
+            'tmrkas.tmsikd_sub_skpd_id',
+            'tmrkas.tmsikd_bidang_id',
+            'tmrkas.rka_type',
+            'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
+            'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
+            'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
+            'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
+            'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
+            'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj',
+            'tmrekening_akun_kelompok_jenis.kd_rek_jenis',
+            'tmrekening_akun_kelompok_jenis.nm_rek_jenis',
+            'tmrekening_akun_kelompoks.kd_rek_kelompok',
+            'tmrekening_akun_kelompoks.nm_rek_kelompok',
+            'tmrka_mata_anggarans.tmsikd_sumber_anggaran_id',
+            // 'tmsikd_sumber_anggarans.nm_sumber_anggaran',
+            \DB::raw('(
+                SELECT SUM(rincian.jumlah) 
+                FROM tmrka_mata_anggarans AS rincian 
+                WHERE rincian.tmrka_id = tmrkas.id 
+                AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 8) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
+            \DB::raw('(
+                SELECT SUM(rincian.jumlah) 
+                FROM tmrka_mata_anggarans AS rincian 
+                WHERE rincian.tmrka_id = tmrkas.id 
+                AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 6) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
+            \DB::raw('(
+                SELECT SUM(rincian.jumlah) 
+                FROM tmrka_mata_anggarans AS rincian 
+                WHERE rincian.tmrka_id = tmrkas.id 
+                AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 4) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
+        )
             ->join('tmrka_mata_anggarans', 'tmrkas.id', '=', 'tmrka_mata_anggarans.tmrka_id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrka_mata_anggarans.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.id')
             ->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.id')
             ->join('tmrekening_akun_kelompok_jenis', 'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', 'tmrekening_akun_kelompok_jenis.id')
             ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.id')
-            ->select(
-                'tmrka_mata_anggarans.*',
-                'tmrkas.id as tmrapbd_id',
-                'tmrkas.tmrapbd_id',
-                'tmrkas.tmsikd_satker_id',
-                'tmrkas.tmsikd_sub_skpd_id',
-                'tmrkas.tmsikd_bidang_id',
-                'tmrkas.rka_type',
-                'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
-                'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
-                'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
-                'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
-                'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
-                'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj',
-                'tmrekening_akun_kelompok_jenis.kd_rek_jenis',
-                'tmrekening_akun_kelompok_jenis.nm_rek_jenis',
-                'tmrekening_akun_kelompoks.kd_rek_kelompok',
-                'tmrekening_akun_kelompoks.nm_rek_kelompok',
-                'tmrka_mata_anggarans.tmsikd_sumber_anggaran_id',
-                // 'tmsikd_sumber_anggarans.nm_sumber_anggaran',
-                \DB::raw('(
-                        SELECT SUM(rincian.jumlah) 
-                        FROM tmrka_mata_anggarans AS rincian 
-                        WHERE rincian.tmrka_id = tmrkas.id 
-                        AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 8) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
-                \DB::raw('(
-                        SELECT SUM(rincian.jumlah) 
-                        FROM tmrka_mata_anggarans AS rincian 
-                        WHERE rincian.tmrka_id = tmrkas.id 
-                        AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 6) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
-                \DB::raw('(
-                        SELECT SUM(rincian.jumlah) 
-                        FROM tmrka_mata_anggarans AS rincian 
-                        WHERE rincian.tmrka_id = tmrkas.id 
-                        AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 4) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
-            )
             // ->where('tgl_pelaporan >', $par['dari'])
             // ->where('tgl_pelaporan >', $par['sampai'])
             ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');;

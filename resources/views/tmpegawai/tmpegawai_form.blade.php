@@ -1,111 +1,79 @@
 <div id="msg_error"></div>
 <form id="exampleValidation" action="{{ $action }}" method="POST" class="simpan" enctype="multipart/form-data">
     @csrf
-    {{ $method_field }} 
+    {{ $method_field }}
     <div class="card-body">
         <div class="form-group form-show-validation row">
             <label for="tgl_masuk" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tgl masuk <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" placeholder="Klik Cari "
-                    value=""> 
+                    value="">
             </div>
-        </div> 
+        </div>
+
+        <div class="form-group form-show-validation row">
+            <label for="nip" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nip <span
+                    class="required-label">*</span></label>
+            <div class="col-sm-8">
+                <input type="text" name="nip" class="form-control" id="nip" placeholder="Nip Pegawai ." value="">
+            </div>
+        </div>
+
         <div class="form-group form-show-validation row">
             <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Password <span
                     class="required-label">*</span></label>
-            <div class="col-sm-8"> 
-                <select name="jabatan_id" class="form-control" id="jabatan_id"> 
-                 @foreach ($jabatan as $jabat)
-
-                    
-                 @endforeach
-                </select>
-             </div>
-        </div>
-
-        <div class="form-group form-show-validation row">
-            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Ulagngi Password <span
-                    class="required-label">*</span></label>
             <div class="col-sm-8">
-                <input type="password" class="form-control" id="password_baru" name="password" placeholder="Ulangai Password"
-                    required value="" >
+                <select name="jabatan_id" class="form-control" id="jabatan_id">
+                    @foreach ($jabatan as $jabat)
+                    <option value="{{  $jabat['jabatan_id'] }}">{{ $jabat['n_jabatan'] }} </option>
+
+                    @endforeach
+                </select>
             </div>
         </div>
- 
+
         <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">No Telp<span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="number" class="form-control" id="telp" name="telp" placeholder="Masukan Nomor Telp"
-                    required value="{{ $telp }}" >
+                    required value="{{ $telp }}">
             </div>
         </div>
 
-
-        <div class="separator-solid"></div>
-        <div class="separator-solid"></div>
-        <div class="form-group form-show-validation row">
-            <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Upload Image <span
-                    class="required-label">*</span></label>
-            <div class="col-sm-8">
-                <div class="input-file input-file-image">
-                    <img class="img-upload-preview img-circle" width="100" height="100"
-                        src="http://placehold.it/100x100" alt="preview">
-                    <input type="file" name="photo" class="form-control form-control-file" id="uploadImg" name="uploadImg"
-                        accept="image/*" required value="" >
-                    <label for="uploadImg" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i>
-                        Upload a Image</label>
-                </div>
-            </div>
-        </div> 
 
         <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Status aktif <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <select class="form-control " name="c_status">
-                   @php 
-                   $arr = [
+                    @php
+                    $arr = [
                     1=>'Aktif',
-                    2=>'Non aktif'  
-                   ]; 
-                   @endphp     
-                    @foreach($arr as $ls => $val) 
-                    @php 
-                       $check = ($ls == $c_status) ? 'checked' : '';
-                    @endphp   
-                    <option value="{{ $ls }}" {{ $check }}>{{ $val }}</option> 
-                   @endforeach 
+                    2=>'Non aktif'
+                    ];
+                    @endphp
+                    @foreach($arr as $ls => $val)
+                    @php
+                    $check = ($ls == $c_status) ? 'checked' : '';
+                    @endphp
+                    <option value="{{ $ls }}" {{ $check }}>{{ $val }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
 
         <div class="form-group form-show-validation row">
-            <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan kerja (Satker)<span
-                    class="required-label">*</span></label>
+            <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan kerja
+                (Satker)<span class="required-label">*</span></label>
             <div class="col-sm-8">
                 <select class="form-control " name="sikd_satker_id">
                     @foreach($satker as $data)
-                    @php 
-                      $lcheck = ($data->id == $sikd_satker_id) ? 'checked' : ''; 
+                    @php
+                    $lcheck = ($data->id == $sikd_satker_id) ? 'checked' : '';
                     @endphp
                     <option value="{{ $data->id }}" {{ $lcheck }}>[{{ $data->kode }}] {{ $data->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>  
-
-        <div class="form-group form-show-validation row">
-            <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Level Akses<span
-                    class="required-label">*</span></label>
-            <div class="col-sm-8">
-                <select class="form-control " name="tmuser_level_id">
-                    @foreach($level as $lv)
-                    @php 
-                      $lcheck = ($lv == $tmuser_level_id) ? 'checked' : ''; 
-                    @endphp
-                    <option value="{{ $lv->id }}" {{ $lcheck }}>{{ $lv->description }}</option>
                     @endforeach
                 </select>
             </div>
@@ -116,7 +84,7 @@
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="number" class="form-control" id="telp" name="telp" placeholder="Masukan Nomor Telp"
-                    required value="{{ $telp }}" >
+                    required value="{{ $telp }}">
             </div>
         </div>
 
@@ -130,9 +98,10 @@
         </div>
     </div>
 </form>
-  
+
 <script>
     $(function () {
+      //preview AFTER upload
         $('#cancel').on('click',function (e) {
             e.preventDefault();
             $('.show_form').hide().slideUp();
@@ -197,42 +166,43 @@
 
 
 
-    {{--  list data pegtawai  --}} 
-    <div class="modal fade" id="modal_pegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+{{--  list data pegtawai  --}}
+<div class="modal fade" id="modal_pegawai" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data notulen
                     rapat.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <i class="fa fa-user"></i>
+                    * ) perlu di ketahui untuk menambahkan data user login , silahkan tambahkan data pegawai terlebih
+                    dahulu jika tidak ada list table
                 </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger">
-                        <i class="fa fa-user"></i>
-                      * ) perlu di ketahui untuk menambahkan data user login , silahkan tambahkan data pegawai terlebih dahulu jika tidak ada list table 
-                     </div>
-                    <table id="list_pegawai" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Pegawai</th>
-                                <th>Nip</th> 
-                                <th>Jabatan</th> 
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+                <table id="list_pegawai" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Pegawai</th>
+                            <th>Nip</th>
+                            <th>Jabatan</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div> 
+    </div>
+</div>
 
- <script>
+<script>
     $(document).ready(function () { 
         $('#list_pegawai').DataTable({
              initComplete: function() {
@@ -284,5 +254,3 @@
     });  
 
 </script>
-    
-  

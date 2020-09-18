@@ -116,6 +116,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($listRincianSubs == '')     
+
+                            <tr><td colspan="6">Data rincian object kosong.</td></tr> 
+                            
+                            @else
+
                             @php $idx = 0; $ttlMak = count($listRincianSubs); @endphp
                             @foreach($listRincianSubs as $rincianSub)
                             @php $style = (isset($rincianSub['style']) ? $rincianSub['style'] : ''); @endphp
@@ -153,6 +159,7 @@
                             <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="{{ $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] }}" />
                             @php $idx++ @endphp
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Setupsikd\Tmsikd_satker;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -13,5 +14,15 @@ class User extends Model
     function Tmpegawai()
     {
         return $this->belongsTo(Tmpegawai::class, 'tmpegawai_id');
+    }
+
+    function Tmsikd_satker()
+    {
+        return $this->belongsTo(Tmsikd_satker::class,'sikd_satker_id');
+    }
+
+    function Tmuser_level()
+    {
+        return $this->belongsTo(Tmuser_level::class);
     }
 }

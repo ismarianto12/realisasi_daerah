@@ -23,12 +23,14 @@ use App\Models\Rka\Tmrka_pendapatan;
 use App\Models\Rka\Tmrka_mata_anggaran;
 use App\Models\Rka\Tmrka_rincian_mata_anggaran;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
+use App\Models\Setupsikd\Tmrekening_akun;
 
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
 
+use function PHPSTORM_META\map;
 
 class ReportController extends Controller
 {
@@ -57,20 +59,25 @@ class ReportController extends Controller
         if ($satker_id == '' && $level_id != 3) {
             $satker_id = isset($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         } else {
-            if ($request->tmsikd_satker_id != $satker_id) {
-                return abort(403, 'Akses tidak sesuai dengan satker id');
-            }
+            // if ($request->tmsikd_satker_id != $satker_id) {
+            //     return abort(403, 'Akses tidak sesuai dengan satker id');
+            // }
         }
-
         $tahun_id           = ($request->tahun_id) ? $request->tahun_id : 0;
         $tmrapbd_id         = $request->tmrapbd_id;
         $tmsikd_satker_id   = $request->tmsikd_satker_id;
         $tmsikd_sub_skpd_id = $request->tmsikd_sub_skpd_id;
         $tmsikd_bidang_id   = $request->tmsikd_bidang_id;
+        $dari               = $request->dari;
+        $sampai             = $request->sampai;
 
         // 
+        $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
-        $tmsikd_satkers   = Tmsikd_satker::select('id', 'nama', 'kode')->get();
+
+        $tmsikd_satkers   =  Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satker_id =  ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
+
         $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->get();
         $tmsikd_bidangs   = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
         $tmrapbds         = Tmrapbd::select('id', 'jenis')->get();
@@ -84,7 +91,6 @@ class ReportController extends Controller
         $rekObjs    = Sikd_list_option::getListRekObjs($rekJeni_id);
         $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
 
-        $rekRincians    = Sikd_list_option::getListRekRincians($rekObj_id);
         $rekRincian_id  = $request->rekRincian_id;
 
         $par = [
@@ -97,6 +103,8 @@ class ReportController extends Controller
         $satker          = Tmsikd_satker::find($satker_id);
         $satker_nm       = ($satker['nama']) ? $satker['nama'] : 'Kosong';
         $listRincianSubs = Tmrka_mata_anggaran::getInputListDataSetRincSub($par);
+
+
         return view($this->view . 'index', compact(
             'title',
             'route',
@@ -107,6 +115,7 @@ class ReportController extends Controller
             'tmsikd_sub_skpd_id',
             'tmsikd_bidang_id',
             'tahuns',
+            'tmrekening_akuns',
             'tmsikd_satkers',
             'satker_nm',
             'tmsikd_sub_skpds',
@@ -116,44 +125,73 @@ class ReportController extends Controller
             'rekJeni_id',
             'rekObjs',
             'rekObj_id',
-            'rekRincians',
             'rekRincian_id',
             'listRincianSubs',
+            'dari',
+            'sampai',
             'tmsikd_sumber_anggarans'
         ));
+    }
+
+
+    function alldata(Request $request)
+    {
+
+        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        return view($this->view . '.report_all', [
+            'tahuns' => $tahuns 
+        ]);
     }
 
     public function action(Request $request)
     {
 
         $namaFile = 'Pendapatan_daerah.xls';
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
+        // header("Pragma: public");
+        // header("Expires: 0");
+        // header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        // header("Content-Type: application/force-download");
+        // header("Content-Type: application/octet-stream");
+        // header("Content-Type: application/download");
+        // header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        // header("Content-Transfer-Encoding: binary ");
 
 
-        if ($request->tahun_id == '' || $request->jenis_id  == '') return abort('data tidak terparsing dengan baik .. ', 404);
-        $where         = [];
+        // if ($request->tahun_id == '' || $request->jenis_id  == '' || $request->jenis_id == '') return abort('data tidak terparsing dengan baik .. ', 404);
+
         $tahun_id      = $request->tahun_id;
         $tahun         = Tmsikd_setup_tahun_anggaran::find($tahun_id);
+        $data = Tmrka::list_report();
 
-        $dari              = $request->dari;
-        $sampai            = $request->sampai;
-        $tmsikd_satker_id  = $request->tmsikd_satker_id;
 
-        $where         = [
-            'tmsikd_satker_id' => $tmsikd_satker_id,
-        ];
-        $par = [
-            'dari' => $request->dari,
-            'sampai' => $request->sampai
-        ];
-        $render        = Tmrka::list_report($where, $par)->get();
+
+        $tahun_id                                = $request->tahun_id;
+        $tmsikd_satker_id                        = $request->tmsikd_satker_id;
+        $dari                                    = $request->dari;
+        $sampai                                  = $request->sampai;
+        $tmrekening_akun_id                      = $request->tmrekening_akun_id;
+        $tmrekening_akun_kelompok_id             = $request->tmrekening_akun_kelompok_id;
+        $tmrekening_akun_kelompok_jenis_id       = $request->tmrekening_akun_kelompok_jenis_id;
+        $tmrekening_akun_kelompok_jenis_objek_id = $request->tmrekening_akun_kelompok_jenis_objek_id;
+
+        if ($tmrekening_akun_kelompok_jenis_objek_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis_objeks.id', '=', $tmrekening_akun_kelompok_jenis_objek_id);
+        }
+        if ($tmrekening_akun_kelompok_jenis_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $tmrekening_akun_kelompok_jenis_id);
+        }
+        if ($dari != '') {
+            $data->where('tmrkas.tanggal_lapor', '>=', $dari);
+        }
+        if ($sampai != '') {
+            $data->where('tmrkas.tanggal_lapor', '<=', $sampai);
+        }
+        if ($tmsikd_satker_id != '') {
+            $data->where('tmrkas.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }
+        $data  = $data->get();
+        //render data to view if != NULLL
+        $render = $data;
         // tmrekening_akun_kelompok_jenis_objek_rincian_subs
         $objectrincian = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $jenisobject   = new Tmrekening_akun_kelompok_jenis_objek;
@@ -164,7 +202,8 @@ class ReportController extends Controller
         // $akun_kelompok = Tmrekening_akun_kelompok_jenis_objeks::where('')->get();
         // $rekening_akun = Tmrekening_akun_kelompok_jenis::where('')->get();
         //satu untuk report per 1 ranger watu 
-        //dua untuk report minggu 
+        //dua untuk report minggu  
+
         if ($request->tmsikd_satker_id) {
             $satker_id        = $request->tmsikd_satker_id;
             $satker           = Tmsikd_satker::find($satker_id);
@@ -200,20 +239,34 @@ class ReportController extends Controller
 
     public function api(Request $request)
     {
-        $where = [
-            'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
-            'tmrkas.tmsikd_satker_id'   => $request->tmsikd_satker_id,
-            'tmrkas.rka_type'           => $this->type,
-            'tmrekening_akun_kelompok_jenis.kd_rek_jenis' => $request->rekJeni_id,
-            'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj' => $request->rekObj_id,
-            'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj' => $request->rekRincian_id,
-        ]; 
-        $r  = Tmrka::list_report($where)->orderBy('kd_rek_rincian_obj')->get();
+        $data = Tmrka::list_report();
 
-        return DataTables::of($r)
-            ->editColumn('id', function ($p) {
-                return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
-            })
+        $tahun_id = $request->tahun_id;
+        $tmsikd_satker_id = $request->tmsikd_satker_id;
+        $dari = $request->dari;
+        $sampai = $request->sampai;
+        $tmrekening_akun_id = $request->tmrekening_akun_id;
+        $tmrekening_akun_kelompok_id = $request->tmrekening_akun_kelompok_id;
+        $tmrekening_akun_kelompok_jenis_id = $request->tmrekening_akun_kelompok_jenis_id;
+        $tmrekening_akun_kelompok_jenis_objek_id = $request->tmrekening_akun_kelompok_jenis_objek_id;
+
+        if ($tmrekening_akun_kelompok_jenis_objek_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis_objeks.id', '=', $tmrekening_akun_kelompok_jenis_objek_id);
+        }
+        if ($tmrekening_akun_kelompok_jenis_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $tmrekening_akun_kelompok_jenis_id);
+        }
+        if ($dari != '') {
+            $data->where('tmrkas.tanggal_lapor', '>=', $dari);
+        }
+        if ($sampai != '') {
+            $data->where('tmrkas.tanggal_lapor', '<=', $sampai);
+        }
+        if ($tmsikd_satker_id != '') {
+            $data->where('tmrkas.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }
+        $data = $data->get();
+        return DataTables::of($data)
             ->editColumn('kd_rek_jenis', function ($p) {
                 return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
             })
@@ -235,7 +288,8 @@ class ReportController extends Controller
             ->editColumn('jumlah', function ($p) {
                 return Html_number::decimal($p->jumlah);
             })
-            ->rawColumns(['id', 'kd_rek_rincian_obj', 'kd_rek_obj', 'kd_rek_jenis', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
+            ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
+            ->addIndexColumn()
             ->toJson();
     }
 }

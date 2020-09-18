@@ -89,47 +89,55 @@ class Tmrka_mata_anggaran extends Model
 
         //jika retribusi 
         if ($par['rekjenis_id'] == 4102) {
-            if($opt_ret['tmsikd_satkers_id'] = $par['tmsikd_satkers_id']){
+            $satker_id   =  $par['tmsikd_satkers_id'];
+            $cek_data    = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmsikd_satkers_id', $satker_id)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+            if ($cek_data == '') {
                 $opt_ret['tmsikd_satkers_id'] = $par['tmsikd_satkers_id'];
-            }else{
+            } else {
                 $opt_ret = [];
-            } 
+            }
             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($opt_ret)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
-
         } else {
+           // dd($par);
             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
-        }
+            //}
+            if ($rekRincians == '') {
+                return $dataSet = [];
+            } else {
 
-        $idx = 0;
-        foreach ($rekRincians as $key => $rekRincian) {
-            $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
-            $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val']     = $rekRincian->id;
-            $dataSet[$idx]['kd_rek']['val'] = $rekRincian->kd_rek_rincian_obj;
-            $dataSet[$idx]['nm_rek']['val'] = $rekRincian->nm_rek_rincian_obj;
-            $dataSet[$idx]['cbox']['accRight'] = 'r';
-            $dataSet[$idx]["style"] = "background:#ECECD7";
-            $dataSet[$idx]["kd_rek"]["no_url"] = true;
-            $idx++;
-            // if($rekRincian->id == 4102){
-            // }else{
-            // }
-            $rekSubs = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wheretmrekening_akun_kelompok_jenis_objek_rincian_id($rekRincian->id)
-                ->whereNotIn('id', $notIn)
-                ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
-                ->get();
-            foreach ($rekSubs as $key => $rekSub) {
-                $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
-                $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
-                $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
-                $dataSet[$idx]['nm_rek']['val'] = $rekSub->nm_rek_rincian_objek_sub;
-                $idx++;
+                $idx = 0;
+                foreach ($rekRincians as $key => $rekRincian) {
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val']     = $rekRincian->id;
+                    $dataSet[$idx]['kd_rek']['val'] = $rekRincian->kd_rek_rincian_obj;
+                    $dataSet[$idx]['nm_rek']['val'] = $rekRincian->nm_rek_rincian_obj;
+                    $dataSet[$idx]['cbox']['accRight'] = 'r';
+                    $dataSet[$idx]["style"] = "background:#ECECD7";
+                    $dataSet[$idx]["kd_rek"]["no_url"] = true;
+                    $idx++;
+                    // if($rekRincian->id == 4102){
+                    // }else{
+                    // }
+                    $rekSubs = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wheretmrekening_akun_kelompok_jenis_objek_rincian_id($rekRincian->id)
+                        ->whereNotIn('id', $notIn)
+                        ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
+                        ->get();
+                    foreach ($rekSubs as $key => $rekSub) {
+                        $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
+                        $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
+                        $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
+                        $dataSet[$idx]['nm_rek']['val'] = $rekSub->nm_rek_rincian_objek_sub;
+                        $idx++;
+                    }
+                }
             }
+            return $dataSet;
         }
-
-        return $dataSet;
     }
 }

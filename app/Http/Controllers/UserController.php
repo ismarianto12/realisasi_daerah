@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
+use App\Models\Setupsikd\Tmsikd_satker;
 use App\Models\Sikd_satker;
 use App\Models\User;
-use  App\Models\Tmuser_level;
+use App\Models\Tmuser_level;
 
-use Illuminate\Http\Request;
 use DataTables;
 use Validator;
 use Properti_app;
@@ -41,7 +42,7 @@ class UserController extends Controller
         $tmpegawai_id = '';
         $action = route('user.store');
         $method_field = method_field('post');
-        $level = Tmuser_level::get();
+        $level = new Tmuser_level;
         $satker = Sikd_satker::get();
         $sikd_satker_id = '';
         $username = '';
@@ -88,18 +89,28 @@ class UserController extends Controller
 
     function api()
     {
-        $pegawaidata = User::with('Tmpegawai')->get();
+        $pegawaidata = User::with(['Tmpegawai'])->get();
         return DataTables::of($pegawaidata)
-            // ->editColumn('employename', function ($p) {
-            //     return '<a hre="#" class="btn btn-primary btn-xs">' . $p->tmpegawai->n_pegawai . '</a>';
-            // })
+            ->editColumn('nama_satker', function ($p) {
+                $satker_id = $p['sikd_satker_id'];
+                if ($p->sikd_satker_id == '') {
+                    if ($p->tmuser_level_id == 1) {
+                        $nama = 'Administrator';
+                    } else {
+                        $nama = '';
+                    }
+                } else {
+                    $satker = Tmsikd_satker::find($satker_id);
+                    $nama = $satker['nama'];
+                }
+                return '<b>' . $nama . '</b>';
+            })
             ->editColumn('action', function ($p) {
                 return '<button to="' . Url($this->route . '/' . $p->id . '/edit') . '" class="edit btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit </button>
                         <button data="' . $p->id . '" class="delete btn btn-danger btn-xs"><i class="fa fa-list"></i>Delete</button>';
             })
-
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['nama_satker', 'action'])
             ->toJson();
     }
     /**
@@ -112,12 +123,12 @@ class UserController extends Controller
     {
         $rules =  [
             'pegawai_id' => 'required',
-            'username' => 'required|unique:user,username',
-            'realname' => 'required',
-            'password' => 'required',
-            'telp'      => 'required',
-            'c_status' => 'required',
-            'photo' => 'required',
+            'username'   => 'required|unique:user,username',
+            'realname'   => 'required',
+            'password'   => 'required',
+            'telp'       => 'required',
+            'c_status'   => 'required',
+            'photo'      => 'required',
 
         ];
         $valid = Validator::make($request->all(), $rules);
@@ -132,7 +143,7 @@ class UserController extends Controller
             $dt    =  Carbon::now();
             $ext   =  $file->getClientOriginalExtension();
             $setfm = rand(1122, 111) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
-            $request->file('foto')->move('./file/photo_user', $setfm);
+            $request->file('photo')->move('./file/photo_user', $setfm);
             $photo = $setfm;
         } else {
             $photo = 'default.jpg';
@@ -200,8 +211,11 @@ class UserController extends Controller
         $paraf = $edit->paraf;
         $tmuser_level_id = $edit->tmuser_level_id;
         $jenis = $edit->jenis;
-        $level = Tmuser_level::get();
-        $p12 = $edit->p12;
+        $level = new Tmuser_level;
+        $p12 = $edit->p12; 
+
+
+     //   dd($tmuser_level_id);
 
         return view(
             $this->view . '.user_form',
@@ -274,7 +288,7 @@ class UserController extends Controller
             $dt    =  Carbon::now();
             $ext   =  $file->getClientOriginalExtension();
             $setfm = rand(1122, 111) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
-            $request->file('file')->move('./file/photo_user', $setfm);
+            $request->file('photo')->move('./file/photo_user/', $setfm);
             $photo = $setfm;
         } else {
             $photo = 'default.jpg';
