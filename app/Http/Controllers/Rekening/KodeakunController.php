@@ -108,7 +108,7 @@ class KodeakunController extends Controller
     {
         $kd_rek_akun = $request->kd_rek_akun;
         $request->validate([
-            'kd_rek_akun' => 'required|max:1|unique:mysql2.tmrekening_akuns,kd_rek_akun,' . $id,
+            'kd_rek_akun' => 'required|max:1|unique:tmrekening_akuns,kd_rek_akun,' . $id,
             'nm_rek_akun' => 'required|max:30'
         ]);
 

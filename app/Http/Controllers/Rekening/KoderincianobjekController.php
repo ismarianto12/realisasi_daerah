@@ -99,7 +99,7 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Tambah | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd'];
+        $toolbar    = ['save'];
 
         $tmrekening_akun_id                         = $request->tmrekening_akun_id;
         $tmrekening_akun_kelompok_id                = $request->tmrekening_akun_kelompok_id;
@@ -128,14 +128,17 @@ class KoderincianobjekController extends Controller
     {
         $request->validate([
             'tmrekening_akun_kelompok_jenis_objek_id' => 'required',
-        ]);
-
+        ]); 
+        
         $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
         $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
         $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;
+      //  dd($nm_rek_rincian_obj);
 
         for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
             if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
+                //dd($nm_rek_rincian_obj[$i]);
+
                 if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherekd_rek_rincian_obj($kd_rek_rincian_obj[$i])->count() > 0) {
                     return response()->json([
                         'message' => 'kode sudah pernah tersimpan : ' . $kd_rek_rincian_obj[$i]
@@ -156,47 +159,6 @@ class KoderincianobjekController extends Controller
             'message' => 'Data rekening kode rincian objek berhasil tersimpan.'
         ]);
     }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'tmrekening_akun_kelompok_jenis_objek_id' => 'required',
-    //     ]);
-
-    //     $err = [];
-    //     $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
-    //     $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
-    //     $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;
-
-    //     for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
-    //         if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
-    //             if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherekd_rek_rincian_obj($kd_rek_rincian_obj[$i])->count() == 0) {
-    //                 $tmrekening_akun_kelompok_jenis_objek_rincian                                           = new Tmrekening_akun_kelompok_jenis_objek_rincian();
-    //                 $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id  = $tmrekening_akun_kelompok_jenis_objek_id;
-    //                 $tmrekening_akun_kelompok_jenis_objek_rincian->kd_rek_rincian_obj                       = $kd_rek_rincian_obj[$i];
-    //                 $tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj                       = $nm_rek_rincian_obj[$i];
-    //                 $tmrekening_akun_kelompok_jenis_objek_rincian->save();
-    //             } else {
-    //                 $err[] = "Kode " . $kd_rek_rincian_obj[$i] . " sudah pernah disimpan.";
-    //             }
-    //         } else {
-    //             $err[] = "Nomor urut " . $i . " terdapat data yang kosong.";
-    //         }
-    //     }
-
-    //     $msg_err = "";
-    //     if (count($err) > 0) {
-    //         $msg_err = "</div><div class='alert alert-danger'><ul class='mb-0'>";
-    //         foreach ($err as $e) {
-    //             $msg_err .= "<li>" . $e . "</li>";
-    //         }
-    //         $msg_err .= "</ul></div>";
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Data rekening kode rincian objek berhasil tersimpan.' . $msg_err
-    //     ]);
-    // }
 
     public function show($id)
     {
@@ -238,7 +200,7 @@ class KoderincianobjekController extends Controller
     {
         $kd_rek_rincian_obj  = $request->kd_rek_rincian_obj;
         $request->validate([
-            'kd_rek_rincian_obj' => 'required|max:8|unique:mysql2.tmrekening_akun_kelompok_jenis_objek_rincians,kd_rek_rincian_obj,' . $id,
+            'kd_rek_rincian_obj' => 'required|max:8|unique:tmrekening_akun_kelompok_jenis_objek_rincians,kd_rek_rincian_obj,' . $id,
             'nm_rek_rincian_obj' => 'required|max:30'
         ]);
 

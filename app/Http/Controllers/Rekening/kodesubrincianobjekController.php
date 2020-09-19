@@ -114,7 +114,6 @@ class kodesubrincianobjekController extends Controller
     {
         $request->validate([
             'tmrekening_akun_kelompok_jenis_objek_rincian_id' => 'required',
-            // 'kd_rek_rincian_objek_sub' => 'required|max:10|unique:mysql2.tmrekening_akun_kelompok_jenis_objek_rincian_subs,kd_rek_rincian_objek_sub,'
         ]);
 
         $kd_rek_rincian_objek_sub = $request->get('kd_rek_rincian_objek_sub');

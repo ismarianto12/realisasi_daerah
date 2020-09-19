@@ -139,7 +139,7 @@ class KodekelompokController extends Controller
     {
         $kd_rek_kelompok = $request->kd_rek_kelompok;
         $request->validate([
-            'kd_rek_kelompok' => 'required|max:2|unique:mysql2.tmrekening_akun_kelompoks,kd_rek_kelompok,' . $id,
+            'kd_rek_kelompok' => 'required|max:2|unique:tmrekening_akun_kelompoks,kd_rek_kelompok,' . $id,
             'nm_rek_kelompok' => 'required|max:30'
         ]);
 

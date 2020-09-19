@@ -1,4 +1,5 @@
-@extends('layouts.page')
+@extends('layouts.template') 
+@section('title','Kode Rincian Object') 
 
 @section('content')
 <div class="page bg-light">
@@ -77,7 +78,7 @@
             $('#alert').html('');
             $('#btnSave').attr('disabled', true);
 
-            url = "{{ route($route.'store') }}";
+            url = "{{ route('rekening.koderincianobjek.store') }}";
             $.post(url, $(this).serialize(), function(data){
                 $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
                 add();

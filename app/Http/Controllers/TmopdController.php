@@ -50,6 +50,14 @@ class TmopdController extends Controller
                 }
                 return $active;
             })
+
+            ->editColumn('set_active', function ($p) { 
+                if ($p->active == 1) {
+                    return '<button onclick="javascript:confirm_active()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
+                } else {
+                    return '<button onclick="javascript:confirm_noactive()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
+                }
+            }, TRUE)
             ->editColumn('action', function ($p) {
                 return '<button to="' . Url($this->route . $p->id . '.edit') . '" class="btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
                         <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
@@ -74,16 +82,14 @@ class TmopdController extends Controller
         $active = $request->active;
         Tmopd::find($id)->updated([
             'active' => $active
-        ]); 
-        
-    return response()->json([
-        'msg'=> 'data berhasil di aktifkan'
-    ]);
-    
-    
+        ]);
+
+        return response()->json([
+            'msg' => 'data berhasil di aktifkan'
+        ]);
     }
-  
-    
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -93,7 +99,6 @@ class TmopdController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -115,16 +120,8 @@ class TmopdController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //

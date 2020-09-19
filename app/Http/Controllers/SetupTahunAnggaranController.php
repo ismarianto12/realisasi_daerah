@@ -78,7 +78,7 @@ class SetupTahunAnggaranController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tahun' => 'required | unique:mysql2.tmsikd_setup_tahun_anggarans,tahun,' . $id,
+            'tahun' => 'required | unique:tmsikd_setup_tahun_anggarans,tahun,' . $id,
         ]);
 
         $input = $request->all();
