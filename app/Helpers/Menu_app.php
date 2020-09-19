@@ -96,12 +96,12 @@ class Menu_app
                 <div class="collapse" id="rekening">
                     <ul class="nav nav-collapse">
             ';
-                    $menu .= self::set_menu(Url('rekening/kodeakun'), 'Kode Akun');
-                    $menu .= self::set_menu(Url('rekening/kodekelompok'), 'Kode Kelompok');
-                    $menu .= self::set_menu(Url('rekening/kodejenis'), 'Kode Jenis');
-                    $menu .= self::set_menu(Url('rekening/kodeobjek'), 'Kode Object');
-                    $menu .= self::set_menu(Url('rekening/koderincianobjek'), 'Kode Rincian Object');
-                    $menu .= self::set_menu(Url('rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object');
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodeakun'), 'Kode Akun');
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodekelompok'), 'Kode Kelompok');
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodejenis'), 'Kode Jenis');
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodeobjek'), 'Kode Object');
+                    $menu .= self::set_menu(Url('bapenda/rekening/koderincianobjek'), 'Kode Rincian Object');
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object');
 
                     $menu .= '
                   </ul>

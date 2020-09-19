@@ -64,19 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('akses')->name('akses.')->group(function () {
         Route::resource('level', 'TmuserlevelController');
         Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
-
         //ganti password 
         Route::resource('profile', 'ProfileController');
     });
 
-    Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
-        Route::resource('kodeakun', 'KodeakunController');
-        Route::resource('kodekelompok', 'KodekelompokController');
-        Route::resource('kodejenis', 'KodejenisController');
-        Route::resource('kodeobjek', 'KodeobjekController');
-        Route::resource('koderincianobjek', 'KoderincianobjekController');
-        Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
-    });
 
     Route::resource('settingrek', 'SettingrekeningController');
     Route::prefix('settingrek')->name('settingrek.')->group(function () {
@@ -92,19 +83,34 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('set_active', 'TmopdController@set_active')->name('set_active');
     });
 
-    // Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
+    Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');
+    Route::prefix('bapenda')->group(function () {
+        Route::namespace('Rekening')->prefix('rekening')->name('rekening.')->group(function () {
+             Route::Resource('kodeakun', 'KodeakunController');
+            Route::resource('kodekelompok', 'KodekelompokController');
+            Route::resource('kodejenis', 'KodejenisController');
+            Route::resource('kodeobjek', 'KodeobjekController');
+            Route::resource('koderincianobjek', 'KoderincianobjekController');
+            Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
+        });
+    });
 
-    Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
-        Route::post('kodeakun', 'KodeakunController@api')->name('kodeakun.api');
-        Route::post('kodekelompok', 'KodekelompokController@api')->name('kodekelompok.api');
-        Route::post('kodejenis', 'KodejenisController@api')->name('kodejenis.api');
-        Route::post('kodeobjek', 'KodeobjekController@api')->name('kodeobjek.api');
-        Route::post('koderincianobjek', 'KoderincianobjekController@api')->name('koderincianobjek.api');
-        Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api');
+//route datatable api
+    Route::prefix('api')->group(function () {
+        Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');  
+   
+        Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
+            Route::post('kodeakun', 'KodeakunController@api')->name('kodeakun.api');
+            Route::post('kodekelompok', 'KodekelompokController@api')->name('kodekelompok.api');
+            Route::post('kodejenis', 'KodejenisController@api')->name('kodejenis.api');
+            Route::post('kodeobjek', 'KodeobjekController@api')->name('kodeobjek.api');
+            Route::post('koderincianobjek', 'KoderincianobjekController@api')->name('koderincianobjek.api');
+            Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api');
 
-        Route::get('kodejenis/kodekelompokByKodeakun/{id}', 'KodejenisController@kodekelompokByKodeakun')->name('kodejenis.kodekelompokByKodeakun');
-        Route::get('kodeobjek/kodejenisByKodekelompok/{id}', 'KodeobjekController@kodejenisByKodekelompok')->name('kodeobjek.kodejenisByKodekelompok');
-        Route::get('koderincianobjek/kodeobjekByKodejenis/{id}', 'KoderincianobjekController@kodeobjekByKodejenis')->name('koderincianobjek.kodeobjekByKodejenis');
-        Route::get('kodesubrincianobjek/kodeobjekrincianByKodeobjek/{id}', 'kodesubrincianobjekController@kodeobjekrincianByKodeobjek')->name('kodesubrincianobjek.kodeobjekrincianByKodeobjek');
+            Route::get('kodejenis/kodekelompokByKodeakun/{id}', 'KodejenisController@kodekelompokByKodeakun')->name('kodejenis.kodekelompokByKodeakun');
+            Route::get('kodeobjek/kodejenisByKodekelompok/{id}', 'KodeobjekController@kodejenisByKodekelompok')->name('kodeobjek.kodejenisByKodekelompok');
+            Route::get('koderincianobjek/kodeobjekByKodejenis/{id}', 'KoderincianobjekController@kodeobjekByKodejenis')->name('koderincianobjek.kodeobjekByKodejenis');
+            Route::get('kodesubrincianobjek/kodeobjekrincianByKodeobjek/{id}', 'kodesubrincianobjekController@kodeobjekrincianByKodeobjek')->name('kodesubrincianobjek.kodeobjekrincianByKodeobjek');
+        });
     });
 });
