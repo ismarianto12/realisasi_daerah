@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
 
-
+use App\Libraries\Sikd_list_option;
 use App\Models\Setupsikd\Tmrekening_akun;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
@@ -99,8 +99,9 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Tambah | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd','save'];
+        $toolbar    = ['c', 'd', 'save'];
 
+        $tmsikd_satkers                             =  Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmrekening_akun_id                         = $request->tmrekening_akun_id;
         $tmrekening_akun_kelompok_id                = $request->tmrekening_akun_kelompok_id;
         $tmrekening_akun_kelompok_jenis_id          = $request->tmrekening_akun_kelompok_jenis_id;
@@ -121,7 +122,7 @@ class KoderincianobjekController extends Controller
 
         $kd_awal = $tmrekening_akun_kelompok_jenis_objek->kd_rek_obj;
 
-        return view($this->view . 'form_add', compact('title', 'route', 'toolbar', 'tmrekening_akun_kelompok_jenis_objek_id', 'n_rekening_akun', 'n_rekening_akun_kelompok', 'n_rekening_akun_kelompok_jenis', 'n_rekening_akun_kelompok_jenis_objek', 'kd_awal'));
+        return view($this->view . 'form_add', compact('title', 'route', 'toolbar', 'tmrekening_akun_kelompok_jenis_objek_id', 'n_rekening_akun', 'n_rekening_akun_kelompok', 'n_rekening_akun_kelompok_jenis', 'n_rekening_akun_kelompok_jenis_objek', 'kd_awal', 'tmsikd_satkers'));
     }
 
     public function store(Request $request)
@@ -133,7 +134,7 @@ class KoderincianobjekController extends Controller
         $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
         $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
         $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;
-
+        $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
         for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
             if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
                 if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherekd_rek_rincian_obj($kd_rek_rincian_obj[$i])->count() > 0) {
@@ -143,7 +144,7 @@ class KoderincianobjekController extends Controller
                 } else {
                     $tmrekening_akun_kelompok_jenis_objek_rincian                                           = new Tmrekening_akun_kelompok_jenis_objek_rincian();
                     $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id  = $tmrekening_akun_kelompok_jenis_objek_id;
-                    $tmrekening_akun_kelompok_jenis_objek_rincian->tmsikd_satkers_id                        = 0;
+                    $tmrekening_akun_kelompok_jenis_objek_rincian->tmsikd_satkers_id                        = $tmsikd_satkers_id;
                     $tmrekening_akun_kelompok_jenis_objek_rincian->id                                       = $kd_rek_rincian_obj[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian->kd_rek_rincian_obj                       = $kd_rek_rincian_obj[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj                       = $nm_rek_rincian_obj[$i];

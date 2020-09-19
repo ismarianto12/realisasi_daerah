@@ -41,6 +41,7 @@
                                 <th width="30"></th>
                                 <th width="160">Kode Rek. Rincian Obj ( <span class="text-danger">*</span> )</th>
                                 <th>Nama Rek. Rincian Obj ( <span class="text-danger">*</span> )</th>
+                                <th width="160">SKPD / SATKER BIDANG AKSES (SATKER)</th>  
                             </tr>
                         </thead>
                         <tbody id="vform">
@@ -48,8 +49,16 @@
                                 @include('layouts._includes.form.deleterow')
                                 <td><input type="text" name="kd_rek_rincian_obj[]" class="form-control r-0 s-12" autocomplete="off" value="{{ $kd_awal }}"/></td>
                                 <td><input type="text" name="nm_rek_rincian_obj[]" class="form-control r-0 s-12" autocomplete="off"/></td>
+                                <td><input type="text" name="nm_rek_rincian_obj[]" class="form-control r-0 s-12" autocomplete="off"/></td>
+                                <td><select name="tmsikd_satkers_id" id="tmsikd_satkers_id" class="form-control select2 " required>
+                                    @foreach($tmsikd_satkers as $tmsikd_satker)
+                                    <option value="{{ $tmsikd_satker->id }}">
+                                        [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                    </option>
+                                    @endforeach
+                                </select></td> 
                             </tr>
-                        <tbody>
+                        </tbody>
                     </table>
                     <a class="btn btn-outline-secondary btn-sm" title="Tambah baris" onclick="javascript:add_form()"><i class="icon-add"></i> Tambah Baris</a>
                 </form>
