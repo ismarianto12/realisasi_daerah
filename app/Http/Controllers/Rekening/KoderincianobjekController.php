@@ -99,7 +99,7 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Tambah | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd', 'save'];
+        $toolbar    = ['list', 'save'];
 
         $tmsikd_satkers                             =  Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmrekening_akun_id                         = $request->tmrekening_akun_id;
