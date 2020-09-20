@@ -8,44 +8,58 @@
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun :</strong></label>
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
+                                    :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_id">
+                                <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_id">
                                     <option value="0">&nbsp;</option>
                                     @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
-                                    <option value="{{ $tmrekening_akun->id }}">{{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}</option>
+                                    <option value="{{ $tmrekening_akun->id }}">
+                                        {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
+                            <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                    Kelompok :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_objek_id" class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_objek_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_objek_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_objek_id"
+                                    class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id"
+                                    onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id" class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                    class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
@@ -58,16 +72,16 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
-                        <thead> 
+                        <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Jumlah Target </th>
-                                <th>Jumlah Anggaran Perubahan</th> 
+                                <th>Jumlah Anggaran Perubahan</th>
                                 <th>Jenis PAD </th>
                                 <th>Rincian </th>
                                 <th>Tahun </th>
-                                <th>Ket </th>     
-                            </tr> 
+                                <th>Ket </th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -77,10 +91,11 @@
     </div>
 </div>
 @endsection
-
+ 
 @section('script')
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script> 
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
+</script>
 
 <script type="text/javascript">
     var table = $('#datatable').dataTable({
@@ -96,8 +111,7 @@
                 data.tmrekening_akun_kelompok_id = $('#tmrekening_akun_kelompok_id').val();
                 data.tmrekening_akun_kelompok_jenis_id = $('#tmrekening_akun_kelompok_jenis_id').val();
                 data.tmrekening_akun_kelompok_jenis_objek_id = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
-                data.tmrekening_akun_kelompok_jenis_objek_rincian_id = $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val();
-            }
+             }
         },
         columns: [
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},

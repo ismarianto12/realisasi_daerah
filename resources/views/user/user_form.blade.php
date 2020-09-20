@@ -8,6 +8,10 @@
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="cari_pgawai" placeholder="Klik Cari " value="">
+                @if($actionform == 'edit') 
+                    <label>Nama Pegawai yang di pilih : {{ $pegawainm }}</label>  
+                  @else 
+                 @endif
                 <div id="nama_peg"></div>
                 <div id="pegawai_id"></div>
             </div>

@@ -60,14 +60,18 @@ class UserController extends Controller
         $tmuser_level_id = '';
         $jenis = '';
         $p12 = '';
+        $pegawainm = '';
+        $actionform = '';
 
         return view(
             $this->view . '.user_form',
             compact(
+                'pegagawinm',
+                'action',
+                'actionform',
                 'tmpegawai_id',
                 'username',
                 'sikd_satker_id',
-                'action',
                 'method_field',
                 'realname',
                 'level',
@@ -158,8 +162,7 @@ class UserController extends Controller
             'last_login' => $request->last_login,
             'telp' => $request->telp,
             'c_status' => $request->c_status,
-            'photo' => $request->photo,
-
+            'photo' => $request->photo, 
             'ttd' => $request->ttd,
             'paraf' => $request->paraf,
             'tmuser_level_id' => $request->tmuser_level_id,
@@ -193,7 +196,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $edit = User::findOrFail($id);
+        $edit = User::with(['tmpegawai'])->findOrFail($id);
+        $actionform = 'edit';
+        $pegawainm  = ($edit->n_pegawai) ? $edit->tmpegawai->n_pegawai : 'kosong';
         $method_field = method_field('put');
         $tmpegawai_id = $edit->tmpegawai_id;
         $sikd_satker_id = $edit->sikd_satker_id;
@@ -215,12 +220,13 @@ class UserController extends Controller
         $level = new Tmuser_level;
         $p12 = $edit->p12;
 
-
         //   dd($tmuser_level_id);
 
         return view(
             $this->view . '.user_form',
             compact(
+                'pegawainm',
+                'actionform',
                 'tmpegawai_id',
                 'username',
                 'sikd_satker_id',

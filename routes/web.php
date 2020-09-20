@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('holiday', 'TmholidayController');
     Route::get('holiday_datatable', 'TmholidayController@api')->name('holiday_datatable');
 
-    Route::resource('user', 'Usercontroller');
+    Route::resource('user', 'UserController');
     Route::get('user_datatable', 'Usercontroller@api')->name('user_datatable');
 
     Route::resource('pegawai', 'TmpegawaiController');
@@ -83,6 +83,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('satker', 'TmopdController');
         Route::post('satker_api', 'TmopdController@api')->name('satker_api');
         Route::post('set_active', 'TmopdController@set_active')->name('set_active');
+        
+        //settting user
     });
 
     Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');

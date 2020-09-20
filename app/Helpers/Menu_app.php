@@ -163,9 +163,9 @@ class Menu_app
                 </a>
                 <div class="collapse" id="identitas">
                     <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('identitas', 'Identitas aplikasi');
-                    $menu .= self::set_menu('satker', 'Satuan Kerja');
-                    $menu .= self::set_menu('opd', 'Data Dinas ');
+                    $menu .= self::set_menu('aplikasi/identitas', 'Identitas aplikasi');
+                    $menu .= self::set_menu('aplikasi/satker', 'Satuan Kerja');
+                    //$menu .= self::set_menu('opd', 'Data Dinas ');
                     $menu .= '
                   </ul>
                 </div>

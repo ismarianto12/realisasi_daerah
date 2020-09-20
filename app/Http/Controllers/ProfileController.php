@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
-use function PHPSTORM_META\map;
-
+use Carbon;
+ 
 class ProfileController extends Controller
 {
     protected $route = 'akses.';
@@ -79,11 +78,26 @@ class ProfileController extends Controller
             'password' => 'required',
         ]);
         $data = new User;
-        $data->relname  = $request->realname;
-        $data->password = bcrypt($request->password);
-        $data->telp     = $request->telp;
-        $data->find($id)->save();
 
+        if ($request->file('photo')) {
+            $dt             = Carbon::now();
+            $ext            = $request->file('photo')->getClientOriginalExtension();
+            $file           = rand(1, 2333) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
+            $data->relname  = $request->realname;
+            $data->password = bcrypt($request->password);
+            $data->telp     = $request->telp;
+            $request->file('photo')->move('./file/photo_user/', $file);
+            $data->photo    = $file;
+            $data->find($id)->save();
+            if (file_exists('./file/photo_user' . $data->photo)) {
+                @unlink('./file/photo_user' . $data->photo);
+            }
+        } else {
+            $data->relname  = $request->realname;
+            $data->password = bcrypt($request->password);
+            $data->telp     = $request->telp;
+            $data->find($id)->save();
+        }
         return response()->json([
             'msg' => 'data berhasil di simpan'
         ]);
