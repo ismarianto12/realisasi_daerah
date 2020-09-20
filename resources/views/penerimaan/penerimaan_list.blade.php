@@ -263,9 +263,7 @@
         $('.show_form').load(url).slideDown(); 
     });  
   });
-    
-</script>
-<script>
+     
    // rek_rincian_obj 
     $(function(){
         $('#rek_rincian_obj').html('<div class="alert alert-danger">Pilih rincian retribusi terlebih dahulu..</div>');

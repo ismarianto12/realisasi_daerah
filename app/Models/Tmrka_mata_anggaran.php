@@ -106,8 +106,7 @@ class Tmrka_mata_anggaran extends Model
                 ->get();
         } else {
             // dd($par);
-            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
             //}
             if ($rekRincians == '') {

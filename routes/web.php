@@ -1,4 +1,6 @@
-<?php
+<?php 
+// @author : ismarianto 
+// @aplication build at 2020  
 
 use Illuminate\Support\Facades\Route;
 
@@ -54,9 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('export', 'TmpenerimaanController@export')->name('export');
 
-    Route::resource("pendapatan", "PendapatanController");
-    Route::post('pendapatan_data', 'PendapatanController@api')->name('pendapatan_data');
-
     Route::resource('report_penerimaan', 'ReportController');
     Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
     Route::get('result_data', 'ReportController@action')->name('result_data');
@@ -75,8 +74,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
-        // Route::post('target', 'PendapatanTargetController@api')->name('target');
-
         // opd
         Route::resource('satker', 'TmopdController');
         Route::post('satker_api', 'TmopdController@api')->name('satker_api');
@@ -86,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');
     Route::prefix('bapenda')->group(function () {
         Route::namespace('Rekening')->prefix('rekening')->name('rekening.')->group(function () {
-             Route::Resource('kodeakun', 'KodeakunController');
+            Route::Resource('kodeakun', 'KodeakunController');
             Route::resource('kodekelompok', 'KodekelompokController');
             Route::resource('kodejenis', 'KodejenisController');
             Route::resource('kodeobjek', 'KodeobjekController');
@@ -94,11 +91,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
         });
     });
-
-//route datatable api
+    //pendapatan route
+    Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
+        Route::resource("/", "PendapatanController");
+        Route::post('api', 'PendapatanController@api')->name('api');
+        //yang berkaitan dengan pendapatan
+        Route::resource('target', 'PendapatanTargetController');
+    });
+    //route datatable api
     Route::prefix('api')->group(function () {
-        Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');  
-   
+        Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
+
         Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
             Route::post('kodeakun', 'KodeakunController@api')->name('kodeakun.api');
             Route::post('kodekelompok', 'KodekelompokController@api')->name('kodekelompok.api');

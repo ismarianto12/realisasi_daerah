@@ -1,4 +1,5 @@
 @extends('layouts.page')
+@section('title', 'Data pendapatan atau retribusi persatuan kerja OPD')
 @section('content')
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
@@ -20,19 +21,24 @@
                 <div class="form-row form-inline">
                     <div class="col-md-8">
                         <div class="form-group m-0">
-                            <label for="tahun_id" class="form-control-label col-md-3"><strong>Tahun RKA </strong></label>
+                            <label for="tahun_id" class="form-control-label col-md-3"><strong>Tahun RKA
+                                </strong></label>
                             <div class="col-md-2">
-                                <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2" autocomplete="off" onchange="selectOnChange()">
+                                <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2"
+                                    autocomplete="off" onchange="selectOnChange()">
                                     @foreach ($tahuns as $tahun)
-                                        <option value="{{$tahun->id}}"@if($tahun_id == $tahun->id) selected="selected"@endif>{{$tahun->tahun}}</option>
+                                    <option value="{{$tahun->id}}" @if($tahun_id==$tahun->id)
+                                        selected="selected"@endif>{{$tahun->tahun}}</option>
                                     @endforeach
                                 </select>
                             </div>&nbsp;
-                            
+
                             <div class="col-md-4">
-                                <select name="tmrapbd_id" id="tmrapbd_id" placeholder="" class="form-control select2 " autocomplete="off" onchange="selectOnChange()">
+                                <select name="tmrapbd_id" id="tmrapbd_id" placeholder="" class="form-control select2 "
+                                    autocomplete="off" onchange="selectOnChange()">
                                     @foreach ($tmrapbds as $tmrapbds)
-                                        <option value="{{ $tmrapbds->id }}"@if($tmrapbd_id == $tmrapbds->id) selected="selected"@endif>{{ $tmrapbds->jenis }}</option>
+                                    <option value="{{ $tmrapbds->id }}" @if($tmrapbd_id==$tmrapbds->id)
+                                        selected="selected"@endif>{{ $tmrapbds->jenis }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -41,48 +47,58 @@
                             <label for="tanggal_lapor" class="col-md-3">Tanggal Pelaporan </label>
                             <div class="col-md-8">
                                 <input type="date" class="form-control" name="tanggal_lapor" id="tanggal_lapor"
-                                value="{{ $tanggal_lapor }}">
+                                    value="{{ $tanggal_lapor }}">
                             </div>
                         </div>
 
                         <div class="form-group m-0">
-                            <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD </strong></label>
+                            <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD
+                                </strong></label>
                             <div class="col-md-8">
-                                <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required onchange="selectOnChange('tmsikd_satker_id')">
+                                <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
+                                    required onchange="selectOnChange('tmsikd_satker_id')">
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
-                                        <option value="{{ $tmsikd_satker->id }}"@if($tmsikd_satker_id == $tmsikd_satker->id) selected="selected"@endif>
-                                            [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                        </option>
+                                    <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
+                                        selected="selected"@endif>
+                                        [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmsikd_sub_skpd_id" class="form-control-label col-md-3"><strong>Sub Unit </strong></label>
+                            <label for="tmsikd_sub_skpd_id" class="form-control-label col-md-3"><strong>Sub Unit
+                                </strong></label>
                             <div class="col-md-6">
-                                <select name="tmsikd_sub_skpd_id" id="tmsikd_sub_skpd_id" class="form-control select2s " onchange="selectOnChange('tmsikd_sub_skpd_id')">
+                                <select name="tmsikd_sub_skpd_id" id="tmsikd_sub_skpd_id" class="form-control select2s "
+                                    onchange="selectOnChange('tmsikd_sub_skpd_id')">
                                     @if($tmsikd_sub_skpds->count() == 0)<option value="0">&nbsp;</option>
                                     @elseif($tmsikd_sub_skpds != null)<option value="0">UNIT INDUK</option>@endif
                                     @foreach($tmsikd_sub_skpds as $tmsikd_sub_skpd)
-                                        <option value="{{ $tmsikd_sub_skpd->id }}"@if($tmsikd_sub_skpd_id == $tmsikd_sub_skpd->id) selected="selected"@endif>
-                                            [{{ $tmsikd_sub_skpd->kode }}] &nbsp; {{ $tmsikd_sub_skpd->nama }}
-                                        </option>
+                                    <option value="{{ $tmsikd_sub_skpd->id }}"
+                                        @if($tmsikd_sub_skpd_id==$tmsikd_sub_skpd->id) selected="selected"@endif>
+                                        [{{ $tmsikd_sub_skpd->kode }}] &nbsp; {{ $tmsikd_sub_skpd->nama }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmsikd_bidang_id" class="form-control-label col-md-3"><strong>Bidang Urusan </strong></label>
+                            <label for="tmsikd_bidang_id" class="form-control-label col-md-3"><strong>Bidang Urusan
+                                </strong></label>
                             <div class="col-md-6">
-                                <select name="tmsikd_bidang_id" id="tmsikd_bidang_id" class="form-control select2s " onchange="selectOnChange('tmsikd_bidang_id')">
+                                <select name="tmsikd_bidang_id" id="tmsikd_bidang_id" class="form-control select2s "
+                                    onchange="selectOnChange('tmsikd_bidang_id')">
                                     @foreach($tmsikd_bidangs as $tmsikd_bidang)
-                                        <option value="{{ $tmsikd_bidang->id }}"@if($tmsikd_bidang_id == $tmsikd_bidang->id) selected="selected"@endif>
-                                            [{{ $tmsikd_bidang->kd_bidang }}] &nbsp; {{ $tmsikd_bidang->nm_bidang }}</option>
+                                    <option value="{{ $tmsikd_bidang->id }}" @if($tmsikd_bidang_id==$tmsikd_bidang->id)
+                                        selected="selected"@endif>
+                                        [{{ $tmsikd_bidang->kd_bidang }}] &nbsp; {{ $tmsikd_bidang->nm_bidang }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
-                        </div> 
-                    
+                        </div>
+
                     </div>
                     {{-- <div class="col-md-4">
                         <div class="form-group m-0">
@@ -117,27 +133,27 @@
             <div class="card-body">
                 <div class="table-responsive">
                     @if ($tanggal_lapor !='')
-                       Pelaporan Per periode tanggal @php
-                          echo '<b>'.Properti_app::tgl_indo($tanggal_lapor).'</b>';
-                       @endphp
-                    @endif 
+                    Pelaporan Per periode tanggal @php
+                    echo '<b>'.Properti_app::tgl_indo($tanggal_lapor).'</b>';
+                    @endphp
+                    @endif
                     @php
-                   // dd($tmsikd_satkers);
+                    // dd($tmsikd_satkers);
                     @endphp
 
-                 [ {{ $satker_kode }} ] - [ {{ $satker_nm }}  ]
+                    [ {{ $satker_kode }} ] - [ {{ $satker_nm }} ]
                     <table id="datatable" class="table table-striped no-b" style="width:100%">
                         <thead>
                             <tr>
                                 <th width="5%">&nbsp;</th>
                                 <th width="10%">Kode Rekening</th>
                                 <th width="35%">Uraian</th>
-                                <th width="10%">Volume Transaksi</th> 
-                                <th width="15%">Jumlah Transaksi</th> 
+                                <th width="10%">Volume Transaksi</th>
+                                <th width="15%">Jumlah Transaksi</th>
                                 <th width="15%">Tanggal Lapor</th>
                             </tr>
 
-                        </thead>    
+                        </thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -148,18 +164,34 @@
 @endsection
 
 @section('script')
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script> 
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}"></script>
- 
-<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/dataTables.buttons.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
+</script>
+
+<script type="text/javascript"
+    src="{{  asset('assets/template/js/plugin/datatables/button/dataTables.buttons.min.js') }}"></script>
 <script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/jszip.min.js') }}"></script>
-<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/pdfmake.min.js') }}"></script>
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/pdfmake.min.js') }}">
+</script>
 <script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/vfs_fonts.js') }}"></script>
-<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js') }}"></script>
-  
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js') }}">
+</script>
+
 <script type="text/javascript">
-    $('#btnCreate').attr('href', "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id=" + $('#tmsikd_satker_id').val() + "&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val());
-    var table = $('#datatable').dataTable({
+    $(function(){ 
+    $('#btnCreate').on('click',function(r){
+     r.preventDefault();
+     //var tanggal_lapor = $('#tanggal_lapor').val();
+     //if(tanggal_lapor == ''){
+     //   $.alert('ket','tanggal lapor tidak boleh kosong');
+     //}else{
+         url =  "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id=" + $('#tmsikd_satker_id').val() + "&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
+         window.location.href = url;
+     //}
+    });
+});
+
+     var table = $('#datatable').dataTable({
         dom: 'Bfrtip',
         buttons: [
             'copyHtml5',
@@ -173,7 +205,7 @@
         pageLength: 10,
         lengthChange: false,
         ajax: {
-            url: "{{ route('pendapatan_data') }}",
+            url: "{{ route('pendapatan.api') }}",
             method: 'POST',
             data:function(data){
                 var tahun_id           = $('#tahun_id').val();

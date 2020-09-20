@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-@section('title', 'edit profile')
+@section('title', 'Edit profile')
 @section('content')
 
 <div class="panel-header bg-primary-gradient">
@@ -24,8 +24,6 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-
-
                 <div id="msg_error"></div>
                 <form id="exampleValidation" action="{{ $action }}" method="POST" class="simpan"
                     enctype="multipart/form-data">
@@ -55,7 +53,7 @@
                             <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Password <span
                                     class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="password" class="form-control" id="password_lama" name="password"
+                                <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Enter Password" required value="">
                             </div>
                         </div>
@@ -78,8 +76,6 @@
                             </div>
                         </div>
 
-
-                        <div class="separator-solid"></div>
                         <div class="separator-solid"></div>
                         <div class="form-group form-show-validation row">
                             <label class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Upload Image <span
@@ -96,7 +92,6 @@
                                 </div>
                             </div>
                         </div>
- 
                     </div>
                     <div class="card-action">
                         <div class="row">
@@ -113,7 +108,52 @@
     </div>
 </div>
 
+@section('script')
 
+<script type="text/javascript">
+    $(function() { 
 
+        $('#cupdate').submit(function(e) {
+            e.preventDefault();
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var password_ul = $('#password_baru').val();
+            var nama = $('#nama').val(); 
+            //   var foto = $('#foto').val();
+            if (password == '') {
+                $.alert('Keterangan', 'Password tidak boleh kosong');
+            } else if (password_ul == '') {
+                $.alert('Keterangan', 'Ulangi Password tidak boleh kosong');
+            } else if (password != password_ul) {
+                $.alert('Keterangan', 'password tidak sama silahkan ulangi');
+            } else if (nama == '') {
+                $.alert('Keterangan', 'Nama tidak boleh kosong');
+            } else {
+
+                var datastring = $(this).serialize();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'post',
+                    data: datastring,
+                    cache: false,
+                    beforeSend: function() { 
+                        $.alert('Processing', 'Sedang Menyimpan data ...');
+                        $('.simpan').attr("disabled", "disabled");
+                        $('.simpan').css("opacity", ".5");
+                    },
+                    success: function(data) { 
+                        $.alert('Succcess', 'profil berhasil di perbaharui...');
+                        $('.simpan').css("opacity", "");
+                        $(".simpan").removeAttr("disabled");
+                    },
+                    error: function(data,error,jqxHr) {
+                        $.alert('Danger', 'Kode erro dengan rincian '+ error);
+                        
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 @endsection
