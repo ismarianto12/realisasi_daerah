@@ -10,6 +10,7 @@
                         <thead>
                             <th width="10px"></th>
                             <th width="600px">Tahun</th>
+                            <th width="600px">Ket</th>                            
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -21,6 +22,12 @@
 @endsection
 
 @section('script')
+
+
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}"></script>
+
+
 <script type="text/javascript">
     var table = $('#datatable').dataTable({
         processing: true,
@@ -34,6 +41,7 @@
         columns: [
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'tahun', name: 'tahun'},
+            {data: 'ket', name: 'ket'},
         ]
     });
 

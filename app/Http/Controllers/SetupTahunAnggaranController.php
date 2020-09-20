@@ -28,7 +28,7 @@ class SetupTahunAnggaranController extends Controller
     {
         $title   = $this->title;
         $route   = $this->route;
-        $toolbar = ['d'];
+        $toolbar = ['d','c','l'];
         return view($this->view . 'index', compact('title', 'route', 'toolbar'));
     }
 
@@ -123,7 +123,10 @@ class SetupTahunAnggaranController extends Controller
             ->editColumn('tahun', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->tahun . "</a>";
             })
-            ->rawColumns(['id', 'tahun'])
+            ->editColumn('ket', function ($p) {
+                return "Keterangan";
+            })            
+            ->rawColumns(['id', 'tahun','ket'])
             ->toJson();
     }
 }

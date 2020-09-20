@@ -101,8 +101,7 @@ class Menu_app
                     $menu .= self::set_menu(Url('bapenda/rekening/kodejenis'), 'Kode Jenis');
                     $menu .= self::set_menu(Url('bapenda/rekening/kodeobjek'), 'Kode Object');
                     $menu .= self::set_menu(Url('bapenda/rekening/koderincianobjek'), 'Kode Rincian Object');
-                    $menu .= self::set_menu(Url('bapenda/rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object');
-
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object'); 
                     $menu .= '
                   </ul>
                 </div>
@@ -131,7 +130,7 @@ class Menu_app
             <ul class="nav nav-collapse">';
                     $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Pendapatan');
                     $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
-                    $menu .= self::set_menu('grafik_penerimaan', 'Grafik Penerimaan');
+                    $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
                     $menu .= '
           </ul>
         </div>

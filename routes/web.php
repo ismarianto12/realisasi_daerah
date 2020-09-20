@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('holiday_datatable', 'TmholidayController@api')->name('holiday_datatable');
 
     Route::resource('user', 'UserController');
-    Route::get('user_datatable', 'Usercontroller@api')->name('user_datatable');
+    Route::get('user_datatable', 'UserController@api')->name('user_datatable');
 
     Route::resource('pegawai', 'TmpegawaiController');
     Route::get('tmpegawai/api/data', 'TmpegawaiController@api')->name('tmpegawai.api.data');
@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('laporan')->name('laporan.')->group(function () {
         Route::get('keseluruhan', 'ReportController@alldata')->name('keseluruhan');
+        //resource data grafik 
+        Route::resource('grafik', 'GrafikController');
     });
 
     Route::prefix('akses')->name('akses.')->group(function () {
@@ -83,11 +85,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('satker', 'TmopdController');
         Route::post('satker_api', 'TmopdController@api')->name('satker_api');
         Route::post('set_active', 'TmopdController@set_active')->name('set_active');
-        
+
         //settting user
     });
 
     Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');
+    Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunaggaran.api');
+
     Route::prefix('bapenda')->group(function () {
         Route::namespace('Rekening')->prefix('rekening')->name('rekening.')->group(function () {
             Route::Resource('kodeakun', 'KodeakunController');
