@@ -1,4 +1,4 @@
-<?php 
+<?php
 // @author : ismarianto 
 // @aplication build at 2020  
 
@@ -58,7 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('report_penerimaan', 'ReportController');
     Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
+
     Route::get('result_data', 'ReportController@action')->name('result_data');
+
+    Route::prefix('laporan')->name('laporan.')->group(function () {
+        Route::get('keseluruhan', 'ReportController@alldata')->name('keseluruhan');
+    });
 
     Route::prefix('akses')->name('akses.')->group(function () {
         Route::resource('level', 'TmuserlevelController');
@@ -97,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('api', 'PendapatanController@api')->name('api');
         //yang berkaitan dengan pendapatan
         Route::resource('target', 'PendapatanTargetController');
+        Route::post('target', 'PendapatanTargetController@api')->name('target.api');
     });
     //route datatable api
     Route::prefix('api')->group(function () {

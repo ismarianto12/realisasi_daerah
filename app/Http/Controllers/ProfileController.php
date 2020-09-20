@@ -82,7 +82,7 @@ class ProfileController extends Controller
         $data->relname  = $request->realname;
         $data->password = bcrypt($request->password);
         $data->telp     = $request->telp;
-        $data->find($request->id)->save();
+        $data->find($id)->save();
 
         return response()->json([
             'msg' => 'data berhasil di simpan'

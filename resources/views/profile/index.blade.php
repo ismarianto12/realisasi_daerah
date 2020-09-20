@@ -1,6 +1,5 @@
 @extends('layouts.template')
-
-@section('title', 'Edit profile')
+@section('title','Edit Profile User .')
 @section('content')
 
 <div class="panel-header bg-primary-gradient">
@@ -22,6 +21,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
+                <div id="alert"></div>
             </div>
             <div class="card-body">
                 <div id="msg_error"></div>
@@ -44,7 +44,7 @@
                             <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nama <span
                                     class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nama" placeholder="Nama"
+                                <input type="text" name="realname" class="form-control" id="nama" placeholder="Nama"
                                     value="{{ $nama }}">
                             </div>
                         </div>
@@ -107,19 +107,16 @@
         </div>
     </div>
 </div>
-
 @section('script')
-
 <script type="text/javascript">
-    $(function() { 
-
-        $('#cupdate').submit(function(e) {
+    $(function() {  
+        $('.simpan').submit(function(e) {
             e.preventDefault();
             var username = $('#username').val();
             var password = $('#password').val();
             var password_ul = $('#password_baru').val();
-            var nama = $('#nama').val(); 
-            //   var foto = $('#foto').val();
+            var nama = $('#nama').val();  
+
             if (password == '') {
                 $.alert('Keterangan', 'Password tidak boleh kosong');
             } else if (password_ul == '') {
@@ -129,31 +126,31 @@
             } else if (nama == '') {
                 $.alert('Keterangan', 'Nama tidak boleh kosong');
             } else {
-
-                var datastring = $(this).serialize();
-                $.ajax({
+                var formData = new FormData();
+                var url = $(this).attr('action'); 
+                $.ajax({ 
+                    type:'POST',
                     url: $(this).attr('action'),
-                    type: 'post',
-                    data: datastring,
-                    cache: false,
-                    beforeSend: function() { 
-                        $.alert('Processing', 'Sedang Menyimpan data ...');
-                        $('.simpan').attr("disabled", "disabled");
-                        $('.simpan').css("opacity", ".5");
-                    },
-                    success: function(data) { 
-                        $.alert('Succcess', 'profil berhasil di perbaharui...');
-                        $('.simpan').css("opacity", "");
-                        $(".simpan").removeAttr("disabled");
-                    },
-                    error: function(data,error,jqxHr) {
-                        $.alert('Danger', 'Kode erro dengan rincian '+ error);
-                        
-                    }
-                });
+                    data:formData,
+                    cache:false,
+                    contentType: false,
+                    processData: false    
+                }).done(function(data){
+                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+                    
+                }).fail(function(data){
+                    err = ''; respon = data.responseJSON;
+                    $.each(respon.errors, function(index, value){
+                        err += "<li>" + value +"</li>";
+                    });
+                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                }).always(function(){
+                    $('.simpan').removeAttr('disabled');
+                });  
             }
         });
     });
 </script>
+@endsection
 
 @endsection

@@ -138,8 +138,17 @@ class ReportController extends Controller
     {
 
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
+        $dari             = $request->dari;
+        $sampai           = $request->sampai;
+
         return view($this->view . '.report_all', [
-            'tahuns' => $tahuns 
+            'tahuns' => $tahuns,
+            'tmsikd_satkers' => $tmsikd_satkers,
+            'tmsikd_satker_id' => $tmsikd_satker_id,
+            'dari'=>$dari,
+            'sampai'=>$sampai
         ]);
     }
 

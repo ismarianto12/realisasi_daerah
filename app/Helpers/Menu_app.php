@@ -129,7 +129,8 @@ class Menu_app
         </a>
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan');
+                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Pendapatan');
+                    $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
                     $menu .= self::set_menu('grafik_penerimaan', 'Grafik Penerimaan');
                     $menu .= '
           </ul>
