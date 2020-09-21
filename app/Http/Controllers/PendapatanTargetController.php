@@ -62,19 +62,26 @@ class PendapatanTargetController extends Controller
 
     public function create()
     {
+        $jumlah = '';
+        $jumlah_perubahan = '';
+        $rekneing_rincian_akun_jenis_objek_id = '';
+        $dasar_hukum = '';
+        $keterangan = '';
+        $tgl_perubahan = '';
         $method = method_field('PUT');
+        $action =  $this->route . 'store';
         return view(
             $this->view . 'target_form',
-            [
-                'jumlah' => '',
-                'jumlah_perubahan' => '',
-                'rekneing_rincian_akun_jenis_objek_id' => '',
-                'dasar_hukum' => '',
-                'keterangan' => '',
-                'tgl_perubahan' => '',
-                'action' => $this->route . 'store',
-                'method_field' => $method
-            ],
+            compact(
+                'jumlah',
+                'jumlah_perubahan',
+                'rekneing_rincian_akun_jenis_objek_id',
+                'dasar_hukum',
+                'keterangan',
+                'tgl_perubahan',
+                'action',
+                'method'
+            ),
         );
     }
 
@@ -126,19 +133,29 @@ class PendapatanTargetController extends Controller
      */
     public function edit($id)
     {
-        $method = method_field('update');
-        $data   = TmpendapatantargetModel::find($id);
-        return view($this->view . 'target_form', [
-            'jumlah' => $data->jumlah,
-            'jumlah_perubahan' => $data->jumlah_perubahan,
-            'rekneing_rincian_akun_jenis_objek_id' => $data->rekneing_rincian_akun_jenis_objek_id,
-            'dasar_hukum' => $data->dasar_hukum,
-            'keterangan' => $data->keterangan,
-            'tgl_perubahan' => $data->tgl_perubahan,
-            'action' => route($this->route, '.update', $data->id),
-            'method_field' => $method,
-        ]);
+        $method                                = method_field('update');
+        $data                                  = TmpendapatantargetModel::find($id);
+        $jumlah                                = $data->jumlah;
+        $jumlah_perubahan                      =  $data->jumlah_perubahan;
+        $rekneing_rincian_akun_jenis_objek_id  =  $data->rekneing_rincian_akun_jenis_objek_id;
+        $dasar_hukum     =  $data->dasar_hukum;
+        $keterangan      =  $data->keterangan;
+        $tgl_perubahan   =  $data->tgl_perubahan;
+        $action          =  route($this->route, '.update', $data->id);
+        $method_field    =  $method;
+
+        return view($this->view . 'target_form', compact(
+            'jumlah',
+            'jumlah_perubahan',
+            'rekneing_rincian_akun_jenis_objek_id',
+            'dasar_hukum',
+            'keterangan',
+            'tgl_perubahan',
+            'action',
+            'method'
+        ));
     }
+
 
     /**
      * Update the specified resource in storage.
