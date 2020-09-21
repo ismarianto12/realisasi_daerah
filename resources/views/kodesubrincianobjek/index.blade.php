@@ -4,48 +4,64 @@
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
         <div class="card">
+
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">
-                        <div class="form-group m-0">
-                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun :</strong></label>
+                         <div class="form-group m-0">
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
+                                    :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_id">
+                                <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_id">
                                     <option value="0">&nbsp;</option>
                                     @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
-                                    <option value="{{ $tmrekening_akun->id }}">{{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}</option>
+                                    <option value="{{ $tmrekening_akun->id }}">
+                                        {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
+                            <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                    Kelompok :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_objek_id" class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_objek_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_objek_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_objek_id"
+                                    class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id"
+                                    onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id" class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
+                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id" class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
+                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                    class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
@@ -53,6 +69,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="card mt-2">
             <div class="card-body">
@@ -60,11 +77,16 @@
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="border-top: none; border-bottom: none; border-right: none" width="60px" rowspan="2"></th>
-                                <th style="border-top: none; border-bottom: none" width="150px" class="text-center" rowspan="2">Kode Sub Rek. Rincian Obj</th>
-                                <th style="border-top: none; border-bottom: none" class="m-auto" rowspan="2">Nama Sub Rek. Rincian Obj</th>
-                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="4">Keterkaitan Dengan Rekening P64</th>
-                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="3">Keterkaitan Dengan Rekening SAP</th>
+                                <th style="border-top: none; border-bottom: none; border-right: none" width="60px"
+                                    rowspan="2"></th>
+                                <th style="border-top: none; border-bottom: none" width="150px" class="text-center"
+                                    rowspan="2">Kode Sub Rek. Rincian Obj</th>
+                                <th style="border-top: none; border-bottom: none" class="m-auto" rowspan="2">Nama Sub
+                                    Rek. Rincian Obj</th>
+                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="4">
+                                    Keterkaitan Dengan Rekening P64</th>
+                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="3">
+                                    Keterkaitan Dengan Rekening SAP</th>
                                 <th style="border-top: none; border-bottom: none" rowspan="2">Status Rek.</th>
                             </tr>
                             <tr>
@@ -87,8 +109,9 @@
 @endsection
 
 @section('script')
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script> 
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
+</script>
 
 <script type="text/javascript">
     var table = $('#datatable').dataTable({
@@ -137,6 +160,7 @@
         }
     }
 
+
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
         option = "<option value=''>&nbsp;</option>";
@@ -160,7 +184,6 @@
                     $('#tmrekening_akun_kelompok_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
                     selectOnChange();
                 }
             }, 'JSON');
@@ -189,7 +212,6 @@
                 }else{
                     $('#tmrekening_akun_kelompok_jenis_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
                     selectOnChange();
                 }
             }, 'JSON');
@@ -204,7 +226,7 @@
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+            url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
@@ -215,15 +237,15 @@
                     $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
                 }else{
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
                     selectOnChange();
                 }
             }, 'JSON');
         }
-    });
+    });   
 
     $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
         val = $(this).val();
+       // alert(val);
         option = "<option value=''>&nbsp;</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
@@ -237,15 +259,15 @@
                         option += "<option value='" + value.id + "'>[" + value.kd_rek_rincian_obj +"] " + value.nm_rek_rincian_obj +"</li>";
                     });
                     $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_jenis_objek_rincian_id").val($("#tmrekening_akun_kelompok_jenis_objek_rincian_id option:first").val()).trigger("change.select2");
+                    $("#tmrekening_akun_kelompok_jenis_objek_rincian_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
                 }else{
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
+                    $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
                     selectOnChange();
                 }
             }, 'JSON');
         }
     });
+
 
     $('#btnCreate').on('click', function(){
         if($('#tmrekening_akun_id').val() == 0 || 

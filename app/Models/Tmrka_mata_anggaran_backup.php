@@ -2,7 +2,6 @@
 
 namespace App\Models\Rka;
 
-use App\Helpers\Properti_app;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Obj;
@@ -35,16 +34,17 @@ class Tmrka_mata_anggaran extends Model
 
     public function tmrekening_akun_kelompok_jenis_objek_rincian_sub()
     {
-        return $this->belongsTo('App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
+        return $this->belongsTo('App\Models\Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
     }
 
     public function tmsikd_sumber_anggaran()
     {
-        return $this->belongsTo('App\Models\Setupsikd\Tmsikd_sumber_anggaran');
+        return $this->belongsTo('App\Models\Tmsikd_sumber_anggaran');
     }
 
     public static function getKdRekRka($RkaSkpdType)
     {
+        //default 4.
         switch ($RkaSkpdType) {
             case "RKAPendapatan":
                 $kdRek = "4";
@@ -73,15 +73,17 @@ class Tmrka_mata_anggaran extends Model
         }
         return $kdRek;
     }
+
     public static function getInputListDataSetRincSub($par)
     {
-        if ($par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != "" || $par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != NULL)
+        if ($par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != "")
             $cond['id'] = $par['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         else
+        if ($par['tmrekening_akun_kelompok_jenis_objek_id'] == '') {
+            $cond = [];
+        } else {
             $cond['tmrekening_akun_kelompok_jenis_objek_id'] = $par['tmrekening_akun_kelompok_jenis_objek_id'];
-
-            dd($cond);
-            exit;
+        }
         // Not In
         $tanggal_sekarang  = date('Y-m-d');
         $notIn = Tmrka_mata_anggaran::wheretanggal_lapor($tanggal_sekarang)
@@ -90,32 +92,28 @@ class Tmrka_mata_anggaran extends Model
             ->toArray();
 
         //jika retribusi 
-        //cek session login user 
-        $level = Properti_app::getlevel();
-
-        if ($par['rekjenis_id'] == 412) {
+        if ($par['rekjenis_id'] == 4102) {
             $satker_id   =  $par['tmsikd_satkers_id'];
             $cek_data    = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmsikd_satkers_id', $satker_id)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
-            if ($cek_data != '' || $cek_data != NULL) {
+            if ($cek_data == '') {
                 $opt_ret['tmsikd_satkers_id'] = $par['tmsikd_satkers_id'];
             } else {
                 $opt_ret = [];
             }
-            $merge_params = array_merge($opt_ret, $cond);
-            dd($merge_params);
-            $rekRincians  = Tmrekening_akun_kelompok_jenis_objek_rincian::where($merge_params)
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($opt_ret)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
         } else {
-            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+            // dd($par);
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
             //}
-            if ($rekRincians == '' || $rekRincians == NULL) {
+            if ($rekRincians == '') {
                 return $dataSet = [];
             } else {
+
                 $idx = 0;
                 foreach ($rekRincians as $key => $rekRincian) {
                     $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
@@ -126,7 +124,9 @@ class Tmrka_mata_anggaran extends Model
                     $dataSet[$idx]["style"] = "background:#ECECD7";
                     $dataSet[$idx]["kd_rek"]["no_url"] = true;
                     $idx++;
-                    
+                    // if($rekRincian->id == 4102){
+                    // }else{
+                    // }
                     $rekSubs = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wheretmrekening_akun_kelompok_jenis_objek_rincian_id($rekRincian->id)
                         ->whereNotIn('id', $notIn)
                         ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
@@ -139,8 +139,9 @@ class Tmrka_mata_anggaran extends Model
                         $idx++;
                     }
                 }
-                return $dataSet;
-            }
+                
+            return $dataSet;
+            } 
         }
     }
 }

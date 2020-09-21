@@ -65,7 +65,6 @@ class PendapatanController extends Controller
         if ($tmrapbds->count() == 0) return abort(403, "RAPBD tidak ditemukan.");
         $tmrapbd_id     = ($request->tmrapbd_id == '' ? $tmrapbds->first()->id : $request->tmrapbd_id);
 
-
         $satker_id       = ($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         $satker          = Tmsikd_satker::find($satker_id);
 
@@ -103,8 +102,7 @@ class PendapatanController extends Controller
             'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
             'tmrkas.tmsikd_satker_id'   => $request->tmsikd_satker_id,
             'tmrkas.rka_type'           => $this->type,
-        ];
-
+        ]; 
         if ($request->tanggal_lapor != '') {
             $tanggal_lapor = [
                 'tmrkas.tanggal_lapor' => $request->tanggal_lapor,
@@ -115,7 +113,6 @@ class PendapatanController extends Controller
 
         $merge = array_merge($tanggal_lapor, $where);
         $r  = Tmrka::list($merge)->orderBy('kd_rek_rincian_obj')->get();
-
         return DataTables::of($r)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
@@ -146,8 +143,7 @@ class PendapatanController extends Controller
     }
 
     public function create(Request $request)
-    {
-        // *
+    {    // *
         $title   = 'Tambahs | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'save'];
@@ -168,7 +164,6 @@ class PendapatanController extends Controller
         $tmsikd_sub_skpd_id = $request->tmsikd_sub_skpd_id;
         $tmsikd_bidang_id   = $request->tmsikd_bidang_id;
         if ($tmsikd_bidang_id == null || $tmsikd_bidang_id == "") return abort(403, "Terdapat data yang tidak terparsing dengan benar.");
-
         // 
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->whereid($tahun_id)->first();
         $tmsikd_satkers   = Tmsikd_satker::select('id', 'nama', 'kode')->whereid($tmsikd_satker_id)->first();
@@ -179,7 +174,7 @@ class PendapatanController extends Controller
         // Sumber Anggaran
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
         // Rekening
-        $kdRek = Tmrka_mata_anggaran::getKdRekRka($this->type);
+        $kdRek      = Tmrka_mata_anggaran::getKdRekRka($this->type);
         $rekJenis   = Sikd_list_option::getRekJenisByKode($kdRek);
         $rekJeni_id = ($request->rekJeni_id == '' ? $rekJenis->first()->id : $request->rekJeni_id);
         $rekObjs    = Sikd_list_option::getListRekObjs($rekJeni_id);
@@ -202,9 +197,8 @@ class PendapatanController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rekRincian_id,
             'tmrekening_akun_kelompok_jenis_objek_id'         => $rekObj_id,
             'tmsikd_satkers_id'                               => $request->tmsikd_satker_id,
-            'rekjenis_id'=>$request->rekJeni_id,
-            //   'tmrka_id' => $tmrka_id
-        ];
+            'rekjenis_id'                                     => $request->rekJeni_id,
+         ];
         $satker          = Tmsikd_satker::find($request->tmsikd_satker_id);
         $satker_nm       = ($satker->nama) ? $satker->nama : 'Kosong'; 
         $listRincianSubs = Tmrka_mata_anggaran::getInputListDataSetRincSub($par);

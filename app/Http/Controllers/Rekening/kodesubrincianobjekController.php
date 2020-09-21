@@ -36,7 +36,6 @@ class kodesubrincianobjekController extends Controller
         $toolbar    = ['c', 'd'];
 
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
-
         return view($this->view . 'index', compact('title', 'route', 'toolbar', 'tmrekening_akuns'));
     }
 
