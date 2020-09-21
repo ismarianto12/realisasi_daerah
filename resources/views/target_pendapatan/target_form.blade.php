@@ -2,6 +2,12 @@
 @section('title', 'Tambah target pendapatan')
 
 @section('content')
+
+{{-- @php
+dd($trekening);
+@endphp --}}
+
+
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -10,7 +16,8 @@
                 <h5 class="text-white op-7 mb-2"></h5>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
-                <a href="#" class="btn btn-white btn-border btn-round mr-2">Target Pendapatan (Termasuk pajak dan retribusi) . </a>
+                <a href="#" class="btn btn-white btn-border btn-round mr-2">Target Pendapatan (Termasuk pajak dan
+                    retribusi) . </a>
             </div>
         </div>
     </div>
@@ -43,7 +50,7 @@
                             <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Jumlah Perubahan
                                 Jika ada <span class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" name="realname" class="form-control" id="jumalah perubahan"
+                                <input type="text" name="jumlah_perubahan" class="form-control" id="jumlah perubahan"
                                     placeholder="Jumlah perubahan target" value="{{ $jumlah_perubahan }}">
                             </div>
                         </div>
@@ -53,14 +60,16 @@
                                 object pendapatan <span class="required-label">*</span></label>
                             <div class="col-sm-8">
                                 <div class="alert alert-succcess">
+                                    @foreach($trekening as $key)
                                     <ul>
-                                        <li>Rekening Pendapatan .
+                                        <li> {{ $key->Tmrekening_akun_kelompok_jenis_objek->nm_rek_obj }}.
                                             <ul>
-                                                <li>Pendapatan 1</li>
-                                                <li>Pendapatan 2</li>
+                                                <li>{{ $key['nm_rek_rincian_obj'] }}</li> 
+                                                <input type="hidden"  name="rekneing_rincian_akun_jenis_objek_id" value="{{ $key['id'] }}">
                                             </ul>
                                         </li>
-                                    </ul>
+                                    </ul>  
+                                    @endforeach
                                 </div>
 
                             </div>
@@ -81,7 +90,7 @@
                                 class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Keterangan
                                 <span class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="ket" name="ket"
+                                <input type="text" class="form-control" id="ket" name="keterangan"
                                     placeholder="Keterangan Sifat Opsional" required value="{{ $keterangan }}">
                             </div>
                         </div>
@@ -90,8 +99,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <input class="simpan btn btn-success btn-sm" type="submit" value="Simpan">
-                                <a href="#" class="btn btn-danger btn-sm" id="cancel">Cancel</a> 
-                                <a href="{{ Url('pendapatan/target') }}" class="btn btn-info btn-sm" id="home"><i class="fa fa-home"></i>Home</a>
+                                <a href="#" class="btn btn-danger btn-sm" id="cancel">Cancel</a>
+                                <a href="{{ Url('pendapatan/target') }}" class="btn btn-info btn-sm" id="home"><i
+                                        class="fa fa-home"></i>Home</a>
                             </div>
                         </div>
                     </div>

@@ -70,6 +70,7 @@
         </div>
         <div class="card mt-2">
             <div class="card-body">
+                <div class="alert alert-danger">Filter data berdasarkan , Rek. Rincian Objek </div>
                 <div class="table-responsive">
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
@@ -104,7 +105,7 @@
         order: [1, 'asc'],
         pageLength: 50,
         ajax: {
-            url: "{{ route($route.'api') }}",
+            url: "{{ route('pendapatan.target_api.api') }}",
             method: 'POST',
             data:function(data){ 
                 data.tmrekening_akun_kelompok_jenis_objek_id = $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val();
@@ -112,12 +113,12 @@
         },
         columns: [
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data : 'jumlah',name : 'jumlah'},
-            {data : 'jumlah_perubahan',name : 'jumlah_perubahan'},
-            {data : 'rekneing_rincian_akun_jenis_objek_id',name : 'rekneing_rincian_akun_jenis_objek_id'},
-            {data : 'dasar_hukum',name : 'dasar_hukum'},
-            {data : 'keterangan',name : 'keterangan'},
-            {data : 'tgl_perubahan',name : 'tgl_perubahan'} 
+            {data : 'djumlah',name : 'jumlah'},
+            {data : 'djumlah_perubahan',name : 'jumlah_perubahan'},
+            {data : 'rincian',name : 'rincian'},
+            {data : 'jenis_pad',name : 'jenis_pad'},
+            {data : 'tahun',name : 'tahun'},
+            {data : 'keterangan',name : 'keterangan'} 
         ] 
     });
     @include('layouts._includes.tablechecked')
@@ -218,6 +219,33 @@
                 }, 'JSON');
             }
         });   
+        
+
+        $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
+            val = $(this).val();
+           // alert(val);
+            option = "<option value=''>&nbsp;</option>";
+            if(val == ""){
+                $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
+                selectOnChange();
+            }else{
+                $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html("<option value=''>Loading...</option>");
+                url = "{{ route('rekening.kodesubrincianobjek.kodeobjekrincianByKodeobjek', ':id') }}".replace(':id', val);
+                $.get(url, function(data){
+                    if(data){
+                        $.each(data, function(index, value){
+                            option += "<option value='" + value.id + "'>[" + value.kd_rek_rincian_obj +"] " + value.nm_rek_rincian_obj +"</li>";
+                        });
+                        $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').empty().html(option);
+                        $("#tmrekening_akun_kelompok_jenis_objek_rincian_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
+                    }else{
+                        $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
+                        selectOnChange();
+                    }
+                }, 'JSON');
+            }
+        });
+
     $('#btnCreate').on('click', function(){
         if($('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val() == 0 ){  
             event.preventDefault();

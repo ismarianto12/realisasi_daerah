@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('api', 'PendapatanController@api')->name('api');
         //yang berkaitan dengan pendapatan
         Route::resource('target', 'PendapatanTargetController');
-        Route::post('target', 'PendapatanTargetController@api')->name('target.api');
+        Route::post('target_api', 'PendapatanTargetController@api')->name('target_api.api');
     });
     //route datatable api
     Route::prefix('api')->group(function () {

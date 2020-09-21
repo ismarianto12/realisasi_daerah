@@ -95,6 +95,12 @@ class KoderincianobjekController extends Controller
         return Tmrekening_akun_kelompok_jenis_objek::select('id', 'kd_rek_obj', 'nm_rek_obj')->wheretmrekening_akun_kelompok_jenis_id($tmrekening_akun_kelompok_jenis_id)->get();
     }
 
+    //get rincian rek 
+    // function objek_rincian($kelompok_jenis_id)
+    // {
+    //     return Tmrekening_akun_kelompok_jenis_objek_rincian::select('id','kd_rek_rincian_obj','nm_rek_rincian_obj')->wheretmrekening_akun_kelompok_jenis_objek_id($kelompok_jenis_id);
+    // }
+
     public function create(Request $request)
     {
         $title      = 'Tambah | ' . $this->title;
