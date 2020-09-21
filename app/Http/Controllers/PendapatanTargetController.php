@@ -137,6 +137,7 @@ class PendapatanTargetController extends Controller
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
         $r->tgl_perubahan                        = $request->tgl_perubahan;
+        $r->tahun                                = date('Y');
         $r->save();
         return response()->json([
             'msg' => 'data berhasil di simpan'
@@ -186,8 +187,7 @@ class PendapatanTargetController extends Controller
             'method_field',
             'trekening'
         ));
-    }
-
+    } 
 
     /**
      * Update the specified resource in storage.
@@ -212,6 +212,7 @@ class PendapatanTargetController extends Controller
         $r->dasar_hukum = $request->dasar_hukum;
         $r->keterangan = $request->keterangan;
         $r->tgl_perubahan = $request->tgl_perubahan;
+        $r->tahun    = date('Y');
         $r->find($id)->save();
 
         return response()->json([
@@ -228,7 +229,7 @@ class PendapatanTargetController extends Controller
     public function destroy(Request $request)
     {
         //
-        $data = TmpendapatantargetModel::find($request->id);
+        $data = TmpendapatantargetModel::whereIn('id', $request->id);
         if ($data != '') {
             $data->delete();
             return response()->json([
