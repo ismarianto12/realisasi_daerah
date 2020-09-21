@@ -1,5 +1,6 @@
 @extends('layouts.template')
 
+@section('title', 'Setting rekening rincian objek per opd')
 @section('content')
 @include('layouts._includes.toolbar')
 
@@ -8,12 +9,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
-                    <div class="col-md-12"> 
-
-                        <div class="form-group">
-                            <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD
-                                </strong></label>
-                            <div class="col-md-8">
+                    <div class="col-md-12">   
+                        <div class="form-group m-0">
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Opd / Satker
+                                    :</strong></label>
+                            <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
                                     required onchange="selectOnChange('tmsikd_satker_id')">
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
@@ -25,7 +25,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group m-0">
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
@@ -40,51 +40,45 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
-                                    :</strong></label>
-                            <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
-                                    id="tmrekening_akun_id">
-                                    <option value="0">&nbsp;</option>
-                                    @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
-                                    <option value="{{ $tmrekening_akun->id }}">
-                                        {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
+   
+                        <div class="form-group m-0">
                             <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek.
                                     Kelompok :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
-                                    id="tmrekening_akun_kelompok_id">
+                                    id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group m-0">
                             <label for="tmrekening_akun_kelompok_jenis_id"
                                 class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2"
-                                    id="tmrekening_akun_kelompok_jenis_id">
+                                    id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group m-0">
                             <label for="tmrekening_akun_kelompok_jenis_objek_id"
                                 class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_kelompok_jenis_objek_id"
                                     class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id"
                                     onchange="selectOnChange();">
+                                    <option value="0">&nbsp;</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-0">
+                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
+                            <div class="col-md-5 p-0 mb-2">
+                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                    class="form-control r-0 s-12 select2"
+                                    id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
                                     <option value="0">&nbsp;</option>
                                 </select>
                             </div>
@@ -234,6 +228,31 @@
                     $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
                 }else{
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                    selectOnChange();
+                }
+            }, 'JSON');
+        }
+    });   
+
+    $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
+        val = $(this).val();
+       // alert(val);
+        option = "<option value=''>&nbsp;</option>";
+        if(val == ""){
+            $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
+            selectOnChange();
+        }else{
+            $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html("<option value=''>Loading...</option>");
+            url = "{{ route('rekening.kodesubrincianobjek.kodeobjekrincianByKodeobjek', ':id') }}".replace(':id', val);
+            $.get(url, function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        option += "<option value='" + value.id + "'>[" + value.kd_rek_rincian_obj +"] " + value.nm_rek_rincian_obj +"</li>";
+                    });
+                    $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').empty().html(option);
+                    $("#tmrekening_akun_kelompok_jenis_objek_rincian_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
+                }else{
+                    $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
                     selectOnChange();
                 }
             }, 'JSON');

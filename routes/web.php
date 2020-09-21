@@ -76,8 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
-    Route::resource('settingrek', 'SettingrekeningController');
     Route::prefix('settingrek')->name('settingrek.')->group(function () {
+        Route::resource('/', 'SettingrekeningController');
         Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
     });
 

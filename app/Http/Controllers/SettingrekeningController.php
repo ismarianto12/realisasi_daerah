@@ -19,6 +19,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_rekening_lak;
 use App\Models\Setupsikd\Tmsikd_rekening_neraca;
+use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 
 
 class SettingrekeningController extends Controller
@@ -38,7 +39,7 @@ class SettingrekeningController extends Controller
     {
 
         $tmsikd_satkers     = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
-      
+
         $title              = $this->title;
         $route              = $this->route;
         $toolbar            = ['c', 'd'];
@@ -49,10 +50,10 @@ class SettingrekeningController extends Controller
             'toolbar',
             'tmrekening_akuns',
             'tmsikd_satkers'
-             
+
         ));
     }
- 
+
     function api(Request $request)
     {
         $data = Tmrekening_akun_kelompok_jenis_objek_rincian::select('tmrekening_akun_kelompok_jenis_objek_rincians.*');
@@ -88,12 +89,12 @@ class SettingrekeningController extends Controller
                 $join->on('tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.id')
                     ->where('tmrekening_akun_kelompoks.tmrekening_akun_id', $tmrekening_akun_id);
             });
-        }elseif($request->tmsikd_satker_id != 0){
+        } elseif ($request->tmsikd_satker_id != 0) {
             $satker_id = $request->tmsikd_satker_id;
             $data->join('tmsikd_satkers', function ($join) use ($satker_id) {
                 $join->on('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', 'tmsikd_satkers.id')
                     ->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $satker_id);
-            }); 
+            });
         }
         $data->get();
         return DataTables::of($data)
@@ -105,11 +106,22 @@ class SettingrekeningController extends Controller
             })
             ->rawColumns(['id', 'nm_rek_rincian_obj'])
             ->toJson();
-    }   
+    }
 
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
+        $dari             = $request->dari;
+        $sampai           = $request->sampai;
+
+        return view($this->view . '.setting_form', [
+            'tahuns' => $tahuns,
+            'tmsikd_satkers' => $tmsikd_satkers,
+            'tmsikd_satker_id' => $tmsikd_satker_id,
+        ]);
     }
 
     /**
