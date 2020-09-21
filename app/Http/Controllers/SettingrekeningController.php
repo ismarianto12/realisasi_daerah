@@ -48,16 +48,11 @@ class SettingrekeningController extends Controller
             'route',
             'toolbar',
             'tmrekening_akuns',
-            'tmsikd_satkers',
+            'tmsikd_satkers'
              
         ));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     function api(Request $request)
     {
         $data = Tmrekening_akun_kelompok_jenis_objek_rincian::select('tmrekening_akun_kelompok_jenis_objek_rincians.*');
