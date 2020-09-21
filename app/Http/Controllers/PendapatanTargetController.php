@@ -2,8 +2,9 @@
 
 
 // author : ismarianto 
- 
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -34,7 +35,7 @@ class PendapatanTargetController extends Controller
 
     function ___construct()
     {
-    }  
+    }
     public function index()
     {
         return view($this->view . 'index', [
@@ -61,10 +62,10 @@ class PendapatanTargetController extends Controller
 
     public function create()
     {
-
+        $method = method_field('PUT');
         return view(
             $this->view . 'target_form',
-            [ 
+            [
                 'jumlah' => '',
                 'jumlah_perubahan' => '',
                 'rekneing_rincian_akun_jenis_objek_id' => '',
@@ -72,7 +73,7 @@ class PendapatanTargetController extends Controller
                 'keterangan' => '',
                 'tgl_perubahan' => '',
                 'action' => $this->route . 'store',
-                'method_field' => method_field('PUT')
+                'method_field' => $method
             ],
         );
     }
@@ -125,16 +126,17 @@ class PendapatanTargetController extends Controller
      */
     public function edit($id)
     {
-        $data = TmpendapatantargetModel::find($id);
-        return view($this->view . 'target_form', [ 
+        $method = method_field('update');
+        $data   = TmpendapatantargetModel::find($id);
+        return view($this->view . 'target_form', [
             'jumlah' => $data->jumlah,
             'jumlah_perubahan' => $data->jumlah_perubahan,
             'rekneing_rincian_akun_jenis_objek_id' => $data->rekneing_rincian_akun_jenis_objek_id,
             'dasar_hukum' => $data->dasar_hukum,
             'keterangan' => $data->keterangan,
             'tgl_perubahan' => $data->tgl_perubahan,
-            'action'=> route($this->route,'.update',$data->id),
-            'method_field'=> method_field('update'),
+            'action' => route($this->route, '.update', $data->id),
+            'method_field' => $method,
         ]);
     }
 
