@@ -81,7 +81,7 @@ class PendapatanTargetController extends Controller
                 'tgl_perubahan',
                 'action',
                 'method'
-            ),
+            )
         );
     }
 
