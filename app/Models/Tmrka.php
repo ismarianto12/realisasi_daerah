@@ -284,4 +284,8 @@ class Tmrka extends Model
         // return Html_number::decimal(Tmrka_mata_anggaran::whereIn('tmrka_id',$tmrka->pluck('id')->toArray())->sum('jumlah'));
 
     }
+
+    function report(){
+       //  return 
+    }
 }

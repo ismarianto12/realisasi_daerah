@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('laporan')->name('laporan.')->group(function () {
         Route::get('keseluruhan', 'ReportController@alldata')->name('keseluruhan');
+        Route::get('action_all', 'ReportController@action_all')->name('action_all');
         //resource data grafik 
         Route::resource('grafik', 'GrafikController');
     });

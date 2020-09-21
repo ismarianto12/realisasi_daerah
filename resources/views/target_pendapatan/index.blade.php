@@ -91,7 +91,7 @@
     </div>
 </div>
 @endsection
- 
+
 @section('script')
 <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
@@ -106,26 +106,19 @@
         ajax: {
             url: "{{ route($route.'api') }}",
             method: 'POST',
-            data:function(data){
-                data.tmrekening_akun_id = $('#tmrekening_akun_id').val();
-                data.tmrekening_akun_kelompok_id = $('#tmrekening_akun_kelompok_id').val();
-                data.tmrekening_akun_kelompok_jenis_id = $('#tmrekening_akun_kelompok_jenis_id').val();
-                data.tmrekening_akun_kelompok_jenis_objek_id = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+            data:function(data){ 
+                data.tmrekening_akun_kelompok_jenis_objek_id = $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val();
              }
         },
         columns: [
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data: 'kd_rek_rincian_objek_sub', name: 'kd_rek_rincian_objek_sub'},
-            {data: 'nm_rek_rincian_objek_sub', name: 'nm_rek_rincian_objek_sub'},
-            {data: 'tmsikd_rek_rincian_obj_p64_id', name: 'tmsikd_rek_rincian_obj_p64_id'},
-            {data: 'sikd_rek_akrual_id', name: 'sikd_rek_akrual_id'},
-            {data: 'sikd_rek_aset_id',  name: 'sikd_rek_aset_id'}, 
-            {data: 'sikd_rek_utang_id',  name: 'sikd_rek_utang_id'},
-            {data: 'tmsikd_rekening_neraca_id', name: 'tmsikd_rekening_neraca_id'}, 
-            {data: 'tmsikd_rekening_lra_id',  name: 'tmsikd_rekening_lra_id'}, 
-            {data: 'tmsikd_rekening_lak_id', name: 'tmsikd_rekening_lak_id'},
-            {data: 'status_aktif', name: 'status_aktif', className: 'text-center'}
-        ]
+            {data : 'jumlah',name : 'jumlah'},
+            {data : 'jumlah_perubahan',name : 'jumlah_perubahan'},
+            {data : 'rekneing_rincian_akun_jenis_objek_id',name : 'rekneing_rincian_akun_jenis_objek_id'},
+            {data : 'dasar_hukum',name : 'dasar_hukum'},
+            {data : 'keterangan',name : 'keterangan'},
+            {data : 'tgl_perubahan',name : 'tgl_perubahan'} 
+        ] 
     });
     @include('layouts._includes.tablechecked')
     
@@ -142,129 +135,102 @@
             });
         }
     }
-
-    $('#tmrekening_akun_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_kelompok +"] " + value.nm_rek_kelompok +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_id").val($("#tmrekening_akun_kelompok_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('#tmrekening_akun_kelompok_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-        $('#tmrekening_akun_kelompok_id').change();
-    });
-
-    $('#tmrekening_akun_kelompok_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_jenis_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_jenis +"] " + value.nm_rek_jenis +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_jenis_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_jenis_id").val($("#tmrekening_akun_kelompok_jenis_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-    });
-
-    $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_obj +"] " + value.nm_rek_obj +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-    });
-
-    $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodesubrincianobjek.kodeobjekrincianByKodeobjek', ':id') }}".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_rincian_obj +"] " + value.nm_rek_rincian_obj +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_jenis_objek_rincian_id").val($("#tmrekening_akun_kelompok_jenis_objek_rincian_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('tmrekening_akun_kelompok_jenis_objek_rincian_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-    });
-
+    //select data in list
+    $(function(){ 
+        $('#tmrekening_akun_id').on('change', function(){
+            val = $(this).val();
+            option = "<option value=''>&nbsp;</option>";
+            if(val == ""){
+                $('#tmrekening_akun_kelompok_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }else{
+                $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
+                url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+                $.get(url, function(data){
+                    if(data){
+                        $.each(data, function(index, value){
+                            option += "<option value='" + value.id + "'>[" + value.kd_rek_kelompok +"] " + value.nm_rek_kelompok +"</li>";
+                        });
+                        $('#tmrekening_akun_kelompok_id').empty().html(option);
+    
+                        $("#tmrekening_akun_kelompok_id").val($("#tmrekening_akun_kelompok_id option:first").val()).trigger("change.select2");
+                    }else{
+                        $('#tmrekening_akun_kelompok_id').html(option);
+                        $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                        selectOnChange();
+                    }
+                }, 'JSON');
+            }
+            $('#tmrekening_akun_kelompok_id').change();
+        });
+    
+        $('#tmrekening_akun_kelompok_id').on('change', function(){
+            val = $(this).val();
+            option = "<option value=''>&nbsp;</option>";
+            if(val == ""){
+                $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }else{
+                $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
+                url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+                $.get(url, function(data){
+                    if(data){
+                        $.each(data, function(index, value){
+                            option += "<option value='" + value.id + "'>[" + value.kd_rek_jenis +"] " + value.nm_rek_jenis +"</li>";
+                        });
+                        $('#tmrekening_akun_kelompok_jenis_id').empty().html(option);
+    
+                        $("#tmrekening_akun_kelompok_jenis_id").val($("#tmrekening_akun_kelompok_jenis_id option:first").val()).trigger("change.select2");
+                    }else{
+                        $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                        selectOnChange();
+                    }
+                }, 'JSON');
+            }
+        });
+    
+        $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
+            val = $(this).val();
+            option = "<option value=''>&nbsp;</option>";
+            if(val == ""){
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }else{
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
+                url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
+                $.get(url, function(data){
+                    if(data){
+                        $.each(data, function(index, value){
+                            option += "<option value='" + value.id + "'>[" + value.kd_rek_obj +"] " + value.nm_rek_obj +"</li>";
+                        });
+                        $('#tmrekening_akun_kelompok_jenis_objek_id').empty().html(option);
+    
+                        $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
+                    }else{
+                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                        selectOnChange();
+                    }
+                }, 'JSON');
+            }
+        });   
     $('#btnCreate').on('click', function(){
-        if($('#tmrekening_akun_id').val() == 0 || 
-        $('#tmrekening_akun_kelompok_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_objek_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val() == 0) {
+        if($('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val() == 0 ){  
             event.preventDefault();
             event.stopPropagation();
-            $.alert("Silahkan memilih <strong>Rek. Akun</strong>, <strong>Rek. Kelompok</strong>, <strong>Rek. Jenis</strong>, <strong>Rek. Obj</strong> dan <strong>Rek. Rincian Obj</strong> yang akan ditambah.");
-        }
-    });
+            $.alert("Silahkan memilih <strong>Rek. object rincian terlebih dahulu</strong>, pada data yang akan ditambah.");
+        } 
+  }); 
 
+});
     function selectOnChange(){
         table.api().ajax.reload();
-        $('#btnCreate').attr('href', "{{ route($route.'create') }}?tmrekening_akun_id=" + $('#tmrekening_akun_id').val() + "&tmrekening_akun_kelompok_id=" + $('#tmrekening_akun_kelompok_id').val() + "&tmrekening_akun_kelompok_jenis_id=" + $('#tmrekening_akun_kelompok_jenis_id').val() + "&tmrekening_akun_kelompok_jenis_objek_id=" + $('#tmrekening_akun_kelompok_jenis_objek_id').val() +  "&tmrekening_akun_kelompok_jenis_objek_rincian_id=" + $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val() );
+        var url = "{{ route($route.'create') }}?rincian_obj_id=" + $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val();
+        $('#btnCreate').attr('href',url);
     }
 </script>
 @endsection

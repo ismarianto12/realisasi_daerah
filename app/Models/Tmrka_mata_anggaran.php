@@ -34,16 +34,17 @@ class Tmrka_mata_anggaran extends Model
 
     public function tmrekening_akun_kelompok_jenis_objek_rincian_sub()
     {
-        return $this->belongsTo('App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
+        return $this->belongsTo('App\Models\Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
     }
 
     public function tmsikd_sumber_anggaran()
     {
-        return $this->belongsTo('App\Models\Setupsikd\Tmsikd_sumber_anggaran');
+        return $this->belongsTo('App\Models\Tmsikd_sumber_anggaran');
     }
 
     public static function getKdRekRka($RkaSkpdType)
     {
+        //default 4.
         switch ($RkaSkpdType) {
             case "RKAPendapatan":
                 $kdRek = "4";

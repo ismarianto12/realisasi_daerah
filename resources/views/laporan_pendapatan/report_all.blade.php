@@ -39,8 +39,7 @@
                     <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
                         <span class="required-label">*</span></label>
                     <div class="col-sm-6">
-                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
-                            onchange="selectOnChange('tmsikd_satker_id')">
+                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required>
                             @foreach($tmsikd_satkers as $tmsikd_satker)
                             <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                 selected="selected"@endif>
@@ -57,8 +56,6 @@
                 <div class="card-body">
                     <div class="form-row form-inline">
                         <div class="col-md-12">
-
-
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
                                         class="required-label">*</span></label>
@@ -72,7 +69,16 @@
                                         value="{{ $sampai }}">
                                 </div>
                             </div>
-
+                        </div> 
+                        <div class="form-group form-show-validation row">
+                            <label for="name" class="col-md-8"><span class="required-label">Perjenis
+                                    Laporan</span></label>
+                            <div class="col-md-4">
+                                <select class="form-control" name="jreport">
+                                    <option value="1">Per Jenis Object</option>
+                                    <option value="2">Per Rincian jenis Object</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +91,20 @@
         </div>
     </div>
 </div>
- 
+
+<script>
+    $(function(){
+    $('#tampilkan').on('click',function(){ 
+        var tahun_id         = $('#tahun_id').val();
+        var tmsikd_satker_id = $('#tmsikd_satker_id').val();
+        var dari             = $('#dari').val();
+        var sampai           = $('#sampai').val();
+        var jreport          = $('#jreport').val();
+        window.location.href = '{{ route('laporan.action_all') }}?tahun_id='+tahun_id+'&tmsikd_satker_id='+tmsikd_satker_id+'&dari='+dari+'&sampai='+sampai+'&jreport='+jreport;
+  });  
+});   
+</script>
+
 
 
 @section('script')
@@ -100,7 +119,7 @@
 </script>
 <script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/vfs_fonts.js') }}"></script>
 <script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js') }}">
-</script> 
-@endsection 
+</script>
+@endsection
 
 @endsection

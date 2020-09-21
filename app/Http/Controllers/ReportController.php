@@ -147,8 +147,30 @@ class ReportController extends Controller
             'tahuns' => $tahuns,
             'tmsikd_satkers' => $tmsikd_satkers,
             'tmsikd_satker_id' => $tmsikd_satker_id,
-            'dari'=>$dari,
-            'sampai'=>$sampai
+            'dari' => $dari,
+            'sampai' => $sampai
+        ]);
+    }
+    //all data report
+    function action_all(Request $request)
+    {
+        //dd($request);
+        $tahun_id          = $request->tahun_id;
+        $tmsikd_satker_id  = $request->tmsikd_satker_id;
+        $dari              = $request->dari;
+        $sampai            = $request->sampai;
+        $jreport           = $request->jreport;
+        $data              = Tmrka::getReport($tahun_id, $tmsikd_satker_id, $jreport, $dari, $sampai);
+
+        if ($jreport == 1) {
+            //jenis object
+            $report = 'jenis_object';
+        } else if ($jreport == 2) {
+            //per rincian jenis object
+            $report = 'rincian_object';
+        }
+        return view($this->view . $report, [
+            'data' => $data
         ]);
     }
 
@@ -170,9 +192,7 @@ class ReportController extends Controller
 
         $tahun_id      = $request->tahun_id;
         $tahun         = Tmsikd_setup_tahun_anggaran::find($tahun_id);
-        $data = Tmrka::list_report();
-
-
+        $data          = Tmrka::list_report();
 
         $tahun_id                                = $request->tahun_id;
         $tmsikd_satker_id                        = $request->tmsikd_satker_id;
@@ -210,8 +230,8 @@ class ReportController extends Controller
         // $rekening_akun = Tmrekening_akun_kelompok_jenis_objek_rincians::where('')->get();
         // $akun_kelompok = Tmrekening_akun_kelompok_jenis_objeks::where('')->get();
         // $rekening_akun = Tmrekening_akun_kelompok_jenis::where('')->get();
-        //satu untuk report per 1 ranger watu 
-        //dua untuk report minggu  
+        // satu untuk report per 1 ranger watu 
+        // dua untuk report minggu  
 
         if ($request->tmsikd_satker_id) {
             $satker_id        = $request->tmsikd_satker_id;

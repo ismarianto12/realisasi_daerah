@@ -182,7 +182,6 @@ class Menu_app
                 ';
                     $menu .= self::set_menu('tmuser_level', 'Level Akses');
                     $menu .= self::set_menu('pegawai', 'Master Pegawai');
-
                     $menu .= '
                       </ul>
                     </div>
@@ -204,6 +203,19 @@ class Menu_app
                       </ul>
                     </div>
                 </li>';
+                $menu .= '<li class="nav-item">
+                <a data-toggle="collapse" href="#target">
+                    <i class="fa fa-list"></i>
+                    <p>Target Pendapatan.</p>
+                    <span class="caret"></span>
+                </a>
+                <div class="collapse" id="target">
+                    <ul class="nav nav-collapse">';
+                $menu .= self::set_menu('pendapatan/target', 'Target Pendapatan.');
+                $menu .= '
+                  </ul>
+                </div>
+            </li>';
                     $menu .= '<li class="nav-item">
                 <a data-toggle="collapse" href="#report">
                     <i class="fas fa-database"></i>

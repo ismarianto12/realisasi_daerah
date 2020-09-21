@@ -1,8 +1,9 @@
 <?php
 
+
+// author : ismarianto 
+ 
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -18,7 +19,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 use App\Models\setupsikd\Tmsikd_rekening_lak;
 use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_Rekening_neraca;
-use App\Models\TmpendapatantargetModel; 
+use App\Models\TmpendapatantargetModel;
 
 class PendapatanTargetController extends Controller
 {
@@ -33,15 +34,13 @@ class PendapatanTargetController extends Controller
 
     function ___construct()
     {
-    }
-
-
+    }  
     public function index()
     {
         return view($this->view . 'index', [
             'route'            => $this->route,
             'toolbar'          => ['c', 'd'],
-            'title'            => 'Setting Target Pendpatann',
+            'title'            => 'Setting Target Pendpatan',
             'tmrekening_akuns' => Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get(),
         ]);
     }
@@ -62,6 +61,20 @@ class PendapatanTargetController extends Controller
 
     public function create()
     {
+
+        return view(
+            $this->view . 'target_form',
+            [ 
+                'jumlah' => '',
+                'jumlah_perubahan' => '',
+                'rekneing_rincian_akun_jenis_objek_id' => '',
+                'dasar_hukum' => '',
+                'keterangan' => '',
+                'tgl_perubahan' => '',
+                'action' => $this->route . 'store',
+                'method_field' => method_field('PUT')
+            ],
+        );
     }
 
     /**
@@ -112,7 +125,17 @@ class PendapatanTargetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = TmpendapatantargetModel::find($id);
+        return view($this->view . 'target_form', [ 
+            'jumlah' => $data->jumlah,
+            'jumlah_perubahan' => $data->jumlah_perubahan,
+            'rekneing_rincian_akun_jenis_objek_id' => $data->rekneing_rincian_akun_jenis_objek_id,
+            'dasar_hukum' => $data->dasar_hukum,
+            'keterangan' => $data->keterangan,
+            'tgl_perubahan' => $data->tgl_perubahan,
+            'action'=> route($this->route,'.update',$data->id),
+            'method_field'=> method_field('update'),
+        ]);
     }
 
     /**
