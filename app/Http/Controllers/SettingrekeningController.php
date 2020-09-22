@@ -19,6 +19,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_rekening_lak;
 use App\Models\Setupsikd\Tmsikd_rekening_neraca;
+use App\Models\Setupsikd\Tmsikd_satker;
 use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 
 
@@ -104,7 +105,15 @@ class SettingrekeningController extends Controller
             ->editColumn('nm_rek_rincian_obj', function ($p) {
                 return "<a href='" . route($this->route . 'rek.show', $p->id) . "' target='_self'>" . $p->nm_rek_rincian_obj . "</a>";
             })
-            ->rawColumns(['id', 'nm_rek_rincian_obj'])
+            ->editColumn('nm_satker', function ($p) {
+                $f = Tmsikd_satker::where('id', $p->tmsikd_satkers_id);
+                if ($f->count() == '') {
+                    return '<span style="color: red"><b>Kosong</b></span>';
+                } else {
+                    return "<b>" . $f->first()->nama . "</b>";
+                }
+            })
+            ->rawColumns(['id', 'nm_rek_rincian_obj', 'nm_satker'])
             ->toJson();
     }
 

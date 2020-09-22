@@ -147,7 +147,7 @@
             {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj'},
             {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
             {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
-            {data: 'sikd_rek_aset_id', name: 'sikd_rek_aset_id'},
+            {data: 'nm_satker', name: 'nm_satker',orderable: false, searchable: false},
             {data: 'sikd_rek_akrual_id', name: 'sikd_rek_akrual_id'},
             {data: 'sikd_rek_utang_id', name: 'sikd_rek_utang_id'},
             {data: 'dasar_hukum', name: 'dasar_hukum'}
