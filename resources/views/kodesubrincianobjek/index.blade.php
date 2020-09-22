@@ -77,27 +77,14 @@
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="border-top: none; border-bottom: none; border-right: none" width="60px"
-                                    rowspan="2"></th>
-                                <th style="border-top: none; border-bottom: none" width="150px" class="text-center"
-                                    rowspan="2">Kode Sub Rek. Rincian Obj</th>
-                                <th style="border-top: none; border-bottom: none" class="m-auto" rowspan="2">Nama Sub
-                                    Rek. Rincian Obj</th>
-                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="4">
-                                    Keterkaitan Dengan Rekening P64</th>
-                                <th style="border-top: none; border-bottom: none" class="text-center" colspan="3">
-                                    Keterkaitan Dengan Rekening SAP</th>
-                                <th style="border-top: none; border-bottom: none" rowspan="2">Status Rek.</th>
-                            </tr>
-                            <tr>
-                                <th style="border-bottom: none">Rek. LRA-P64</th>
-                                <th style="border-bottom: none">Rek. Akrual</th>
-                                <th style="border-bottom: none">Rek. Aset</th>
-                                <th style="border-bottom: none">Rek. Utang</th>
-                                <th style="border-bottom: none">Rek. Neraca</th>
-                                <th style="border-bottom: none">Rek. LRA</th>
-                                <th style="border-bottom: none">Rek. LAK</th>
-                            </tr>
+                                <th style="border-top: none; border-bottom: none; border-right: none"
+                                    ></th>
+                                <th style="border-top: none; border-bottom: none" class="text-center"
+                                    >Rincian Obj</th>
+                                <th style="border-top: none; border-bottom: none" class="text-center">
+                                    Satus</th>
+                                <th style="border-top: none; border-bottom: none">Status Rek.</th>
+                            </tr> 
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -134,14 +121,7 @@
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'kd_rek_rincian_objek_sub', name: 'kd_rek_rincian_objek_sub'},
             {data: 'nm_rek_rincian_objek_sub', name: 'nm_rek_rincian_objek_sub'},
-            {data: 'tmsikd_rek_rincian_obj_p64_id', name: 'tmsikd_rek_rincian_obj_p64_id'},
-            {data: 'sikd_rek_akrual_id', name: 'sikd_rek_akrual_id'},
-            {data: 'sikd_rek_aset_id',  name: 'sikd_rek_aset_id'}, 
-            {data: 'sikd_rek_utang_id',  name: 'sikd_rek_utang_id'},
-            {data: 'tmsikd_rekening_neraca_id', name: 'tmsikd_rekening_neraca_id'}, 
-            {data: 'tmsikd_rekening_lra_id',  name: 'tmsikd_rekening_lra_id'}, 
-            {data: 'tmsikd_rekening_lak_id', name: 'tmsikd_rekening_lak_id'},
-            {data: 'status_aktif', name: 'status_aktif', className: 'text-center'}
+            {data: 'status_aktif', name: 'status_aktif', className: 'text-center'},
         ]
     });
     @include('layouts._includes.tablechecked')

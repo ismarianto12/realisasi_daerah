@@ -326,8 +326,7 @@ class ReportController extends Controller
     public function tesjasper(Request $request)
     {
 
-        $jns_lap        = $request->jns_lap;
-
+        $jns_lap        = $request->jns_lap; 
         $format_reports = Jasper_report::getArrayOutputFormats();
         $format         = $request->format;
 
