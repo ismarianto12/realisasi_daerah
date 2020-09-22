@@ -10,8 +10,8 @@ use DataTables;
 class TmopdController extends Controller
 {
 
-    public $view  = 'tmopd';
-    public $route = 'satker.';
+    public $view  = 'tmopd.';
+    public $route = 'aplikasi.satker.';
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +19,11 @@ class TmopdController extends Controller
      */
     public function index()
     {
+        $route       = $this->route;
         $load_script = Properti_app::load_js([
             asset('assets/template/js/plugin/datatables/datatables.min.js'),
         ]);
-        return view($this->view . '.index', compact('load_script'));
+        return view($this->view . '.index', compact('load_script', 'route'));
     }
 
     /**
@@ -32,7 +33,19 @@ class TmopdController extends Controller
      */
     public function create()
     {
-        //
+        return view(
+            $this->view . '.tmopd_form',
+            [
+                'action' => route($this->route . 'store'),
+                'method_field' => 'POST',
+                'route' => $this->route,
+                'kode' => '',
+                'n_opd' => '',
+                'initial' => '',
+                'active' => '',
+                'ket' => ''  
+            ]
+        );
     }
 
     public function api(Request $request)
@@ -51,7 +64,7 @@ class TmopdController extends Controller
                 return $active;
             })
 
-            ->editColumn('set_active', function ($p) { 
+            ->editColumn('set_active', function ($p) {
                 if ($p->active == 1) {
                     return '<button onclick="javascript:confirm_active()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
                 } else {
@@ -83,7 +96,6 @@ class TmopdController extends Controller
         Tmopd::find($id)->updated([
             'active' => $active
         ]);
-
         return response()->json([
             'msg' => 'data berhasil di aktifkan'
         ]);
@@ -99,6 +111,23 @@ class TmopdController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'kode' => 'required',
+            'n_opd' => 'required',
+            'initial' => 'required',
+            'tmrumpun_id' => 'required',
+            'active' => 'required'
+        ]);
+        $r  = new Tmopd;
+        $r->kode = $request->kode;
+        $r->n_opd = $request->n_opd;
+        $r->initial = $request->initial;
+        $r->tmrumpun_id = $request->tmrumpun_id;
+        $r->active = $request->active;
+        $r->save();
+        return response()->json([
+            'msg' => 'data berhasil di simpan'
+        ]);
     }
 
     /**
@@ -120,11 +149,42 @@ class TmopdController extends Controller
      */
     public function edit($id)
     {
+        $data = Tmopd::find($id);
+        return view(
+            $this->view . 'form',
+            [
+                'action' => route($this->route . 'store'),
+                'method_field' => 'PACTH',
+                'route' => $this->route,
+                'kode' => $data->kode,
+                'n_opd' => $data->n_opd,
+                'initial' => $data->initial,
+                'ket' => $data->ket,
+                'active' => $data->active
+            ]
+        );
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'kode' => 'required|unique:tmopds,kode',
+            'n_opd' => 'required',
+            'initial' => 'required',
+            'tmrumpun_id' => 'required',
+            'active' => 'required'
+        ]);
+        $r              = new Tmopd;
+        $r->kode        = $request->kode;
+        $r->n_opd       = $request->n_opd;
+        $r->initial     = $request->initial;
+        $r->tmrumpun_id = $request->tmrumpun_id;
+        $r->active = $request->active;
+        $r->find($request->id)->save();
+
+        return response()->json([
+            'msg' => 'data berhasil di simpan'
+        ]);
     }
 
     /**
@@ -133,8 +193,14 @@ class TmopdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $data = Tmopd::whereIn($request->id);
+        if ($data != '') {
+            $data->delete();
+            return response()->json([
+                'msg' => 'data berhasil di hapus'
+            ]);
+        }
     }
 }

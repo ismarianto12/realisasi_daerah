@@ -18,14 +18,13 @@
                 <h5 class="text-white op-7 mb-2">Data list sattuan kerja </h5>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
-                <a href="#" class="btn btn-white btn-border btn-round mr-2">List data hak akses.</a>
-                <a href="#" to="{{ route('pegawai.create') }}" class="tambah btn btn-secondary btn-round">Tambah Data
-                    Master Pegawai Akses</a>
+                <a href="#" class="btn btn-white btn-border btn-round mr-2">List master kerja (OPD).</a>
+                <a href="#" to="{{ route($route.'create') }}" class="tambah btn btn-secondary btn-round">Tambah Data
+                    Master Satuan Kerja. </a>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <div class="row">
@@ -35,10 +34,10 @@
                 <h4 class="card-title">Master Data Pegawai</h4>
             </div>
             <div class="card-body">
+                <div id="alert"></div>
                 <div class="show_form"></div>
-
                 <div class="table-responsive">
-                    <table id="pegawai" class="display table table-striped table-hover">
+                    <table id="satkertb" class="display table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -73,7 +72,7 @@
                     "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
                 };
             };
-            $('#pegawai').DataTable({
+           var satkertb = $('#satkertb').DataTable({
                 //route _table_divisi.
                 initComplete: function() {
                     var api = this.api();
@@ -123,67 +122,10 @@
                 e.preventDefault();
                 var url = $(this).attr('to');
                 $('.show_form').load(url).slideDown(); 
+                satkertb.ajax.reload();
             });  
           });
-        
-        
-          $(function(){
-            $('#pegawai').on('click','.delete',function(){
-                var id = $(this).attr('data'); 
-                Swal.fire({
-                    title: 'Penerimaan ' + id + ' Di Hapus ?',
-                    text: "Data akan di hapus ",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: '{{ Url("user/destroy") }}',
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                id: id,
-                                _token: '{{ csrf_token() }}',
-                                _method: 'DELETE'
-                            }, 
-                            success: function(data) {
-                                  Swal.fire(
-                                     'Deleted!',
-                                     'Data berhasil di hapus.',
-                                     'success'
-                                ); 
-                                $("#datauser").DataTable().ajax.reload(); 
-                            },
-                            error: function(data) {
-                                Swal.fire(
-                                    'Tidak bisa di hapus!',
-                                    'Server tidak respon.',
-                                    'danger'
-                                );
-                            }
-                        });
-                    }
-                })   
-            });
-        }); 
-            
-        function del(){
-            var c = $(this).attr('id');
-            if(c == 0){
-                $.alert("Silahkan memilih data yang akan dihapus.");
-            }else{
-                $.post("{{ route('aplikasi.satker.destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
-                    table.api().ajax.reload();
-                }, "JSON").fail(function(){
-                    reload();
-                });
-            }
-        }
  
-
 </script>
 
 
