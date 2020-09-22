@@ -10,6 +10,12 @@ use Session;
 class Properti_app
 {
 
+
+    public static function indetitas_app()
+    {
+        return "Badan Pendapatan Daerah Tangerang Selatan";
+    }
+
     public static function getTahun()
     {
         $session = (Session::get('year')) ?  Session::get('year') : '';
@@ -40,7 +46,7 @@ class Properti_app
 
 
     public static function tgl_indo($tgl)
-    { 
+    {
         $bulan = array(
             1 =>   'Januari',
             'Februari',

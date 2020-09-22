@@ -174,7 +174,7 @@
                             </a>
                             <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                 <li>
-                                    <div class="dropdown-title">You have 4 new notification</div>
+                                    <div class="dropdown-title">Opd yang belum input realisasi pendapatan</div>
                                 </li>
                                 <li>
                                     <div class="notif-scroll scrollbar-outer">
