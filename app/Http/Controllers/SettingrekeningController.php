@@ -165,17 +165,16 @@ class SettingrekeningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
         $request->validate([
-            'satker_id' => 'required'
+            'satker_id' => 'required|unique:tmrekening_akun_kelompok_jenis_objek_rincians,tmsikd_satkers_id'
         ]);
         $satker = $request->satker_id;
-        $id     = $request->id; 
+        $id     = $request->id;
 
         $r = new Tmrekening_akun_kelompok_jenis_objek_rincian;
-        $r->tmsikd_satkers_id = $satker;
-
-        $r->whereIn('id', $id)->save();
+        $r->whereIn('id', $id)->update([
+            'tmsikd_satkers_id' => $satker
+        ]);
         return response()->json([
             'msg' => 'data berhasil di simpan'
         ]);
