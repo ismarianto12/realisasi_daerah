@@ -82,7 +82,7 @@ class Menu_app
                 ';
                     $menu .= self::set_menu('pendapatan/target', 'Besaran Target');
                     $menu .= self::set_menu('setuptahunanggaran', 'Tahun Anggaran');
-                    $menu .= self::set_menu('settingrek', 'Setting akses user rekening');
+                    $menu .= self::set_menu('settingrek/rek', 'Setting akses user rekening');
                     $menu .= '
                       </ul>
                     </div>
