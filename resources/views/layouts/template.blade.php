@@ -184,7 +184,7 @@
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="block">
-                                                        New user registered
+                                                        Dinas Permukiman Umum dan Tanah
                                                     </span>
                                                     <span class="time">5 minutes ago</span>
                                                 </div>

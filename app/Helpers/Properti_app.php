@@ -1,7 +1,10 @@
 <?php
 
+
+// by ismarianto 
 namespace App\Helpers;
 
+use App\Models\Setupsikd\Tmsikd_satker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +12,6 @@ use Session;
 
 class Properti_app
 {
-
 
     public static function indetitas_app()
     {
@@ -63,5 +65,26 @@ class Properti_app
         );
         $split = explode('-', $tgl);
         return $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+    }
+
+
+    public static function getsatker()
+    {
+        $satker_id  = Auth::user()->sikd_satker_id;
+        $level_id   = self::getlevel();
+        if ($satker_id != '') {
+            $data = Tmsikd_satker::find($satker_id);
+            if ($data != '') {
+                return $data->nama;
+            } else {
+                return 'Kosong';
+            }
+        } else {
+            if ($level_id  == 1) {
+                return 'Administrator';
+            } else {
+                return 'Kosong';
+            }
+        }
     }
 }
