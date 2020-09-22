@@ -20,6 +20,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 use App\Models\setupsikd\Tmsikd_rekening_lak;
 use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_Rekening_neraca;
+use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 use App\Models\TmpendapatantargetModel;
 
 class PendapatanTargetController extends Controller
@@ -97,7 +98,7 @@ class PendapatanTargetController extends Controller
         $tgl_perubahan                        = '';
         $method_field                         = method_field('POST');
         $action                               = route($this->route . 'store');
-
+        $tahuns                               = Tmsikd_setup_tahun_anggaran::get();
         return view(
             $this->view . 'target_form',
             compact(
@@ -109,6 +110,7 @@ class PendapatanTargetController extends Controller
                 'keterangan',
                 'tgl_perubahan',
                 'action',
+                'tahuns',
                 'method_field'
             )
         );
@@ -126,13 +128,17 @@ class PendapatanTargetController extends Controller
             'jumlah' => 'required',
             'jumlah_perubahan' => 'required',
             'rekneing_rincian_akun_jenis_objek_id' => 'required|unique:tmpendapatan_target,rekneing_rincian_akun_jenis_objek_id',
-            'dasar_hukum' => 'required',
-            'keterangan' => 'required',
+            'dasar_hukum'     => 'required',
+            'keterangan'      => 'required',
+            'tahun'           => 'required'
         ]);
         //dd($request);
+        $jumlah        = str_replace(',', ' ', $request->jumlah);
+        $jumlahperuhan = str_replace(',', ' ', $request->jumlah_perubahan);
+
         $r                                       = new TmpendapatantargetModel;
-        $r->jumlah                               = $request->jumlah;
-        $r->jumlah_perubahan                     = $request->jumlah_perubahan;
+        $r->jumlah                               = $jumlah;
+        $r->jumlah_perubahan                     = $jumlahperuhan;
         $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
@@ -164,6 +170,7 @@ class PendapatanTargetController extends Controller
     {
 
         $data                                  = TmpendapatantargetModel::find($id);
+        $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
 
         $method_field                          = method_field('update');
         $jumlah                                = $data->jumlah;
@@ -185,9 +192,10 @@ class PendapatanTargetController extends Controller
             'tgl_perubahan',
             'action',
             'method_field',
+            'tahuns',
             'trekening'
         ));
-    } 
+    }
 
     /**
      * Update the specified resource in storage.
@@ -204,15 +212,21 @@ class PendapatanTargetController extends Controller
             'rekneing_rincian_akun_jenis_objek_id' => 'required',
             'dasar_hukum' => 'required',
             'keterangan' => 'required',
+            'tahun' => 'required'
         ]);
         $r = new TmpendapatantargetModel;
-        $r->jumlah = $request->jumlah;
-        $r->jumlah_perubahan = $request->jumlah_perubahan;
+
+        $jumlah        = str_replace(',', ' ', $request->jumlah);
+        $jumlahperubahan = str_replace(',', ' ', $request->jumlah_perubahan);
+
+        $r->jumlah                               = $jumlah;
+        $r->jumlah_perubahan                     = $jumlahperubahan;
+
         $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
-        $r->dasar_hukum = $request->dasar_hukum;
-        $r->keterangan = $request->keterangan;
-        $r->tgl_perubahan = $request->tgl_perubahan;
-        $r->tahun    = date('Y');
+        $r->dasar_hukum                          = $request->dasar_hukum;
+        $r->keterangan                           = $request->keterangan;
+        $r->tgl_perubahan                        = $request->tgl_perubahan;
+        $r->tahun                                = $request->tahun;
         $r->find($id)->save();
 
         return response()->json([

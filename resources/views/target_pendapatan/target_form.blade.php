@@ -41,7 +41,7 @@ dd($trekening);
                                 <span class="required-label">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="jumlah target pendapatan"
-                                    aria-label="username" aria-describedby="username-addon" id="username" name="jumlah"
+                                    aria-label="username" aria-describedby="target-addon" id="tpendapatan" name="jumlah"
                                     required value="{{ $jumlah }}">
                             </div>
                         </div>
@@ -50,7 +50,7 @@ dd($trekening);
                             <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Jumlah Perubahan
                                 Jika ada <span class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" name="jumlah_perubahan" class="form-control" id="jumlah perubahan"
+                                <input type="text" name="jumlah_perubahan" class="form-control" id="tpendapatan"
                                     placeholder="Jumlah perubahan target" value="{{ $jumlah_perubahan }}">
                             </div>
                         </div>
@@ -59,19 +59,33 @@ dd($trekening);
                             <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Rincian Rekening
                                 object pendapatan <span class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <div class="alert alert-succcess">
+                                <div class="alert alert-success">
                                     @foreach($trekening as $key)
                                     <ul>
                                         <li> {{ $key->Tmrekening_akun_kelompok_jenis_objek->nm_rek_obj }}.
                                             <ul>
-                                                <li>{{ $key['nm_rek_rincian_obj'] }}</li> 
-                                                <input type="hidden"  name="rekneing_rincian_akun_jenis_objek_id" value="{{ $key['id'] }}">
+                                                <li>{{ $key['nm_rek_rincian_obj'] }}</li>
+                                                <input type="hidden" name="rekneing_rincian_akun_jenis_objek_id"
+                                                    value="{{ $key['id'] }}">
                                             </ul>
                                         </li>
-                                    </ul>  
+                                    </ul>
                                     @endforeach
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div class="form-group form-show-validation row">
+                            <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right"> 
+                                Target Pendapatan.
+                                <span class="required-label">*</span></label>
+                            <div class="col-sm-8">
+                                <select name="tahun" class="form-control">
+                                    @foreach($tahuns as $val)
+                                    <option value="{{ $val->tahun }}">{{ $val->tahun }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -90,8 +104,7 @@ dd($trekening);
                                 class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Keterangan
                                 <span class="required-label">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="ket" name="keterangan"
-                                    placeholder="Keterangan Sifat Opsional" required value="{{ $keterangan }}">
+                                <textarea class="form-control" name="keterangan"> {{ $keterangan }} </textarea>
                             </div>
                         </div>
                     </div>
@@ -135,6 +148,14 @@ dd($trekening);
                     $('.simpan').removeAttr('disabled');
                 });  
             }
+        });
+
+        //action form 
+
+        $("#tpendapatan").on('keyup', function(){
+            var n = parseInt($(this).val().replace(/\D/g,''),10);
+            $(this).val(n.toLocaleString());
+             myFunc(); //call another function too
         });
     });
 </script>
