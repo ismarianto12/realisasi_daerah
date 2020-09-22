@@ -6,13 +6,13 @@
 
 <div class="page bg-light">
     <div class="container-fluid my-3">
+        <div class="alert alert-danger"> Mendeskripsikan rekening object mana saja yang bisa diakses level dinas .</div>
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Opd /
-                                    Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
@@ -100,9 +100,6 @@
                             <th>Nama Rek. Rincian Obj</th>
                             <th width="120">Klasifikasi</th>
                             <th width="120">Level akses opd</th>
-                            <th width="120">Status Aktif</th>
-                            <th width="120">Date Creat</th>
-                            <th width="120">Action</th>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -148,9 +145,7 @@
             {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
             {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
             {data: 'nm_satker', name: 'nm_satker',orderable: false, searchable: false},
-            {data: 'sikd_rek_akrual_id', name: 'sikd_rek_akrual_id'},
-            {data: 'sikd_rek_utang_id', name: 'sikd_rek_utang_id'},
-            {data: 'dasar_hukum', name: 'dasar_hukum'}
+         
         ]
     });
 
