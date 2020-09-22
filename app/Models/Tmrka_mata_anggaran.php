@@ -79,9 +79,7 @@ class Tmrka_mata_anggaran extends Model
             $cond['id'] = $par['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         else
             $cond['tmrekening_akun_kelompok_jenis_objek_id'] = $par['tmrekening_akun_kelompok_jenis_objek_id'];
-
-            dd($cond);
-            exit;
+ 
         // Not In
         $tanggal_sekarang  = date('Y-m-d');
         $notIn = Tmrka_mata_anggaran::wheretanggal_lapor($tanggal_sekarang)

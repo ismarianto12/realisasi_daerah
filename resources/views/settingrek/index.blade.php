@@ -9,9 +9,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
-                    <div class="col-md-12">   
+                    <div class="col-md-12">
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Opd / Satker
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Opd /
+                                    Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
@@ -40,7 +41,7 @@
                                 </select>
                             </div>
                         </div>
-   
+
                         <div class="form-group m-0">
                             <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek.
                                     Kelompok :</strong></label>
@@ -89,6 +90,7 @@
         </div>
         <div class="card mt-2">
             <div class="card-body no-b">
+                <div id="alert"></div>
                 <div class="table-responsive">
                     * ) memeberikan batasan pada setiap opd yang login
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
@@ -267,17 +269,41 @@
         if(c.length == 0){
             $.alert("Silahkan memilih data yang akan dihapus.");
         }else{
-            $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+            $.post("{{ route($route.'rek.destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
                 table.api().ajax.reload();
             }, "JSON").fail(function(){
                 reload();
             });
         }
     }
+  
+    //simpan data if click save  
+    $('#btnSave').on('click', function (event) { 
+        var c          = new Array();
+        var satker_id  = $('#tmsikd_satker_id').val();
+        $("input:checked").each(function(){ c.push($(this).val()); });
+        if(c.length == 0){
+            $.alert("Silahkan memilih satker yang akan di set.","Ket : ");
+        }else{
+           $.post("{{ route($route.'rek.update', ':id') }}",
+                     {
+                       "_method" : "PATCH", "id": c,'satker_id': satker_id     
+                     }, 
+                function(data) {
+                     table.api().ajax.reload();
+                     $.alert('data berhasil di simpan berdasarkan sateker yang di pilih .');
+                }, "JSON").fail(function(data){
+                    err = ''; respon = data.responseJSON;
+                    $.each(respon.errors, function(index, value){
+                        err += "<li>" + value +"</li>";
+                    });
+                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                }).always(function(){
+                    $('#btnSave').removeAttr('disabled');
+                });
+        } 
 
-    function selectOnChange(){
-        table.api().ajax.reload();
-        $('#btnCreate').attr('href', "{{ route($route.'create') }}?tmrekening_akun_id=" + $('#tmrekening_akun_id').val() + "&tmrekening_akun_kelompok_id=" + $('#tmrekening_akun_kelompok_id').val() + "&tmrekening_akun_kelompok_jenis_id=" + $('#tmrekening_akun_kelompok_jenis_id').val() + "&tmrekening_akun_kelompok_jenis_objek_id=" + $('#tmrekening_akun_kelompok_jenis_objek_id').val());
-    }
+    });     
+  
 </script>
 @endsection

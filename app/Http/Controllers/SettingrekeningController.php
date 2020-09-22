@@ -42,7 +42,7 @@ class SettingrekeningController extends Controller
 
         $title              = $this->title;
         $route              = $this->route;
-        $toolbar            = ['c', 'd'];
+        $toolbar            = ['list', 'save'];
         $tmrekening_akuns   = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         return view($this->view . 'index', compact(
             'title',
@@ -102,7 +102,7 @@ class SettingrekeningController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "' />";
             })
             ->editColumn('nm_rek_rincian_obj', function ($p) {
-                return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->nm_rek_rincian_obj . "</a>";
+                return "<a href='" . route($this->route . 'rek.show', $p->id) . "' target='_self'>" . $p->nm_rek_rincian_obj . "</a>";
             })
             ->rawColumns(['id', 'nm_rek_rincian_obj'])
             ->toJson();
@@ -165,7 +165,20 @@ class SettingrekeningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
+        $request->validate([
+            'satker_id' => 'required'
+        ]);
+        $satker = $request->satker_id;
+        $id     = $request->id; 
+
+        $r = new Tmrekening_akun_kelompok_jenis_objek_rincian;
+        $r->tmsikd_satkers_id = $satker;
+
+        $r->whereIn('id', $id)->save();
+        return response()->json([
+            'msg' => 'data berhasil di simpan'
+        ]);
     }
 
     /**
