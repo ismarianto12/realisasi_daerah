@@ -29,6 +29,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
+use App\Libraries\Jasper_report;  
 
 use function PHPSTORM_META\map;
 
@@ -320,5 +321,23 @@ class ReportController extends Controller
             ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
             ->addIndexColumn()
             ->toJson();
+    }
+    //report get
+    public function tesjasper(Request $request)
+    {
+
+        $jns_lap        = $request->jns_lap;
+
+        $format_reports = Jasper_report::getArrayOutputFormats();
+        $format         = $request->format;
+
+        $jasper_dir = "resources/views/jasper/";
+        $reportName = $jasper_dir . 'reoport_gw.jrxml';
+
+        $params = 'PAGE=' . $request->dinasid;
+
+        $jasper = new Jasper_report();
+        $jasper->createReport($reportName, $format, $params);
+        $jasper->showReport();
     }
 }

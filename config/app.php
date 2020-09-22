@@ -237,9 +237,7 @@ return [
         'Access' => App\Helpers\Access::class,
         'Properti_app' => App\Helpers\Properti_app::class,
         'Obj' => App\Helpers\Obj::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,  
-         
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,    
     ],
 
 

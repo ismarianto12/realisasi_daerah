@@ -16,7 +16,7 @@
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
-                                    required onchange="selectOnChange('tmsikd_satker_id')">
+                                    required onchange="selectOnChange()">
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
                                         [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
@@ -73,17 +73,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group m-0">
-                            <label for="tmrekening_akun_kelompok_jenis_objek_rincian_id"
-                                class="col-form-label s-12 col-md-3"><strong>Rek. Rincian Obj :</strong></label>
-                            <div class="col-md-5 p-0 mb-2">
-                                <select name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
-                                    class="form-control r-0 s-12 select2"
-                                    id="tmrekening_akun_kelompok_jenis_objek_rincian_id" onchange="selectOnChange();">
-                                    <option value="0">&nbsp;</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -124,7 +113,7 @@
         }
     });
 
-    var table = $('#datatable').dataTable({
+    var table = $('#datatable').DataTable({
         processing: true,
         serverSide: true,
         order: [1, 'asc'],
@@ -133,6 +122,7 @@
             url: "{{ route($route.'api_data_setting') }}",
             method: 'POST',
             data:function(data){
+                data.tmsikd_satker_id   = $('#tmsikd_satker_id').val();
                 data.tmrekening_akun_id = $('#tmrekening_akun_id').val();
                 data.tmrekening_akun_kelompok_id = $('#tmrekening_akun_kelompok_id').val();
                 data.tmrekening_akun_kelompok_jenis_id = $('#tmrekening_akun_kelompok_jenis_id').val();
@@ -148,7 +138,12 @@
          
         ]
     });
+    //if change data 
 
+    function selectOnChange()
+    {
+       table.ajax.reload();   
+    }
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
         option = "<option value=''>&nbsp;</option>";

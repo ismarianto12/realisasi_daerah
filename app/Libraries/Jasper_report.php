@@ -75,21 +75,23 @@ class Jasper_report
 
     private function createLog($reportName, $format, $params, $uniqid)
     {
-        $tmpegawai = (Auth::user()->tmpegawai != '' ? Auth::user()->tmpegawai : '-');
+        // $tmpegawai = (Auth::user()->tmpegawai != '' ? Auth::user()->tmpegawai : '-');
         $f = 'log/jasper/'.date('Y').'/'.date('m').'/'.date('d').'.txt';
         $w = date('Y-m-d H:i:s')." ========= ".$reportName."\n";
         $w .= "          uniqid : ".$uniqid."\n";
         $w .= "          format : ".$format."\n";
         $w .= "          Params : ".$params."\n";
         $w .= "          User   : ".Auth::user()."\n";
-        $w .= "          Pegawai: ".$tmpegawai."\n";
+        // $w .= "          Pegawai: ".$tmpegawai."\n";
 
-        $exists = Storage::disk('sftp')->exists($f);
-        if(!$exists)
-            Storage::disk('sftp')->put($f, $w);
-        else
-            Storage::disk('sftp')->append($f, $w);
-    }
+        // $exists = Storage::disk('sftp')->exists($f);
+        // if(!$exists)
+        //     Storage::disk('sftp')->put($f, $w);
+        // else
+        //     Storage::disk('sftp')->append($f, $w);
+   
+   
+        }
 
 	private function cleanReportParameter($params) 
 	{
@@ -259,12 +261,12 @@ class Jasper_report
  
 	private function getConnectionParams()
 	{
-		$db_driver = config('app.db_connection2');
-		$db_host = config('app.db_host2');
-		$db_post = config('app.db_port2');
-		$db_name = config('app.db_database2');
-		$db_user = config('app.db_username2');
-		$db_pswd = config('app.db_password2');
+		$db_driver = config('app.db_connection');
+		$db_host = config('app.db_host');
+		$db_post = config('app.db_port');
+		$db_name = config('app.db_database');
+		$db_user = config('app.db_username');
+		$db_pswd = config('app.db_password');
 		
 		$j_driver = "com.$db_driver.jdbc.Driver";
 		$j_connect = "jdbc:mysql://$db_host:$db_post/$db_name";

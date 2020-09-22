@@ -66,6 +66,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('action_all', 'ReportController@action_all')->name('action_all');
         //resource data grafik 
         Route::resource('grafik', 'GrafikController');
+        Route::get('tesjasper', 'ReportController@tesjasper')->name('tesjasper');
+      
     });
 
     Route::prefix('akses')->name('akses.')->group(function () {
@@ -74,7 +76,6 @@ Route::group(['middleware' => 'auth'], function () {
         //ganti password 
         Route::resource('profile', 'ProfileController');
     });
-
 
     Route::prefix('settingrek')->name('settingrek.')->group(function () {
         Route::resource('rek', 'SettingrekeningController');
@@ -122,7 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('kodeobjek', 'KodeobjekController@api')->name('kodeobjek.api');
             Route::post('koderincianobjek', 'KoderincianobjekController@api')->name('koderincianobjek.api');
             Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api');
-
+            //
             Route::get('kodejenis/kodekelompokByKodeakun/{id}', 'KodejenisController@kodekelompokByKodeakun')->name('kodejenis.kodekelompokByKodeakun');
             Route::get('kodeobjek/kodejenisByKodekelompok/{id}', 'KodeobjekController@kodejenisByKodekelompok')->name('kodeobjek.kodejenisByKodekelompok');
             Route::get('koderincianobjek/kodeobjekByKodejenis/{id}', 'KoderincianobjekController@kodeobjekByKodejenis')->name('koderincianobjek.kodeobjekByKodejenis');
