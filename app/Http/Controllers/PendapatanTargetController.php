@@ -83,12 +83,13 @@ class PendapatanTargetController extends Controller
 
     public function create(Request $request)
     {
-
+   
         if ($request->rincian_obj_id == '' || $request->rincian_obj_id == 0) return abort('404', 'Parameter tidak berjalan dengan baik');
 
         $rincian_obj_id                       = $request->rincian_obj_id;
         $trekening                            = Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
         if ($trekening->count() == '' || $trekening == NULL) return abort('404', 'data tidak di temukan');
+        //dd($request);
 
         $jumlah                               = '';
         $jumlah_perubahan                     = '';

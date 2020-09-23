@@ -143,7 +143,7 @@ class PendapatanController extends Controller
     }
 
     public function create(Request $request)
-    {    // *
+    {    // * 
         $title   = 'Tambahs | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'save'];
@@ -174,12 +174,15 @@ class PendapatanController extends Controller
         // Sumber Anggaran
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
         // Rekening
+        //kode rekening pendapatan 4 
         $kdRek      = Tmrka_mata_anggaran::getKdRekRka($this->type);
         $rekJenis   = Sikd_list_option::getRekJenisByKode($kdRek);
         $rekJeni_id = ($request->rekJeni_id == '' ? $rekJenis->first()->id : $request->rekJeni_id);
+        //dd($rekJeni_id);
+
         $rekObjs    = Sikd_list_option::getListRekObjs($rekJeni_id);
         $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
-
+        //dd($rekObj_id); 
         $rekRincians    = Sikd_list_option::getListRekRincians($rekObj_id);
         $rekRincian_id  = $request->rekRincian_id;
 
