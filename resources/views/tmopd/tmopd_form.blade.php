@@ -6,7 +6,8 @@
             <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Kode <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <input type="number" class="form-control" id="kode" placeholder="Kode Satuan Kerja" value="{{ $kode }}">
+                <input name="kode" type="number" class="form-control" id="kode" placeholder="Kode Satuan Kerja"
+                    value="{{ $kode }}">
             </div>
         </div>
         <div class="form-group form-show-validation row">
@@ -19,10 +20,10 @@
         </div>
 
         <div class="form-group form-show-validation row">
-            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Keterangan<span
+            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Keterangan (Sifat Opsional)<span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <input type="password" class="form-control" id="ket" name="ket" placeholder="Ket " required
+                <input type="text" class="form-control" id="ket" name="ket" placeholder="Ket " required
                     value="{{ $ket }}">
             </div>
         </div>
@@ -31,15 +32,15 @@
             <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Aktive<span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <select class="form-control" id="active">
+                <select class="form-control" name="active" id="active">
                     @php
                     $active = [
                     1 =>'Active',
                     2 =>'Non Active'
                     ];
                     @endphp
-                    @foreach ($active as $item)
-                    <option value="{{ $item }} @if($item == $active) 'selected'; @endif">{{ $item }}</option>
+                    @foreach ($active as $item => $val)
+                    <option value="{{ $item }} @if($item == $active) 'selected'; @endif">{{ $val }}</option>
                     @endforeach
                 </select>
             </div>
@@ -58,6 +59,11 @@
 
 <script>
     $(function(){ 
+        $('#cancel').on('click',function(e){
+            e.preventDefault(); 
+            $('.show_form').hide().slideUp();
+        }); 
+        
     $('#form').on('submit', function (event) {
         event.preventDefault(); 
             $('#alert').html('');

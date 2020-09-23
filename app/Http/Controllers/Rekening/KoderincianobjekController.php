@@ -140,7 +140,7 @@ class KoderincianobjekController extends Controller
         $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
         $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
         $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;
-        $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
+       // $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
         for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
             if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
                 if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherekd_rek_rincian_obj($kd_rek_rincian_obj[$i])->count() > 0) {

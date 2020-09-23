@@ -43,7 +43,7 @@ class TmopdController extends Controller
                 'n_opd' => '',
                 'initial' => '',
                 'active' => '',
-                'ket' => ''  
+                'ket' => ''
             ]
         );
     }
@@ -72,8 +72,8 @@ class TmopdController extends Controller
                 }
             }, TRUE)
             ->editColumn('action', function ($p) {
-                return '<button to="' . Url($this->route . $p->id . '.edit') . '" class="btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
-                        <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
+                return '<button to="' . Url('aplikasi/satker/' . $p->id . '/' . 'edit') . '" class="edit btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
+                        <button onclick="javascript:konfirmasi_hp(' . $p->id . ')"  class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
                         ';
             }, TRUE)
             ->addIndexColumn()
@@ -100,9 +100,6 @@ class TmopdController extends Controller
             'msg' => 'data berhasil di aktifkan'
         ]);
     }
-
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -113,10 +110,10 @@ class TmopdController extends Controller
     {
         $request->validate([
             'kode' => 'required',
-            'n_opd' => 'required',
-            'initial' => 'required',
-            'tmrumpun_id' => 'required',
+            'n_opd' => 'required|unique:tmopds,n_opd',
             'active' => 'required'
+        ], [
+            'n_opd' => 'Nama Satker / OPD'
         ]);
         $r  = new Tmopd;
         $r->kode = $request->kode;
@@ -151,28 +148,28 @@ class TmopdController extends Controller
     {
         $data = Tmopd::find($id);
         return view(
-            $this->view . 'form',
+            $this->view . 'tmopd_form',
             [
-                'action' => route($this->route . 'store'),
-                'method_field' => 'PACTH',
+                'action' => route($this->route .'update',$id),
+                'method_field' => 'POST',
                 'route' => $this->route,
                 'kode' => $data->kode,
                 'n_opd' => $data->n_opd,
                 'initial' => $data->initial,
-                'ket' => $data->ket,
+                'ket' => $data->ket, 
                 'active' => $data->active
             ]
         );
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
-            'kode' => 'required|unique:tmopds,kode',
-            'n_opd' => 'required',
-            'initial' => 'required',
-            'tmrumpun_id' => 'required',
+            'kode' => 'required',
+            'n_opd' => 'required|unique:tmopds,n_opd',
             'active' => 'required'
+        ], [
+            'n_opd' => 'Nama Satker / OPD'
         ]);
         $r              = new Tmopd;
         $r->kode        = $request->kode;

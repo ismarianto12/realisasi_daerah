@@ -3,10 +3,11 @@
 @section('content')
 <script>
     $(function(){
-        $('#datauser').on('click', '.edit', function() {
+        $('#satkertb').on('click', '.edit', function() {
             var access = $(this).attr('to');
             $('.show_form').load(access).slideDown();
         }); 
+ 
     });  
 </script>
 
@@ -116,6 +117,39 @@
             });
 
         });   
+
+        function konfirmasi_hp(n) {
+            $.confirm({
+                title: '',
+                content: 'Apakah Anda yakin akan menghapus data ini?',
+                icon: 'icon icon-question amber-text',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'scale',
+                type: 'red',
+                buttons: {
+                    ok: {
+                        text: 'ok!',
+                        btnClass: 'btn-primary',
+                        keys: [ 'enter' ],
+                        action: function() {
+                            del_dt(n);
+                        }
+                    },
+                    cancel: function() {}
+                }
+            });
+        }
+        
+    function del_dt(n){
+        var c = n; 
+        $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+                table.api().ajax.reload();
+            }, "JSON").fail(function(){
+                reload();
+            });
+        }
+    
 
         $(function(){
             $('.tambah').on('click',function(e){

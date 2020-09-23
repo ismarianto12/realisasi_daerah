@@ -1,5 +1,5 @@
-@extends('layouts.template') 
-@section('title','Kode Rincian Object') 
+@extends('layouts.template')
+@section('title','Kode Rincian Object')
 
 @section('content')
 <div class="page bg-light">
@@ -34,32 +34,29 @@
             <div class="card-body no-b">
                 <form class="needs-validation" id="form" method="POST" novalidate>
                     {{ method_field('POST') }}
-                    <input type="hidden" name="tmrekening_akun_kelompok_jenis_objek_id" value="{{ $tmrekening_akun_kelompok_jenis_objek_id }}" />
+                    <input type="hidden" name="tmrekening_akun_kelompok_jenis_objek_id"
+                        value="{{ $tmrekening_akun_kelompok_jenis_objek_id }}" />
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th></th>
                                 <th>Kode Rek. Rincian Obj ( <span class="text-danger">*</span> )</th>
                                 <th>Nama Rek. Rincian Obj ( <span class="text-danger">*</span> )</th>
-                                <th>SKPD / SATKER BIDANG AKSES (SATKER)</th>  
+
                             </tr>
                         </thead>
                         <tbody id="vform">
                             <tr>
                                 @include('layouts._includes.form.deleterow')
-                                <td><input type="text" name="kd_rek_rincian_obj[]" class="form-control r-0 s-12" autocomplete="off" value="{{ $kd_awal }}"/></td>
-                                <td><input type="text" name="nm_rek_rincian_obj[]" class="form-control r-0 s-12" autocomplete="off"/></td>
-                                <td><select name="tmsikd_satkers_id" id="tmsikd_satkers_id" class="form-control select2 " required>
-                                    @foreach($tmsikd_satkers as $tmsikd_satker)
-                                    <option value="{{ $tmsikd_satker->id }}">
-                                        [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                    </option>
-                                    @endforeach
-                                </select></td> 
+                                <td><input type="text" name="kd_rek_rincian_obj[]" class="form-control r-0 s-12"
+                                        autocomplete="off" value="{{ $kd_awal }}" /></td>
+                                <td><input type="text" name="nm_rek_rincian_obj[]" class="form-control r-0 s-12"
+                                        autocomplete="off" /></td>
                             </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-outline-secondary btn-sm" title="Tambah baris" onclick="javascript:add_form()"><i class="icon-add"></i> Tambah Baris</a>
+                    <a class="btn btn-outline-secondary btn-sm" title="Tambah baris" onclick="javascript:add_form()"><i
+                            class="icon-add"></i> Tambah Baris</a>
                 </form>
             </div>
         </div>
