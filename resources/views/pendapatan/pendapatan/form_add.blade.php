@@ -92,12 +92,16 @@
                                     </select>
                                 </div>
                             </div>
+                            @if($listRincianSubs == '')     
+                                <div class="alert alert-danger"><i class="fa fa-info"></i>Silahkan Tambahkan rekening rincian terkait pendapatan .</div>
+                            @else
                             <div class="form-group">
                                 <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
                                 <div class="col-md-8">
                                 <input name="jumlah_mak" id="jumlah_mak" type="number" placeholder="" class="form-control number" autocomplete="off" />
                             </div>
                         </div>
+                        @endif
                     </div>
                     </div>
 

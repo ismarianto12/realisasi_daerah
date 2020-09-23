@@ -77,25 +77,35 @@ class Tmrka_mata_anggaran extends Model
     }
     public static function getInputListDataSetRincSub($par)
     {
+        //def level 
+        $level_id  = Properti_app::getlevel();
+        //def satuan kerja session 
+        $satker_id = Auth::user()->sikd_satker_id;
+        
         if ($par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != "")
             $cond['id'] = $par['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         else
             $cond['tmrekening_akun_kelompok_jenis_objek_id'] = $par['tmrekening_akun_kelompok_jenis_objek_id'];
 
-        // Not In
-        // $notIn = Tmrka_mata_anggaran::wheretmrka_id($par['tmrka_id'])
-        //     ->select('id', 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
-        //     ->pluck('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
-        //     ->toArray();
         $tanggal_sekarang = date('Y-m-d');
         $notIn = Tmrka_mata_anggaran::wheretanggal_lapor($tanggal_sekarang)
             ->select('id', 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
             ->pluck('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
             ->toArray();
 
-        $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-            ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-            ->get();
+        if ($level_id == 1) {
+
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        } else {
+            $satker['tmsikd_satkers_id']  = $satker_id;
+            $kondisi = array_merge($cond, $satker);
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($kondisi)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        } 
+
         $idx = 0;
         $dataSet = [];
         foreach ($rekRincians as $key => $rekRincian) {
