@@ -48,8 +48,6 @@
         href="http://localhost/simral/public/css/tooltipster-sideTip-borderless.min.css">
 
     <script src="{{ asset('/assets/template/js/aplikasi.js') }}"></script>
-
-
 </head>
 
 <body>

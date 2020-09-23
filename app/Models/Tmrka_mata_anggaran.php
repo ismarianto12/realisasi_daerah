@@ -93,8 +93,7 @@ class Tmrka_mata_anggaran extends Model
             ->pluck('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
             ->toArray();
 
-        if ($level_id == 1) {
-
+        if ($level_id == 1) { 
             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
@@ -130,7 +129,6 @@ class Tmrka_mata_anggaran extends Model
                 $idx++;
             }
         }
-
         return $dataSet;
     }
 }

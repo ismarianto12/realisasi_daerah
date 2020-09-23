@@ -141,7 +141,8 @@
                     // dd($tmsikd_satkers);
                     @endphp
 
-                    [ {{ $satker_kode }} ] - [ {{ $satker_nm }} ]
+                    <b> [ {{ $satker_kode }} ] - [ {{ $satker_nm }} ] </b>
+                    <hr />
                     <table id="datatable" class="table table-striped no-b" style="width:100%">
                         <thead>
                             <tr>
@@ -234,7 +235,7 @@
         rowGroup: {
             startRender: function(rows, group){
                 return $('<tr/>')
-                    .append('<td><td/>')
+                    .append('<td>')
                     .append(group)
             },
             endRender: null,
