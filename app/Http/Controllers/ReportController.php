@@ -186,9 +186,7 @@ class ReportController extends Controller
         // header("Content-Type: application/octet-stream");
         // header("Content-Type: application/download");
         // header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        // header("Content-Transfer-Encoding: binary ");
-
-
+        // header("Content-Transfer-Encoding: binary "); 
         // if ($request->tahun_id == '' || $request->jenis_id  == '' || $request->jenis_id == '') return abort('data tidak terparsing dengan baik .. ', 404);
 
         $tahun_id      = $request->tahun_id;
@@ -263,7 +261,7 @@ class ReportController extends Controller
             'objectrincian',
             'jenisobject',
             'kolompokjenis',
-            'akun_kelompok',
+            'akun_kelompok'
         ));
     }
 

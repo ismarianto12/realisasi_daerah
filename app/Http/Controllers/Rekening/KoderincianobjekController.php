@@ -245,7 +245,7 @@ class KoderincianobjekController extends Controller
     {
         $kd_rek_rincian_obj  = $request->kd_rek_rincian_obj;
         $request->validate([
-            'kd_rek_rincian_obj' => 'required|max:8|unique:tmrekening_akun_kelompok_jenis_objek_rincians,kd_rek_rincian_obj,' . $id,
+            'kd_rek_rincian_obj' => 'required|max:10|unique:tmrekening_akun_kelompok_jenis_objek_rincians,kd_rek_rincian_obj,' . $id,
             'nm_rek_rincian_obj' => 'required|max:30'
         ]);
 
