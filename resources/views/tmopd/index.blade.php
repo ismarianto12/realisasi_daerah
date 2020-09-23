@@ -60,6 +60,8 @@
 @foreach($load_script as $script)
 @php echo $script @endphp
 @endforeach
+
+@section('script')
 <script>
     $(function () {
             $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
@@ -144,7 +146,7 @@
     function del_dt(n){
         var c = n; 
         $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
-            satkertb.api().ajax.reload();
+            $('#satkertb').DataTable().ajax.reload();
             }, "JSON").fail(function(){
                 reload();
             });
@@ -156,7 +158,7 @@
                 e.preventDefault();
                 var url = $(this).attr('to');
                 $('.show_form').load(url).slideDown(); 
-                satkertb.ajax.reload();
+                $('#satkertb').DataTable().ajax.reload();
             });  
           });
  
@@ -165,4 +167,5 @@
 
 
 
+@endsection
 @endsection

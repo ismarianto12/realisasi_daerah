@@ -70,8 +70,8 @@
             $('#btnSave').attr('disabled', true); 
             url = "{{ route($route.'store') }}";
             $.post(url, $(this).serialize(), function(data){
-                $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
-                satkertb.ajax.reload();
+                $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.msg + "</div>");
+                $('#satkertb').DataTable().ajax.reload();
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
                 $.each(respon.errors, function(index, value){
