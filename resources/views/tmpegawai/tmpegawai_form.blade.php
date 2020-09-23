@@ -19,20 +19,7 @@
                 <input type="text" name="nip" class="form-control" id="nip" placeholder="Nip Pegawai ." value="">
             </div>
         </div>
-
-        <div class="form-group form-show-validation row">
-            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Password <span
-                    class="required-label">*</span></label>
-            <div class="col-sm-8">
-                <select name="jabatan_id" class="form-control" id="jabatan_id">
-                    @foreach ($jabatan as $jabat)
-                    <option value="{{  $jabat['jabatan_id'] }}">{{ $jabat['n_jabatan'] }} </option>
-
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
+ 
         <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">No Telp<span
                     class="required-label">*</span></label>
