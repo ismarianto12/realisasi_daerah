@@ -7,7 +7,7 @@
             var access = $(this).attr('to');
             $('.show_form').load(access).slideDown();
         }); 
- 
+
     });  
 </script>
 
@@ -144,7 +144,7 @@
     function del_dt(n){
         var c = n; 
         $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
-                table.api().ajax.reload();
+            satkertb.api().ajax.reload();
             }, "JSON").fail(function(){
                 reload();
             });

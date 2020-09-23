@@ -192,7 +192,7 @@ class TmopdController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $data = Tmopd::whereIn($request->id);
+        $data = Tmopd::where('id',$request->id);
         if ($data != '') {
             $data->delete();
             return response()->json([
