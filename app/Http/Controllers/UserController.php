@@ -53,6 +53,7 @@ class UserController extends Controller
         $telp     = '';
         $c_status = '';
         $photo = '';
+        $pegagawinm = '';
         $d_entry = '';
         $d_update = '';
         $ttd = '';
@@ -162,7 +163,7 @@ class UserController extends Controller
             'last_login' => $request->last_login,
             'telp' => $request->telp,
             'c_status' => $request->c_status,
-            'photo' => $request->photo, 
+            'photo' => $request->photo,
             'ttd' => $request->ttd,
             'paraf' => $request->paraf,
             'tmuser_level_id' => $request->tmuser_level_id,
@@ -197,8 +198,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $edit = User::with(['tmpegawai'])->findOrFail($id);
+       //dd($edit->tmpegawai->n_pegawai);  
+
         $actionform = 'edit';
-        $pegawainm  = ($edit->n_pegawai) ? $edit->tmpegawai->n_pegawai : 'kosong';
+        $pegawainm  = ($edit->tmpegawai->n_pegawai) ? $edit->tmpegawai->n_pegawai : 'kosong';
         $method_field = method_field('put');
         $tmpegawai_id = $edit->tmpegawai_id;
         $sikd_satker_id = $edit->sikd_satker_id;

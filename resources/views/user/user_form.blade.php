@@ -8,12 +8,16 @@
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="cari_pgawai" placeholder="Klik Cari " value="">
-                @if($actionform == 'edit') 
-                    <label>Nama Pegawai yang di pilih : {{ $pegawainm }}</label>  
-                  @else 
-                 @endif
+                <br /><br />
+                <div class="alert alert-success">Jika ada perubahan nama pegawai silahkan pilih pada column pencarian .</div>
+
+                @if($actionform == 'edit')
+                <label>Nama Pegawai yang di pilih sebelumnya : {{ $pegawainm }}</label>
+                @else
+                @endif
                 <div id="nama_peg"></div>
                 <div id="pegawai_id"></div>
+
             </div>
         </div>
         <div class="form-group form-show-validation row">
@@ -113,7 +117,7 @@
                 <select class="form-control " name="tmuser_level_id">
                     @foreach($level as $lv)
                     @php
-                   // dd($lv);
+                    // dd($lv);
                     $lcheck = ($lv == (int) $tmuser_level_id) ? 'checked' : '';
                     @endphp
                     <option value="{{ $lv['id'] }}" {{ $lcheck }}>{{ $lv['description'] }}</option>
@@ -147,8 +151,7 @@
 
         function readURL(input) {
             if (input.files && input.files[0]) {
-              var reader = new FileReader();
-              
+              var reader = new FileReader(); 
               reader.onload = function(e) {
                 $('#foto').attr('src', e.target.result);
               }

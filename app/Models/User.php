@@ -13,7 +13,7 @@ class User extends Model
 
     function Tmpegawai()
     {
-        return $this->belongsTo(Tmpegawai::class, 'tmpegawai_id');
+        return $this->belongsTo(Tmpegawai::class);
     }
 
     function Tmsikd_satker()
