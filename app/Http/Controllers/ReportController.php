@@ -29,7 +29,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
-use App\Libraries\Jasper_report;  
+use App\Libraries\Jasper_report;
 
 use function PHPSTORM_META\map;
 
@@ -324,17 +324,20 @@ class ReportController extends Controller
     public function tesjasper(Request $request)
     {
 
-        $jns_lap        = $request->jns_lap; 
+        // $jns_lap        = $request->jns_lap; 
         $format_reports = Jasper_report::getArrayOutputFormats();
-        $format         = $request->format;
+        // $format         = $request->format;
+        $format = $request->format;
 
         $jasper_dir = "resources/views/jasper/";
-        $reportName = $jasper_dir . 'reoport_gw.jrxml';
+        $reportName = $jasper_dir . 'report3.jrxml';
 
-        $params = 'PAGE=' . $request->dinasid;
-
+        $params = $request->TAHUN;
+        // $params = '';
+        // dd($params);
         $jasper = new Jasper_report();
         $jasper->createReport($reportName, $format, $params);
         $jasper->showReport();
+        // dd($jasper);
     }
 }

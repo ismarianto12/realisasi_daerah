@@ -7,4 +7,4 @@ java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp ".:/var/www/html
 
 java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp ".:/home/webapp/simral_adminframe/app/Libraries/jasper_report/JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1
 
-java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp "D:\xampp\htdocs\sierpekade_v0_1\app\Libraries\jasper_report\JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1
+java -Duser.language=id -Duser.country=ID -Xms256m -Xmx512m -cp "D:\xampp64\www\retribusi\app\Libraries\jasper_report\JasperSimpleServer.jar" jaspersimpleserver.Main -d >> ./jasper.log 2>&1

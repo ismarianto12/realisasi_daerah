@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"> 
-<head> 
+<html lang="en">
+
+<head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>@yield('title') - RETRIBUSIs {{ Properti_app::getTahun() }}</title>
@@ -30,24 +31,24 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('/assets/template/') }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/assets/template/') }}/css/atlantis.css">
- 
+
     <link rel="stylesheet" href="{{ asset('/assets/template/') }}/css/demo.css">
-    <script src="{{ asset('/assets/template/') }}/js/sweetalert2@9.js"></script>  
+    <script src="{{ asset('/assets/template/') }}/js/sweetalert2@9.js"></script>
     <script src="{{ asset('/assets/template/') }}/js/core/jquery.3.2.1.min.js"></script>
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js">
     </script>
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://localhost/simral/public/css/tooltipster.bundle.min.css">
-<link rel="stylesheet" type="text/css" href="http://localhost/simral/public/css/tooltipster-sideTip-borderless.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://localhost/simral/public/css/tooltipster.bundle.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="http://localhost/simral/public/css/tooltipster-sideTip-borderless.min.css">
+
     <script src="{{ asset('/assets/template/js/aplikasi.js') }}"></script>
-     
+
 
 </head>
 
@@ -58,8 +59,8 @@
             <div class="logo-header" data-background-color="blue">
 
                 <a href="index.html" class="logo">
-                    <img src="{{ asset('assets/template/img/logo.png') }}"
-                        alt="navbar brand" class="navbar-brand" style="
+                    <img src="{{ asset('assets/template/img/logo.png') }}" alt="navbar brand" class="navbar-brand"
+                        style="
                         height: 38px;
                     ">
                 </a>
@@ -224,7 +225,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="see-all" href="javascript:void(0);">See all notifications<i
+                                    <a class="see-all" href="javascript:void(0);">Lihat Semua Pendapatan .<i
                                             class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
@@ -303,8 +304,8 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="{{ asset('/assets/template/') }}/img/profile.jpg"
-                                        alt="..." class="avatar-img rounded-circle">
+                                    <img src="{{ asset('/assets/template/') }}/img/profile.jpg" alt="..."
+                                        class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -324,7 +325,7 @@
                                     <li>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ Url('akses/profile') }}">My Profile</a>
-                                       
+
                                         <a class="dropdown-item" href="#">Inbox</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
@@ -351,14 +352,14 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="{{ asset('/assets/template/') }}/img/profile.jpg"
-                                alt="..." class="avatar-img rounded-circle">
+                            <img src="{{ asset('/assets/template/') }}/img/profile.jpg" alt="..."
+                                class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
                                     <h4>{{ Auth::user()->realname }}</h4>
-                                    <span class="user-level">Administrator</span>
+                                    <span class="user-level">{{ Properti_app::getsatker() }}</span>
                                     <span class="caret"></span>
                                 </span>
                             </a>
@@ -396,7 +397,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li> 
+                        </li>
                         @php echo Menu_app::list_menu() @endphp
                     </ul>
                 </div>
@@ -425,9 +426,9 @@
                         </ul>
                     </nav>
                     <div class="copyright ml-auto">
-                    @php
-                      echo date('Y')   
-                    @endphp, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
+                        @php
+                        echo date('Y')
+                        @endphp, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
                     </div>
                 </div>
             </footer>
@@ -436,13 +437,11 @@
     </div>
     <!--   Core JS Files   -->
 
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js">
     </script>
 
     <!-- jQuery Scrollbar -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js">
     </script>
 
     <!-- Moment JS -->
@@ -452,8 +451,7 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js">
     </script>
 
     <!-- Chart Circle -->
@@ -462,13 +460,11 @@
 
 
     <!-- Bootstrap Notify -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
 
     <!-- Bootstrap Toggle -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js">
     </script>
 
     <!-- jQuery Vector Maps -->
@@ -492,23 +488,19 @@
     </script>
 
     <!-- DateTimePicker -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/datepicker/bootstrap-datetimepicker.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/datepicker/bootstrap-datetimepicker.min.js">
     </script>
 
     <!-- Bootstrap Tagsinput -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js">
     </script>
 
     <!-- Bootstrap Wizard -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-wizard/bootstrapwizard.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-wizard/bootstrapwizard.js">
     </script>
 
     <!-- jQuery Validation -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery.validate/jquery.validate.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.validate/jquery.validate.min.js">
     </script>
 
     <!-- Summernote -->
@@ -528,8 +520,7 @@
     </script>
 
     <!-- Magnific Popup -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js">
     </script>
 
     <!-- Atlantis JS -->
@@ -542,8 +533,7 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js">
     </script>
 
     <!-- Chart Circle -->
@@ -556,12 +546,11 @@
     </script>
 
     <!-- Bootstrap Notify -->
-    <script
-        src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
+    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
     @yield('script')
 
-    
+
     <script>
         Circles.create({
             id: 'circles-1',

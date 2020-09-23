@@ -1,0 +1,45 @@
+Sep 23, 2020 1:47:30 PM jaspersimpleserver.Main initialize
+SEVERE: null
+java.io.FileNotFoundException: .\JasperSimpleServer.properties (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:146)
+	at java.io.FileInputStream.<init>(FileInputStream.java:101)
+	at jaspersimpleserver.Main.initialize(Main.java:120)
+	at jaspersimpleserver.Main.main(Main.java:48)
+
+Sep 23, 2020 1:47:30 PM jaspersimpleserver.Main main
+SEVERE: Initialization fail
+Sep 23, 2020 1:47:51 PM jaspersimpleserver.Main initialize
+SEVERE: null
+java.io.FileNotFoundException: .\JasperSimpleServer.properties (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:146)
+	at java.io.FileInputStream.<init>(FileInputStream.java:101)
+	at jaspersimpleserver.Main.initialize(Main.java:120)
+	at jaspersimpleserver.Main.main(Main.java:48)
+
+Sep 23, 2020 1:47:51 PM jaspersimpleserver.Main main
+SEVERE: Initialization fail
+Sep 23, 2020 1:48:30 PM jaspersimpleserver.Main initialize
+SEVERE: null
+java.io.FileNotFoundException: .\JasperSimpleServer.properties (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:146)
+	at java.io.FileInputStream.<init>(FileInputStream.java:101)
+	at jaspersimpleserver.Main.initialize(Main.java:120)
+	at jaspersimpleserver.Main.main(Main.java:48)
+
+Sep 23, 2020 1:48:30 PM jaspersimpleserver.Main main
+SEVERE: Initialization fail
+Error: Could not find or load main class jaspersimpleserver.Main
+Sep 23, 2020 1:48:47 PM jaspersimpleserver.Main initialize
+SEVERE: null
+java.io.FileNotFoundException: .\JasperSimpleServer.properties (The system cannot find the file specified)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:146)
+	at java.io.FileInputStream.<init>(FileInputStream.java:101)
+	at jaspersimpleserver.Main.initialize(Main.java:120)
+	at jaspersimpleserver.Main.main(Main.java:48)
+
+Sep 23, 2020 1:48:47 PM jaspersimpleserver.Main main
+SEVERE: Initialization fail

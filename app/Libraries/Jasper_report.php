@@ -88,8 +88,7 @@ class Jasper_report
         // if(!$exists)
         //     Storage::disk('sftp')->put($f, $w);
         // else
-        //     Storage::disk('sftp')->append($f, $w);
-   
+        //     Storage::disk('sftp')->append($f, $w); 
    
         }
 
