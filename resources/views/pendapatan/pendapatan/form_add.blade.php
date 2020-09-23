@@ -118,7 +118,7 @@
                         <tbody>
                             @if($listRincianSubs == '')     
 
-                            <tr><td colspan="6">Data rincian object kosong.</td></tr> 
+                            <tr><td colspan="6"><div class="alert alert-danger"><center>Data rincian object kosong.</center></div></td></tr> 
                             
                             @else
 
