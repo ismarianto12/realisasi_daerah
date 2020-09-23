@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Libraries; 
+namespace App\Libraries;
+
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+use App\Helpers\Properti_app;
 
 class Sikd_list_option
 {
@@ -112,7 +114,7 @@ class Sikd_list_option
             $where = ["trsikd_bidang_skpds.tmsikd_satker_id" => $tmsikd_satker_id];
         }
         return Trsikd_bidang_skpd::select(
-            'tmsikd_bidangs.id',    
+            'tmsikd_bidangs.id',
             'tmsikd_bidangs.kd_bidang',
             'tmsikd_bidangs.nm_bidang'
         )
@@ -194,9 +196,22 @@ class Sikd_list_option
 
     public static function getListRekRincians($obj_id)
     {
-        return Tmrekening_akun_kelompok_jenis_objek_rincian::wheretmrekening_akun_kelompok_jenis_objek_id($obj_id)
-            ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-            ->get();
+        $level_id  = Properti_app::getlevel();
+        $satker_id = Auth::user()->sikd_satker_id;
+
+        if ($level_id == 3) {
+            $where = [
+                'tmsikd_satkers_id' => $satker_id,
+                'tmrekening_akun_kelompok_jenis_objek_id' => $obj_id
+            ];
+            return Tmrekening_akun_kelompok_jenis_objek_rincian::where($where)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        } else {
+            return Tmrekening_akun_kelompok_jenis_objek_rincian::wheretmrekening_akun_kelompok_jenis_objek_id($obj_id)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        }
     }
     public static function getListRekRinciansSub($rincian_id)
     {
