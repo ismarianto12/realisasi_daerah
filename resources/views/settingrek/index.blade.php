@@ -330,8 +330,8 @@ $('#simpandata').on('click', function (event) {
                                     Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
-                                    required onchange="selectOnChange()">
+                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih" class="form-control select2 "
+                                    required>
                                     <option value="0">Semua Satker</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
