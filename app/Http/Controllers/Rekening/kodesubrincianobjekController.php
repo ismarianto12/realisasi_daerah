@@ -128,7 +128,7 @@ class kodesubrincianobjekController extends Controller
                     ], 422);
                 } else {
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub();
-                    $tmrekening_akun_kelompok_jenis_objek_rincian_sub->id                       = $kd_rek_rincian_objek_sub[$i].$i;
+                    $tmrekening_akun_kelompok_jenis_objek_rincian_sub->id                       = $kd_rek_rincian_objek_sub[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->kd_rek_rincian_objek_sub = $kd_rek_rincian_objek_sub[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->nm_rek_rincian_objek_sub = $nm_rek_rincian_objek_sub[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->dasar_hukum              = $dasar_hukum[$i];
