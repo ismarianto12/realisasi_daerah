@@ -45,7 +45,7 @@ class SettingrekeningController extends Controller
         $tmsikd_satkers     = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $title              = $this->title;
         $route              = $this->route;
-        $toolbar            = ['list', 'save', 'rs'];
+        $toolbar            = ['list', 'save_rek', 'rs'];
         $tmrekening_akuns   = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         return view($this->view . 'index', compact(
             'title',
@@ -108,12 +108,20 @@ class SettingrekeningController extends Controller
             ->editColumn('nm_satker', function ($p) {
                 $f = Tmsikd_satker::where('id', $p->tmsikd_satkers_id);
                 if ($f->count() == '') {
-                    return '<span style="color: red"><b>Kosong</b></span>';
+                    return '<span style="color: red"><b>Kosong</b></span><br /><small>Belum di setting.</small>';
                 } else {
                     return "<b>" . $f->first()->nama . "</b>";
                 }
             })
-            ->rawColumns(['id', 'nm_rek_rincian_obj', 'nm_satker'])
+            ->editColumn('nm_satker', function ($p) {
+                $f = Tmsikd_satker::where('id', $p->tmsikd_satkers_id);
+                if ($f->count() == '') {
+                    return '<span style="color: red"><b>Kosong</b></span><br /><small>Belum di setting.</small>';
+                } else {
+                    return "<b>" . $f->first()->nama . "</b>";
+                }
+            })
+            ->rawColumns(['id', 'nm_rek_rincian_obj', 'nm_satker','action'])
             ->toJson();
     }
 

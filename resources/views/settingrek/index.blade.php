@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">
-                         
+
 
                         <div class="form-group m-0">
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
@@ -60,9 +60,11 @@
                                 </select>
                             </div>
                         </div>
-                        <small><i>Jika Level akses OPD =  Kosong  Silahkan tambahkan Pada rekening rincian dengan memmilih list opd di bawah .</i></small>
+                        <small><i>Jika Level akses OPD = Kosong Silahkan tambahkan Pada rekening rincian dengan memmilih
+                                list opd di bawah .</i></small>
                         <div class="form-group m-0">
-                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd / Satker
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
+                                    Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
@@ -91,8 +93,8 @@
                             <th width="30"></th>
                             <th width="130">Kode Rek. Rincian Obj</th>
                             <th>Nama Rek. Rincian Obj</th>
-                            <th width="120">Klasifikasi</th>
                             <th width="120">Level akses opd</th>
+                            <th width="120">Klasifikasi</th>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -137,9 +139,9 @@
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj'},
             {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
-            {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
             {data: 'nm_satker', name: 'nm_satker',orderable: false, searchable: false},
-         
+            {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
+        
         ]
     });
     //if change data 
@@ -261,43 +263,93 @@
         var c = new Array();
         $("input:checked").each(function(){ c.push($(this).val()); });
         if(c.length == 0){
-            $.alert("Silahkan memilih data yang akan dihapus.");
+            $.alert("Silahkan nama dan kode rekening yang akan di batalkan .");
         }else{
             $.post("{{ route('settingrek.batalkan', ':id') }}", {'_method' : 'POST', 'id' : c}, function(data) {
-                table.api().ajax.reload();
+                $('#datatable').DataTable().ajax.reload();
             }, "JSON").fail(function(){
-                reload();
+                $('#datatable').DataTable().ajax.reload();
+                reload(); 
             });
         }
     }
-  
-    //simpan data if click save  
-    $('#btnSave').on('click', function (event) { 
-        var c          = new Array();
-        var satker_id  = $('#tmsikd_satker_id').val();
-        $("input:checked").each(function(){ c.push($(this).val()); });
-        if(c.length == 0){
-            $.alert("Silahkan memilih satker yang akan di set.","Ket : ");
-        }else{
-           $.post("{{ route($route.'update', ':id') }}",
-                     {
-                       "_method" : "PATCH", "id": c,'satker_id': satker_id     
-                     }, 
-                function(data) {
-                     table.api().ajax.reload();
-                     $.alert('data berhasil di simpan berdasarkan sateker yang di pilih .');
-                }, "JSON").fail(function(data){
-                    err = ''; respon = data.responseJSON;
-                    $.each(respon.errors, function(index, value){
-                        err += "<li>" + value +"</li>";
-                    });
-                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
-                }).always(function(){
-                    $('#btnSave').removeAttr('disabled');
-                });
-        } 
 
-    });     
-  
+    function save_rek(){
+        $('#modal_satker').modal('show');   
+        
+$('#simpandata').on('click', function (event) { 
+    var c          = new Array();
+    var satker_id  = $('#tmsikd_satker_id_pilih').val();
+    $("input:checked").each(function(){ c.push($(this).val()); });
+    if(c.length == 0){
+        $.alert("Silahkan memilih satker yang akan di set.","Ket : ");
+    }else{
+       $.post("{{ route($route.'update', ':id') }}",
+                 {
+                   "_method" : "PATCH", "id": c,'satker_id': satker_id     
+                 }, 
+            function(data) {
+                 table.api().ajax.reload();
+                 $.alert('data berhasil di simpan berdasarkan sateker yang di pilih .');
+            }, "JSON").fail(function(data){
+                err = ''; respon = data.responseJSON;
+                $.each(respon.errors, function(index, value){
+                    err += "<li>" + value +"</li>";
+                });
+                $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+            }).always(function(){
+                $('#btnSave').removeAttr('disabled');
+            });
+    } 
+
+});  
+    }
+     
 </script>
+//satker model
+<div class="modal fade" id="modal_satker" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Satuan OPD
+                    rapat.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    * ) perlu di ketahui untuk menambahkan data user login , silahkan tambahkan data pegawai terlebih
+                    dahulu jika tidak ada list table
+                </div> 
+                <div class="form-row form-inline">
+                    <div class="col-md-12">
+                        <div class="form-group m-0">
+                            <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
+                                    Satker
+                                    :</strong></label>
+                            <div class="col-md-5 p-0 mb-2">
+                                <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
+                                    required onchange="selectOnChange()">
+                                    <option value="0">Semua Satker</option>
+                                    @foreach($tmsikd_satkers as $tmsikd_satker)
+                                    <option value="{{ $tmsikd_satker->id }}">
+                                        [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group m-0">
+                            <button class="btn btn-primary" id="simpandata">Simpan Data</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection

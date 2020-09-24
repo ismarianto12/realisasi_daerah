@@ -48,6 +48,11 @@
             <a class="btn btn-outline-secondary btn-sm" title="Simpan Data" id="btnSave" href="#"
                 onclick="javascript:save()"><i class="fa fa-save"></i> Simpan <span id="txtSave"></span></a>
             @endif
+            
+            @if(in_array('save_rek', $toolbar))
+            <a class="btn btn-outline-secondary btn-sm" title="Simpan Data" id="btnSave" href="#"
+                onclick="javascript:save_rek()"><i class="fa fa-plus"></i> Tambah Rekening Satker <span id="txtSave"></span></a>
+            @endif
             <span id="btnExtra"></span>
             <div class="col-md-7">
                 <h5 class="float-right" style="font-weight:300;line-height:1.2;color:#606676">
