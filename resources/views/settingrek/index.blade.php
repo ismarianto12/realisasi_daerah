@@ -282,15 +282,15 @@ $('#simpandata').on('click', function (event) {
     var satker_id  = $('#tmsikd_satker_id_pilih').val();
     $("input:checked").each(function(){ c.push($(this).val()); });
     if(c.length == 0){
-        $.alert("Silahkan memilih satker yang akan di set.","Ket : ");
+        $.alert("Silahkan checklist dulu list rincian object rekening nya gays .","Perhatian ");
     }else{
        $.post("{{ route($route.'update', ':id') }}",
                  {
                    "_method" : "PATCH", "id": c,'satker_id': satker_id     
                  }, 
             function(data) {
-                 table.api().ajax.reload();
-                 $.alert('data berhasil di simpan berdasarkan sateker yang di pilih .');
+                $('#datatable').DataTable().ajax.reload();  
+        $('#modal_satker').modal('hide');   
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
                 $.each(respon.errors, function(index, value){
@@ -312,8 +312,7 @@ $('#simpandata').on('click', function (event) {
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Satuan OPD
-                    rapat.</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Satuan OPD</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
