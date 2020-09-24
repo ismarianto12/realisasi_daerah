@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use DataTables;   
+use DataTables;
 // Models
 use App\Models\Setupsikd\Tmrekening_akun;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
@@ -122,13 +122,13 @@ class kodesubrincianobjekController extends Controller
 
         for ($i = 0; $i < count($kd_rek_rincian_objek_sub); $i++) {
             if ($kd_rek_rincian_objek_sub[$i] != "" && $nm_rek_rincian_objek_sub[$i] != "") {
-                if (Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wherekd_rek_rincian_objek_sub($kd_rek_rincian_objek_sub[$i])->count() > 0) {
+                if (Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wherenm_rek_rincian_objek_sub($nm_rek_rincian_objek_sub[$i])->count() > 0) {
                     return response()->json([
-                        'message' => 'kode sudah pernah tersimpan : ' . $kd_rek_rincian_objek_sub[$i]
+                        'message' => 'Nama sub rekening sudah pernah tersimpan : Kode [' . $kd_rek_rincian_objek_sub[$i] . ']' . $nm_rek_rincian_objek_sub[$i]
                     ], 422);
                 } else {
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub();
-                    $tmrekening_akun_kelompok_jenis_objek_rincian_sub->id                       = $kd_rek_rincian_objek_sub[$i];
+                    $tmrekening_akun_kelompok_jenis_objek_rincian_sub->id                       = $kd_rek_rincian_objek_sub[$i].$i;
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->kd_rek_rincian_objek_sub = $kd_rek_rincian_objek_sub[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->nm_rek_rincian_objek_sub = $nm_rek_rincian_objek_sub[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian_sub->dasar_hukum              = $dasar_hukum[$i];
@@ -188,7 +188,7 @@ class kodesubrincianobjekController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_rincian_sub',
             'tmrekening_akun_kelompok_jenis_objek_rincian_id',
             'tmrekening_akun_kelompok_jenis_objek_rincian'
-            
+
         ));
     }
 

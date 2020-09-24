@@ -134,8 +134,8 @@ class PendapatanTargetController extends Controller
             'tahun'           => 'required'
         ]);
         //dd($request);
-        $jumlah        = str_replace(',', ' ', $request->jumlah);
-        $jumlahperuhan = str_replace(',', ' ', $request->jumlah_perubahan);
+        $jumlah        = str_replace(',', '', $request->jumlah);
+        $jumlahperuhan = str_replace(',', '', $request->jumlah_perubahan);
 
         $r                                       = new TmpendapatantargetModel;
         $r->jumlah                               = $jumlah;
@@ -217,8 +217,8 @@ class PendapatanTargetController extends Controller
         ]);
         $r = new TmpendapatantargetModel;
 
-        $jumlah        = str_replace(',', ' ', $request->jumlah);
-        $jumlahperubahan = str_replace(',', ' ', $request->jumlah_perubahan);
+        $jumlah        = str_replace(',', '', $request->jumlah);
+        $jumlahperubahan = str_replace(',', '', $request->jumlah_perubahan);
 
         $r->jumlah                               = $jumlah;
         $r->jumlah_perubahan                     = $jumlahperubahan;
