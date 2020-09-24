@@ -1,14 +1,25 @@
-<div id="msg_error"></div>
+<div id="alert"></div>
 <form id="exampleValidation" action="{{ $action }}" method="POST" class="simpan" enctype="multipart/form-data">
     @csrf
     {{ $method_field }}
     <div class="card-body">
+
+        <div class="form-group form-show-validation row">
+            <label for="nip" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nama Pegawai <span
+                    class="required-label">*</span></label>
+            <div class="col-sm-8">
+                <input type="text" name="n_pegawai" class="form-control" id="nip" placeholder="Nama Pegawai"
+                    value="{{ $n_pegawai }}">
+            </div>
+        </div>
+
+
         <div class="form-group form-show-validation row">
             <label for="tgl_masuk" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tgl masuk <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <input type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" placeholder="Klik Cari "
-                    value="">
+                <input type="date" name="d_masuk" class="form-control" id="tgl_masuk" placeholder="Klik Cari "
+                    value="{{ $d_masuk }}">
             </div>
         </div>
 
@@ -16,10 +27,11 @@
             <label for="nip" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nip <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <input type="text" name="nip" class="form-control" id="nip" placeholder="Nip Pegawai ." value="">
+                <input type="text" name="nip" class="form-control" id="nip" placeholder="Nip Pegawai ."
+                    value="{{ $nip }}">
             </div>
         </div>
- 
+
         <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">No Telp<span
                     class="required-label">*</span></label>
@@ -31,10 +43,21 @@
 
 
         <div class="form-group form-show-validation row">
+            <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Alamat Karyawan<span
+                    class="required-label">*</span></label>
+            <div class="col-sm-8">
+            <textarea class="form-control" name="alamat" rows="4">
+              {{ $alamat }}
+            </textarea>
+            </div>
+        </div>
+
+
+        <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Status aktif <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <select class="form-control " name="c_status">
+                <select class="form-control " name="pegawaistatusid">
                     @php
                     $arr = [
                     1=>'Aktif',
@@ -64,7 +87,7 @@
                     @endforeach
                 </select>
             </div>
-        </div> 
+        </div>
 
         <div class="form-group form-show-validation row">
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Nomor Telp<span
@@ -97,58 +120,25 @@
         //simpan data
         $('.simpan').on('submit', function(e) {
             e.preventDefault();
-            var formData = new FormData(this);
-            
-            var password_lama = $('#password_lama').val();
-            var password_baru = $('#password_baru').val();
+            var url = $(this).attr('action');
 
-            if(password_baru != password_lama){
-                Swal.fire({
-                    title: 'Perhatian',
-                    text: "Maaf Password anda tidak sama.",
-                    icon: 'warning',
+            $('#alert').html('');
+            $('.simpan').attr('disabled', true); 
+            $.post(url, $(this).serialize(), function(data){
+                $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.msg + "</div>");
+                $('#satkertb').DataTable().ajax.reload();
+                $('.show_form').hide().slideUp();
+            }, "JSON").fail(function(data){
+                err = ''; respon = data.responseJSON;
+                $.each(respon.errors, function(index, value){
+                    err += "<li>" + value +"</li>";
                 });
-            }else{  
-
-             $.ajax({
-                type: 'post',
-                url: $(this).attr('action'),
-                data: formData,
-                headers: {
-                    '_csrf': '{{ csrf_token() }}'
-                },
-                mimeType: "multipart/form-data",
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                success: function(data) {
-                    if (data.status == 1) {
-                          html = '<div class="alert alert-success">' + data.msg + '</div><br />';
-                            //$('#sample_form')[0].reset();
-                            //   $('#example2').DataTable().ajax.reload();
-                           $('.show_form').hide().slideUp();
-                       } else if (data.status == 2) {
-                            html = '';
-                            for (var count = 0; count < data.msg.length; count++) {
-                                html += '<div class="alert alert-danger msg">' + data.msg[count] + '</div>';
-                            }  
-                        }
-                        $('#msg_error').html(html).fadeOut();
-                        $("#datauser").DataTable().ajax.reload(); 
-                    },
-                    error: function(xhr, error, status) { 
-                        alert(error)
-                    }
-                });
-              }
-            });
-         
-             //cari data id_ pegawai 
-            $('#cari_pgawai').on('click',function(e){
-                e.preventDefault();
-                $('#modal_pegawai').modal('show');         
-         }); 
+                $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+            }).always(function(){
+                $('.simpan').removeAttr('disabled');
+            }); 
     });
+});
 </script>
 
 

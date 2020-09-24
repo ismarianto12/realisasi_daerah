@@ -3,7 +3,7 @@
 @section('content')
 <script>
     $(function(){
-        $('#datauser').on('click', '.edit', function() {
+        $('#pegawai').on('click', '.edit', function() {
             var access = $(this).attr('to');
             $('.show_form').load(access).slideDown();
         }); 

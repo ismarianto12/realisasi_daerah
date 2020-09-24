@@ -92,7 +92,7 @@
                                     </select>
                                 </div>
                             </div>
-                            @if($listRincianSubs == '')     
+                            @if($rekRincians == '')     
                                 <div class="alert alert-danger"><i class="fa fa-info"></i>Silahkan Tambahkan rekening rincian terkait pendapatan . 
                                      <br />
                                      @php

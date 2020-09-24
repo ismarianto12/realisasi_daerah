@@ -184,6 +184,9 @@ class PendapatanController extends Controller
         $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
         //dd($rekObj_id); 
         $rekRincians    = Sikd_list_option::getListRekRincians($rekObj_id);
+        //dd($rekRincians->count());
+        //exit();
+        
         $rekRincian_id  = $request->rekRincian_id;
 
         // List Rincian Sub

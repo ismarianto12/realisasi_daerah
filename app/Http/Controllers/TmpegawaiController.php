@@ -57,8 +57,8 @@ class TmpegawaiController extends Controller
 
             return DataTables::of($pegawaidata)
                 ->editColumn('action', function ($p) {
-                    return '<button to="' . Url($this->route . $p->id . '.edit') . '" class="btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
-                            <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
+                    return '<button to="' . route($this->route . 'edit', $p->id) . '" class="edit btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit </button>
+                            <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i>Delete</button>
                             ';
                 }, TRUE)
                 ->addIndexColumn()
@@ -118,28 +118,17 @@ class TmpegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'pegawaiid' => 'required|unique:pegawaiid',
-            'satuankerjaid' => 'required',
-            'jabatanid' => 'required',
+        $request->validate([
+            'pegawaiid' => 'unique:pegawaiid',  
             'pegawaistatusid' => 'required',
-            'd_masuk' => 'required',
-            'd_keluar' => 'required',
+            'd_masuk' => 'required', 
             'nip' => 'required',
             'n_pegawai' => 'required',
             'telp' => 'required',
-            'alamat' => 'required',
-            'dinasid' => 'required',
-            'bidangid' => 'required',
-            'd_kontrak' => 'required'
-        ];
-        $error = Validator::make($request->all(), $rules);
-        if ($error->fails()) {
-            return response()->json(['status' => 1, 'msg' => $error->errors()->all()]);
-        }
-        $data = new Tmpegawai();
-        $data->pegawaiid = $request->pegawaiid;
-        $data->satuankerjaid = $request->satuankerjaid;
+            'alamat' => 'required', 
+        ]);
+
+        $data = new Tmpegawai();  
         $data->jabatanid = $request->jabatanid;
         $data->pegawaistatusid = $request->pegawaistatusid;
         $data->d_masuk = $request->d_masuk;
@@ -174,8 +163,7 @@ class TmpegawaiController extends Controller
     public function edit($id)
     {
         $data = Tmpegawai::find($id);
-
-        $pegawaiid = $data->pegawaiid;
+ 
         $satuankerjaid = $data->satuankerjaid;
         $jabatanid = $data->jabatanid;
         $pegawaistatusid = $data->pegawaistatusid;
@@ -188,6 +176,11 @@ class TmpegawaiController extends Controller
         $dinasid = $data->dinasid;
         $bidangid = $data->bidangid;
         $d_kontrak = $data->d_kontrak;
+        $action           = route('pegawai.update', $id);
+        $method_field     = method_field('post');
+        $satker = [];
+        $c_status = $data->c_status;
+
 
         return view($this->view . '.tmpegawai_form', compact(
             'pegawaiid',
@@ -202,30 +195,24 @@ class TmpegawaiController extends Controller
             'alamat',
             'dinasid',
             'bidangid',
-            'd_kontrak'
+            'd_kontrak',
+            'action',
+            'method_field',
+            'c_status',
+            'satker'
         ));
     }
     public function update(Request $request, $id)
     {
-        $rules = [
-            'pegawaiid' => 'required|unique:pegawaiid',
-            'satuankerjaid' => 'required',
-            'jabatanid' => 'required',
+        $request->validate([
+            'pegawaiid' => 'unique:pegawaiid',  
             'pegawaistatusid' => 'required',
-            'd_masuk' => 'required',
-            'd_keluar' => 'required',
+            'd_masuk' => 'required', 
             'nip' => 'required',
             'n_pegawai' => 'required',
             'telp' => 'required',
-            'alamat' => 'required',
-            'dinasid' => 'required',
-            'bidangid' => 'required',
-            'd_kontrak' => 'required',
-        ];
-        $error = Validator::make($request->all(), $rules);
-        if ($error->fails()) {
-            return response()->json(['status' => 1, 'msg' => $error->errors()->all()]);
-        }
+            'alamat' => 'required', 
+        ]);
         $user = Tmpegawai::find($request->id)->fill($request->all());
         if ($user) {
             return response()->json(['status' => 1, 'msg' => 'data berhasil di tambahkan']);
