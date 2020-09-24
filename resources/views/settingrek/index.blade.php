@@ -11,8 +11,6 @@
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">
-
-
                         <div class="form-group m-0">
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
                                     :</strong></label>
@@ -275,7 +273,14 @@
     }
 
     function save_rek(){
+        var c          = new Array();
+        var satker_id  = $('#tmsikd_satker_id_pilih').val();
+        $("input:checked").each(function(){ c.push($(this).val()); });
+        if(c.length == 0){
+            $.alert("Silahkan checklist dulu list rincian object rekening nya gays .","Oops ,wess ");
+        }else{
         $('#modal_satker').modal('show');   
+        }
         
 $('#simpandata').on('click', function (event) { 
     var c          = new Array();
@@ -312,7 +317,8 @@ $('#simpandata').on('click', function (event) {
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Satuan OPD</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Satuan OPD
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -321,7 +327,7 @@ $('#simpandata').on('click', function (event) {
                 <div class="alert alert-danger">
                     * ) perlu di ketahui untuk menambahkan data user login , silahkan tambahkan data pegawai terlebih
                     dahulu jika tidak ada list table
-                </div> 
+                </div>
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
@@ -329,8 +335,8 @@ $('#simpandata').on('click', function (event) {
                                     Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih" class="form-control select2 "
-                                    required>
+                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih"
+                                    class="form-control select2 " required>
                                     <option value="0">Semua Satker</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
@@ -344,7 +350,7 @@ $('#simpandata').on('click', function (event) {
                             <button class="btn btn-primary" id="simpandata">Simpan Data</button>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>

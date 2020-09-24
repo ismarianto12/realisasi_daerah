@@ -5183,7 +5183,10 @@ label.error {
 
 .modal-content {
   border-radius: .4rem !important;
-  border: 0 !important; }
+  border: 0 !important;
+  position: relative;
+  margin-left: -200px;
+  }
 
 .rating > label {
   display: inline;
