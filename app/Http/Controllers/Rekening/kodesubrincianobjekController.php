@@ -26,7 +26,8 @@ class kodesubrincianobjekController extends Controller
     protected $title      = "Rekening Sub Rincian Objek Mata Anggaran Kegiatan";
 
     public function __construct()
-    {
+    { 
+        $this->middleware('level:|1');
     }
 
     public function index()

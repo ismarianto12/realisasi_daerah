@@ -19,7 +19,8 @@ class KodeakunController extends Controller
     protected $title      = "Rekening Akun Mata Anggaran Kegiatan";
 
     public function __construct()
-    {
+    { 
+        $this->middleware('level:|1');
     }
 
     public function index()

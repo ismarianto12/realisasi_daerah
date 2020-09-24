@@ -6,18 +6,16 @@ use Illuminate\Http\Request;
 
 class sikd_tahunController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    function __construct()
+    {
+        $this->middleware('level:|1');
+    }
     public function index()
     {
         $load_script = Properti_app::load_js([
             asset('assets/template/js/plugin/datatables/datatables.min.js'),
         ]);
         return view($this->view . '.sikd_rek_list', compact('load_script'));
-  
     }
 
     /**
@@ -26,9 +24,7 @@ class sikd_tahunController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { 
-
-
+    {
     }
 
     /**
@@ -38,7 +34,7 @@ class sikd_tahunController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
     }
 
     /**

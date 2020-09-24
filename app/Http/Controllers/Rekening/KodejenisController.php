@@ -21,7 +21,8 @@ class KodejenisController extends Controller
     protected $title      = "Rekening Jenis Mata Anggaran Kegiatan";
 
     public function __construct()
-    {
+    { 
+        $this->middleware('level:|1');
     }
 
     public function index()

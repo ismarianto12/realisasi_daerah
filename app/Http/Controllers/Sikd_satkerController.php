@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 class Sikd_satkerController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+{ 
+    function __construct()
+    { 
+        $this->middleware('level:|1');
+    }
     public function index()
     {
         $load_script = Properti_app::load_js([
