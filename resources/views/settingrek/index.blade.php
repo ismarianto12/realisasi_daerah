@@ -295,13 +295,14 @@ $('#simpandata').on('click', function (event) {
                  }, 
             function(data) {
                 $('#datatable').DataTable().ajax.reload();  
-        $('#modal_satker').modal('hide');   
+                $('#modal_satker').modal('hide');   
+                selectOnChange();
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
                 $.each(respon.errors, function(index, value){
                     err += "<li>" + value +"</li>";
                 });
-                $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                $.alert("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>","Error Gays");
             }).always(function(){
                 $('#btnSave').removeAttr('disabled');
             });
@@ -324,10 +325,7 @@ $('#simpandata').on('click', function (event) {
                 </button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-danger">
-                    * ) perlu di ketahui untuk menambahkan data user login , silahkan tambahkan data pegawai terlebih
-                    dahulu jika tidak ada list table
-                </div>
+                <div id="alert"></div>
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
