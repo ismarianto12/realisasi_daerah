@@ -144,9 +144,9 @@ class KoderincianobjekController extends Controller
        // $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
         for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
             if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
-                if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherekd_rek_rincian_obj($kd_rek_rincian_obj[$i])->count() > 0) {
+                if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherenm_rek_rincian_obj($nm_rek_rincian_obj[$i])->count() > 0) {
                     return response()->json([
-                        'message' => 'kode sudah pernah tersimpan : ' . $kd_rek_rincian_obj[$i]
+                        'message' => 'kode sudah pernah tersimpan : ' . $nm_rek_rincian_obj[$i]
                     ], 422);
                 } else {
                     $tmrekening_akun_kelompok_jenis_objek_rincian                                           = new Tmrekening_akun_kelompok_jenis_objek_rincian();
