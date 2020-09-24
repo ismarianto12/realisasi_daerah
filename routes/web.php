@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('settingrek')->name('settingrek.')->group(function () {
         Route::resource('rek', 'SettingrekeningController');
+        Route::post('batalkan', 'SettingrekeningController@batalkan')->name('batalkan');
         Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
     });
 
@@ -130,4 +131,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('kodesubrincianobjek/kodeobjekrincianByKodeobjek/{id}', 'kodesubrincianobjekController@kodeobjekrincianByKodeobjek')->name('kodesubrincianobjek.kodeobjekrincianByKodeobjek');
         });
     });
+
+    //restrict 
+    Route::get('restrict', 'HomeController@restrict')->name('restrict');
+    
 });

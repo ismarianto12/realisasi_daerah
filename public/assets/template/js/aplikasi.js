@@ -233,4 +233,32 @@ function confirm_program_indikator(id) {
 			cancel: function() {}
 		}
 	});
+
+
+}
+
+
+function confirm_cancel(id) {
+	$.confirm({
+		title: '',
+		content: 'Anda Membatalkan akses rincian object untuk satuan kerja di pilih ?',
+		icon: 'icon icon-question amber-text',
+		theme: 'modern',
+		closeIcon: true,
+		animation: 'scale',
+		type: 'red',
+		buttons: {
+			ok: {
+				text: 'ok!',
+				btnClass: 'btn-primary',
+				keys: [ 'enter' ],
+				action: function() {
+				 	del_cancel();
+				 }
+			},
+			cancel: function() {}
+		}
+	});
+
+
 }

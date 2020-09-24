@@ -39,6 +39,10 @@
                 <a class="btn btn-outline-secondary btn-sm" title="Hapus Data" id="btnDelete" href="#"
                     onclick="javascript:confirm_del()"><i class="fa fa-trash"></i> Hapus</a>
                 @endif
+                @if(in_array('rs', $toolbar))
+                <a class="btn btn-outline-secondary btn-sm" title="Batalkan" id="btnCancel" href="#"
+                    onclick="javascript:confirm_cancel()"><i class="fa fa-prev"></i> Batalkan</a>
+                @endif
             </div>
             @if(in_array('save', $toolbar))
             <a class="btn btn-outline-secondary btn-sm" title="Simpan Data" id="btnSave" href="#"

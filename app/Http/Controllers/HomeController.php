@@ -30,4 +30,10 @@ class HomeController extends Controller
         $page = $params;
         return view('layouts.iframe', compact('page'));
     }
+
+    function restrict()
+    {
+        $title = 'halaman di batasi hak akses tidak di izinkan';
+        return view('restrict',compact('title'));
+    }
 }

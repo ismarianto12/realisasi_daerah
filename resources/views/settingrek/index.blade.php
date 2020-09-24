@@ -17,6 +17,7 @@
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
                                     required onchange="selectOnChange()">
+                                    <option value="0">Pilih Satker</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
                                         [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
@@ -119,7 +120,7 @@
         order: [1, 'asc'],
         pageLength: 50,
         ajax: {
-            url: "{{ route($route.'api_data_setting') }}",
+            url: "{{ route('settingrek.api_data_setting') }}",
             method: 'POST',
             data:function(data){
                 data.tmsikd_satker_id   = $('#tmsikd_satker_id').val();
@@ -253,13 +254,13 @@
 
     @include('layouts._includes.tablechecked')
     
-    function del(){
+    function del_cancel(){
         var c = new Array();
         $("input:checked").each(function(){ c.push($(this).val()); });
         if(c.length == 0){
             $.alert("Silahkan memilih data yang akan dihapus.");
         }else{
-            $.post("{{ route($route.'rek.destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+            $.post("{{ route('settingrek.batalkan', ':id') }}", {'_method' : 'POST', 'id' : c}, function(data) {
                 table.api().ajax.reload();
             }, "JSON").fail(function(){
                 reload();
@@ -275,7 +276,7 @@
         if(c.length == 0){
             $.alert("Silahkan memilih satker yang akan di set.","Ket : ");
         }else{
-           $.post("{{ route($route.'rek.update', ':id') }}",
+           $.post("{{ route($route.'update', ':id') }}",
                      {
                        "_method" : "PATCH", "id": c,'satker_id': satker_id     
                      }, 
