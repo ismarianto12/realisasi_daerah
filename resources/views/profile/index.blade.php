@@ -36,7 +36,7 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="username" aria-label="username"
                                     aria-describedby="username-addon" id="username" name="username" required
-                                    value="{{ $username }}">
+                                    value="{{ $username }}" readonly="true">
                             </div>
                         </div>
 

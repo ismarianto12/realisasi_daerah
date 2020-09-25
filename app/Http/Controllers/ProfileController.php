@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\File\File;
+use Carbon\Carbon;  
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -23,12 +23,11 @@ class ProfileController extends Controller
         $data       = User::find($session_id);
         $username   = $data->username;
         $nama       = $data->realname;
-        $photo_paht = asset(public_path() . '/file/photo_user/' . $data->photo);
-        if (file_exists($photo_paht)) {
-            $user_foto = asset('./file/photo_user/' . $data->photo);
-        } else {
-            $user_foto = asset('assets/template/img/profile.jpg');
-        }
+        //  if (FILE::exists($photo_paht)) {
+        //     $user_foto = asset('./file/photo_user/' . $data->photo);
+        // } else {
+        //     $user_foto = asset('assets/template/img/profile.jpg');
+        // }
         $telp       = $data->telp;
         return view(
             $this->view . 'index',
@@ -36,7 +35,7 @@ class ProfileController extends Controller
                 'username'  => $username,
                 'nama'  => $nama,
                 'telp'  => $telp,
-                'photo' => $user_foto,
+                'photo' => asset('./file/photo_user/' . $data->photo),
                 'action' => route($this->route . 'profile.update', $session_id),
                 'method_field' => method_field('put')
             ]

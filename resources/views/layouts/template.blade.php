@@ -302,7 +302,7 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="{{ asset('/assets/template/') }}/img/profile.jpg" alt="..."
+                                    <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
                                         class="avatar-img rounded-circle">
                                 </div>
                             </a>
@@ -350,7 +350,7 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="{{ asset('/assets/template/') }}/img/profile.jpg" alt="..."
+                            <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
                                 class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
