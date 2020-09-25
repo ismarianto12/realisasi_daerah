@@ -83,9 +83,10 @@
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="notsetting" id="notsetting" class="form-control select2 "
-                                    required onchange="selectOnChange()">
-                                    <option value="0">Yang Sudah Di Setting</option>
-                                    <option value="1">Lihat Yang Belum di Sett</option> 
+                                    required onchange="selectOnChange()">  
+                                    <option value="0">Semua Object Rincian Setting</option>
+                                    <option value="1">Lihat Yang Belum di Sett</option>  
+                                    <option value="2">Yang Sudah Di Setting</option>
                                 </select>
                             </div>
                         </div>
