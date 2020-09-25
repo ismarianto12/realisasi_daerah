@@ -311,7 +311,7 @@
                                     <li>
                                         <div class="user-box">
                                             <div class="avatar-lg"><img
-                                                    src="{{ asset('/assets/template/') }}/img/profile.jpg"
+                                                    src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
                                                     alt="image profile" class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->realname }}</h4>

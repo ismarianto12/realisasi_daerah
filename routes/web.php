@@ -106,9 +106,11 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     //pendapatan route
-    Route::resource("pendapatan", "PendapatanController");
-    Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
-         Route::post('api', 'PendapatanController@api')->name('api');
+     Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
+        Route::resource("", "PendapatanController");
+        Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
+        
+        Route::post('api', 'PendapatanController@api')->name('api');
         //yang berkaitan dengan pendapatan
         Route::resource('target', 'PendapatanTargetController');
         Route::post('target_api', 'PendapatanTargetController@api')->name('target_api.api');
