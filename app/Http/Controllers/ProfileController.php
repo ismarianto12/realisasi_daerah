@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Carbon;
- 
+use Carbon\Carbon;
+use Symfony\Component\HttpFoundation\File\File;
+
 class ProfileController extends Controller
 {
     protected $route = 'akses.';
@@ -22,9 +23,9 @@ class ProfileController extends Controller
         $data       = User::find($session_id);
         $username   = $data->username;
         $nama       = $data->realname;
-        $photo_paht = asset('/file/foto_user/' . $data->photo);
+        $photo_paht = asset(public_path() . '/file/photo_user/' . $data->photo);
         if (file_exists($photo_paht)) {
-            $user_foto = $photo_paht;
+            $user_foto = asset('./file/photo_user/' . $data->photo);
         } else {
             $user_foto = asset('assets/template/img/profile.jpg');
         }
@@ -71,33 +72,33 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $result = User::find($request->id);
+
+        $userid = Auth::user()->id;
+        $result = User::find($userid);
+
         $request->validate([
             'realname' => 'required',
             'telp'    => 'required',
             'password' => 'required',
-        ]);
-        $data = new User;
-
+        ]); 
         if ($request->file('photo')) {
             $dt             = Carbon::now();
             $ext            = $request->file('photo')->getClientOriginalExtension();
             $file           = rand(1, 2333) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
-            $data->relname  = $request->realname;
-            $data->password = bcrypt($request->password);
-            $data->telp     = $request->telp;
+            $data['realname']  = $request->realname;
+            $data['password'] = bcrypt($request->password);
+            $data['telp']     = $request->telp;
             $request->file('photo')->move('./file/photo_user/', $file);
-            $data->photo    = $file;
-            $data->find($id)->save();
-            if (file_exists('./file/photo_user' . $data->photo)) {
-                @unlink('./file/photo_user' . $data->photo);
+            $data['photo']    = $file; 
+            if (file_exists('./file/photo_user' . $result->photo)) {
+                @unlink('./file/photo_user' . $result->photo);
             }
         } else {
-            $data->relname  = $request->realname;
-            $data->password = bcrypt($request->password);
-            $data->telp     = $request->telp;
-            $data->find($id)->save();
+            $data['realname']  = $request->realname;
+            $data['password'] = bcrypt($request->password);
+            $data['telp']     = $request->telp;
         }
+        User::find($userid)->update($data); 
         return response()->json([
             'msg' => 'data berhasil di simpan'
         ]);

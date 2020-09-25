@@ -119,7 +119,7 @@ class PendapatanController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
             })
             ->editColumn('kd_rek_jenis', function ($p) {
-                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
+                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
             })
             ->editColumn('kd_rek_obj', function ($p) {
                 return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';

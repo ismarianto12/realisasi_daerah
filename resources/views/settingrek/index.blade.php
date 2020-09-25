@@ -67,7 +67,7 @@
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
                                     required onchange="selectOnChange()">
-                                    <option value="0">Semua Satker</option>
+                                    <option value="0">Semua Satker (OPD)</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
                                         [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
@@ -76,6 +76,20 @@
                                 </select>
                             </div>
                         </div>
+                        <hr />
+                        <div class="form-group m-0">
+                            <label for="notsetting" class="col-form-label s-12 col-md-3"><strong>Filter By Belum Di setting
+                                    Satker
+                                    :</strong></label>
+                            <div class="col-md-5 p-0 mb-2">
+                                <select name="notsetting" id="notsetting" class="form-control select2 "
+                                    required onchange="selectOnChange()">
+                                    <option value="0">Yang Sudah Di Setting</option>
+                                    <option value="1">Lihat Yang Belum di Sett</option> 
+                                </select>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>
@@ -131,6 +145,7 @@
                 data.tmrekening_akun_kelompok_id = $('#tmrekening_akun_kelompok_id').val();
                 data.tmrekening_akun_kelompok_jenis_id = $('#tmrekening_akun_kelompok_jenis_id').val();
                 data.tmrekening_akun_kelompok_jenis_objek_id = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+                data.notsetting   = $('#notsetting').val();
             }
         },
         columns: [

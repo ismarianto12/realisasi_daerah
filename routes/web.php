@@ -106,9 +106,9 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     //pendapatan route
+    Route::resource("pendapatan", "PendapatanController");
     Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
-        Route::resource("/", "PendapatanController");
-        Route::post('api', 'PendapatanController@api')->name('api');
+         Route::post('api', 'PendapatanController@api')->name('api');
         //yang berkaitan dengan pendapatan
         Route::resource('target', 'PendapatanTargetController');
         Route::post('target_api', 'PendapatanTargetController@api')->name('target_api.api');
@@ -116,7 +116,6 @@ Route::group(['middleware' => 'auth'], function () {
     //route datatable api
     Route::prefix('api')->group(function () {
         Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
-
         Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
             Route::post('kodeakun', 'KodeakunController@api')->name('kodeakun.api');
             Route::post('kodekelompok', 'KodekelompokController@api')->name('kodekelompok.api');

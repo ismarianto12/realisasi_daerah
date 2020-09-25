@@ -28,7 +28,7 @@
                 <form id="exampleValidation" action="{{ $action }}" method="POST" class="simpan"
                     enctype="multipart/form-data">
                     @csrf
-                    {{ $method_field }}
+                    {{ method_field('PATCH') }}
                     <div class="card-body">
                         <div class="form-group form-show-validation row">
                             <label for="username" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Username <span
@@ -126,27 +126,31 @@
             } else if (nama == '') {
                 $.alert('Keterangan', 'Nama tidak boleh kosong');
             } else {
-                var formData = new FormData();
-                var url = $(this).attr('action'); 
-                $.ajax({ 
-                    type:'POST',
+                var datastring = new FormData(this);
+                $.ajax({
                     url: $(this).attr('action'),
-                    data:formData,
-                    cache:false,
+                    type: 'post',
+                    data: datastring,
+                    cache: false,
                     contentType: false,
-                    processData: false    
-                }).done(function(data){
-                    $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
-                    
-                }).fail(function(data){
-                    err = ''; respon = data.responseJSON;
+                    processData: false,
+                    beforeSend: function() {
+                        $('#cupdate').attr("disabled", "disabled");
+                        $('#cupdate').css("opacity", ".5");
+                    },
+                    success: function(data) {
+                        $.alert('Data username dan password berhasil di update', 'success');
+                        $('#cupdate').css("opacity", "");
+                        $("#cupdate").removeAttr("disabled");
+                    },
+                    error: function(data) { 
+                     err = ''; respon = data.responseJSON;
                     $.each(respon.errors, function(index, value){
                         err += "<li>" + value +"</li>";
                     });
                     $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
-                }).always(function(){
-                    $('.simpan').removeAttr('disabled');
-                });  
+                    }
+                });
             }
         });
     });

@@ -97,6 +97,10 @@ class SettingrekeningController extends Controller
             $satker_id = $request->tmsikd_satker_id;
             $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $satker_id);
         }
+        if($request->notsetting != 0){
+            $notsetting = $request->notsetting;
+            $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=','');
+        }
         $data->get();
         return DataTables::of($data)
             ->editColumn('id', function ($p) {
