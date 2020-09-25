@@ -183,11 +183,7 @@ class SettingrekeningController extends Controller
      */
     public function update(Request $request, $id)
     {  
-        $r     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
-        $check = $r->where([
-            'tmsikd_satkers_id'
-        ]) 
-
+        $r      = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $satker = $request->satker_id;
         $id     = $request->id;
  
