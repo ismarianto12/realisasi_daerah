@@ -57,7 +57,8 @@ class List_pendapatan
             if (count($row) == 1 && count($row) != NULL) {
                 $wherelist = $row;
             } else {
-                $wherelist = implode(',', $row);
+                // $rlist     = '\'.$row.\'';
+                $wherelist = $row; //implode(',', $row);
             }
             return Tmrekening_akun_kelompok_jenis_objek::where('tmrekening_akun_kelompok_jenis_id', $jenis_id)
                 ->whereIn('tmrekening_akun_kelompok_jenis_id', $wherelist)
