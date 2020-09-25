@@ -186,8 +186,17 @@
      //if(tanggal_lapor == ''){
      //   $.alert('ket','tanggal lapor tidak boleh kosong');
      //}else{
-         url =  "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id=" + $('#tmsikd_satker_id').val() + "&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
-         window.location.href = url;
+         @php    
+            $levelid  = Properti_app::getlevel();
+            $satkerid = Auth::user()->sikd_satker_id; 
+
+         @endphp
+        @if($levelid == 3 )  
+        url = "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id={{ $satkerid }}&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
+           @else
+        url = "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id=" + $('#tmsikd_satker_id').val() + "&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
+        @endif        
+        window.location.href = url;
      //}
     });
 });

@@ -30,7 +30,8 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
 use App\Libraries\Jasper_report;
-
+use App\Libraries\List_pendapatan;
+  
 use function PHPSTORM_META\map;
 
 class ReportController extends Controller

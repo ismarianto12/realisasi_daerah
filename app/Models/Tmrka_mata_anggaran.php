@@ -78,8 +78,7 @@ class Tmrka_mata_anggaran extends Model
     public static function getInputListDataSetRincSub($par)
     {
         //def level 
-        $level_id  = Properti_app::getlevel();
-        //def satuan kerja session 
+        $level_id  = Properti_app::getlevel(); 
         $satker_id = Auth::user()->sikd_satker_id;
         
         if ($par['tmrekening_akun_kelompok_jenis_objek_rincian_id'] != "")
@@ -99,10 +98,16 @@ class Tmrka_mata_anggaran extends Model
                 ->get();
         } else {
             $satker['tmsikd_satkers_id']  = $satker_id;
-            $kondisi = array_merge($cond, $satker);
-            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($kondisi)
+            if(empty($cond['tmrekening_akun_kelompok_jenis_objek_id'])){
+               $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($satker)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();  
+            }else{    
+             $mcond = array_merge($satker,$cond);
+             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($mcond)
                 ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                 ->get();
+            }
         } 
 
         $idx = 0;

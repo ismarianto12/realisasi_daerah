@@ -136,8 +136,7 @@ class KoderincianobjekController extends Controller
     {
         $request->validate([
             'tmrekening_akun_kelompok_jenis_objek_id' => 'required',
-        ]);
-
+        ]); 
         $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
         $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
         $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;

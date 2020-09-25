@@ -24,6 +24,7 @@ use App\Models\Rka\Tmrka_pendapatan;
 use App\Models\Rka\Tmrka_mata_anggaran;
 use App\Models\Rka\Tmrka_rincian_mata_anggaran;
 use App\Helpers\Properti_app;
+use App\Libraries\List_pendapatan;
 
 class PendapatanController extends Controller
 {
@@ -68,9 +69,9 @@ class PendapatanController extends Controller
         $satker_id       = ($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         $satker          = Tmsikd_satker::find($satker_id);
 
-        $satker_nm       = ($satker['nama']) ? $satker['nama'] : 'Kosong';  
-        $satker_kode     = ($satker['kode']) ? $satker['kode'] : 'Kosong';  
-        
+        $satker_nm       = ($satker['nama']) ? $satker['nama'] : 'Kosong';
+        $satker_kode     = ($satker['kode']) ? $satker['kode'] : 'Kosong';
+
         if ($request->tanggal_lapor) {
             $tanggal_lapor  = $request->tanggal_lapor;
         } else {
@@ -102,7 +103,7 @@ class PendapatanController extends Controller
             'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
             'tmrkas.tmsikd_satker_id'   => $request->tmsikd_satker_id,
             'tmrkas.rka_type'           => $this->type,
-        ]; 
+        ];
         if ($request->tanggal_lapor != '') {
             $tanggal_lapor = [
                 'tmrkas.tanggal_lapor' => $request->tanggal_lapor,
@@ -144,7 +145,7 @@ class PendapatanController extends Controller
 
     public function create(Request $request)
     {    // * 
-        $title   = 'Tambahs | ' . $this->title;
+        $title   = 'Tambah | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'save'];
         // Validasi
@@ -154,7 +155,7 @@ class PendapatanController extends Controller
         if ($satker_id == '' && $level_id != 3) {
         } else {
             if ($request->tmsikd_satker_id != $satker_id) {
-                return abort(403,'Akses tidak sesuai dengan satker id');
+                return abort(403, 'Akses tidak sesuai dengan satker id');
             }
         }
 
@@ -175,18 +176,29 @@ class PendapatanController extends Controller
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
         // Rekening
         //kode rekening pendapatan 4 
+        if ($level_id != 3) {
+            $class_option = new Sikd_list_option;
+        }
+        if ($level_id  == 3) {
+            $class_option = new List_pendapatan;
+        }
+        //dd($class_option);
+        //exit;  
         $kdRek      = Tmrka_mata_anggaran::getKdRekRka($this->type);
-        $rekJenis   = Sikd_list_option::getRekJenisByKode($kdRek);
+        $rekJenis   = $class_option->getRekJenisByKode($kdRek);
         $rekJeni_id = ($request->rekJeni_id == '' ? $rekJenis->first()->id : $request->rekJeni_id);
-        //dd($rekJeni_id);
 
-        $rekObjs    = Sikd_list_option::getListRekObjs($rekJeni_id);
-        $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
-        //dd($rekObj_id); 
-        $rekRincians    = Sikd_list_option::getListRekRincians($rekObj_id);
-        //dd($rekRincians->count());
-        //exit();
-        
+
+        $rekObjs    = $class_option->getListRekObjs($rekJeni_id);
+        //dd($rekObjs);
+        if (count($rekObjs) == NULL) {
+            $rekObj_id  = [];
+        } else {
+            $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
+        }
+       // dd($rekObjs);
+
+        $rekRincians    = $class_option->getListRekRincians($rekObj_id);
         $rekRincian_id  = $request->rekRincian_id;
 
         // List Rincian Sub
@@ -204,9 +216,9 @@ class PendapatanController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_id'         => $rekObj_id,
             'tmsikd_satkers_id'                               => $request->tmsikd_satker_id,
             'rekjenis_id'                                     => $request->rekJeni_id,
-         ];
+        ];
         $satker          = Tmsikd_satker::find($request->tmsikd_satker_id);
-        $satker_nm       = ($satker->nama) ? $satker->nama : 'Kosong'; 
+        $satker_nm       = ($satker->nama) ? $satker->nama : 'Kosong';
         $listRincianSubs = Tmrka_mata_anggaran::getInputListDataSetRincSub($par);
         return view($this->view . 'form_add', compact(
             'title',

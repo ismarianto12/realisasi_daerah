@@ -57,7 +57,7 @@
                                 <div class="col-md-8">
                                     <select name="rekObj_id" id="rekObj_id" placeholder=""  class="form-control select2s col-md-4" autocomplete="off" onchange="selectOnChange('rekObj_id')">
                                         @foreach($rekObjs as $key=>$rekObj)
-                                        <option value="{{ $rekObj->id }}"{{ $rekObj_id == $rekObj->id ? " selected='selected'" : ''}}>[{{ $rekObj->kd_rek_obj }}] {{ $rekObj->nm_rek_obj }}</option>
+                                        <option value="{{ $rekObj['id'] }}"{{ $rekObj_id == $rekObj['id'] ? " selected='selected'" : ''}}>[{{ $rekObj['kd_rek_obj'] }}] {{ $rekObj->nm_rek_obj }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -237,9 +237,13 @@
   
     function save(){ $('#form').submit(); }
     $('#form').on('submit', function (event) {
+        event.preventDefault();
+        var tanggal_lapor = $('#tanggal_lapor').val();
+        if(tanggal_lapor == ''){
+            $.alert('Tanggal Lapor Nya Jangan kosong Bosq','Perhatian : ');
+        }else{ 
         if ($(this)[0].checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+             event.stopPropagation();
         }else{
             $('#alert').html('');
             $('#btnSave').attr('disabled', true);
@@ -253,13 +257,14 @@
                 $.each(respon.errors, function(index, value){
                     err += "<li>" + value +"</li>";
                 });
-                $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3'>" + err + "</ol></div>");
+                $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Kesalaha Sedikti Bossq : </strong> " + respon.message + "<ol class='pl-3'>" + err + "</ol></div>");
             }).always(function(){
                 $('#btnSave').removeAttr('disabled');
             });
             return false;
         }
         $(this).addClass('was-validated');
+      }
     });
 
     function selectOnChange(f){

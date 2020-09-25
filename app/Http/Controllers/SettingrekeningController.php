@@ -182,14 +182,15 @@ class SettingrekeningController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'satker_id' => 'required|unique:tmrekening_akun_kelompok_jenis_objek_rincians,tmsikd_satkers_id'
-        ]);
+    {  
+        $r     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
+        $check = $r->where([
+            'tmsikd_satkers_id'
+        ]) 
+
         $satker = $request->satker_id;
         $id     = $request->id;
-
-        $r = new Tmrekening_akun_kelompok_jenis_objek_rincian;
+ 
         $r->whereIn('id', $id)->update([
             'tmsikd_satkers_id' => $satker
         ]);

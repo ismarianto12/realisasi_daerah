@@ -234,6 +234,7 @@ return [
         'Html_number' => App\Libraries\Html\Html_number::class,
         'Html_label' => App\Libraries\Html\Html_label::class,
         'Sikd_list_option' => App\Libraries\Sikd_list_option::class,
+        'List_pendapatan' => App\Libraries\List_pendapatan::class, 
         'Access' => App\Helpers\Access::class,
         'Properti_app' => App\Helpers\Properti_app::class,
         'Obj' => App\Helpers\Obj::class,
