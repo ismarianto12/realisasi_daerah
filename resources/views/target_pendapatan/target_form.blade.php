@@ -1,11 +1,10 @@
 @extends('layouts.template')
 @section('title', 'Tambah target pendapatan')
-
 @section('content')
 
 {{-- @php
-dd($trekening);
-@endphp --}}
+    dd($trekening);
+    @endphp --}}
 
 
 <div class="panel-header bg-primary-gradient">
@@ -36,24 +35,6 @@ dd($trekening);
                     @csrf
                     {{ $method_field }}
                     <div class="card-body">
-                        <div class="form-group form-show-validation row">
-                            <label for="username" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Jumlah Target
-                                <span class="required-label">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="jumlah target pendapatan"
-                                    aria-label="username" aria-describedby="target-addon" id="tpendapatan" name="jumlah"
-                                    required value="{{ $jumlah }}">
-                            </div>
-                        </div>
-
-                        <div class="form-group form-show-validation row">
-                            <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Jumlah Perubahan
-                                Jika ada <span class="required-label">*</span></label>
-                            <div class="col-sm-8">
-                                <input type="text" name="jumlah_perubahan" class="form-control" id="tpendapatan"
-                                    placeholder="Jumlah perubahan target" value="{{ $jumlah_perubahan }}">
-                            </div>
-                        </div>
 
                         <div class="form-group form-show-validation row">
                             <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Rincian Rekening
@@ -76,9 +57,25 @@ dd($trekening);
                             </div>
                         </div>
 
+
                         <div class="form-group form-show-validation row">
-                            <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right"> 
-                                Target Pendapatan.
+                            <label for="username" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Total Target +
+                                Perubahan
+                                <span class="required-label">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" placeholder="jumlah target "
+                                    aria-label="target" aria-describedby="target-addon" id="tpendapatan" name="jumlah"
+                                    required value="{{ $jumlah }}">
+                                <div class="rincian_jtarget"></div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="form-group form-show-validation row">
+                            <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
+                                Tahun Pendapatan.
                                 <span class="required-label">*</span></label>
                             <div class="col-sm-8">
                                 <select name="tahun" class="form-control">
@@ -127,36 +124,44 @@ dd($trekening);
 @section('script')
 <script type="text/javascript">
     $(function() {  
-        $('#form').on('submit',function(e) {
-            e.preventDefault(); 
-            if ($(this)[0].checkValidity() === false) {
-                e.preventDefault();
-                e.stopPropagation();
-            }else{ 
-               $('#alert').html('');
-               $('#btnSave').attr('disabled', true);
-               url = $(this).attr('action');
-               $.post(url, $(this).serialize(),function(data){
-                  $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong>Data berhasil di simpan</div>");
-             },'JSON').fail(function(data){
-                    err = ''; respon = data.responseJSON;
-                    $.each(respon.errors, function(index, value){
-                        err += "<li>" + value +"</li>";
-                    });
-                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
-                }).always(function(){
-                    $('.simpan').removeAttr('disabled');
-                });  
-            }
-        });
+                                $('#form').on('submit',function(e) {
+                                    e.preventDefault(); 
+                                    if ($(this)[0].checkValidity() === false) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }else{ 
+                                     $('#alert').html('');
+                                     $('#btnSave').attr('disabled', true);
+                                     url = $(this).attr('action');
+                                     $.post(url, $(this).serialize(),function(data){
+                                      $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong>Data berhasil di simpan</div>");
+                                      window.location.href = '{{ Url("pendapatan/target") }}';
+                                  },'JSON').fail(function(data){
+                                    err = ''; respon = data.responseJSON;
+                                    $.each(respon.errors, function(index, value){
+                                        err += "<li>" + value +"</li>";
+                                    });
+                                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                                }).always(function(){
+                                    $('.simpan').removeAttr('disabled');
+                                });  
+                            }
+                        });
 
-        //action form 
-
+        //action form  
+        $('.rincian_jtarget').html('<b>Loading ..</b>');
         $("#tpendapatan").on('keyup', function(){
             var n = parseInt($(this).val().replace(/\D/g,''),10);
             $(this).val(n.toLocaleString());
-             myFunc(); //call another function too
-        });
+         }); 
+
+        @if($method == 'add')  
+        load_url = "{{ Url('pendapatan/trtargetrincian_form/'.$targetid) }}"; 
+        @elseif($method == 'edit')
+        load_url = "{{ Url('pendapatan/trtargetrincian_form_edit/'.$targetid) }}";  
+        @endif 
+        $('.rincian_jtarget').load(load_url);
+
     });
 </script>
 @endsection

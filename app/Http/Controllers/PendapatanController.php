@@ -63,7 +63,7 @@ class PendapatanController extends Controller
 
         // RAPBD
         $tmrapbds       = Tmrapbd::select('id', 'jenis')->wheretmsikd_setup_tahun_anggaran_id($tahun_id)->get();
-        if ($tmrapbds->count() == 0) return abort(403, "RAPBD tidak ditemukan.");
+        if ($tmrapbds->count() == 0) return abort(403, "Pendapatan tidak ditemukan.");
         $tmrapbd_id     = ($request->tmrapbd_id == '' ? $tmrapbds->first()->id : $request->tmrapbd_id);
 
         $satker_id       = ($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
@@ -99,10 +99,15 @@ class PendapatanController extends Controller
 
     public function api(Request $request)
     {
+        $levelid = Properti_app::getlevel();
+        if ($levelid == 3) {
+            $satker_id = $levelid;
+        } else {
+            $satker_id = $request->tmsikd_satker_id;
+        }
         $where = [
             'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
-            'tmrkas.tmsikd_satker_id'   => $request->tmsikd_satker_id,
-            'tmrkas.rka_type'           => $this->type,
+            'tmrkas.tmsikd_satker_id'   => $satker_id, 
         ];
         if ($request->tanggal_lapor != '') {
             $tanggal_lapor = [
@@ -110,8 +115,7 @@ class PendapatanController extends Controller
             ];
         } else {
             $tanggal_lapor = [];
-        }
-
+        } 
         $merge = array_merge($tanggal_lapor, $where);
         $r  = Tmrka::list($merge)->orderBy('kd_rek_rincian_obj')->get();
         return DataTables::of($r)
@@ -196,7 +200,7 @@ class PendapatanController extends Controller
         } else {
             $rekObj_id  = ($request->rekObj_id == '' ? $rekObjs->first()->id : $request->rekObj_id);
         }
-       // dd($rekObjs);
+        // dd($rekObjs);
 
         $rekRincians    = $class_option->getListRekRincians($rekObj_id);
         $rekRincian_id  = $request->rekRincian_id;

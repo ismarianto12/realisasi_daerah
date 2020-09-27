@@ -15,6 +15,5 @@ class TmpendapatantargetModel extends Model
     {
         return  $this->belongsTo(Tmrekening_akun_kelompok_jenis_objek_rincian::class,'rekneing_rincian_akun_jenis_objek_id');
     }
-     
-
+    
 }

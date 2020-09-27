@@ -4,7 +4,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>@yield('title') - RETRIBUSIs {{ Properti_app::getTahun() }}</title>
+    <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ Properti_app::getTahun() }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="http://demo.themekita.com/atlantis/livepreview/examples/assets/img/icon.ico"
         type="image/x-icon" />
@@ -56,7 +56,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
 
-                <a href="index.html" class="logo">
+                <a href="" class="logo">
                     <img src="{{ asset('assets/template/img/logo.png') }}" alt="navbar brand" class="navbar-brand"
                         style="
                         height: 38px;
@@ -107,7 +107,7 @@
                                             <a href="#">
                                                 <div class="notif-img">
                                                     <img src="{{ asset('/assets/template/') }}/img/jm_denis.jpg"
-                                                        alt="Img Profile">
+                                                        alt="Img Profile" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jimmy Denis</span>
@@ -303,7 +303,7 @@
                                 aria-expanded="false">
                                 <div class="avatar-sm">
                                     <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
-                                        class="avatar-img rounded-circle">
+                                        class="avatar-img rounded-circle" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -312,11 +312,11 @@
                                         <div class="user-box">
                                             <div class="avatar-lg"><img
                                                     src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
-                                                    alt="image profile" class="avatar-img rounded"></div>
+                                                    alt="image profile" class="avatar-img rounded" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'"></div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->realname }}</h4>
-                                                <p class="text-muted">hello@example.com</p><a href="profile.html"
-                                                    class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                <p class="text-muted"></p><a href="{{ Url('akses/profile') }}"
+                                                    class="btn btn-xs btn-secondary btn-sm" target="_blank">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -351,7 +351,7 @@
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
                             <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
-                                class="avatar-img rounded-circle">
+                                class="avatar-img rounded-circle" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -362,7 +362,6 @@
                                 </span>
                             </a>
                             <div class="clearfix"></div>
-
                             <div class="collapse in" id="collapseExample">
                                 <ul class="nav">
                                     <li>
@@ -547,106 +546,9 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
     @yield('script')
-
-
-    <script>
-        Circles.create({
-            id: 'circles-1',
-            radius: 45,
-            value: 60,
-            maxValue: 100,
-            width: 7,
-            text: 5,
-            colors: ['#f1f1f1', '#FF9E27'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        })
-
-        Circles.create({
-            id: 'circles-2',
-            radius: 45,
-            value: 70,
-            maxValue: 100,
-            width: 7,
-            text: 36,
-            colors: ['#f1f1f1', '#2BB930'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        })
-
-        Circles.create({
-            id: 'circles-3',
-            radius: 45,
-            value: 40,
-            maxValue: 100,
-            width: 7,
-            text: 12,
-            colors: ['#f1f1f1', '#F25961'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        })
-
-        var totalIncomeChart = document.getElementById('totalIncomeChart').getContext('2d');
-
-        var mytotalIncomeChart = new Chart(totalIncomeChart, {
-            type: 'bar',
-            data: {
-                labels: ["S", "M", "T", "W", "T", "F", "S", "S", "M", "T"],
-                datasets: [{
-                    label: "Total Income",
-                    backgroundColor: '#ff9e27',
-                    borderColor: 'rgb(23, 125, 255)',
-                    data: [6, 4, 9, 5, 4, 6, 4, 3, 8, 10],
-                }],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            display: false //this will remove only the label
-                        },
-                        gridLines: {
-                            drawBorder: false,
-                            display: false
-                        }
-                    }],
-                    xAxes: [{
-                        gridLines: {
-                            drawBorder: false,
-                            display: false
-                        }
-                    }]
-                },
-            }
-        });
-
-        $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
-            type: 'line',
-            height: '70',
-            width: '100%',
-            lineWidth: '2',
-            lineColor: '#ffa534',
-            fillColor: 'rgba(255, 165, 52, .14)'
-        });
-
-    </script>
+    
     <script src="{{ asset('/assets/template/') }}/js/core/popper.min.js"></script>
-
-
+ 
 
 
 

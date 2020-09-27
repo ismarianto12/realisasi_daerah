@@ -5,7 +5,7 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::get('/', 'Auth\LoginController@showLoginForm')->middleware('guest')->name('/');
+Route::get('/', 'HomeController@index')->middleware('auth')->name('/');
 
 Route::get('/logout', function () {
     return redirect('/');
@@ -67,7 +67,6 @@ Route::group(['middleware' => 'auth'], function () {
         //resource data grafik 
         Route::resource('grafik', 'GrafikController');
         Route::get('tesjasper', 'ReportController@tesjasper')->name('tesjasper');
-      
     });
 
     Route::prefix('akses')->name('akses.')->group(function () {
@@ -106,14 +105,22 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     //pendapatan route
-     Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
+    Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
         Route::resource("", "PendapatanController");
         Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
-        
+
         Route::post('api', 'PendapatanController@api')->name('api');
         //yang berkaitan dengan pendapatan
         Route::resource('target', 'PendapatanTargetController');
         Route::post('target_api', 'PendapatanTargetController@api')->name('target_api.api');
+        // rincian tartet pendanpatan bapenda katanya
+        Route::resource('targetrincian', 'TrtargetrincianController');
+        Route::post('targetrincian_api', 'TrtargetrincianController@api')->name('targetrincian_api.api');
+        
+        //get data from access frontend js 
+        Route::get('trtargetrincian_form/{id}','TrtargetrincianController@form')->name('trtargetrincian_form');
+        Route::get('trtargetrincian_form_edit/{id}','TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
+  
     });
     //route datatable api
     Route::prefix('api')->group(function () {
@@ -135,5 +142,4 @@ Route::group(['middleware' => 'auth'], function () {
 
     //restrict 
     Route::get('restrict', 'HomeController@restrict')->name('restrict');
-    
 });

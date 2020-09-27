@@ -22,6 +22,7 @@ use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_Rekening_neraca;
 use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 use App\Models\TmpendapatantargetModel;
+use App\Models\Trtargetrincian;
 
 class PendapatanTargetController extends Controller
 {
@@ -68,7 +69,7 @@ class PendapatanTargetController extends Controller
                 return '<b>' . $pad_jenis['nm_rek_obj'] . '</b>';
             })
             ->editColumn('djumlah', function ($p) {
-                return "<b>" . number_format($p->jumlah, 0, 0, '.') . "</b>";
+                return "<b><a href='" . route($this->route . 'edit', $p->id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
             })
             ->editColumn('djumlah_perubahan', function ($p) {
                 return "<b>" . number_format($p->jumlah, 0, 0, '.') . "</b>";
@@ -83,7 +84,7 @@ class PendapatanTargetController extends Controller
 
     public function create(Request $request)
     {
-   
+
         if ($request->rincian_obj_id == '' || $request->rincian_obj_id == 0) return abort('404', 'Parameter tidak berjalan dengan baik');
 
         $rincian_obj_id                       = $request->rincian_obj_id;
@@ -100,9 +101,19 @@ class PendapatanTargetController extends Controller
         $method_field                         = method_field('POST');
         $action                               = route($this->route . 'store');
         $tahuns                               = Tmsikd_setup_tahun_anggaran::get();
+
+        $ctargetid                            = TmpendapatantargetModel::max('id');
+        $targetid                             = ($ctargetid) ? $ctargetid : 1;
+        // $gtargetid                       = TmpendapatantargetModel::firstOrCreate([
+        //     'tahun' => date('Y')
+        // ]);
+        $method = 'add';
         return view(
             $this->view . 'target_form',
             compact(
+                'action',
+                'method',
+                'targetid',
                 'trekening',
                 'jumlah',
                 'jumlah_perubahan',
@@ -110,7 +121,6 @@ class PendapatanTargetController extends Controller
                 'dasar_hukum',
                 'keterangan',
                 'tgl_perubahan',
-                'action',
                 'tahuns',
                 'method_field'
             )
@@ -127,7 +137,7 @@ class PendapatanTargetController extends Controller
     {
         $request->validate([
             'jumlah' => 'required',
-            'jumlah_perubahan' => 'required',
+            'tperubahan' => 'required',
             'rekneing_rincian_akun_jenis_objek_id' => 'required|unique:tmpendapatan_target,rekneing_rincian_akun_jenis_objek_id',
             'dasar_hukum'     => 'required',
             'keterangan'      => 'required',
@@ -135,17 +145,29 @@ class PendapatanTargetController extends Controller
         ]);
         //dd($request);
         $jumlah        = str_replace(',', '', $request->jumlah);
-        $jumlahperuhan = str_replace(',', '', $request->jumlah_perubahan);
-
+        $jumlahperubahan = str_replace(',', '', $request->tperubahan);
+        //    $rinciantr                               = new TrtargetrincianModel;    
         $r                                       = new TmpendapatantargetModel;
         $r->jumlah                               = $jumlah;
-        $r->jumlah_perubahan                     = $jumlahperuhan;
+        $r->jumlah_perubahan                     = $jumlahperubahan;
         $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
         $r->tgl_perubahan                        = $request->tgl_perubahan;
         $r->tahun                                = date('Y');
         $r->save();
+
+        $ctargetid                            = TmpendapatantargetModel::max('id');
+        for ($i = 1; $i <= 12; $i++) {
+            $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
+            $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
+            Trtargetrincian::create([
+                'tmtarget_id' => $ctargetid,
+                'bulan' => $i,
+                'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
+                'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
+            ]);
+        }
         return response()->json([
             'msg' => 'data berhasil di simpan'
         ]);
@@ -158,7 +180,12 @@ class PendapatanTargetController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = TmpendapatantargetModel::find($id);
+        return view($this->view . 'target_show', [
+            'action' => route($this->route . 'update', $id),
+            'method_field' => method_field('PACTH'),
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -173,25 +200,31 @@ class PendapatanTargetController extends Controller
         $data                                  = TmpendapatantargetModel::find($id);
         $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
 
-        $method_field                          = method_field('update');
+        $method_field                          = method_field('PATCH');
         $jumlah                                = $data->jumlah;
         $jumlah_perubahan                      = $data->jumlah_perubahan;
         $rekneing_rincian_akun_jenis_objek_id  = $data->rekneing_rincian_akun_jenis_objek_id;
         $dasar_hukum     =  $data->dasar_hukum;
         $keterangan      =  $data->keterangan;
         $tgl_perubahan   =  $data->tgl_perubahan;
-        $action          =  route($this->route, '.update', $data->id);
-        $rincian_obj_id  =  $data['tmrekening_akun_kelompok_jenis_objek_id'];
-        $trekening       =  Tmrekening_akun_kelompok_jenis_objek_rincian::with(['tmrekening_akun_kelompok_jenis_objek'])->wheretmrekening_akun_kelompok_jenis_objek_id($rincian_obj_id)->get();
+        $action          =  route($this->route . 'update', $data->id);
+        $rincian_obj_id  =  $data->rekneing_rincian_akun_jenis_objek_id;
+        //dd($rincian_obj_id);
+        $trekening       =   $trekening                            = Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
+
+        $method          = 'edit';
+        $targetid        = $id;
 
         return view($this->view . 'target_form', compact(
+            'action',
+            'targetid',
             'jumlah',
             'jumlah_perubahan',
             'rekneing_rincian_akun_jenis_objek_id',
             'dasar_hukum',
             'keterangan',
             'tgl_perubahan',
-            'action',
+            'method',
             'method_field',
             'tahuns',
             'trekening'
@@ -209,27 +242,34 @@ class PendapatanTargetController extends Controller
     {
         $request->validate([
             'jumlah' => 'required',
-            'jumlah_perubahan' => 'required',
-            'rekneing_rincian_akun_jenis_objek_id' => 'required',
-            'dasar_hukum' => 'required',
-            'keterangan' => 'required',
-            'tahun' => 'required'
+            'tperubahan' => 'required',
+            'dasar_hukum'     => 'required',
+            'keterangan'      => 'required',
+            'tahun'           => 'required'
         ]);
-        $r = new TmpendapatantargetModel;
 
-        $jumlah        = str_replace(',', '', $request->jumlah);
-        $jumlahperubahan = str_replace(',', '', $request->jumlah_perubahan);
+        $jumlah          = str_replace(',', '', $request->jumlah);
+        $jumlahperubahan = str_replace(',', '', $request->tperubahan);
 
+        $r = TmpendapatantargetModel::find($id);
         $r->jumlah                               = $jumlah;
         $r->jumlah_perubahan                     = $jumlahperubahan;
-
         $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
         $r->tgl_perubahan                        = $request->tgl_perubahan;
         $r->tahun                                = $request->tahun;
-        $r->find($id)->save();
+        $r->save();
 
+        for ($i = 1; $i <= 12; $i++) {
+            $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
+            $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
+            Trtargetrincian::where('tmtarget_id', $id)->update([
+                'tmtarget_id' => $id,
+                'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
+                'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
+            ]);
+        }
         return response()->json([
             'msg' => 'data berhasil di update'
         ]);
