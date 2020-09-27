@@ -83,7 +83,7 @@
                             <div class="col-sm-8">
                                 <div class="input-file input-file-image">
                                     <img class="img-upload-preview img-circle" id="foto" width="100" height="100"
-                                        src="{{ $photo }}" alt="preview">
+                                        src="{{ $photo }}" alt="preview" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                     <input type="file" name="photo" class="form-control form-control-file"
                                         id="uploadImg" name="uploadImg" accept="image/*" required value="">
                                     <label for="uploadImg" class="btn btn-primary btn-round btn-lg"><i

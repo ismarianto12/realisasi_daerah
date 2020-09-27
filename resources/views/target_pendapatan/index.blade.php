@@ -71,7 +71,10 @@
         <div class="card mt-2">
             <div class="card-body">
                 <div class="alert alert-danger">Filter data berdasarkan , Rek. Rincian Objek </div>
+                <div class="alert alert-danger">Silahkan klik tombol hijau untuk edit target pendapatan berasarkan kode rekening pendapatan. </div>
+               
                 <div class="table-responsive">
+               
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <tr>
