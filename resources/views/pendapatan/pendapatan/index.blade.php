@@ -1,21 +1,16 @@
 @extends('layouts.page')
 @section('title', 'Data pendapatan atau retribusi persatuan kerja OPD')
 @section('content')
+
+
+@php
+$levelid = Properti_app::getlevel();
+$satkerid = Auth::user()->sikd_satker_id;
+@endphp
+
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
-        {{-- @if ($r->count() > 1)
-            <div role='alert' class='alert alert-danger alert-dismissible'>
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>×</span>
-                </button>
-                <strong>Error ! </strong> Duplikat Kegiatan<ol class='pl-3 m-0'></ol>
-                Hapus kegiatan yang tidak memiliki sumber data ?  
-                <a class="text-danger" title="Hapus Data" id="btnDelete" href="#" onclick="javascript:confirm_del_include()">
-                    <strong>Ya</strong>
-                </a>
-            </div>
-        @endif --}}
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
@@ -49,14 +44,18 @@
                                 <input type="date" class="form-control" name="tanggal_lapor" id="tanggal_lapor"
                                     value="{{ $tanggal_lapor }}">
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group m-0">
                             <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD
                                 </strong></label>
                             <div class="col-md-8">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
                                     required onchange="selectOnChange('tmsikd_satker_id')">
+                                    @if($levelid == 3 )
+                                    @else
                                     <option value=""> Silahkan Pilih Satuan Kerja </option>
+                                    @endif
+                                    
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                         selected="selected"@endif>
