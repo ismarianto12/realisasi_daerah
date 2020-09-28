@@ -102,20 +102,32 @@ class PendapatanController extends Controller
         $levelid = Properti_app::getlevel();
         if ($levelid == 3) {
             $satker_id = $levelid;
+            $where = [
+                'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
+                'tmrkas.tmsikd_satker_id'   => $satker_id
+            ];
         } else {
-            $satker_id = $request->tmsikd_satker_id;
+            $rsatker_id = $request->tmsikd_satker_id;
+            if ($rsatker_id == 0 || $rsatker_id == NULL) {
+                $where = [
+                    'tmrkas.tmrapbd_id'         => $request->tmrapbd_id
+                ];
+            } else {
+                $satker_id = $rsatker_id;
+                $where = [
+                    'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
+                    'tmrkas.tmsikd_satker_id'   => $satker_id
+                ];
+            }
         }
-        $where = [
-            'tmrkas.tmrapbd_id'         => $request->tmrapbd_id,
-            'tmrkas.tmsikd_satker_id'   => $satker_id, 
-        ];
+        //dd($satker_id); 
         if ($request->tanggal_lapor != '') {
             $tanggal_lapor = [
                 'tmrkas.tanggal_lapor' => $request->tanggal_lapor,
             ];
         } else {
             $tanggal_lapor = [];
-        } 
+        }
         $merge = array_merge($tanggal_lapor, $where);
         $r  = Tmrka::list($merge)->orderBy('kd_rek_rincian_obj')->get();
         return DataTables::of($r)

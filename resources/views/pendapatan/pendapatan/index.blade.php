@@ -53,9 +53,10 @@ $satkerid = Auth::user()->sikd_satker_id;
                                     required onchange="selectOnChange('tmsikd_satker_id')">
                                     @if($levelid == 3 )
                                     @else
-                                    <option value=""> Silahkan Pilih Satuan Kerja </option>
+                                    <option value="0" @if($tmsikd_satker_id== 0) selected="selected" @endif> Semua
+                                        Satuan Kerja </option>
                                     @endif
-                                    
+
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                         selected="selected"@endif>
