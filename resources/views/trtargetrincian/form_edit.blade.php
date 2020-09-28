@@ -15,7 +15,7 @@
         @endfor
         <tr>
           <td>Total Target Perbulan <br />
-            <input type="text" name="t_target" id="pbulan_total" class="form-control">
+            <input type="text" name="t_target" id="pbulan_total" class="form-control" value="{{ $jumlah }}">
           </td>
         </tr>
     </table>
@@ -31,7 +31,7 @@
         @endfor
         <tr>
           <td>Total Target Perbulan <br />
-            <input type="text" name="tperubahan" id="tperubahan" class="form-control">
+            <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="{{ $jumlah_perubahan }}">
           </td>
         </tr>
     </table>

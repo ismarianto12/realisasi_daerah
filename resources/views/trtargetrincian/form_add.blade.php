@@ -31,7 +31,7 @@
         @endfor
         <tr>
           <td>Total Target Perbulan <br />
-            <input type="text" name="tperubahan" id="tperubahan" class="form-control">
+            <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="">
           </td>
         </tr>
     </table>

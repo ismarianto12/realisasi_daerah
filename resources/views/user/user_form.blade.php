@@ -241,7 +241,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data notulen
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Pegawai di list
                     rapat.</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

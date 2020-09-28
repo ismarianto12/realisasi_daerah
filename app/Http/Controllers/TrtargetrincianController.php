@@ -54,11 +54,16 @@ class TrtargetrincianController extends Controller
 
     public function form_edit($id)
     {
-        $rdata  = Trtargetrincian::where('tmtarget_id', $id)->get();
+        $rdata  = Trtargetrincian::where('tmtarget_id', $id)->OrderBy('id', 'asc')->get();
         //dd($rincian_data);
+        $rjumlah = $rdata->first()->jumlah;
+        $rjumlah_perubahan = $rdata->first()->jumlah_perubahan;
+
         return view(
             $this->view . 'form_edit',
             [
+                'jumlah' => number_format($rjumlah,0,0,','),
+                'jumlah_perubahan' => number_format($rjumlah_perubahan,0,0,','),
                 'rincian_data' => $rdata,
                 'targetid' => $id
             ]

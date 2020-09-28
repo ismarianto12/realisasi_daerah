@@ -201,7 +201,7 @@ class PendapatanTargetController extends Controller
         $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
 
         $method_field                          = method_field('PATCH');
-        $jumlah                                = $data->jumlah;
+        $jumlah                                = number_format($data->jumlah,0,0,',');
         $jumlah_perubahan                      = $data->jumlah_perubahan;
         $rekneing_rincian_akun_jenis_objek_id  = $data->rekneing_rincian_akun_jenis_objek_id;
         $dasar_hukum     =  $data->dasar_hukum;
