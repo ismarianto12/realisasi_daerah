@@ -141,7 +141,11 @@
                     // dd($tmsikd_satkers);
                     @endphp
 
+                    @if($satker_kode == NULL || $satker_nm == 0)
+                    <div class="alert alert-success">Semua Satuan Kerja Yang di pilih .</div>
+                    @else
                     <b> [ {{ $satker_kode }} ] - [ {{ $satker_nm }} ] </b>
+                    @endif
                     <hr />
                     <table id="datatable" class="table table-striped no-b" style="width:100%">
                         <thead>

@@ -210,8 +210,7 @@ class PendapatanTargetController extends Controller
         $action          =  route($this->route . 'update', $data->id);
         $rincian_obj_id  =  $data->rekneing_rincian_akun_jenis_objek_id;
         //dd($rincian_obj_id);
-        $trekening       =   $trekening                            = Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
-
+        $trekening       =  Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
         $method          = 'edit';
         $targetid        = $id;
 
