@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ Properti_app::getTahun() }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="http://demo.themekita.com/atlantis/livepreview/examples/assets/img/icon.ico"
-        type="image/x-icon" />
+    <link rel="icon" href="{{ asset('assets\template\img/icon.ico') }}" />
     <!-- Fonts and icons -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/webfont/webfont.min.js"></script>
     <script>
@@ -25,7 +23,8 @@
                 sessionStorage.fonts = true;
             }
         });
-
+        
+    <!-- Ismarianto Github io -->
     </script>
 
     <!-- CSS Files -->
@@ -43,9 +42,9 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost/simral/public/css/tooltipster.bundle.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/template/') }}/css/tooltipster.bundle.min.css">
     <link rel="stylesheet" type="text/css"
-        href="http://localhost/simral/public/css/tooltipster-sideTip-borderless.min.css">
+        href="{{ asset('/assets/template/') }}/css/tooltipster-sideTip-borderless.min.css">
 
     <script src="{{ asset('/assets/template/js/aplikasi.js') }}"></script>
 </head>
@@ -524,7 +523,7 @@
     <script src="{{ asset('/assets/template/') }}/js/atlantis.min.js"></script>
     <!-- Moment JS -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/moment/moment.min.js"></script>
-    <script src="http://localhost/simral/public/js/tooltipster.bundle.min.js"></script>
+    <script src="{{ asset('/assets/template/') }}/js/tooltipster.bundle.min.js"></script>
 
     <!-- Chart JS -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/chart.js/chart.min.js"></script>

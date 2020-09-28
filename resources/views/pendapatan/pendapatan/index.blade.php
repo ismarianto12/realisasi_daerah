@@ -248,7 +248,7 @@
         rowGroup: {
             startRender: function(rows, group){
                 return $('<tr/>')
-                    .append('<td/>')
+                    .append('<td></td>')
                     .append(group)
             },
             endRender: null,
