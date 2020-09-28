@@ -81,17 +81,17 @@ class Tmrka extends Model
                     SELECT SUM(rincian.jumlah) 
                     FROM tmrka_mata_anggarans AS rincian 
                     WHERE rincian.tmrka_id = tmrkas.id 
-                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 8) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
+                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 7) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
             \DB::raw('(
                     SELECT SUM(rincian.jumlah) 
                     FROM tmrka_mata_anggarans AS rincian 
                     WHERE rincian.tmrka_id = tmrkas.id 
-                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 6) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
+                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 5) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
             \DB::raw('(
                     SELECT SUM(rincian.jumlah) 
                     FROM tmrka_mata_anggarans AS rincian 
                     WHERE rincian.tmrka_id = tmrkas.id 
-                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 4) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
+                    AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 3) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
         )    
             ->join('tmrka_mata_anggarans', 'tmrkas.id', '=', 'tmrka_mata_anggarans.tmrka_id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrka_mata_anggarans.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id')
