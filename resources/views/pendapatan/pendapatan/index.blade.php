@@ -49,14 +49,14 @@
                                 <input type="date" class="form-control" name="tanggal_lapor" id="tanggal_lapor"
                                     value="{{ $tanggal_lapor }}">
                             </div>
-                        </div>
-
+                        </div> 
                         <div class="form-group m-0">
                             <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD
                                 </strong></label>
                             <div class="col-md-8">
                                 <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
                                     required onchange="selectOnChange('tmsikd_satker_id')">
+                                    <option value=""> Silahkan Pilih Satuan Kerja </option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                         selected="selected"@endif>

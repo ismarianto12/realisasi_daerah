@@ -192,7 +192,6 @@ class PendapatanController extends Controller
         $rekJenis   = $class_option->getRekJenisByKode($kdRek);
         $rekJeni_id = ($request->rekJeni_id == '' ? $rekJenis->first()->id : $request->rekJeni_id);
 
-
         $rekObjs    = $class_option->getListRekObjs($rekJeni_id);
         //dd($rekObjs);
         if (count($rekObjs) == NULL) {
@@ -300,7 +299,7 @@ class PendapatanController extends Controller
         $tmsikd_sumber_anggaran_id = $request->tmsikd_sumber_anggaran_id;
 
         if ($cboxInput == null)
-            return response()->json(['message' => "Tidak ada data yang dipilih."], 422);
+            return response()->json(['message' => "Tidak ada data rincian pendapatan yang dipilih."], 422);
 
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $cboxInput[$i];
