@@ -123,13 +123,14 @@ class PendapatanController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
             })
             ->editColumn('kd_rek_jenis', function ($p) {
-                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
+                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_jenis) . '</td><td></td>';
             })
             ->editColumn('kd_rek_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';
+                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_obj) . '</td><td></td>';
             })
             ->editColumn('kd_rek_rincian_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td>';
+                return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td>
+                <td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td><td></td>';
             })
             ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
                 return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
