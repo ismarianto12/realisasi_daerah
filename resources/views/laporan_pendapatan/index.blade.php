@@ -1,8 +1,7 @@
 @extends('layouts.template')
 
-@section('title','Report Pendapatan')
-@section('content')
-
+@section('title','Pendapatan Daerah')
+@section('content') 
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -57,8 +56,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row form-inline">
-                        <div class="col-md-12">
-
+                        <div class="col-md-12"> 
 
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
@@ -126,13 +124,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div> 
             <div class="card-body">
                 <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
-            </div>
-
-
+            </div>  
         </div>
     </div>
 

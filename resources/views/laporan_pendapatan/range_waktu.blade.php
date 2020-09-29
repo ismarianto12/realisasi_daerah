@@ -68,10 +68,8 @@
       <td></td>
       <td></td>
       <td></td>
-    </tr>
-
-    @endforeach
-
+    </tr> 
+    @endforeach 
     <tr>
       <td>{{ $list['kd_rek_rincian_obj'] }}</td>
       <td>{{ $list['nm_rek_rincian_obj'] }}</td>

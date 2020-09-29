@@ -31,7 +31,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
 use App\Libraries\Jasper_report;
 use App\Libraries\List_pendapatan;
-  
+
 use function PHPSTORM_META\map;
 
 class ReportController extends Controller
@@ -50,7 +50,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
 
-        $title   = 'Tambahs | ' . $this->title;
+        $title   = 'Laporan | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'save'];
         // Validasi
@@ -296,30 +296,30 @@ class ReportController extends Controller
         }
         $data = $data->get();
         return DataTables::of($data)
-            ->editColumn('kd_rek_jenis', function ($p) {
-                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
-            })
-            ->editColumn('kd_rek_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';
-            })
-            ->editColumn('kd_rek_rincian_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td>';
-            })
-            ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
-                return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
-            })
-            ->editColumn('tgl_lapor', function ($p) {
-                return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
-            })
-            ->editColumn('volume', function ($p) {
-                return ($p->volume == 0 ? '' : Html_number::decimal($p->volume));
-            })
-            ->editColumn('jumlah', function ($p) {
-                return Html_number::decimal($p->jumlah);
-            })
-            ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
-            ->addIndexColumn()
-            ->toJson();
+        ->editColumn('kd_rek_jenis', function ($p) {
+            return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
+        })
+        ->editColumn('kd_rek_obj', function ($p) {
+            return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';
+        })
+        ->editColumn('kd_rek_rincian_obj', function ($p) {
+            return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td>';
+        })
+        ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
+            return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
+        })
+        ->editColumn('tgl_lapor', function ($p) {
+            return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+        })
+        ->editColumn('volume', function ($p) {
+            return ($p->volume == 0 ? '' : Html_number::decimal($p->volume));
+        })
+        ->editColumn('jumlah', function ($p) {
+            return Html_number::decimal($p->jumlah);
+        })
+        ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
+        ->addIndexColumn()
+        ->toJson();
     }
     //report get
     public function tesjasper(Request $request)

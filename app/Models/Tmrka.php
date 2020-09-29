@@ -53,10 +53,9 @@ class Tmrka extends Model
         return $this->belongsTo(Tmsikd_bidang::class);
     }
 
-    public static function list($where)
+    public static function list()
     {
-        return Tmrka::where($where)
-        ->select(
+        return Tmrka::select(
             'tmrka_mata_anggarans.*',
             'tmrkas.id as tmrapbd_id',
             'tmrkas.tmrapbd_id',
@@ -92,7 +91,7 @@ class Tmrka extends Model
                     FROM tmrka_mata_anggarans AS rincian 
                     WHERE rincian.tmrka_id = tmrkas.id 
                     AND SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 3) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
-        )    
+         )    
             ->join('tmrka_mata_anggarans', 'tmrkas.id', '=', 'tmrka_mata_anggarans.tmrka_id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrka_mata_anggarans.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.id')
@@ -283,7 +282,6 @@ class Tmrka extends Model
         // }
 
         // return Html_number::decimal(Tmrka_mata_anggaran::whereIn('tmrka_id',$tmrka->pluck('id')->toArray())->sum('jumlah'));
-
     }
 
     function report(){

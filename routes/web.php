@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('result_data', 'ReportController@action')->name('result_data');
 
     Route::prefix('laporan')->name('laporan.')->group(function () {
+
+        Route::get('/', 'ReportController@index')->name('index');
         Route::get('keseluruhan', 'ReportController@alldata')->name('keseluruhan');
         Route::get('action_all', 'ReportController@action_all')->name('action_all');
         //resource data grafik 
@@ -88,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('satker_api', 'TmopdController@api')->name('satker_api');
         Route::post('set_active', 'TmopdController@set_active')->name('set_active');
 
+        //get route ajax 
+        Route::get('get_satker/{id}','TmopdController@get_satker')->name('get_satker'); 
         //settting user
     });
 

@@ -1,172 +1,145 @@
-@extends('layouts.page')
-@section('title', 'Data pendapatan atau retribusi persatuan kerja OPD')
+@extends('layouts.template')
+
+@section('title','Pendapatan Daerah')
 @section('content')
-
-
-@php
-$levelid = Properti_app::getlevel();
-$satkerid = Auth::user()->sikd_satker_id;
-@endphp
-
+@include('layouts._includes.toolbar')
+ 
 <div class="page bg-light">
-    @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
         <div class="card">
             <div class="card-body">
-                <div class="form-row form-inline">
-                    <div class="col-md-8">
-                        <div class="form-group m-0">
-                            <label for="tahun_id" class="form-control-label col-md-3"><strong>Tahun RKA
-                                </strong></label>
-                            <div class="col-md-2">
-                                <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2"
-                                    autocomplete="off" onchange="selectOnChange()">
-                                    @foreach ($tahuns as $tahun)
-                                    <option value="{{$tahun->id}}" @if($tahun_id==$tahun->id)
-                                        selected="selected"@endif>{{$tahun->tahun}}</option>
-                                    @endforeach
-                                </select>
-                            </div>&nbsp;
-
-                            <div class="col-md-4">
-                                <select name="tmrapbd_id" id="tmrapbd_id" placeholder="" class="form-control select2 "
-                                    autocomplete="off" onchange="selectOnChange()">
-                                    @foreach ($tmrapbds as $tmrapbds)
-                                    <option value="{{ $tmrapbds->id }}" @if($tmrapbd_id==$tmrapbds->id)
-                                        selected="selected"@endif>{{ $tmrapbds->jenis }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tanggal_lapor" class="col-md-3">Tanggal Pelaporan </label>
-                            <div class="col-md-8">
-                                <input type="date" class="form-control" name="tanggal_lapor" id="tanggal_lapor"
-                                    value="{{ $tanggal_lapor }}">
-                            </div>
-                        </div>
-                        <div class="form-group m-0">
-                            <label for="tmsikd_satker_id" class="form-control-label col-md-3"><strong>PD
-                                </strong></label>
-                            <div class="col-md-8">
-                                <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
-                                    required onchange="selectOnChange('tmsikd_satker_id')">
-                                    @if($levelid == 3 )
-                                    @else
-                                    <option value="0" @if($tmsikd_satker_id== 0) selected="selected" @endif> Semua
-                                        Satuan Kerja </option>
-                                    @endif
-
-                                    @foreach($tmsikd_satkers as $tmsikd_satker)
-                                    <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
-                                        selected="selected"@endif>
-                                        [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group m-0">
-                            <label for="tmsikd_sub_skpd_id" class="form-control-label col-md-3"><strong>Sub Unit
-                                </strong></label>
-                            <div class="col-md-6">
-                                <select name="tmsikd_sub_skpd_id" id="tmsikd_sub_skpd_id" class="form-control select2s "
-                                    onchange="selectOnChange('tmsikd_sub_skpd_id')">
-                                    @if($tmsikd_sub_skpds->count() == 0)<option value="0">&nbsp;</option>
-                                    @elseif($tmsikd_sub_skpds != null)<option value="0">UNIT INDUK</option>@endif
-                                    @foreach($tmsikd_sub_skpds as $tmsikd_sub_skpd)
-                                    <option value="{{ $tmsikd_sub_skpd->id }}"
-                                        @if($tmsikd_sub_skpd_id==$tmsikd_sub_skpd->id) selected="selected"@endif>
-                                        [{{ $tmsikd_sub_skpd->kode }}] &nbsp; {{ $tmsikd_sub_skpd->nama }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group m-0">
-                            <label for="tmsikd_bidang_id" class="form-control-label col-md-3"><strong>Bidang Urusan
-                                </strong></label>
-                            <div class="col-md-6">
-                                <select name="tmsikd_bidang_id" id="tmsikd_bidang_id" class="form-control select2s "
-                                    onchange="selectOnChange('tmsikd_bidang_id')">
-                                    @foreach($tmsikd_bidangs as $tmsikd_bidang)
-                                    <option value="{{ $tmsikd_bidang->id }}" @if($tmsikd_bidang_id==$tmsikd_bidang->id)
-                                        selected="selected"@endif>
-                                        [{{ $tmsikd_bidang->kd_bidang }}] &nbsp; {{ $tmsikd_bidang->nm_bidang }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
+                <div class="form-group form-show-validation row">
+                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
+                            class="required-label">*</span></label>
+                    <div class="col-sm-6">
+                        <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
+                            autocomplete="off" onchange="selectOnChange()">
+                            @foreach ($tahuns as $tahun)
+                            <option value="{{$tahun->id}}" @if($tahun_id==$tahun->id)
+                                selected="selected"@endif>{{$tahun->tahun}}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    {{-- <div class="col-md-4">
-                        <div class="form-group m-0">
-                            <label class="form-control-label col-md-5"><strong>Status PPAS :</strong></label>
-                            @if ($status_anggaran == null)
-                                <label class="r-0 col-md-7 tl">-</label>
-                            @elseif($status_anggaran->status_ppas == 0)
-                                <label class="r-0 col-md-7 tl">Draft</label>
-                            @elseif($status_anggaran->status_ppas == 1)
-                                <label class="r-0 col-md-7 tl">Final</label>
-                            @elseif($status_anggaran->status_ppas == 2)
-                                <label class="r-0 col-md-7 tl">Revisi</label>
-                            @endif
+                </div>
+
+                <div class="form-group form-show-validation row">
+                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
+                        <span class="required-label">*</span></label>
+                    <div class="col-sm-6">
+                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
+                            onchange="selectOnChange()">
+                            @foreach($tmsikd_satkers as $tmsikd_satker)
+                            <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
+                                selected="selected"@endif>
+                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-header">
+                    <h6>List Rekening Mata Anggaran</h6>
+                </div>
+                <div class="card-body">
+                    <div class="form-row form-inline">
+                        <div class="col-md-12">
+
+                            <div class="form-group form-show-validation row">
+                                <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
+                                        class="required-label">*</span></label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="dari" class="form-control" placeholder="Dari .."
+                                        value="{{ $dari }}">
+                                </div>
+                                S /D
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="sampai" placeholder="Sampai dengan"
+                                        value="{{ $sampai }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                            Akun :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
+                                            id="tmrekening_akun_id">
+                                            <option value="0">&nbsp;</option>
+                                            @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
+                                            <option value="{{ $tmrekening_akun->id }}">
+                                                {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_kelompok_id"
+                                        class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
+                                            id="tmrekening_akun_kelompok_id">
+                                            <option value="0">&nbsp;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_kelompok_jenis_id"
+                                        class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_kelompok_jenis_id"
+                                            class="form-control r-0 s-12 select2"
+                                            id="tmrekening_akun_kelompok_jenis_id">
+                                            <option value="0">&nbsp;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_kelompok_jenis_objek_id"
+                                        class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_kelompok_jenis_objek_id"
+                                            class="form-control r-0 s-12 select2"
+                                            id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
+                                            <option value="0">&nbsp;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group m-0">
-                            <label class="form-control-label col-md-5"><strong>Dokumen PPAS :</strong></label>
-                            <label class="r-0 col-md-7 tl">
-                                @if ($status_anggaran == null)
-                                    -
-                                @else
-                                    <a href="" class="mr-2" href="#">PDF</a>
-                                    <span style="border-left: 1px black solid; height: 18px;"></span>
-                                    <a href="" class="ml-2" href="#">XLS</a>
-                                @endif
-                            </label>
-                        </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card mt-2">
             <div class="card-body">
-                <div class="table-responsive">
-                    @if ($tanggal_lapor !='')
-                    Pelaporan Per periode tanggal @php
-                    echo '<b>'.Properti_app::tgl_indo($tanggal_lapor).'</b>';
-                    @endphp
-                    @endif
-                    @php
-                    // dd($tmsikd_satkers);
-                    @endphp
-
-                    @if($satker_kode == NULL || $satker_nm == 0)
-                    <div class="alert alert-success">Semua Satuan Kerja Yang di pilih .</div>
-                    @else
-                    <b> [ {{ $satker_kode }} ] - [ {{ $satker_nm }} ] </b>
-                    @endif
-                    <hr />
-                    <table id="datatable" class="table table-striped no-b" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th width="5%">&nbsp;</th>
-                                <th width="10%">Kode Rekening</th>
-                                <th width="35%">Uraian</th>
-                                <th width="10%">Volume Transaksi</th>
-                                <th width="15%">Jumlah Transaksi</th>
-                                <th width="15%">Tanggal Lapor</th>
-                            </tr>
-
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+                <center>
+                    <div class="satker_show"></div>
+                </center>
             </div>
         </div>
     </div>
+
+    <div id="btn_cetak"></div>
+    <div class="card">
+        <div class="card-body">
+            <table id="datatable" class="table table-striped no-b" style="width:100%">
+                <thead>
+                    <tr>
+                        <th width="5%">&nbsp;</th>
+                        <th width="10%">Kode Rekening</th>
+                        <th width="35%">Uraian</th>
+                        <th width="10%">Volume Transaksi</th>
+                        <th width="15%">Jumlah Transaksi</th>
+                        <th width="15%">Tanggal Lapor</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 </div>
-@endsection
+
 
 @section('script')
 <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
@@ -183,35 +156,13 @@ $satkerid = Auth::user()->sikd_satker_id;
 </script>
 
 <script type="text/javascript">
-    $(function(){ 
-    $('#btnCreate').on('click',function(r){
-     r.preventDefault();
-     //var tanggal_lapor = $('#tanggal_lapor').val();
-     //if(tanggal_lapor == ''){
-     //   $.alert('ket','tanggal lapor tidak boleh kosong');
-     //}else{
-         @php    
-            $levelid  = Properti_app::getlevel();
-            $satkerid = Auth::user()->sikd_satker_id; 
-
-         @endphp
-        @if($levelid == 3 )  
-        url = "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id={{ $satkerid }}&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
-           @else
-        url = "{{ route('pendapatan.create') }}?tahun_id=" + $('#tahun_id').val() + "&tmrapbd_id=" + $('#tmrapbd_id').val() + "&tmsikd_satker_id=" + $('#tmsikd_satker_id').val() + "&tmsikd_sub_skpd_id=" + $('#tmsikd_sub_skpd_id').val() + "&tmsikd_bidang_id=" + $('#tmsikd_bidang_id').val();
-        @endif        
-        window.location.href = url;
-     //}
-    });
-});
-
-     var table = $('#datatable').dataTable({
+    var table = $('#datatable').dataTable({
         dom: 'Bfrtip',
         buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
+            {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
+            {extend:'excelHtml5', className: 'btn btn-success btn-xs'},
+            {extend:'csvHtml5', className: 'btn btn-warning btn-xs'},
+            {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
         ],
         processing: true,
         serverSide: true,
@@ -219,25 +170,22 @@ $satkerid = Auth::user()->sikd_satker_id;
         pageLength: 10,
         lengthChange: false,
         ajax: {
-            url: "{{ route('pendapatan.api') }}",
+            url: "{{ route($route.'api') }}",
             method: 'POST',
             data:function(data){
-                var tahun_id           = $('#tahun_id').val();
-                var tmrapbd_id         = $('#tmrapbd_id').val();
-                var tmsikd_satker_id   = $('#tmsikd_satker_id').val();
-                var tmsikd_sub_skpd_id = $('#tmsikd_sub_skpd_id').val();
-                var tmsikd_bidang_id   = $('#tmsikd_bidang_id').val();
-                var tanggal_lapor      = $('#tanggal_lapor').val();
                 
-                data.tahun_id           = tahun_id;
-                data.tmrapbd_id         = tmrapbd_id;
-                data.tmsikd_satker_id   = tmsikd_satker_id;
-                data.tmsikd_sub_skpd_id = tmsikd_sub_skpd_id;
-                data.tmsikd_bidang_id   = tmsikd_bidang_id;
-                data.tanggal_lapor      = tanggal_lapor;
-            } 
-        },
-        columns: [ 
+            data.tahun_id  = $('#tahun_id').val();
+            data.tmsikd_satker_id  = $('#tmsikd_satker_id').val();
+            data.dari  = $('#dari').val();
+            data.sampai  = $('#sampai').val();
+            data.tmrekening_akun_id  = $('#tmrekening_akun_id').val();
+            data.tmrekening_akun_kelompok_id  = $('#tmrekening_akun_kelompok_id').val();
+            data.tmrekening_akun_kelompok_jenis_id  = $('#tmrekening_akun_kelompok_jenis_id').val();
+            data.tmrekening_akun_kelompok_jenis_objek_id  = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+          }
+      },  
+
+    columns: [ 
             {data: 'id', name: 'id', orderable: false, searchable: false, className: 'text-center'},
             {data: 'kd_rek_rincian_objek_sub', name: 'kd_rek_rincian_objek_sub'},
             {data: 'nm_rek_rincian_objek_sub', name: 'nm_rek_rincian_objek_sub'},
@@ -254,31 +202,117 @@ $satkerid = Auth::user()->sikd_satker_id;
             endRender: null,
             dataSrc: ['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj']
         }
-    });
+    });        
     @include('layouts._includes.tablechecked')
+ 
+//if data change fiunction 
 
-    function del(){
-        var c = new Array();
-        $("input:checked").each(function(){ c.push($(this).val()); });
-        if(c.length == 0){
-            $.alert("Silahkan memilih data yang akan dihapus.");
-        }else{
-            $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
-                table.api().ajax.reload();
-            }, "JSON").fail(function(){
-                reload();
-            });
-        }
-    }
+$('#tmrekening_akun_id').on('change', function(){
+    val = $(this).val();
+    option = "<option value=''>&nbsp;</option>";
+    if(val == ""){
+        $('#tmrekening_akun_kelompok_id').html(option);
+        $('#tmrekening_akun_kelompok_jenis_id').html(option);
+        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+        selectOnChange();
+    }else{
+        $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
+        url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+        $.get(url, function(data){
+            if(data){
+                $.each(data, function(index, value){
+                    option += "<option value='" + value.id + "'>[" + value.kd_rek_kelompok +"] " + value.nm_rek_kelompok +"</li>";
+                });
+                $('#tmrekening_akun_kelompok_id').empty().html(option);
 
-    function selectOnChange(){
-        tahun_id           = $('#tahun_id').val();
-        tmrapbd_id         = $('#tmrapbd_id').val();
-        tmsikd_satker_id   = $('#tmsikd_satker_id').val();
-        tmsikd_sub_skpd_id = $('#tmsikd_sub_skpd_id').val();
-        tmsikd_bidang_id   = $('#tmsikd_bidang_id').val();
-        tanggal_lapor      = $('#tanggal_lapor').val(); 
-        document.location.href = "{{ route($route.'index') }}?tahun_id=" + tahun_id + "&tmrapbd_id=" + tmrapbd_id + "&tmsikd_satker_id=" + tmsikd_satker_id + "&tmsikd_sub_skpd_id=" + tmsikd_sub_skpd_id + "&tmsikd_bidang_id=" + tmsikd_bidang_id+ "&tanggal_lapor=" + tanggal_lapor;
+                $("#tmrekening_akun_kelompok_id").val($("#tmrekening_akun_kelompok_id option:first").val()).trigger("change.select2");
+            }else{
+                $('#tmrekening_akun_kelompok_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }
+        }, 'JSON');
     }
+    $('#tmrekening_akun_kelompok_id').change();
+});
+
+$('#tmrekening_akun_kelompok_id').on('change', function(){
+    val = $(this).val();
+    option = "<option value=''>&nbsp;</option>";
+    if(val == ""){
+        $('#tmrekening_akun_kelompok_jenis_id').html(option);
+        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+        selectOnChange();
+    }else{
+        $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
+        url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+        $.get(url, function(data){
+            if(data){
+                $.each(data, function(index, value){
+                    option += "<option value='" + value.id + "'>[" + value.kd_rek_jenis +"] " + value.nm_rek_jenis +"</li>";
+                });
+                $('#tmrekening_akun_kelompok_jenis_id').empty().html(option);
+
+                $("#tmrekening_akun_kelompok_jenis_id").val($("#tmrekening_akun_kelompok_jenis_id option:first").val()).trigger("change.select2");
+            }else{
+                $('#tmrekening_akun_kelompok_jenis_id').html(option);
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }
+        }, 'JSON');
+    }
+});
+
+$('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
+    val = $(this).val();
+    option = "<option value=''>&nbsp;</option>";
+    if(val == ""){
+        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+        selectOnChange();
+    }else{
+        $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
+        url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
+        $.get(url, function(data){
+            if(data){
+                $.each(data, function(index, value){
+                    option += "<option value='" + value.id + "'>[" + value.kd_rek_obj +"] " + value.nm_rek_obj +"</li>";
+                });
+                $('#tmrekening_akun_kelompok_jenis_objek_id').empty().html(option);
+
+                $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
+            }else{
+                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
+                selectOnChange();
+            }
+        }, 'JSON');
+    }
+});   
+
+$('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
+
+function selectOnChange(){
+   var dari   = $('#dari').val();
+   var sampai = $('#sampai').val();
+
+    table.api().ajax.reload();
+    $('#btnCreate').attr('href', "{{ route($route.'create') }}?tmrekening_akun_id=" + $('#tmrekening_akun_id').val() + "&tmrekening_akun_kelompok_id=" + $('#tmrekening_akun_kelompok_id').val() + "&tmrekening_akun_kelompok_jenis_id=" + $('#tmrekening_akun_kelompok_jenis_id').val() + "&tmrekening_akun_kelompok_jenis_objek_id=" + $('#tmrekening_akun_kelompok_jenis_objek_id').val());
+  //get data afetr change satker_id
+    val_satker_id  = $('#tmsikd_satker_id').val();
+    url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
+$.get(url,function(data){
+     if(data){
+    
+        $('.satker_show').html('<div class="alert alert-success"><b> ['+data.kode+']['+data.satker_name+' ] PERIODE DARI : '+dari+' S/D '+sampai +'</b></div>')
+     }else{ 
+        $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
+      }
+
+
+
+})
+
+}
 </script>
+@endsection
 @endsection

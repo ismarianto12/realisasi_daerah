@@ -52,37 +52,37 @@ class TmopdController extends Controller
     {
         $data = Tmopd::get();
         return DataTables::of($data)
-            ->editColumn('nama_opd', function ($p) {
-                return '<b>' . $p->n_opd . '</b>';
-            })
-            ->editColumn('active', function ($p) {
-                if ($p->active == 1) {
-                    $active = '<b>aktif</b>';
-                } else {
-                    $active = '<b>non aktif</b>';
-                }
-                return $active;
-            })
+        ->editColumn('nama_opd', function ($p) {
+            return '<b>' . $p->n_opd . '</b>';
+        })
+        ->editColumn('active', function ($p) {
+            if ($p->active == 1) {
+                $active = '<b>aktif</b>';
+            } else {
+                $active = '<b>non aktif</b>';
+            }
+            return $active;
+        })
 
-            ->editColumn('set_active', function ($p) {
-                if ($p->active == 1) {
-                    return '<button onclick="javascript:confirm_active()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
-                } else {
-                    return '<button onclick="javascript:confirm_noactive()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
-                }
-            }, TRUE)
-            ->editColumn('action', function ($p) {
-                return '<button to="' . Url('aplikasi/satker/' . $p->id . '/' . 'edit') . '" class="edit btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
-                        <button onclick="javascript:konfirmasi_hp(' . $p->id . ')"  class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
-                        ';
-            }, TRUE)
-            ->addIndexColumn()
-            ->rawColumns([
-                'nama_opd',
-                'action',
-                'active'
-            ])
-            ->toJson();
+        ->editColumn('set_active', function ($p) {
+            if ($p->active == 1) {
+                return '<button onclick="javascript:confirm_active()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
+            } else {
+                return '<button onclick="javascript:confirm_noactive()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>';
+            }
+        }, TRUE)
+        ->editColumn('action', function ($p) {
+            return '<button to="' . Url('aplikasi/satker/' . $p->id . '/' . 'edit') . '" class="edit btn btn-warning btn-xs"><i class="fa fa-list"></i>Edit </button>
+            <button onclick="javascript:konfirmasi_hp(' . $p->id . ')"  class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Delete</button>
+            ';
+        }, TRUE)
+        ->addIndexColumn()
+        ->rawColumns([
+            'nama_opd',
+            'action',
+            'active'
+        ])
+        ->toJson();
     }
 
     //set active
@@ -133,10 +133,29 @@ class TmopdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    //get data json opd data
+
+    public function get_satker($id)
+    { 
+        $data = Tmopd::where('kode',$id)->get();
+        if($data == ''){
+           return response()->json([ 
+            'kode'=> '',
+            'satker_name'=> '',
+        ]); 
+       }else{
+           return response()->json([ 
+            'kode'=> $data->first()->kode,
+            'satker_name'=> $data->first()->n_opd,
+        ]); 
+       }  
+   }
+
+
+   public function show($id)
+   {
         //
-    }
+   }
 
     /**
      * Show the form for editing the specified resource.

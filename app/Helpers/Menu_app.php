@@ -101,7 +101,7 @@ class Menu_app
                     $menu .= self::set_menu(Url('bapenda/rekening/kodejenis'), 'Kode Jenis');
                     $menu .= self::set_menu(Url('bapenda/rekening/kodeobjek'), 'Kode Object');
                     $menu .= self::set_menu(Url('bapenda/rekening/koderincianobjek'), 'Kode Rincian Object');
-                    $menu .= self::set_menu(Url('bapenda/rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object'); 
+                    $menu .= self::set_menu(Url('bapenda/rekening/kodesubrincianobjek'), 'Kode Sub Rincian Object');
                     $menu .= '
                   </ul>
                 </div>
@@ -115,7 +115,7 @@ class Menu_app
             </a>
             <div class="collapse" id="laporan">
                 <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Pendapatan (PAD)', '', 'target="content"');
+                    $menu .= self::set_menu('pendapatan', 'Pelaporan Pendapatan (PAD)', '', 'target="content"');
                     $menu .= '
               </ul>
             </div>
@@ -128,7 +128,7 @@ class Menu_app
         </a>
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Pendapatan');
+                    $menu .= self::set_menu('laporan/index', 'Laporan Pendapatan');
                     $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
                     $menu .= '
@@ -198,12 +198,12 @@ class Menu_app
                     </a>
                     <div class="collapse" id="retribusi">
                         <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('page/pendapatan', 'Pelaporan Retribusi');
+                    $menu .= self::set_menu('pendapatan', 'Pelaporan Retribusi');
                     $menu .= '
                       </ul>
                     </div>
                 </li>';
-                $menu .= '<li class="nav-item">
+                    $menu .= '<li class="nav-item">
                 <a data-toggle="collapse" href="#target">
                     <i class="fa fa-list"></i>
                     <p>Target Pendapatan.</p>
@@ -211,8 +211,8 @@ class Menu_app
                 </a>
                 <div class="collapse" id="target">
                     <ul class="nav nav-collapse">';
-                $menu .= self::set_menu('pendapatan/target', 'Target Pendapatan.');
-                $menu .= '
+                    $menu .= self::set_menu('pendapatan/target', 'Target Pendapatan.');
+                    $menu .= '
                   </ul>
                 </div>
             </li>';
