@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -106,7 +107,8 @@
                                             <a href="#">
                                                 <div class="notif-img">
                                                     <img src="{{ asset('/assets/template/') }}/img/jm_denis.jpg"
-                                                        alt="Img Profile" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
+                                                        alt="Img Profile"
+                                                        onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jimmy Denis</span>
@@ -301,8 +303,9 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
-                                        class="avatar-img rounded-circle" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
+                                    <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
+                                        alt="..." class="avatar-img rounded-circle"
+                                        onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -311,11 +314,14 @@
                                         <div class="user-box">
                                             <div class="avatar-lg"><img
                                                     src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
-                                                    alt="image profile" class="avatar-img rounded" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'"></div>
+                                                    alt="image profile" class="avatar-img rounded"
+                                                    onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
+                                            </div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->realname }}</h4>
                                                 <p class="text-muted"></p><a href="{{ Url('akses/profile') }}"
-                                                    class="btn btn-xs btn-secondary btn-sm" target="_blank">View Profile</a>
+                                                    class="btn btn-xs btn-secondary btn-sm" target="_blank">View
+                                                    Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -349,8 +355,9 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..."
-                                class="avatar-img rounded-circle" onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
+                            <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
+                                alt="..." class="avatar-img rounded-circle"
+                                onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -545,9 +552,14 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
     @yield('script')
-    
+
+    <script>
+        $(function(){
+            $('.select2').select2();
+        }); 
+    </script>
     <script src="{{ asset('/assets/template/') }}/js/core/popper.min.js"></script>
- 
+
 
 
 
