@@ -555,7 +555,10 @@
 
     <script>
         $(function(){
-            $('.select2').select2();
+            $('.select2').select2({
+                dropdownAutoWidth : true,
+                width: 'auto'
+            });
         }); 
     </script>
     <script src="{{ asset('/assets/template/') }}/js/core/popper.min.js"></script>
