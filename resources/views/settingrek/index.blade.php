@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                              
-                                
+
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
                                             :</strong></label>
@@ -91,7 +91,10 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-primary"><i class="fa fa-save"></i>Simpan </button>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-save"></i>Simpan </button>
+                        <button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i>Update </button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trahs"></i>Hapus </button>
+         
                     </div>
                 </div>
                 <div class="card mt-2">
@@ -307,6 +310,7 @@
     {
        table.ajax.reload();   
     }
+    
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
         option = "<option value=''>&nbsp;</option>";
