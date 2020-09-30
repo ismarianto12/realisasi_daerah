@@ -44,7 +44,9 @@
                                 </div>
                                 <div class="form-group m-0">
                                     <div class="col-md-5 p-0 mb-2">
-                                        * ) untuk mengedit satker cukup checklist dan tekan tombol simpan.
+                                        * ) untuk mengedit satker cukup checklist dan tekan tombol set.
+                                        <br /><br />
+                                        <hr />
                                         <a class="btn-primary btn-sm" title="Simpan Data" id="btnSave" href="#"
                                             onclick="javascript:save_rek()"><i class="fa fa-save"></i> Set Rekening
                                             Satker <span id="txtSave"></span></a>
