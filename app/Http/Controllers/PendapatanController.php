@@ -212,6 +212,7 @@ class PendapatanController extends Controller
 
     public function store(Request $request)
     {
+        $satker_id = Auth::user()->sikd_satker_id;
         $request->validate([
            // 'tmsikd_setup_tahun_anggaran_id' => 'required', 
             'tmsikd_satker_id'               => 'required'
@@ -238,6 +239,7 @@ class PendapatanController extends Controller
             $key = $cboxInput[$i];
 
             Tmpendapatan::updateOrCreate([ 
+                'tmsikd_satker_id'=> $satker_id,
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$key],
                 'kd_rekening' => $kd_rekening[$key],
                 'volume' => $volume[$key],

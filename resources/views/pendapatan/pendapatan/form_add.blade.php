@@ -51,7 +51,7 @@
                                             <label for="name" class="col-md-3 text-right">Tanggal Lapor Realisasi <span
                                                     class="required-label">*</span></label>
                                             <div class="col-sm-8">
-                                                <input type="date" id="dari" class="form-control" placeholder="Dari .."
+                                                <input type="date" name="tanggal_lapor" id="tanggal_lapor" class="form-control" placeholder="Dari .."
                                                     value="{{ $dari }}">
                                             </div>
 
