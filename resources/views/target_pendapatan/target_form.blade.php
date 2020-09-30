@@ -64,14 +64,11 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" placeholder="jumlah target "
                                     aria-label="target" aria-describedby="target-addon" id="tpendapatan" name="jumlah"
-                                    required value="{{ $jumlah }}">
+                                    required value="{{ $jumlah }}" readonly>
                                 <div class="rincian_jtarget"></div>
                             </div>
                         </div>
-
-
-
-
+  
                         <div class="form-group form-show-validation row">
                             <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
                                 Tahun Pendapatan.

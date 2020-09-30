@@ -2,8 +2,7 @@
 
 @section('title', 'Setting rekening rincian objek per opd')
 @section('content')
-@include('layouts._includes.toolbar')
-
+  
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="alert alert-danger"> Mendeskripsikan rekening object mana saja yang bisa diakses level dinas .</div>
