@@ -193,12 +193,12 @@ class Menu_app
                     $menu .= '<li class="nav-item">
                     <a data-toggle="collapse" href="#retribusi">
                         <i class="fa fa-list"></i>
-                        <p>Retribusi</p>
+                        <p>Realisasi Pendapatan </p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="retribusi">
                         <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('pendapatan', 'Pelaporan Retribusi');
+                    $menu .= self::set_menu('pendapatan', 'Realisasai Pendapatan');
                     $menu .= '
                       </ul>
                     </div>
