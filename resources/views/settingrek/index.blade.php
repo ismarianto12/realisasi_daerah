@@ -10,7 +10,75 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
+
                     <div class="col-md-12">
+
+
+                        <nav>
+                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                    role="tab" aria-controls="nav-home" aria-selected="true">Setting Rekening
+                                    Rincian</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false">List Rekening
+                                    Rincian</a>
+                            </div>
+                        </nav>
+
+                        <br />
+
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+
+
+                                <div class="form-group m-0">
+                                    <label for="notsetting" class="col-form-label s-12 col-md-3"><strong>Filter By Belum
+                                            Di setting
+                                            Satker
+                                            :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="notsetting" id="notsetting" class="form-control select2 " required
+                                            onchange="selectOnChange()">
+                                            <option value="0">Semua Object Rincian Setting</option>
+                                            <option value="1">Lihat Yang Belum di Sett</option>
+                                            <option value="2">Yang Sudah Di Setting</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                aria-labelledby="nav-profile-tab">
+                                <small><i>Jika Level akses OPD = Kosong Silahkan tambahkan Pada rekening rincian dengan
+                                        memmilih
+                                        list opd di bawah .</i></small>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter
+                                            By Opd /
+                                            Satker
+                                            :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmsikd_satker_id" id="tmsikd_satker_id"
+                                            class="form-control select2 " required onchange="selectOnChange()">
+                                            <option value="0">Semua Satker (OPD)</option>
+                                            @foreach($tmsikd_satkers as $tmsikd_satker)
+                                            <option value="{{ $tmsikd_satker->id }}">
+                                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr />
+
+
+                            </div>
+                        </div>
+                        <br /><br />
+
+
+
                         <div class="form-group m-0">
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
                                     :</strong></label>
@@ -59,68 +127,6 @@
                             </div>
                         </div>
 
-                        <nav>
-                            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-                                    role="tab" aria-controls="nav-home" aria-selected="true">Setting Rekening
-                                    Rincian</a>
-                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-                                    role="tab" aria-controls="nav-profile" aria-selected="false">List Rekening
-                                    Rincian</a>
-                            </div>
-                        </nav>
-
-                        <br />
-
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                                aria-labelledby="nav-home-tab">
-
-                                
-                                <div class="form-group m-0">
-                                    <label for="notsetting" class="col-form-label s-12 col-md-3"><strong>Filter By Belum
-                                            Di setting
-                                            Satker
-                                            :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="notsetting" id="notsetting" class="form-control select2 " required
-                                            onchange="selectOnChange()">
-                                            <option value="0">Semua Object Rincian Setting</option>
-                                            <option value="1">Lihat Yang Belum di Sett</option>
-                                            <option value="2">Yang Sudah Di Setting</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-                                aria-labelledby="nav-profile-tab">
-                                <small><i>Jika Level akses OPD = Kosong Silahkan tambahkan Pada rekening rincian dengan
-                                        memmilih
-                                        list opd di bawah .</i></small>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter
-                                            By Opd /
-                                            Satker
-                                            :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmsikd_satker_id" id="tmsikd_satker_id"
-                                            class="form-control select2 " required onchange="selectOnChange()">
-                                            <option value="0">Semua Satker (OPD)</option>
-                                            @foreach($tmsikd_satkers as $tmsikd_satker)
-                                            <option value="{{ $tmsikd_satker->id }}">
-                                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr /> 
-
-
-                            </div>
-                        </div>
-                        <br /><br />
 
                     </div>
                 </div>
