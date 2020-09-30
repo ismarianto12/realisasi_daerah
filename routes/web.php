@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('export', 'TmpenerimaanController@export')->name('export');
 
-    Route::resource('report_penerimaan', 'ReportController');
+    //Route::resource('report_penerimaan', 'ReportController');
     Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
 
     Route::get('result_data', 'ReportController@action')->name('result_data');

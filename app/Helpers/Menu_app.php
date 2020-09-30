@@ -128,8 +128,8 @@ class Menu_app
         </a>
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('laporan/index', 'Laporan Pendapatan');
-                    $menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
+                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Pendapatan');
+                    //$menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
                     $menu .= '
           </ul>
@@ -224,8 +224,8 @@ class Menu_app
                 </a>
                 <div class="collapse" id="report">
                     <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('tmtarget', 'Laporan Penerimaan');
-                    $menu .= self::set_menu('tmtarget', 'Grafik Penerimaan');
+                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Penerimaan');
+                    $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
 
                     $menu .= '
                   </ul>
