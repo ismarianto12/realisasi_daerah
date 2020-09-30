@@ -163,7 +163,7 @@ class PendapatanController extends Controller
 
         $title   = 'Laporan Pendapatan | ' . $this->title;
         $route   =  $this->route;
-        $toolbar =  ['r', 'd', 'c','save'];
+        $toolbar =  ['r', 'c','save'];
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
         $level_id  = Properti_app::getlevel();
