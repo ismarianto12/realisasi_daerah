@@ -364,9 +364,9 @@ class PendapatanController extends Controller
     public function destroy(Request $request)
     {
         if (is_array($request->id)) {
-            Tmrka_mata_anggaran::whereIn('id', $request->id)->delete();
+            Tmpendapatan::whereIn('id', $request->id)->delete();
         } else {
-            $tmrka = Tmrka_mata_anggaran::whereid($request->id)->firstOrFail();
+            $tmrka = Tmpendapatan::whereid($request->id)->firstOrFail();
             $tmrka->delete();
         }
         return ['message' => "Data " . $this->title . " berhasil dihapus."];

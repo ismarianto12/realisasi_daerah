@@ -51,7 +51,7 @@
             
             @if(in_array('save_rek', $toolbar))
             <a class="btn btn-outline-secondary btn-sm" title="Simpan Data" id="btnSave" href="#"
-                onclick="javascript:save_rek()"><i class="fa fa-plus"></i> Tambah Rekening Satker <span id="txtSave"></span></a>
+                onclick="javascript:save_rek()"><i class="fa fa-save"></i> Simpan Rekening Satker <span id="txtSave"></span></a>
             @endif
             <span id="btnExtra"></span>
             <div class="col-md-7">
