@@ -145,10 +145,13 @@ class ReportController extends Controller
         $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
         $dari             = $request->dari;
-        $sampai           = $request->sampai;
+        $sampai           = $request->sampai; 
+        $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
 
         return view($this->view . '.report_all', [
+            'tahun_id' => $tahuns,
             'tahuns' => $tahuns,
+            'tmrekening_akuns' => $tmrekening_akuns,
             'tmsikd_satkers' => $tmsikd_satkers,
             'tmsikd_satker_id' => $tmsikd_satker_id,
             'dari' => $dari,
@@ -167,7 +170,7 @@ class ReportController extends Controller
         header("Content-Type: application/octet-stream");
         header("Content-Type: application/download");
         header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary "); 
+        header("Content-Transfer-Encoding: binary ");
 
         //dd($request);
         $tahun_id          = $request->tahun_id;
@@ -175,10 +178,18 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
         $jreport           = 1;
- 
+        $rekjenis_id       = $request->rekjenis_id;
+
         $groupby           = 'tmrekening_akun_kelompok_jenis.id';
 
         $data              = Tmpendapatan::report_pendapatan([], $groupby)->get();
+
+
+        $data->where([
+            'tmpendapatan.tanggal_lapor', '=>', $dari,
+            'tmpendapatan.tanggal_lapor', '>=', $sampai,
+            'tmrekening_akun_kelompok_jenis.id' => $rekjenis_id
+        ]);
         // dd($data);
         $tahun             = date('Y');
 
