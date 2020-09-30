@@ -21,6 +21,24 @@
                         <div class="form-row form-inline">
                             <div class="col-md-12">
                                 <div class="form-group m-0">
+                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
+                                            Satker
+                                            :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
+                                            required onchange="selectOnChange()">
+                                            <option value="0">Semua Satker (OPD)</option>
+                                            @foreach($tmsikd_satkers as $tmsikd_satker)
+                                            <option value="{{ $tmsikd_satker->id }}">
+                                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                             
+                                
+                                <div class="form-group m-0">
                                     <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek. Akun
                                             :</strong></label>
                                     <div class="col-md-5 p-0 mb-2">
@@ -69,38 +87,7 @@
                                 </div>
                                 <small><i>Jika Level akses OPD = Kosong Silahkan tambahkan Pada rekening rincian dengan memmilih
                                         list opd di bawah .</i></small>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
-                                            Satker
-                                            :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
-                                            required onchange="selectOnChange()">
-                                            <option value="0">Semua Satker (OPD)</option>
-                                            @foreach($tmsikd_satkers as $tmsikd_satker)
-                                            <option value="{{ $tmsikd_satker->id }}">
-                                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr />
-                                <div class="form-group m-0">
-                                    <label for="notsetting" class="col-form-label s-12 col-md-3"><strong>Filter By Belum Di setting
-                                            Satker
-                                            :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="notsetting" id="notsetting" class="form-control select2 "
-                                            required onchange="selectOnChange()">  
-                                            <option value="0">Semua Object Rincian Setting</option>
-                                            <option value="1">Lihat Yang Belum di Sett</option>  
-                                            <option value="2">Yang Sudah Di Setting</option>
-                                        </select>
-                                    </div>
-                                </div>
-                
-                
+                               
                             </div>
                         </div>
 
