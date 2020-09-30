@@ -15,6 +15,7 @@ class Tmpendapatan extends Model
     protected $table        = 'tmpendapatan';
 
     protected $fillable     = [
+        'tmsikd_satker_id',
         'tanggal_lapor',
         'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id',
         'kd_rekening',

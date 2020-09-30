@@ -40,11 +40,13 @@ class PendapatanController extends Controller
     protected $jdl        = "Pendapatan";
 
     public function __construct()
-    {
-    }
+    {   
+      }
 
     public function index(Request $request)
     {
+        // dd(Auth::user()->sikd_satker_id);
+    
         $title   = 'Laporan Pendapatan | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'd', 'c'];
@@ -236,12 +238,11 @@ class PendapatanController extends Controller
             return response()->json(['message' => "Tidak ada data rincian pendapatan yang dipilih."], 422);
 
         for ($i = 0; $i < count($cboxInput); $i++) {
-            $key = $cboxInput[$i];
-
-            Tmpendapatan::updateOrCreate([ 
-                'tmsikd_satker_id'=> $satker_id,
+            $key = $cboxInput[$i]; 
+            Tmpendapatan::updateOrCreate([  
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$key],
-                'kd_rekening' => $kd_rekening[$key],
+                'kd_rekening' => $kd_rekening[$key],  
+                'tmsikd_satker_id'=> $satker_id,
                 'volume' => $volume[$key],
                 'satuan' => $satuan[$key],
                 'jumlah' => $jumlah[$key],
