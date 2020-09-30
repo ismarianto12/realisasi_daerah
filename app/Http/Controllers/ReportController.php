@@ -31,6 +31,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
 use App\Libraries\Jasper_report;
 use App\Libraries\List_pendapatan;
+use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 use App\Models\Tmpendapatan;
 
 use function PHPSTORM_META\map;
@@ -167,19 +168,24 @@ class ReportController extends Controller
         header("Content-Type: application/download");
         header("Content-Disposition: attachment;filename=" . $namaFile . "");
         header("Content-Transfer-Encoding: binary "); 
-      
+
         //dd($request);
         $tahun_id          = $request->tahun_id;
         $tmsikd_satker_id  = $request->tmsikd_satker_id;
         $dari              = $request->dari;
         $sampai            = $request->sampai;
-        $jreport           = $request->jreport;
-        $data              = Tmpendapatan::all();
+        $jreport           = 1;
+ 
+        $groupby           = 'tmrekening_akun_kelompok_jenis.id';
+
+        $data              = Tmpendapatan::report_pendapatan([], $groupby)->get();
+        // dd($data);
         $tahun             = date('Y');
-        $kolompokjenis     = new Tmrekening_akun_kelompok_jenis;
+
         $jenisobject       = new Tmrekening_akun_kelompok_jenis;
         $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
-
+        $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+        $tmpendapatan      = new Tmpendapatan;
         if ($jreport == 1) {
             //jenis object
             $report = 'jenis_object';
@@ -194,9 +200,10 @@ class ReportController extends Controller
             'tahun_id' => $tahun_id,
             'sampai' => $sampai,
             'render' => $data,
-            'kolompokjenis' => $kolompokjenis,
+            'tmpendapatan' => $tmpendapatan,
             'jenisobject' => $jenisobject,
-            'objectrincian' => $objectrincian
+            'objectrincian' => $objectrincian,
+            'objectrinciansub' => $objectrinciansub,
         ]);
     }
 
@@ -204,15 +211,15 @@ class ReportController extends Controller
     {
 
         $namaFile = 'Pendapatan_daerah.xls';
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary "); 
-        // if ($request->tahun_id == '' || $request->jenis_id  == '' || $request->jenis_id == '') return abort('data tidak terparsing dengan baik .. ', 404);
+        // header("Pragma: public");
+        // header("Expires: 0");
+        // header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        // header("Content-Type: application/force-download");
+        // header("Content-Type: application/octet-stream");
+        // header("Content-Type: application/download");
+        // header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        // header("Content-Transfer-Encoding: binary ");
+        // // if ($request->tahun_id == '' || $request->jenis_id  == '' || $request->jenis_id == '') return abort('data tidak terparsing dengan baik .. ', 404);
 
         $tahun_id      = $request->tahun_id;
         $tahun         = Tmsikd_setup_tahun_anggaran::find($tahun_id);
