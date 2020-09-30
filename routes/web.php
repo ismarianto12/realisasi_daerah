@@ -93,6 +93,9 @@ Route::group(['middleware' => 'auth'], function () {
         //get route ajax 
         Route::get('get_satker/{id}','TmopdController@get_satker')->name('get_satker'); 
         //settting user
+
+        //indentitas 
+        Route::resource('identitas', 'IdentitasController'); 
     });
 
     Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');

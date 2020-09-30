@@ -79,7 +79,7 @@
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Status aktif <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <select class="form-control " name="c_status">
+                <select class="form-control select2" name="c_status">
                     @php
                     $arr = [
                     1=>'Aktif',
@@ -87,7 +87,7 @@
                     ];
                     @endphp
                     @foreach($arr as $ls => $val)
-                    @php  
+                    @php
                     $check = ($ls == $c_status) ? 'checked' : '';
                     @endphp
                     <option value="{{ $ls }}" {{ $check }}>{{ $val }}</option>
@@ -100,9 +100,9 @@
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan kerja
                 (Satker)<span class="required-label">*</span></label>
             <div class="col-sm-8">
-                <select class="form-control " name="sikd_satker_id">
+                <select class="form-control select2" name="sikd_satker_id">
                     @foreach($satker as $data)
-                    <option value="{{ $data->id }}" @if($data->id == $sikd_satker_id) ?  checked @endif
+                    <option value="{{ $data->id }}" @if($data->id == $sikd_satker_id) ? checked @endif
                         >[{{ $data->kode }}] {{ $data->nama }}</option>
                     @endforeach
                 </select>
@@ -113,13 +113,13 @@
             <label for="confirmpassword" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Level Akses<span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
-                <select class="form-control " name="tmuser_level_id">
-                  @foreach($level as $lv)
+                <select class="form-control select2" name="tmuser_level_id">
+                    @foreach($level as $lv)
                     @php
-                     $lcheck = ($lv['id'] == $tmuser_level_id) ? 'checked="checked"' : '';
+                    $lcheck = ($lv['id'] == $tmuser_level_id) ? 'checked="checked"' : '';
                     @endphp
                     <option value="{{ $lv['id'] }}" {{ $lcheck }}>{{ $lv['description'] }}</option>
-                 @endforeach
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -137,8 +137,8 @@
     <div class="card-action">
         <div class="row">
             <div class="col-md-12">
-                <input class="simpan btn btn-success" type="submit" value="Simpan">
-                <a href="#" class="btn btn-danger" id="cancel">Cancel</a>
+                <input class="simpan btn btn-success btn-xs" type="submit" value="Simpan">
+                <a href="#" class="btn btn-danger btn-xs" id="cancel">Cancel</a>
             </div>
         </div>
     </div>
@@ -321,4 +321,12 @@
         });    
     });  
 
+
+    
+    $(function(){
+        $('.select2').select2({
+            dropdownAutoWidth : true,
+            width: 'auto'
+        });
+    }); 
 </script>
