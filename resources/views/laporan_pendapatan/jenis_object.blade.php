@@ -14,7 +14,7 @@
             <td>Uraian</td>
             <td>Pagu Anggaran</td>
             <td colspan="3">Jumlah Realisasi (Rp.)</td>
-            <td colspan="2">Lebih Kurang<br /><br /></td>
+            <td colspan="2">Lebih Kurang<br /></td>
         </tr>
         <tr>
             <td></td>
