@@ -32,7 +32,9 @@ use App\Helpers\Properti_app;
 use App\Libraries\Jasper_report;
 use App\Libraries\List_pendapatan;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+use App\Models\Sikd_satker;
 use App\Models\Tmpendapatan;
+use App\Models\TmpendapatantargetModel;
 
 use function PHPSTORM_META\map;
 
@@ -145,7 +147,7 @@ class ReportController extends Controller
         $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
         $dari             = $request->dari;
-        $sampai           = $request->sampai; 
+        $sampai           = $request->sampai;
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
 
         return view($this->view . '.report_all', [
@@ -178,21 +180,28 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
         $jreport           = 1;
-        $rekjenis_id       = $request->rekjenis_id;
+        $rekjenis_id       = $request->tmrekening_akun_kelompok_jenis_id;
 
         $groupby           = 'tmrekening_akun_kelompok_jenis.id';
+        $data              = Tmpendapatan::report_pendapatan([], $groupby);
 
-        $data              = Tmpendapatan::report_pendapatan([], $groupby)->get();
+        if ($rekjenis_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
+        }
+        if ($dari != '') {
+            $data->where('tmpendapatan.tanggal_lapor', '>=', $dari);
+        }
+        if ($sampai != '') {
+            $data->where('tmpendapatan.tanggal_lapor', '<=', $sampai);
+        }
+        if ($tmsikd_satker_id != '') {
+            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }
 
-
-        $data->where([
-            'tmpendapatan.tanggal_lapor.', '=>', $dari,
-            'tmpendapatan.tanggal_lapor', '>=', $sampai,
-            'tmrekening_akun_kelompok_jenis.id' => $rekjenis_id
-        ]);
+        $filldata =  $data->get();
         // dd($data);
         $tahun             = date('Y');
-
+        $listarget         = new TmpendapatantargetModel;
         $jenisobject       = new Tmrekening_akun_kelompok_jenis;
         $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
@@ -204,13 +213,18 @@ class ReportController extends Controller
             //per rincian jenis object
             $report = 'rincian_object';
         }
+        // dd($listarget);
+
+        $opd = Sikd_satker::find($request->tmsikd_satker_id);
         return view($this->view . $report, [
             'tahun' => $tahun,
             'dari' => $dari,
+            'opd' => $opd,
             'tmsikd_satker_id' => $tmsikd_satker_id,
             'tahun_id' => $tahun_id,
             'sampai' => $sampai,
-            'render' => $data,
+            'render' => $filldata,
+            'listarget' => $listarget,
             'tmpendapatan' => $tmpendapatan,
             'jenisobject' => $jenisobject,
             'objectrincian' => $objectrincian,

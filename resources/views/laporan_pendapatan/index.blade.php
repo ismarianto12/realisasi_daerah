@@ -108,18 +108,7 @@
                                             <option value="0">&nbsp;</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_kelompok_jenis_objek_id"
-                                        class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmrekening_akun_kelompok_jenis_objek_id"
-                                            class="form-control r-0 s-12 select2"
-                                            id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
-                                            <option value="0">&nbsp;</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -325,8 +314,6 @@ $(function(){
             $.alert({title : 'Keterangan',content : 'tmrekening_akun_kelompok_id  pilih terlebih daulu'});
         }else if(tmrekening_akun_kelompok_jenis_id ==''){
             $.alert({title : 'Keterangan',content : 'tmrekening_akun_kelompok_jenis_id  pilih terlebih daulu'});
-        }else if(tmrekening_akun_kelompok_jenis_objek_id ==''){
-            $.alert({title : 'Keterangan',content : 'tmrekening_akun_kelompok_jenis_objek_id  pilih terlebih daulu'});
         }else{   
 
            var type = 1;

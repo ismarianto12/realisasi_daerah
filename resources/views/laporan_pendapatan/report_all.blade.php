@@ -106,29 +106,26 @@
                                             <option value="0">&nbsp;</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_kelompok_jenis_objek_id"
-                                        class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmrekening_akun_kelompok_jenis_objek_id"
-                                            class="form-control r-0 s-12 select2"
-                                            id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
-                                            <option value="0">&nbsp;</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
+                <div class="col-md-6">
+                    <div class="form-group m-0">
+                        <select class="form-control" id="type_params">
+                            <option value="pdf">PDF</option>
+                            <option value="xls">XLS</option>
+                        </select>
+                        <hr />
+                        <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
+    </div> 
     <div id="btn_cetak"></div>
 </div>
 @section('script')
@@ -223,24 +220,28 @@ $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
            var tmsikd_satker_id  = $('#tmsikd_satker_id').val();
            var dari  = $('#dari').val();
            var sampai  = $('#sampai').val();
-           var rekjenis_id  = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+           var rekjenis_id  = $('#tmrekening_akun_kelompok_jenis_id').val();
  
-           if(tahun_id == ''){
-
-           }else if(tmsikd_satker_id == ''){
+           if(tahun_id == ''){ 
+                $.alert('tahun anggaran boleh kosong');
+           }
+           if(tmsikd_satker_id == ''){
                 $.alert('Satuan kerja tidak boleh kosong');
            }else if(dari == ''){
-              $.alert('tanggal awal tidak boleh kosong');
+                $.alert('tanggal awal tidak boleh kosong');
            }else if(sampai == ''){
-            $.alert('tanggal akhir tidak boleh kosong');
+                $.alert('tanggal akhir tidak boleh kosong');
            }else if(rekjenis_id == ''){
                 $.alert('rekening jenis object tidak boleh kosong');
            }else{ 
+               var jenis = $('#type_params').val();
+               if(jenis == '' || jenis == 0){
+                $.alert('jenis laporan tidak boleh kosong');
+               }else{ 
              window.location.href= "{{ route('laporan.action_all') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id;
-           }
-
-    })
-
+           } 
+        }
+    }) 
 
 });
 function selectOnChange()
