@@ -9,7 +9,8 @@
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="cari_pgawai" placeholder="Klik Cari " value="">
                 <br /><br />
-                <div class="alert alert-success">Jika ada perubahan nama pegawai silahkan pilih pada column pencarian .</div>
+                <div class="alert alert-success">Jika ada perubahan nama pegawai silahkan pilih pada column pencarian .
+                </div>
 
                 @if($actionform == 'edit')
                 <label>Nama Pegawai yang di pilih sebelumnya : {{ $pegawainm }}</label>
@@ -86,7 +87,7 @@
                     ];
                     @endphp
                     @foreach($arr as $ls => $val)
-                    @php
+                    @php  
                     $check = ($ls == $c_status) ? 'checked' : '';
                     @endphp
                     <option value="{{ $ls }}" {{ $check }}>{{ $val }}</option>
@@ -101,10 +102,8 @@
             <div class="col-sm-8">
                 <select class="form-control " name="sikd_satker_id">
                     @foreach($satker as $data)
-                    @php
-                    $lcheck = ($data->id == $sikd_satker_id) ? 'checked' : '';
-                    @endphp
-                    <option value="{{ $data->id }}" {{ $lcheck }}>[{{ $data->kode }}] {{ $data->nama }}</option>
+                    <option value="{{ $data->id }}" @if($data->id == $sikd_satker_id) ?  checked @endif
+                        >[{{ $data->kode }}] {{ $data->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -115,13 +114,12 @@
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <select class="form-control " name="tmuser_level_id">
-                    @foreach($level as $lv)
+                  @foreach($level as $lv)
                     @php
-                    // dd($lv);
-                    $lcheck = ($lv == (int) $tmuser_level_id) ? 'checked' : '';
+                     $lcheck = ($lv['id'] == $tmuser_level_id) ? 'checked="checked"' : '';
                     @endphp
                     <option value="{{ $lv['id'] }}" {{ $lcheck }}>{{ $lv['description'] }}</option>
-                    @endforeach
+                 @endforeach
                 </select>
             </div>
         </div>
@@ -241,7 +239,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Pegawai di list
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i> Pilih data Pegawai di
+                    list
                     rapat.</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

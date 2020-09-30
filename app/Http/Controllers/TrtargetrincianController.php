@@ -22,7 +22,7 @@ class TrtargetrincianController extends Controller
 
     function __construct()
     {
-        $this->middleware('level:|1');
+       // $this->middleware('level:|1');
     }
 
     public function index()

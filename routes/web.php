@@ -124,7 +124,10 @@ Route::group(['middleware' => 'auth'], function () {
         //get data from access frontend js 
         Route::get('trtargetrincian_form/{id}','TrtargetrincianController@form')->name('trtargetrincian_form');
         Route::get('trtargetrincian_form_edit/{id}','TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
-  
+
+        // get frm isian pendapatan
+        Route::get('form_pendapatan/{id}','PendapatanController@form_pendapatan')->name('form_pendapatan');
+         
     });
     //route datatable api
     Route::prefix('api')->group(function () {

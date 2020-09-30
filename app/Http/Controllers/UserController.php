@@ -1,9 +1,12 @@
 <?php
-namespace App\Http\Controllers; 
+
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use App\Models\Setupsikd\Tmsikd_satker;
 use App\Models\Sikd_satker;
+use App\Models\Tmpegawai;
 use App\Models\User;
 use App\Models\Tmuser_level;
 
@@ -41,7 +44,7 @@ class UserController extends Controller
         $tmpegawai_id = '';
         $action = route('user.store');
         $method_field = method_field('post');
-        $level = new Tmuser_level;
+        $level = Tmuser_level::get();
         $satker = Sikd_satker::get();
         $sikd_satker_id = '';
         $username = '';
@@ -195,11 +198,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $edit = User::with(['tmpegawai'])->findOrFail($id);
-       //dd($edit->tmpegawai->n_pegawai);  
-
+        $edit = User::find($id); 
+        
+        $pegawaidt = Tmpegawai::find($edit->tmpegawai_id); 
         $actionform = 'edit';
-        $pegawainm  = ($edit->tmpegawai->n_pegawai) ? $edit->tmpegawai->n_pegawai : 'kosong';
+        $pegawainm  = ($pegawaidt['n_pegawai'])? $pegawaidt['n_pegawai'] : 'kosong';
         $method_field = method_field('put');
         $tmpegawai_id = $edit->tmpegawai_id;
         $sikd_satker_id = $edit->sikd_satker_id;
@@ -216,11 +219,11 @@ class UserController extends Controller
         $d_update = $edit->d_update;
         $ttd = $edit->ttd;
         $paraf = $edit->paraf;
-        $tmuser_level_id = $edit->tmuser_level_id;
+        $tmuser_level_id = ($edit['tmuser_level_id']) ? $edit['tmuser_level_id'] : 0;
         $jenis = $edit->jenis;
-        $level = new Tmuser_level;
+        $level = Tmuser_level::get();
         $p12 = $edit->p12;
-
+        //dd($level);
         //   dd($tmuser_level_id);
 
         return view(

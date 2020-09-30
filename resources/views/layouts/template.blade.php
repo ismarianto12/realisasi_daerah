@@ -25,7 +25,7 @@
             }
         });
         
-    <!-- Ismarianto Github io -->
+    <!--- Ismarianto Github io --->
     </script>
 
     <!-- CSS Files -->
