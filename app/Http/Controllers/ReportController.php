@@ -31,6 +31,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Helpers\Properti_app;
 use App\Libraries\Jasper_report;
 use App\Libraries\List_pendapatan;
+use App\Models\Tmpendapatan;
 
 use function PHPSTORM_META\map;
 
@@ -162,7 +163,11 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
         $jreport           = $request->jreport;
-        $data              = Tmrka::getReport($tahun_id, $tmsikd_satker_id, $jreport, $dari, $sampai);
+        $data              = Tmpendapatan::all();
+        $tahun             = date('Y');
+        $kolompokjenis     = new Tmrekening_akun_kelompok_jenis;
+        $jenisobject       = new Tmrekening_akun_kelompok_jenis;
+        $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
 
         if ($jreport == 1) {
             //jenis object
@@ -172,7 +177,15 @@ class ReportController extends Controller
             $report = 'rincian_object';
         }
         return view($this->view . $report, [
-            'data' => $data
+            'tahun' => $tahun,
+            'dari' => $dari,
+            'tmsikd_satker_id' => $tmsikd_satker_id,
+            'tahun_id' => $tahun_id,
+            'sampai' => $sampai,
+            'render' => $data,
+            'kolompokjenis' => $kolompokjenis,
+            'jenisobject' => $jenisobject,
+            'objectrincian' => $objectrincian
         ]);
     }
 
@@ -180,19 +193,19 @@ class ReportController extends Controller
     {
 
         $namaFile = 'Pendapatan_daerah.xls';
-        // header("Pragma: public");
-        // header("Expires: 0");
-        // header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        // header("Content-Type: application/force-download");
-        // header("Content-Type: application/octet-stream");
-        // header("Content-Type: application/download");
-        // header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        // header("Content-Transfer-Encoding: binary "); 
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        header("Content-Transfer-Encoding: binary "); 
         // if ($request->tahun_id == '' || $request->jenis_id  == '' || $request->jenis_id == '') return abort('data tidak terparsing dengan baik .. ', 404);
 
         $tahun_id      = $request->tahun_id;
         $tahun         = Tmsikd_setup_tahun_anggaran::find($tahun_id);
-        $data          = Tmrka::list_report();
+        $data          = Tmpendapatan::list_report();
 
         $tahun_id                                = $request->tahun_id;
         $tmsikd_satker_id                        = $request->tmsikd_satker_id;
@@ -296,30 +309,30 @@ class ReportController extends Controller
         }
         $data = $data->get();
         return DataTables::of($data)
-        ->editColumn('kd_rek_jenis', function ($p) {
-            return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
-        })
-        ->editColumn('kd_rek_obj', function ($p) {
-            return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';
-        })
-        ->editColumn('kd_rek_rincian_obj', function ($p) {
-            return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td>';
-        })
-        ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
-            return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
-        })
-        ->editColumn('tgl_lapor', function ($p) {
-            return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
-        })
-        ->editColumn('volume', function ($p) {
-            return ($p->volume == 0 ? '' : Html_number::decimal($p->volume));
-        })
-        ->editColumn('jumlah', function ($p) {
-            return Html_number::decimal($p->jumlah);
-        })
-        ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
-        ->addIndexColumn()
-        ->toJson();
+            ->editColumn('kd_rek_jenis', function ($p) {
+                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_jenis) . '</td>';
+            })
+            ->editColumn('kd_rek_obj', function ($p) {
+                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_obj) . '</td>';
+            })
+            ->editColumn('kd_rek_rincian_obj', function ($p) {
+                return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td><td></td><td></td><td></td><td align="right">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td>';
+            })
+            ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
+                return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
+            })
+            ->editColumn('tgl_lapor', function ($p) {
+                return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+            })
+            ->editColumn('volume', function ($p) {
+                return ($p->volume == 0 ? '' : Html_number::decimal($p->volume));
+            })
+            ->editColumn('jumlah', function ($p) {
+                return Html_number::decimal($p->jumlah);
+            })
+            ->rawColumns(['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
+            ->addIndexColumn()
+            ->toJson();
     }
     //report get
     public function tesjasper(Request $request)
