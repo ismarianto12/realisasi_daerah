@@ -186,7 +186,7 @@ class ReportController extends Controller
 
 
         $data->where([
-            'tmpendapatan.tanggal_lapor', '=>', $dari,
+            'tmpendapatan.tanggal_lapor.', '=>', $dari,
             'tmpendapatan.tanggal_lapor', '>=', $sampai,
             'tmrekening_akun_kelompok_jenis.id' => $rekjenis_id
         ]);

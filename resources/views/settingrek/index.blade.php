@@ -10,10 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
-
-                    <div class="col-md-12">
-
-
+                    <div class="col-md-12"> 
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
@@ -23,10 +20,8 @@
                                     role="tab" aria-controls="nav-profile" aria-selected="false">List Rekening
                                     Rincian</a>
                             </div>
-                        </nav>
-
-                        <br />
-
+                        </nav> 
+                        <br /> 
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
@@ -44,6 +39,16 @@
                                             <option value="1">Lihat Yang Belum di Sett</option>
                                             <option value="2">Yang Sudah Di Setting</option>
                                         </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group m-0">
+                                    <div class="col-md-5 p-0 mb-2">
+                                        * ) untuk mengedit satker cukup checklist dan tekan tombol simpan.
+                                        <a class="btn-primary btn-sm" title="Simpan Data" id="btnSave" href="#"
+                                            onclick="javascript:save_rek()"><i class="fa fa-save"></i> Set Rekening
+                                            Satker <span id="txtSave"></span></a>
+
                                     </div>
                                 </div>
 
