@@ -156,7 +156,7 @@
     $('#datauser').on('click','.delete',function(){
         var id = $(this).attr('data'); 
         Swal.fire({
-            title: 'Penerimaan ' + id + ' Di Hapus ?',
+            title: 'Data User ini akan di hapus ?',
             text: "Data akan di hapus ",
             icon: 'warning',
             showCancelButton: true,
