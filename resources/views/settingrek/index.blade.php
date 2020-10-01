@@ -353,7 +353,7 @@ $('#simpandata').on('click', function (event) {
             function(data) {
                 $('#datatable').DataTable().ajax.reload();  
                 $('#modal_satker').modal('hide');   
-                $.alert("Data Set rekening berhasil di simpan ","Success"); 
+                $.alert("Data Set rekening berhasil di simpan silahkan lihat hasil nya di tab list rekenign rincian","Success"); 
                 selectOnChange();
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
