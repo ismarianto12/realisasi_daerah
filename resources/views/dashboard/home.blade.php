@@ -43,23 +43,47 @@
                     <hr />
                     <div class="row">
 
-                        <div class="col-md-6">
-                            <div>
-                                <h6 class="fw-bold text-uppercase text-success op-8">TOTAL PAD TAHUN INI</h6>
-                                <h3 class="fw-bold">
-                                    <div class="tpadtahun"></div>
-                                </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card card-stats card-warning card-round">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-interface-6"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">TOTAL PAD TAHUN INI</p>
+                                                    <h4 class="card-title"><div class="tpadtahun"></div></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="card card-stats card-success card-round">
+                                    <div class="card-body ">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="flaticon-analytics"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 col-stats">
+                                                <div class="numbers">
+                                                    <p class="card-category">TOTAL PAD HARI INI</p>
+                                                    <h4 class="card-title"><div class="tpadharini"></div></h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
-                        <div class="col-md-6">
-                            <div>
-                                <h6 class="fw-bold text-uppercase text-warning op-8">TOTAL PAD HARI INI</h6>
-                                <h3 class="fw-bold">
-                                    <div class="tpadharini"></div>
-                                </h3>
-                            </div>
-                        </div>
-
+ 
                     </div>
                 </div>
             </div>
@@ -100,7 +124,7 @@
         });
         
             //jumlmah hari ini
-        $.getJSON('{{ Url("api_grafik/total_pad?sekarang=1") }}',function(data){ 
+        $.getJSON('{{ Url("api_grafik/total_pad?tanggal_lapor=1") }}',function(data){ 
             $('.tpadharini').text(data.total);
         });
         
@@ -130,7 +154,7 @@
             id: 'circles-2',
             radius: 45,
             value: rek_obj,
-            maxValue: 1000,
+            maxValue: 580,
             width: 10,
             text: rek_jenis,
             colors: ['#f1f1f1', '#2BB930'],
@@ -158,9 +182,7 @@
             styleWrapper: true,
             styleText: true
         })
-    });
- 
-    
+    });  
 
     Highcharts.chart('container', {
         chart: {
@@ -222,9 +244,6 @@
         }, {
             name: 'Year 2000',
             data: [814, 841, 3714, 727, 31]
-        }, {
-            name: 'Year 2016',
-            data: [1216, 1001, 4436, 738, 40]
         }]
     });
 

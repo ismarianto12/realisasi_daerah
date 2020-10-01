@@ -431,14 +431,20 @@ class ReportController extends Controller
         //pajak atau retribusi 
 
         $rek_kelompok_id = $request->rek_kelompok_id;
+        if ($rek_kelompok_id == '' || $rek_kelompok_id == 0) {
+            return abort(403, 'jenis rekenin tidak di temukan');
+        }
+
         $tsekarang      = date('Y');
         $par = [
             'tahun' => $tsekarang
         ];
         //get kelompok rekening terlebih dahulu 
         $kelompok           = Tmrekening_akun_kelompok_jenis::find($rek_kelompok_id);
-        $tmrekening_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmrekening_akun_kelompok_jenis_objeks_id', $kelompok->id);
+        $jenis_obj          = Tmrekening_akun_kelompok_jenis_objek::where('tmrekening_akun_kelompok_jenis_id', $kelompok->id)->first();
+        $tmrekening_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmrekening_akun_kelompok_jenis_objek_id', $jenis_obj->id)->get();
 
+        // dd($tmrekening_rincian);
         foreach ($tmrekening_rincian as $rinci) {
             $didrincian[] = $rinci['id'];
         }
@@ -449,7 +455,10 @@ class ReportController extends Controller
         foreach ($rekening_sub as $sub) {
             $dsubs[] = $sub['id'];
         }
-        $data = Tmpendapatan::where($par)->whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $dsubs)->get();
+
+        $data = Tmpendapatan::select('tahun','jumlah','tanggal_lapor')->where($par)->whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $dsubs)
+        ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id',\DB::raw('DATE_FORMAT(tanggal_lapor,"%M")'))
+        ->get(); 
         return response()->json($data);
     }
 

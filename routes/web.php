@@ -141,8 +141,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('kodejenis', 'KodejenisController@api')->name('kodejenis.api');
 			Route::post('kodeobjek', 'KodeobjekController@api')->name('kodeobjek.api');
 			Route::post('koderincianobjek', 'KoderincianobjekController@api')->name('koderincianobjek.api');
-			Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api');
-            //
+			Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api'); 
+			
 			Route::get('kodejenis/kodekelompokByKodeakun/{id}', 'KodejenisController@kodekelompokByKodeakun')->name('kodejenis.kodekelompokByKodeakun');
 			Route::get('kodeobjek/kodejenisByKodekelompok/{id}', 'KodeobjekController@kodejenisByKodekelompok')->name('kodeobjek.kodejenisByKodekelompok');
 			Route::get('koderincianobjek/kodeobjekByKodejenis/{id}', 'KoderincianobjekController@kodeobjekByKodejenis')->name('koderincianobjek.kodeobjekByKodejenis');

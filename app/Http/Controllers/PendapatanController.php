@@ -226,6 +226,7 @@ class PendapatanController extends Controller
         // Tahap 1
         $cboxInput      = $request->cboxInput;
         $cboxInputVal   = $request->cboxInputVal;
+        $cboxInputRinci = $request->cboxInputRinci;
         $kd_rekening    = $request->kd_rekening;
         $volume         = $request->volume;
         $satuan         = $request->satuan;
@@ -241,6 +242,7 @@ class PendapatanController extends Controller
             $key = $cboxInput[$i]; 
             Tmpendapatan::updateOrCreate([  
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$key],
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id'=> $cboxInputRinci[$key],
                 'kd_rekening' => $kd_rekening[$key],  
                 'tmsikd_satker_id'=> $satker_id,
                 'volume' => $volume[$key],

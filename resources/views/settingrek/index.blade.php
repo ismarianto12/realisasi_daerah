@@ -51,6 +51,10 @@
                                             onclick="javascript:save_rek()"><i class="fa fa-save"></i> Set Rekening
                                             Satker <span id="txtSave"></span></a>
 
+                                            <a class="btn-warning btn-sm" title="Batalkan" id="btnCancel" href="#"
+                                            onclick="javascript:confirm_cancel()"><i class="fa fa-refresh"></i> Batalkan</a>
+                                        <hr />
+
                                     </div>
                                 </div>
 

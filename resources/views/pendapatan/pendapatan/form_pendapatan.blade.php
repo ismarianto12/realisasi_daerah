@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @if($dataSet == '')     
+        @if($dataSet == '' || $dataset == 0)     
 
         <tr><td colspan="6"><div class="alert alert-danger"><center>Data rincian object kosong.</center></div></td></tr> 
         
@@ -51,6 +51,7 @@
         </tr>
         <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="{{ $rincianSub['kd_rek']['val'] }}" />
         <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="{{ $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] }}" />
+        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="{{ $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] }}" />
         @php $idx++ @endphp
         @endforeach
         @endif
