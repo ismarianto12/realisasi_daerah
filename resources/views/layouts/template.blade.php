@@ -235,60 +235,37 @@
                             </a>
                             <div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
                                 <div class="quick-actions-header">
-                                    <span class="title mb-1">Quick Actions</span>
+                                    <span class="title mb-1">Akses Cepat</span>
                                     <span class="subtitle op-8">Shortcuts</span>
                                 </div>
                                 <div class="quick-actions-scroll scrollbar-outer">
                                     <div class="quick-actions-items">
                                         <div class="row m-0">
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="{{ url('pendapatan/target') }}">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-danger rounded-circle">
                                                         <i class="far fa-calendar-alt"></i>
                                                     </div>
-                                                    <span class="text">Calendar</span>
+                                                    <span class="text">Rincian Target PAD</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="{{ url('pendapatan') }}">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-warning rounded-circle">
                                                         <i class="fas fa-map"></i>
                                                     </div>
-                                                    <span class="text">Maps</span>
+                                                    <span class="text">Pelaporan PAD</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
+                                            <a class="col-6 col-md-4 p-0" href="{{ url('laporan/keseluruhan') }}">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-info rounded-circle">
                                                         <i class="fas fa-file-excel"></i>
                                                     </div>
-                                                    <span class="text">Reports</span>
+                                                    <span class="text">Report Hasil PAD</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-success rounded-circle">
-                                                        <i class="fas fa-envelope"></i>
-                                                    </div>
-                                                    <span class="text">Emails</span>
-                                                </div>
-                                            </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-primary rounded-circle">
-                                                        <i class="fas fa-file-invoice-dollar"></i>
-                                                    </div>
-                                                    <span class="text">Invoice</span>
-                                                </div>
-                                            </a>
-                                            <a class="col-6 col-md-4 p-0" href="#">
-                                                <div class="quick-actions-item">
-                                                    <div class="avatar-item bg-secondary rounded-circle">
-                                                        <i class="fas fa-credit-card"></i>
-                                                    </div>
-                                                    <span class="text">Payments</span>
-                                                </div>
-                                            </a>
+                                        
                                         </div>
                                     </div>
                                 </div>
