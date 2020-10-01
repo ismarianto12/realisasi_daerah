@@ -79,14 +79,10 @@
                     </div>
 
                     <div class="form-group form-action-d-flex mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="rememberme"> 
-                            <label class="custom-control-label m-0" for="rememberme">Remember Me</label>
-                        </div>
-                        <button type="submit" name="logi" class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold">Sign In</a>
+                        <button type="submit" name="login" class="btn btn-secondary col-md-5 float-right mt-3 mt-sm-0 fw-bold">Login</a>
                     </div>
                     <div class="login-account">
-                        <span class="msg">Lupa Akun ?</span>
+                        {{--  <span class="msg">Lupa Akun ?</span>  --}}
                     </div>   
                 </div>
             </form>
