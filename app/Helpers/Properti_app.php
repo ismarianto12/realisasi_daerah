@@ -4,8 +4,9 @@
 // by ismarianto 
 namespace App\Helpers;
 
-use App\Models\User; 
+use App\Models\User;
 use App\Models\Setupsikd\Tmsikd_satker;
+use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,10 +41,10 @@ class Properti_app
 	{
 		$user_id = Auth::user()->id;
 		$query   = DB::table('user')
-		->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
-		->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
-		->where('user.id', $user_id)
-		->get();
+			->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
+			->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
+			->where('user.id', $user_id)
+			->get();
 		return $query->first()->level_id;
 	}
 
@@ -89,20 +90,21 @@ class Properti_app
 		}
 	}
 
-	public static function propuser($params){
-		$userid = Auth::user()->id; 
+	public static function propuser($params)
+	{
+		$userid = Auth::user()->id;
 		$data   = User::find($userid);
-		if($data != ''){
+		if ($data != '') {
 			return $data[$params];
-
-		}else{
+		} else {
 			return NULL;
-
 		}
-
-
-
 	}
 
 
+	public static function tahun_sekarang()
+	{
+		$data =  Tmsikd_setup_tahun_anggaran::where('active', 1)->limit(1)->get();
+		return $data->first()->tahun;
+	}
 }

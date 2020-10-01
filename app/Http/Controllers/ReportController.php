@@ -35,6 +35,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 use App\Models\Sikd_satker;
 use App\Models\Tmpendapatan;
 use App\Models\TmpendapatantargetModel;
+use App\Models\Tmopd;
 
 use function PHPSTORM_META\map;
 
@@ -396,5 +397,77 @@ class ReportController extends Controller
         $jasper->createReport($reportName, $format, $params);
         $jasper->showReport();
         // dd($jasper);
+    }
+    /// json response
+    function listnoentri()
+    {
+        $rekid       = 412; //rekening ini adalah retribusi;
+        $tglsekarang = date('Y-m-d');
+
+        $par  = [
+            'tmpendapatan.tanggal_lapor' => $tglsekarang,
+        ];
+        $lsdata =  Tmopd::where($par)
+            ->select('*')
+            ->join('tmpendapatan', 'tmpendapatan.tmsikd_satker_id', '=', 'tmopds.id')
+            ->get();
+
+        $arrpendapatan = [];
+        foreach ($lsdata as $ls) {
+            $arrpendapatan[] = $ls['tmsikd_satker_id'];
+        }
+        $tmopd = Tmopd::select('kode', 'n_opd')->whereNotIn('id', $arrpendapatan)->get();
+        foreach ($tmopd as $glist) {
+            $datauser[] = $glist;
+        }
+        return response()->json($datauser);
+    }
+
+    function grafik_penerimaan(Request $request)
+    {
+        $tahun_sekarang = Properti_app::tahun_sekarang();
+        $rekening_jenis = 412;
+        $tsekarang      = date('Y');
+
+
+        $par = [
+            'tahun' => $tsekarang
+        ];
+        $tmrekening_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::get();
+        foreach ($tmrekening_rincian as $rinci) {
+            $didrincian[] = $rinci['id'];
+        }
+        //dd($didrincian);
+        $rekening_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_id', $didrincian)->get();
+
+        //dd($rekening_sub);
+        foreach ($rekening_sub as $sub) {
+            $dsubs[] = $sub['id'];
+        }
+        $data = Tmpendapatan::where($par)->whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $dsubs)->get();
+        return response()->json($data);
+    }
+
+    function jumlah_rek(Request $request)
+    {
+
+        //1 rekening object
+        //2 rekening jenis 
+        //3 rekening rincian_sub 
+        if ($request->jenis == 0 || $request->jenis == NULL) {
+            return abort('404', 'Response tidak benar');
+        }
+        $jenis = $request->jenis;
+        if ($jenis == 1) {
+            $data = Tmrekening_akun_kelompok_jenis::get();
+            $jumlah = $data->count();
+        } elseif ($jenis == 2) {
+            $data = Tmrekening_akun_kelompok_jenis_objek::get();
+            $jumlah = $data->count();
+        } elseif ($jenis == 3) {
+            $data = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::get();
+            $jumlah = $data->count();
+        }
+        return response()->json(['data' => $jumlah]);
     }
 }
