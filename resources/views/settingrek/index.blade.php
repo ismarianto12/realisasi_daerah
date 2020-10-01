@@ -353,6 +353,7 @@ $('#simpandata').on('click', function (event) {
             function(data) {
                 $('#datatable').DataTable().ajax.reload();  
                 $('#modal_satker').modal('hide');   
+                $.alert("Data Set rekening berhasil di simpan ","Success"); 
                 selectOnChange();
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
@@ -402,7 +403,7 @@ $('#simpandata').on('click', function (event) {
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <button class="btn btn-primary" id="simpandata">Simpan Data</button>
+                            <button class="btn btn-primary btn-xs" id="simpandata"><i class="fa fa-save"></i>Simpan Data</button>
                         </div>
                     </div>
                 </div>

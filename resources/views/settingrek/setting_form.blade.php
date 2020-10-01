@@ -280,7 +280,7 @@
                      }, 
                 function(data) {
                      table.api().ajax.reload();
-                     $.alert('data berhasil di simpan berdasarkan sateker yang di pilih .');
+                     $.alert('data berhasil di simpan berdasarkan satker yang di pilih .');
                 }, "JSON").fail(function(data){
                     err = ''; respon = data.responseJSON;
                     $.each(respon.errors, function(index, value){
