@@ -369,8 +369,9 @@ $('#simpandata').on('click', function (event) {
 });  
     }
 $('#nav-profile-tab').click(function(){
-     $('#notsetting').val(2);
-     selectOnChange(); 
+     $('#notsetting').val(2); 
+     $('#tmsikd_satker_id').val('');
+     selectOnChange();  
 })
 
      
