@@ -36,6 +36,8 @@ use App\Models\Sikd_satker;
 use App\Models\Tmpendapatan;
 use App\Models\TmpendapatantargetModel;
 use App\Models\Tmopd;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\map;
 
@@ -426,14 +428,17 @@ class ReportController extends Controller
     function grafik_penerimaan(Request $request)
     {
         $tahun_sekarang = Properti_app::tahun_sekarang();
-        $rekening_jenis = 412;
+        //pajak atau retribusi 
+
+        $rek_kelompok_id = $request->rek_kelompok_id;
         $tsekarang      = date('Y');
-
-
         $par = [
             'tahun' => $tsekarang
         ];
-        $tmrekening_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::get();
+        //get kelompok rekening terlebih dahulu 
+        $kelompok           = Tmrekening_akun_kelompok_jenis::find($rek_kelompok_id);
+        $tmrekening_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmrekening_akun_kelompok_jenis_objeks_id', $kelompok->id);
+
         foreach ($tmrekening_rincian as $rinci) {
             $didrincian[] = $rinci['id'];
         }
@@ -448,9 +453,31 @@ class ReportController extends Controller
         return response()->json($data);
     }
 
-    function jumlah_rek(Request $request)
+
+    //get total pad 
+    function total_pad(Request $request)
     {
 
+        $rsekarang = $request->tanggal_lapor;
+        $sekarang  = Carbon::now()->format('Y-m-d');
+
+        if ($rsekarang == 1) {
+            $par = ['tanggal_lapor' => $sekarang];
+            $data = Tmpendapatan::select(\DB::raw('SUM(jumlah) as total'))
+                ->where($par)
+                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', NULL)
+                ->get();
+        } else {
+            $data = Tmpendapatan::select(\DB::raw('SUM(jumlah) as total'))
+                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', NULL)
+                ->get();
+        }
+        $result  = ($data->first()->total) ? number_format($data->first()->total, 0, 0, '.') : 0;
+        return response()->json(['total' => $result]);
+    }
+
+    function jumlah_rek(Request $request)
+    {
         //1 rekening object
         //2 rekening jenis 
         //3 rekening rincian_sub 

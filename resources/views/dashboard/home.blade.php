@@ -46,14 +46,17 @@
                         <div class="col-md-6">
                             <div>
                                 <h6 class="fw-bold text-uppercase text-success op-8">TOTAL PAD TAHUN INI</h6>
-                                <h3 class="fw-bold">Rp. 231.313.000</h3>
+                                <h3 class="fw-bold">
+                                    <div class="tpadtahun"></div>
+                                </h3>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div>
                                 <h6 class="fw-bold text-uppercase text-warning op-8">TOTAL PAD HARI INI</h6>
-                                <h3 class="fw-bold">Rp. 231.313.000</h3>
+                                <h3 class="fw-bold">
+                                    <div class="tpadharini"></div>
+                                </h3>
                             </div>
                         </div>
 
@@ -90,8 +93,19 @@
 <script src="{{ asset('assets/plugins/hight-cart') }}/accessibility.js"></script>
 
 <script>
-    $(function(){    
-     $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=1") }}',function(data){
+    $(function(){     
+        //jumlah tahun ini
+        $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
+            $('.tpadtahun').text(data.total);
+        });
+        
+            //jumlmah hari ini
+        $.getJSON('{{ Url("api_grafik/total_pad?sekarang=1") }}',function(data){ 
+            $('.tpadharini').text(data.total);
+        });
+        
+    
+        $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=1") }}',function(data){
          rek_obj = data.data;
          Circles.create({
             id: 'circles-1',

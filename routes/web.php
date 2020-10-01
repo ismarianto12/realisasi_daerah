@@ -153,7 +153,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('api_grafik')->group(function(){
 		Route::get('listnoentri','ReportController@listnoentri')->name('listnoentri.api_grafik'); 
 		Route::get('grafik_penerimaan','ReportController@grafik_penerimaan')->name('grafik_penerimaan.api_grafik');
-		Route::get('jumlah_rek','ReportController@jumlah_rek')->name('grafik_penerimaan.jumlah_rek');
+		Route::get('jumlah_rek','ReportController@jumlah_rek')->name('grafik_penerimaan.jumlah_rek'); 
+		Route::get('total_pad','ReportController@total_pad')->name('total_pad.api_grafik');
 		
 	}); 
     //restrict 
