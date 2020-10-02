@@ -51,8 +51,8 @@
                                             <label for="name" class="col-md-3 text-right">Tanggal Lapor Realisasi <span
                                                     class="required-label">*</span></label>
                                             <div class="col-sm-8">
-                                                <input type="date" name="tanggal_lapor" id="tanggal_lapor" class="form-control" placeholder="Dari .."
-                                                    value="{{ $dari }}">
+                                                <input type="date" name="tanggal_lapor" id="tanggal_lapor"
+                                                    class="form-control" placeholder="Dari .." value="{{ $dari }}">
                                             </div>
 
                                         </div>
@@ -220,15 +220,25 @@
             }, 'JSON');
             
         }
-    });   
+    });  
+ 
 
     $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
-        val_id = $(this).val();
-        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
-        $('.entri_rek').load(form_url).slideDown(); 
-      });
-  }); 
+       var val_id     = $(this).val();
+       var satker_id  = $('#tmsikd_satker_id').val();
 
+        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
+        $.get(form_url,{satker_id : satker_id },function(data){
+            $('.entri_rek').html(data); 
+        }); 
+    });
+ 
+}); 
+ 
+
+function selectOnChange()
+{ 
+}  
 
   //save data if true
   function add(){

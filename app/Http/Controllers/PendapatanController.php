@@ -283,11 +283,17 @@ class PendapatanController extends Controller
 
 
     //get forim isian rincian ketika satker mengisi jumlah pendapatan pada app
-    public function form_pendapatan($jenis_object)
+    public function form_pendapatan(Request $request, $jenis_object)
     {
         //def level 
         $level_id  = Properti_app::getlevel();
-        $satker_id = Auth::user()->sikd_satker_id;
+
+        $rsatker_id = Auth::user()->sikd_satker_id;
+        if($rsatker_id == NULL || $rsatker_id == 0){
+            $fsatker_id = $request->satker_id;
+        }else{
+            $fsatker_id = $rsatker_id;
+        }
 
         $cond['tmrekening_akun_kelompok_jenis_objek_id'] = $jenis_object;
 
@@ -297,12 +303,12 @@ class PendapatanController extends Controller
             ->pluck('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
             ->toArray();
 
-        if ($level_id == 1) {
-            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-                ->get();
-        } else {
-            $satker['tmsikd_satkers_id']  = $satker_id;
+        // if ($level_id == 1) {
+        //     $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
+        //         ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+        //         ->get();
+        // } else {
+            $satker['tmsikd_satkers_id']  = $fsatker_id;
             if (empty($cond['tmrekening_akun_kelompok_jenis_objek_id'])) {
                 $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($satker)
                     ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
@@ -313,7 +319,7 @@ class PendapatanController extends Controller
                     ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                     ->get();
             }
-        }
+        // }
 
         $idx = 0;
         $dataSet = [];
