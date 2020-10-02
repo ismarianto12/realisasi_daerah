@@ -3,6 +3,7 @@
 @section('title','Pendapatan Daerah')
 @section('content')
 @include('layouts._includes.toolbar')
+ 
 
 <div class="page bg-light">
     <div class="container-fluid my-3">
@@ -15,7 +16,7 @@
                             <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
                             autocomplete="off" onchange="selectOnChange()">
                             @foreach ($tahuns as $tahun)
-                            <option value="{{$tahun->id}}" @if($tahun_active == $tahun->id)
+                            <option value="{{$tahun->id}}" @if($tahun_active==$tahun->id)
                                 selected="selected"@endif>{{$tahun->tahun}}</option>
                                 @endforeach
                             </select>
@@ -199,8 +200,9 @@ src="{{  asset('assets/template/js/plugin/datatables/button/dataTables.buttons.m
                 .append('<td></td>')
                 .append(group)
             },
-            endRender: null,
+            endRender: null, 
             dataSrc: ['kd_rek_jenis', 'kd_rek_obj', 'kd_rek_rincian_obj']
+            
         }
     });        
     @include('layouts._includes.tablechecked')
@@ -292,8 +294,8 @@ $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
 $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
 
 function selectOnChange(){
-   var dari   = $('#dari').val();
-   var sampai = $('#sampai').val();
+ var dari   = $('#dari').val();
+ var sampai = $('#sampai').val();
 
    // 'tahun_id='+$('tahun_id').val() +'&tmrapbd_id='+$('tmrapbd_id').val()+'&tmsikd_satker_id='+$('tmsikd_satker_id').val();
    table.api().ajax.reload();
@@ -302,15 +304,29 @@ function selectOnChange(){
   val_satker_id  = $('#tmsikd_satker_id').val();
   url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
   $.get(url,function(data){
-     if(data){ 
-        $('.satker_show').html('<div class="alert alert-success"><b> ['+data.kode+']['+data.satker_name+' ] PERIODE DARI : '+dari+' S/D '+sampai +'</b></div>')
-    }else{ 
-        $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
-    }  
+   if(data){ 
+    $('.satker_show').html('<div class="alert alert-success"><b> ['+data.kode+']['+data.satker_name+' ] PERIODE DARI : '+dari+' S/D '+sampai +'</b></div>')
+}else{ 
+    $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
+}  
 
 })
 
 }
+
+function del(){
+        var c = new Array();
+        $("input:checked").each(function(){ c.push($(this).val()); });
+        if(c.length == 0){
+            $.alert("Silahkan memilih data yang akan dihapus.");
+        }else{
+            $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+                table.api().ajax.reload();
+            }, "JSON").fail(function(){
+                reload();
+            });
+        }
+    }
 </script>
 @endsection
 @endsection

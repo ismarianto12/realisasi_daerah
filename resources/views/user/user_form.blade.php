@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group form-show-validation row">
-            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Ulagngi Password <span
+            <label for="password" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Ulangi Password <span
                     class="required-label">*</span></label>
             <div class="col-sm-8">
                 <input type="password" class="form-control" id="password_baru" name="password"
