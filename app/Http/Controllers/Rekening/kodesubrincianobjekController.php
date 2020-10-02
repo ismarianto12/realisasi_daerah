@@ -17,6 +17,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 use App\Models\setupsikd\Tmsikd_rekening_lak;
 use App\Models\Setupsikd\Tmsikd_rekening_lra;
 use App\Models\Setupsikd\Tmsikd_Rekening_neraca;
+use App\Helpers\Properti_app;
 
 class kodesubrincianobjekController extends Controller
 {
@@ -26,8 +27,8 @@ class kodesubrincianobjekController extends Controller
     protected $title      = "Rekening Sub Rincian Objek Mata Anggaran Kegiatan";
 
     public function __construct()
-    { 
-       // $this->middleware('level:|1');
+    {
+        // $this->middleware('level:|1');
     }
 
     public function index()
@@ -76,7 +77,17 @@ class kodesubrincianobjekController extends Controller
 
     public function kodeobjekrincianByKodeobjek($tmrekening_akun_kelompok_jenis_objek_id)
     {
-        return Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')->wheretmrekening_akun_kelompok_jenis_objek_id($tmrekening_akun_kelompok_jenis_objek_id)->get();
+        $levelid = Properti_app::getlevel();
+        $user_id = Auth::user()->id;
+        if ($levelid == 3) {
+            $where = [
+                'tmrekening_akun_kelompok_jenis_objek_id' => $tmrekening_akun_kelompok_jenis_objek_id,
+                'tmsikd_satkers_id' =>  $user_id
+            ];
+            return Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')->where($where)->get();
+        } else {
+            return Tmrekening_akun_kelompok_jenis_objek_rincian::select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')->wheretmrekening_akun_kelompok_jenis_objek_id($tmrekening_akun_kelompok_jenis_objek_id)->get();
+        }
     }
 
     public function create(Request $request)

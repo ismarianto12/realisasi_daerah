@@ -5,6 +5,7 @@
     <div class="container-fluid my-3">
         <div class="card">
             <div class="card-body">
+                <div class="alert alert-danger">Data rincian ada apabila pendapatan telah di setting di setting satker OPD Sebelumnnya</div>
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
@@ -72,9 +73,7 @@
     <div class="card-body">
         <div class="alert alert-danger">Filter data berdasarkan , Rek. Rincian Objek </div>
         <div class="alert alert-danger">Silahkan klik tombol hijau untuk edit target pendapatan berasarkan kode rekening pendapatan. </div>
-        
-        <div class="table-responsive">
-         
+        <div class="table-responsive"> 
             <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                 <thead>
                     <tr>
@@ -124,8 +123,8 @@
         },
         columns: [
         {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-        {data : 'djumlah',name : 'jumlah'},
-        {data : 'djumlah_perubahan',name : 'jumlah_perubahan'},
+        {data : 'djumlah',name : 'djumlah',orderable: false, searchable: false},
+        {data : 'djumlah_perubahan',name : 'jumlah_perubahan',orderable: false, searchable: false},
         {data : 'rincian',name : 'rincian'},
         {data : 'jenis_pad',name : 'jenis_pad'},
         {data : 'tahun',name : 'tahun'},
