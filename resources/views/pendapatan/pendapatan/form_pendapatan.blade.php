@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @if($dataSet == '' || $dataset == 0)     
+        @if($dataSet == '' || $dataSet == 0)     
 
         <tr><td colspan="6"><div class="alert alert-danger"><center>Data rincian object kosong.</center></div></td></tr> 
         

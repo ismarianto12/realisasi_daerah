@@ -168,14 +168,14 @@ class ReportController extends Controller
     {
         //report pendapatan daerah
         $namaFile = 'Pendapatan_daerah.xls';
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header("Content-Disposition: attachment;filename=" . $namaFile . "");
-        header("Content-Transfer-Encoding: binary ");
+        // header("Pragma: public");
+        // header("Expires: 0");
+        // header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        // header("Content-Type: application/force-download");
+        // header("Content-Type: application/octet-stream");
+        // header("Content-Type: application/download");
+        // header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        // header("Content-Transfer-Encoding: binary ");
 
         //dd($request);
         $tahun_id          = $request->tahun_id;
@@ -199,9 +199,10 @@ class ReportController extends Controller
         }
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id == 0) {
             $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        } else {
-            $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
         }
+        if ($tmsikd_satker_id == 0) {
+            $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
+        } 
         $filldata =  $data->get();
         // dd($data);
         $tahun             = date('Y');
