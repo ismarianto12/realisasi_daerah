@@ -39,6 +39,7 @@
                     <div class="col-sm-6">
                         <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
                             onchange="selectOnChange('tmsikd_satker_id')">
+                            <option value="0">Semua Satuan kerja</option>
                             @foreach($tmsikd_satkers as $tmsikd_satker)
                             <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                 selected="selected"@endif>
@@ -54,8 +55,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row form-inline">
-                        <div class="col-md-12">
-
+                        <div class="col-md-12"> 
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
                                         class="required-label">*</span></label>

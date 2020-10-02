@@ -166,7 +166,7 @@ class ReportController extends Controller
     //all data report
     function action_all(Request $request)
     {
-
+        //report pendapatan daerah
         $namaFile = 'Pendapatan_daerah.xls';
         header("Pragma: public");
         header("Expires: 0");
@@ -197,10 +197,11 @@ class ReportController extends Controller
         if ($sampai != '') {
             $data->where('tmpendapatan.tanggal_lapor', '<=', $sampai);
         }
-        if ($tmsikd_satker_id != '') {
+        if ($tmsikd_satker_id != '' || $tmsikd_satker_id == 0) {
             $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        } else {
+            $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
         }
-
         $filldata =  $data->get();
         // dd($data);
         $tahun             = date('Y');
@@ -456,9 +457,9 @@ class ReportController extends Controller
             $dsubs[] = $sub['id'];
         }
 
-        $data = Tmpendapatan::select('tahun','jumlah','tanggal_lapor')->where($par)->whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $dsubs)
-        ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id',\DB::raw('DATE_FORMAT(tanggal_lapor,"%M")'))
-        ->get(); 
+        $data = Tmpendapatan::select('tahun', 'jumlah', 'tanggal_lapor')->where($par)->whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $dsubs)
+            ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', \DB::raw('DATE_FORMAT(tanggal_lapor,"%M")'))
+            ->get();
         return response()->json($data);
     }
 
