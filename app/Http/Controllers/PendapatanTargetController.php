@@ -23,6 +23,7 @@ use App\Models\Setupsikd\Tmsikd_Rekening_neraca;
 use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 use App\Models\TmpendapatantargetModel;
 use App\Models\Trtargetrincian;
+use Properti_app;
 
 class PendapatanTargetController extends Controller
 {
@@ -54,7 +55,12 @@ class PendapatanTargetController extends Controller
      */
     public function api(Request $request)
     {
-        $ls = TmpendapatantargetModel::with(['Tmrekening_akun_kelompok_jenis_objek_rincian'])->get();
+        $ls       = TmpendapatantargetModel::with(['Tmrekening_akun_kelompok_jenis_objek_rincian'])->get();
+        $levelid  = Properti_app::getlevel();
+        $satkerid = Auth::user()->sikd_satker_id;
+        if ($levelid == 3) {
+            $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', $satkerid);
+        }
         if ($request->tmrekening_akun_kelompok_jenis_objek_id != 0) {
             $rincian_rek_id =  $request->tmrekening_akun_kelompok_jenis_objek_id;
             $ls = $ls->where('rekneing_rincian_akun_jenis_objek_id', $rincian_rek_id);
@@ -201,7 +207,7 @@ class PendapatanTargetController extends Controller
         $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
 
         $method_field                          = method_field('PATCH');
-        $jumlah                                = number_format($data->jumlah,0,0,',');
+        $jumlah                                = number_format($data->jumlah, 0, 0, ',');
         $jumlah_perubahan                      = $data->jumlah_perubahan;
         $rekneing_rincian_akun_jenis_objek_id  = $data->rekneing_rincian_akun_jenis_objek_id;
         $dasar_hukum     =  $data->dasar_hukum;
