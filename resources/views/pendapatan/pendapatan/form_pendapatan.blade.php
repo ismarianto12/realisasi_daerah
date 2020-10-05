@@ -26,7 +26,7 @@
         <tr>
             <td style="{{ $style }}" align="center">
                 <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"
-                    @if(isset($rincianSub['cbox']['accRight'])) disabled="disabled" @else value="{{ $idx }}" @endif
+                    @if(isset($rincianSub['cbox']['accRight']))  @else value="{{ $idx }}" @endif
                     \="">
             </td>
             <td style="{{ $style }}">

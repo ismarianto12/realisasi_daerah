@@ -1,0 +1,5 @@
+alter table tmpendpatan
+ALTER TABLE `tmrekening_akun_kelompok_jenis_objek_rincians` ADD UNIQUE(`id`);
+
+
+ALTER TABLE `tmrekening_akun_kelompok_jenis_objek_rincians` CHANGE `id` `id` INT(8) NOT NULL AUTO_INCREMENT COMMENT 'menu rekening/kode Rincian Objek';

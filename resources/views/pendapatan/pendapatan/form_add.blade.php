@@ -113,8 +113,8 @@
                                             <div class="form-group">
                                                 <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
                                                 <div class="col-md-8">
-                                                    <input name="jumlah_mak" id="jumlah_mak" type="number"
-                                                        placeholder="" class="form-control number" autocomplete="off" />
+                                                    <input name="jumlah_mak" id="jumlah_mak" type="text" placeholder=""
+                                                        class="form-control number" autocomplete="off" />
                                                 </div>
                                             </div>
                                         </div>
@@ -280,6 +280,19 @@ add();
       $(this).addClass('was-validated');
     }
   });
+
+
+  {{-- $("#jumlah_mak").live('keypress', function (event) {
+    var alpha = new Array();
+    alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\{", "\}", "\[", "\]", "=", "+", "-", "_", "|", "\\", "/", ",", "'", "?", "\"", ":", ";", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","."];
+    var charpressed = String.fromCharCode(event.which);    
+    if ($.inArray(charpressed, alpha) > -1) {
+        return false;
+    }
+}); --}}
+
+  
+
 
 </script>
 @endsection

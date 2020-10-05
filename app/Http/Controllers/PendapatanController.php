@@ -40,13 +40,13 @@ class PendapatanController extends Controller
     protected $jdl        = "Pendapatan";
 
     public function __construct()
-    {   
-      }
+    {
+    }
 
     public function index(Request $request)
     {
         // dd(Auth::user()->sikd_satker_id);
-    
+
         $title   = 'Laporan Pendapatan | ' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'd', 'c'];
@@ -163,7 +163,7 @@ class PendapatanController extends Controller
 
         $title   = 'Laporan Pendapatan | ' . $this->title;
         $route   =  $this->route;
-        $toolbar =  ['r', 'c','save'];
+        $toolbar =  ['r', 'c', 'save'];
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
         $level_id  = Properti_app::getlevel();
@@ -214,16 +214,22 @@ class PendapatanController extends Controller
 
     public function store(Request $request)
     {
-        $satker_id = Auth::user()->sikd_satker_id;
         $request->validate([
-           // 'tmsikd_setup_tahun_anggaran_id' => 'required', 
+            // 'tmsikd_setup_tahun_anggaran_id' => 'required', 
             'tmsikd_satker_id'               => 'required'
-        ]); 
+        ]);
         /* Tahapan:
             1. Tmrkas
             2. Tmrka_pendapatans
-            3. Tmrka_mata_anggarans */ 
+            3. Tmrka_mata_anggarans */
         // Tahap 1
+        $level_id      = Properti_app::getlevel();
+        if ($level_id  == 3) {
+            $satker_id = Auth::user()->sikd_satker_id;
+        } else {
+            $satker_id = $request->tmsikd_satker_id;
+        }
+
         $cboxInput      = $request->cboxInput;
         $cboxInputVal   = $request->cboxInputVal;
         $cboxInputRinci = $request->cboxInputRinci;
@@ -234,26 +240,43 @@ class PendapatanController extends Controller
         $harga          = $request->harga;
         $tanggal_lapor  = $request->tanggal_lapor;
 
- 
-        if ($cboxInput == null)
-            return response()->json(['message' => "Tidak ada data rincian pendapatan yang dipilih."], 422);
 
+        if ($cboxInput == null)
+            return response()->json(['message' => "Tidak ada data list pendapatan yang dipilih."], 422);
+
+        //$count = count($cboxInput);
+        //dd($count);
+
+        // if ($count == 0) {
+        //     Tmpendapatan::updateOrCreate([
+        //         'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$count],
+        //         'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$count],
+        //         'kd_rekening' => $kd_rekening[$count],
+        //         'tmsikd_satker_id' => $satker_id,
+        //         'volume' => $volume[$count],
+        //         'satuan' => $satuan[$count],
+        //         'jumlah' => $jumlah[$count],
+        //         'harga'  => $harga[$count],
+        //         'tanggal_lapor' => $tanggal_lapor
+        //     ]);
+        // } else {
         for ($i = 0; $i < count($cboxInput); $i++) {
-            $key = $cboxInput[$i];  
-        
-            Tmpendapatan::updateOrCreate([  
-                'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$key],
-                'tmrekening_akun_kelompok_jenis_objek_rincian_id'=> $cboxInputRinci[$key],
-                'kd_rekening' => $kd_rekening[$key],  
-                'tmsikd_satker_id'=> $satker_id,
+            $key = $i;
+            $sub_rek = ($cboxInputVal[$key]) ? $cboxInputVal[$key] : 0;
+            Tmpendapatan::updateOrCreate([
+                'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$key],
+                'kd_rekening' => $kd_rekening[$key],
+                'tmsikd_satker_id' => $satker_id,
                 'volume' => $volume[$key],
                 'satuan' => $satuan[$key],
                 'jumlah' => $jumlah[$key],
                 'harga'  => $harga[$key],
                 'tanggal_lapor' => $tanggal_lapor
             ]);
-            //update tanggal raport
         }
+        //update tanggal raport
+        //}
         return response()->json([
             'message' => "Data " . $this->title . " Berhasil Tersimpan"
         ]);
@@ -290,9 +313,9 @@ class PendapatanController extends Controller
         $level_id  = Properti_app::getlevel();
 
         $rsatker_id = Auth::user()->sikd_satker_id;
-        if($rsatker_id == NULL || $rsatker_id == 0){
+        if ($rsatker_id == NULL || $rsatker_id == 0) {
             $fsatker_id = $request->satker_id;
-        }else{
+        } else {
             $fsatker_id = $rsatker_id;
         }
 
@@ -309,17 +332,17 @@ class PendapatanController extends Controller
         //         ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
         //         ->get();
         // } else {
-            $satker['tmsikd_satkers_id']  = $fsatker_id;
-            if (empty($cond['tmrekening_akun_kelompok_jenis_objek_id'])) {
-                $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($satker)
-                    ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-                    ->get();
-            } else {
-                $mcond = array_merge($satker, $cond);
-                $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($mcond)
-                    ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-                    ->get();
-            }
+        $satker['tmsikd_satkers_id']  = $fsatker_id;
+        if (empty($cond['tmrekening_akun_kelompok_jenis_objek_id'])) {
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($satker)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        } else {
+            $mcond = array_merge($satker, $cond);
+            $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($mcond)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->get();
+        }
         // }
 
         $idx = 0;
