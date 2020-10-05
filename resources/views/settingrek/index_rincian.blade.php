@@ -2,11 +2,16 @@
 
 @section('title', 'Setting Rekening Sub Rincian Object , Nama Rincian Object')
 @section('content')  
+ 
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="alert alert-danger">  Setting sub rekening rincian sub rincian object .{{ $nama_rincian }}</div>
         <div class="card">
             <div class="card-body">
+                <h3>Setting Akses {{ $nama_rincian }}</h3>
+                <br />
+                <br />
+
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <nav>
