@@ -1,10 +1,16 @@
+<style>
+    table {
+        border: 0.1px;
+    }
+</style>
+
 <center>
     <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
     <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
     <h4> PER REKENING JENIS</h4>
-    TAHUN ANGGARAN {{ $tahun }} 
+    TAHUN ANGGARAN {{ $tahun }}
     <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
-    PERIODE : {{ $dari }} S/D {{ $sampai }} 
+    PERIODE : {{ $dari }} S/D {{ $sampai }}
     <br />
 </center>
 <table style="border-collapse: collapse; width: 100%;" border="1" cellspacing="1">

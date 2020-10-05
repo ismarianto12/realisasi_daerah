@@ -128,7 +128,8 @@ class Menu_app
         </a>
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Pendapatan');
+                    $menu .= self::set_menu('laporan', 'Laporan Pendapatan'); 
+                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Bulan');
                     //$menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
                     $menu .= '
@@ -186,8 +187,7 @@ class Menu_app
                       </ul>
                     </div>
                 </li>';
-                    break;
-
+                    break; 
                 case 3:
 
                     $menu .= '<li class="nav-item">
@@ -224,7 +224,8 @@ class Menu_app
                 </a>
                 <div class="collapse" id="report">
                     <ul class="nav nav-collapse">';
-                    $menu .= self::set_menu('laporan/keseluruhan', 'Laporan Penerimaan');
+                    $menu .= self::set_menu('laporan', 'Laporan Penerimaan'); 
+                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Bulan');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
 
                     $menu .= '

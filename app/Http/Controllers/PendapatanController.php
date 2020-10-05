@@ -239,7 +239,8 @@ class PendapatanController extends Controller
             return response()->json(['message' => "Tidak ada data rincian pendapatan yang dipilih."], 422);
 
         for ($i = 0; $i < count($cboxInput); $i++) {
-            $key = $cboxInput[$i]; 
+            $key = $cboxInput[$i];  
+        
             Tmpendapatan::updateOrCreate([  
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$key],
                 'tmrekening_akun_kelompok_jenis_objek_rincian_id'=> $cboxInputRinci[$key],

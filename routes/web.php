@@ -31,21 +31,21 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('tmpjabatan', 'TmajabatanController');
 	Route::get('tmjabatan_datatable', 'TmajabatanController@api')->name('tmjabatan_datatable');
-    //   
+	//   
 	Route::resource("tahunsikd", "sikd_tahunController");
 	Route::get('tahunsikd', 'sikd_tahunController@api')->name('tahunsikd');
 
 	Route::resource("rekening-akun", "tmrekening_akunsController");
 	Route::get('rekeningakun_datatable', 'tmrekening_akunsController@api')->name('rekeningakun_datatable');
 
-    //gete  object data
+	//gete  object data
 	Route::resource("sikd_object", "Sikd_rek_objController");
 	Route::get('sikd_object_datatable', 'Sikd_rek_objController@api')->name('sikd_object_datatable');
-    //route data badan pendapatan daerah 
+	//route data badan pendapatan daerah 
 
 	Route::resource("sikd_robject", "Sikd_rek_rincian_objController");
 	Route::get('sikd_robject_datatable', 'Sikd_rek_rincian_objController@api')->name('sikd_robject_datatable');
-    // get retribution receive 
+	// get retribution receive 
 
 	Route::resource("penerimaan", "TmpenerimaanController");
 	Route::get('penerimaan_datatable', 'TmpenerimaanController@api')->name('penerimaan_datatable');
@@ -56,25 +56,28 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('export', 'TmpenerimaanController@export')->name('export');
 
-    //Route::resource('report_penerimaan', 'ReportController');
+	//Route::resource('report_penerimaan', 'ReportController');
 	Route::post('reportpendapatan_api', 'ReportController@api')->name('reportpendapatan_api');
 
 	Route::get('result_data', 'ReportController@action')->name('result_data');
 
 	Route::prefix('laporan')->name('laporan.')->group(function () {
-
-		Route::get('/', 'ReportController@index')->name('index');
-		Route::get('keseluruhan', 'ReportController@alldata')->name('keseluruhan');
+		Route::get('', 'ReportController@index')->name('');
 		Route::get('action_all', 'ReportController@action_all')->name('action_all');
-        //resource data grafik 
+
+		//resource data perbulan 
+		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
+		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
+		// grafik pendapatan 
 		Route::resource('grafik', 'GrafikController');
-		Route::get('tesjasper', 'ReportController@tesjasper')->name('tesjasper');
+			 
+
 	});
 
 	Route::prefix('akses')->name('akses.')->group(function () {
 		Route::resource('level', 'TmuserlevelController');
 		Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
-        //ganti password 
+		//ganti password 
 		Route::resource('profile', 'ProfileController');
 	});
 
@@ -85,17 +88,15 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 
 	Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
-        // opd
+		// opd
 		Route::resource('satker', 'TmopdController');
 		Route::post('satker_api', 'TmopdController@api')->name('satker_api');
 		Route::post('set_active', 'TmopdController@set_active')->name('set_active');
 
-        //get route ajax 
-		Route::get('get_satker/{id}','TmopdController@get_satker')->name('get_satker'); 
-        //settting user
-
-        //indentitas 
-		Route::resource('identitas', 'IdentitasController'); 
+		//get route ajax 
+		Route::get('get_satker/{id}', 'TmopdController@get_satker')->name('get_satker');
+		//settting user
+		Route::resource('identitas', 'IdentitasController');
 	});
 
 	Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');
@@ -111,28 +112,27 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::resource('kodesubrincianobjek', 'kodesubrincianobjekController');
 		});
 	});
-    //pendapatan route
+	//pendapatan route
 	Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
 		Route::resource("", "PendapatanController");
 		Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
 
 		Route::post('api', 'PendapatanController@api')->name('api');
-        //yang berkaitan dengan pendapatan
+		//yang berkaitan dengan pendapatan
 		Route::resource('target', 'PendapatanTargetController');
 		Route::post('target_api', 'PendapatanTargetController@api')->name('target_api.api');
-        // rincian tartet pendanpatan bapenda katanya
+		// rincian tartet pendanpatan bapenda katanya
 		Route::resource('targetrincian', 'TrtargetrincianController');
 		Route::post('targetrincian_api', 'TrtargetrincianController@api')->name('targetrincian_api.api');
 
-        //get data from access frontend js 
-		Route::get('trtargetrincian_form/{id}','TrtargetrincianController@form')->name('trtargetrincian_form');
-		Route::get('trtargetrincian_form_edit/{id}','TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
+		//get data from access frontend js 
+		Route::get('trtargetrincian_form/{id}', 'TrtargetrincianController@form')->name('trtargetrincian_form');
+		Route::get('trtargetrincian_form_edit/{id}', 'TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
 
-        // get frm isian pendapatan
-		Route::get('form_pendapatan/{id}','PendapatanController@form_pendapatan')->name('form_pendapatan');
-
+		// get frm isian pendapatan
+		Route::get('form_pendapatan/{id}', 'PendapatanController@form_pendapatan')->name('form_pendapatan');
 	});
-    //route datatable api
+	//route datatable api
 	Route::prefix('api')->group(function () {
 		Route::post('setuptahunanggaran', 'SetupTahunAnggaranController@api')->name('setuptahunanggaran.api');
 		Route::prefix('rekening')->namespace('Rekening')->name('rekening.')->group(function () {
@@ -141,8 +141,8 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('kodejenis', 'KodejenisController@api')->name('kodejenis.api');
 			Route::post('kodeobjek', 'KodeobjekController@api')->name('kodeobjek.api');
 			Route::post('koderincianobjek', 'KoderincianobjekController@api')->name('koderincianobjek.api');
-			Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api'); 
-			
+			Route::post('kodesubrincianobjek', 'kodesubrincianobjekController@api')->name('kodesubrincianobjek.api');
+
 			Route::get('kodejenis/kodekelompokByKodeakun/{id}', 'KodejenisController@kodekelompokByKodeakun')->name('kodejenis.kodekelompokByKodeakun');
 			Route::get('kodeobjek/kodejenisByKodekelompok/{id}', 'KodeobjekController@kodejenisByKodekelompok')->name('kodeobjek.kodejenisByKodekelompok');
 			Route::get('koderincianobjek/kodeobjekByKodejenis/{id}', 'KoderincianobjekController@kodeobjekByKodejenis')->name('koderincianobjek.kodeobjekByKodejenis');
@@ -150,13 +150,12 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 
-	Route::prefix('api_grafik')->group(function(){
-		Route::get('listnoentri','ReportController@listnoentri')->name('listnoentri.api_grafik'); 
-		Route::get('grafik_penerimaan','ReportController@grafik_penerimaan')->name('grafik_penerimaan.api_grafik');
-		Route::get('jumlah_rek','ReportController@jumlah_rek')->name('grafik_penerimaan.jumlah_rek'); 
-		Route::get('total_pad','ReportController@total_pad')->name('total_pad.api_grafik');
-		
-	}); 
-    //restrict 
+	Route::prefix('api_grafik')->group(function () {
+		Route::get('listnoentri', 'ReportController@listnoentri')->name('listnoentri.api_grafik');
+		Route::get('grafik_penerimaan', 'ReportController@grafik_penerimaan')->name('grafik_penerimaan.api_grafik');
+		Route::get('jumlah_rek', 'ReportController@jumlah_rek')->name('grafik_penerimaan.jumlah_rek');
+		Route::get('total_pad', 'ReportController@total_pad')->name('total_pad.api_grafik');
+	});
+	//restrict 
 	Route::get('restrict', 'HomeController@restrict')->name('restrict');
 });
