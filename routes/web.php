@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
 		// grafik pendapatan 
 		Route::resource('grafik', 'GrafikController');
-			 
+
 
 	});
 
@@ -84,7 +84,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('settingrek')->name('settingrek.')->group(function () {
 		Route::resource('rek', 'SettingrekeningController');
 		Route::post('batalkan', 'SettingrekeningController@batalkan')->name('batalkan');
+		Route::post('batalkan_sub', 'SettingrekeningController@batalkan_sub')->name('batalkan_sub');
+
+
 		Route::post('api_data_setting', 'SettingrekeningController@api')->name('api_data_setting');
+		Route::post('api_data_setting_sub/{id}', 'SettingrekeningController@api_rincian_sub')->name('api_data_setting_sub');
+		//patch
+		Route::patch('update_rincian_sub', 'SettingrekeningController@update_rincian_sub')->name('update_rincian_sub');
+
 	});
 
 	Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
