@@ -152,20 +152,23 @@ class ReportController extends Controller
                 'objectrinciansub' => $objectrinciansub,
             ]);
         } else {
-            $pdf = PDF::loadView($this->view . 'jenis_object', [
-                'tahun' => $tahun,
-                'dari' => $dari,
-                'opd' => $opd,
-                'tmsikd_satker_id' => $tmsikd_satker_id,
-                'tahun_id' => $tahun_id,
-                'sampai' => $sampai,
-                'render' => $filldata,
-                'listarget' => $listarget,
-                'tmpendapatan' => $tmpendapatan,
-                'jenisobject' => $jenisobject,
-                'objectrincian' => $objectrincian,
-                'objectrinciansub' => $objectrinciansub,
-            ]);
+            $pdf = PDF::loadView(
+                $this->view . 'jenis_object',
+                [
+                    'tahun' => $tahun,
+                    'dari' => $dari,
+                    'opd' => $opd,
+                    'tmsikd_satker_id' => $tmsikd_satker_id,
+                    'tahun_id' => $tahun_id,
+                    'sampai' => $sampai,
+                    'render' => $filldata,
+                    'listarget' => $listarget,
+                    'tmpendapatan' => $tmpendapatan,
+                    'jenisobject' => $jenisobject,
+                    'objectrincian' => $objectrincian,
+                    'objectrinciansub' => $objectrinciansub,
+                ]
+            );
             $pdf->setPaper('A4', 'landscape');
             return $pdf->stream();
         }
@@ -261,7 +264,7 @@ class ReportController extends Controller
                 'kelompok_rincian' => $kelompok_rincian,
                 'kelompok_sub_rincian' => $kelompok_sub_rincian,
             ])
-            ->setPaper('F4', 'landscape');
+                ->setPaper('F4', 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
         }
     }

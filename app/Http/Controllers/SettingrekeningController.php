@@ -42,7 +42,7 @@ class SettingrekeningController extends Controller
     public function index()
     {
 
-        $tmsikd_satkers     = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satkers     = Sikd_list_option::listSkpd();
         $title              = $this->title;
         $route              = $this->route;
         $toolbar            = ['list'];
