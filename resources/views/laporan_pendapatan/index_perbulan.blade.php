@@ -6,8 +6,8 @@
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">Laporan Penerimaaan Perbulan</h2>
-                <h5 class="text-white op-7 mb-2"> Pendapatapan Daerah </h5>
+                <h2 class="text-white pb-2 fw-bold">Laporan Keseluruhan PAD</h2>
+                <h5 class="text-white op-7 mb-2"> Report PAD </h5>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-white btn-border btn-round mr-2">Report Penerimaan</a>
@@ -22,9 +22,9 @@
             <div class="card-body">
                 <div class="form-group form-show-validation row">
                     <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
-                        class="required-label">*</span></label>
-                        <div class="col-sm-6">
-                            <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
+                            class="required-label">*</span></label>
+                    <div class="col-sm-6">
+                        <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
                             autocomplete="off" onchange="selectOnChange()">
                             @foreach ($tahuns as $tahun)
                             <option value="{{$tahun->id}}">{{$tahun->tahun}}</option>
@@ -32,41 +32,23 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group form-show-validation row">
-                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
-                        <span class="required-label">*</span></label>
-                        <div class="col-sm-6">
-                            <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
-                            onchange="selectOnChange('tmsikd_satker_id')">
-                            <option value="0">Semua Satuan kerja</option>
-                            @foreach($tmsikd_satkers as $tmsikd_satker)
-                            <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
-                                selected="selected"@endif>
-                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                            </option>
-                            @endforeach
+            </div>
+            <div class="card-body">
+                <div class="col-md-6">
+                    <div class="form-group m-0">
+                        <select class="form-control" id="type_params">
+                            <option value="pdf">PDF</option>
+                            <option value="rtf">WORD (RTF)</option>
+                            <option value="xls">XLS</option>
                         </select>
+                        <hr />
+                        <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
                     </div>
                 </div>
-
-               
-    </div>
-    <div class="card-body">
-        <div class="col-md-6">
-            <div class="form-group m-0">
-                <select class="form-control" id="type_params">
-                    <option value="pdf">PDF</option> 
-                    <option value="rtf">WORD (RTF)</option>
-                    <option value="xls">XLS</option>
-                </select>
-                <hr />
-                <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
             </div>
         </div>
     </div>
-</div>
-</div> 
-<div id="btn_cetak"></div>
+    <div id="btn_cetak"></div>
 </div>
 @section('script')
 <script>

@@ -209,7 +209,7 @@ class UserController extends Controller
         $satker = Sikd_satker::get();
         $username = $edit->username;
         $realname = $edit->realname;
-        $action = route('user.store', $edit->id);
+        $action = route('user.update', $edit->id);
         $password = $edit->password;
         $last_login = $edit->last_login;
         $telp = $edit->telp;
