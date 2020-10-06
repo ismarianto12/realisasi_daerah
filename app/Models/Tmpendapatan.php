@@ -50,7 +50,7 @@ class Tmpendapatan extends Model
     public static function list()
     {
         return Tmpendapatan::select(
-            'tmpendapatan.*',
+            'tmpendapatan.*', 
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
 

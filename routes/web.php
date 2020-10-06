@@ -122,6 +122,8 @@ Route::group(['middleware' => 'auth'], function () {
 	//pendapatan route
 	Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
 		Route::resource("", "PendapatanController");
+
+		Route::get("{id}/edit", "PendapatanController@edit")->name('edit');
 		Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
 
 		Route::post('api', 'PendapatanController@api')->name('api');
@@ -135,6 +137,7 @@ Route::group(['middleware' => 'auth'], function () {
 		//get data from access frontend js 
 		Route::get('trtargetrincian_form/{id}', 'TrtargetrincianController@form')->name('trtargetrincian_form');
 		Route::get('trtargetrincian_form_edit/{id}', 'TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
+
 
 		// get frm isian pendapatan
 		Route::get('form_pendapatan/{id}', 'PendapatanController@form_pendapatan')->name('form_pendapatan');

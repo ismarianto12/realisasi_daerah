@@ -155,6 +155,7 @@ class PendapatanController extends Controller
         $opd  = Tmopd::Where('kode', $data->tmsikd_satker_id)->first();
         return view($this->view . 'pendapatandetail', [
             'data' => $data,
+            'pendapatan_id' => $id,
             'opd' => $opd
         ]);
     }
@@ -266,6 +267,11 @@ class PendapatanController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        return redirect(route('pendapatan.create', 'id=' . $id . '&edit=1'));
+    }
+
     public function show($id)
     {
         // *
@@ -365,16 +371,6 @@ class PendapatanController extends Controller
             //'listRincianSubs' => $listRincianSubs,
             'dataSet' => $dataSet
         ]);
-    }
-
-    public function edit($id)
-    {
-        return redirect(route('rka.rkaskpd.rincian_mata_anggaran.create', 'tmrka_mata_anggaran_id=' . $id . '&edit=1'));
-    }
-
-    public function update()
-    {
-        // 
     }
 
     public function destroy(Request $request)
