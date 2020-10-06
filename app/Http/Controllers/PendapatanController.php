@@ -151,6 +151,7 @@ class PendapatanController extends Controller
     function pendapatandetail($id)
     {
         $data = Tmpendapatan::list()->findOrFail($id);
+        //dd($data);
         return view($this->view . 'pendapatandetail', [
             'data' => $data
         ]);

@@ -186,8 +186,8 @@
 
         columns: [ 
         {data: 'id', name: 'id', orderable: false, searchable: false, className: 'text-center'},
-        {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj'},
-        {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
+        {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj',orderable: false, searchable: false},
+        {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj',orderable: false, searchable: false},
         {data: 'volume', name: 'volume', className: 'text-right'},  
         {data: 'jumlah', name: 'jumlah', className: 'text-right'},  
         {data: 'tgl_lapor', name: 'tgl_lapor', className: 'text-right'},   
