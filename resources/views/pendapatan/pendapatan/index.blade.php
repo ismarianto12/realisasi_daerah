@@ -183,7 +183,6 @@
                 data.tmrekening_akun_kelompok_jenis_objek_id  = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
             }
         },  
-
         columns: [ 
         {data: 'id', name: 'id', orderable: false, searchable: false, className: 'text-center'},
         {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj',orderable: false, searchable: false},
@@ -191,8 +190,7 @@
         {data: 'volume', name: 'volume', className: 'text-right'},  
         {data: 'jumlah', name: 'jumlah', className: 'text-right'},  
         {data: 'tgl_lapor', name: 'tgl_lapor', className: 'text-right'},   
-        ],
-
+        ], 
     });        
     @include('layouts._includes.tablechecked')
 

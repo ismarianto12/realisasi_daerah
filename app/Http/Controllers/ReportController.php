@@ -57,7 +57,6 @@ class ReportController extends Controller
 
     function index(Request $request)
     {
-
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
         $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
@@ -169,7 +168,7 @@ class ReportController extends Controller
                     'objectrinciansub' => $objectrinciansub,
                 ]
             )
-            ->setPaper('A4', 'landscape');
+                ->setPaper('A4', 'landscape');
             return $pdf->stream('report_pad');
         }
     }
@@ -245,6 +244,7 @@ class ReportController extends Controller
                 'kelompok_sub_rincian' => $kelompok_sub_rincian,
             ]);
         } else {
+            $customPaper = array(0, 0, 567.00, 1000);
             $pdf = PDF::loadView($this->view . 'report_bulan', [
                 'tahun' => $tahun,
                 'dari' => $dari,
@@ -253,18 +253,13 @@ class ReportController extends Controller
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
                 'listarget' => $listarget,
-                // 'tmpendapatan' => $tmpendapatan,
-                // 'jenisobject' => $jenisobject,
-                // 'objectrincian' => $objectrincian,
-                // 'objectrinciansub' => $objectrinciansub,
-                // get list rekening pendapatan
                 'akun_kelompok' => $akun_kelompok,
                 'kelompok_jenis' => $kelompok_jenis,
                 'kelompok_object' => $kelompok_object,
                 'kelompok_rincian' => $kelompok_rincian,
                 'kelompok_sub_rincian' => $kelompok_sub_rincian,
             ])
-                ->setPaper('F4', 'landscape');
+                ->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
         }
     }

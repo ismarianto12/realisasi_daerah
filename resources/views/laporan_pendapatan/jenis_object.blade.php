@@ -1,9 +1,7 @@
 <title>Report Hasil Pendapatan Daerah Tangerang selatan</title>
-
-
 <style>
     table {
-        border: 0.1px;
+        border: 0.1px solid #ddd;
     }
 </style>
 
@@ -13,10 +11,11 @@
     <h4> PER REKENING JENIS</h4>
     TAHUN ANGGARAN {{ $tahun }}
     <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
+    <br />
     PERIODE : {{ $dari }} S/D {{ $sampai }}
     <br />
 </center>
-<table style="border-collapse: collapse; width: 100%;" border="1" cellspacing="1">
+<table>
     <thead>
         <tr>
             <td>No</td>
