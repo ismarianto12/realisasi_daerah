@@ -91,6 +91,7 @@ class Tmpendapatan extends Model
             ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.kd_rek_kelompok')
 
             ->groupBy('tmpendapatan.id')
+            ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')            
             ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');
     }
 

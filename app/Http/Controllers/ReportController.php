@@ -168,9 +168,9 @@ class ReportController extends Controller
                     'objectrincian' => $objectrincian,
                     'objectrinciansub' => $objectrinciansub,
                 ]
-            );
-            $pdf->setPaper('A4', 'landscape');
-            return $pdf->stream();
+            )
+            ->setPaper('A4', 'landscape');
+            return $pdf->stream('report_pad');
         }
     }
 
