@@ -172,8 +172,7 @@
         ajax: {
             url: "{{ route($route.'api') }}",
             method: 'POST',
-            data:function(data){
-
+            data:function(data){ 
                 data.tahun_id  = $('#tahun_id').val();
                 data.tmsikd_satker_id  = $('#tmsikd_satker_id').val();
                 data.dari  = $('#dari').val();
