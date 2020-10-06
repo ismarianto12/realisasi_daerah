@@ -1,8 +1,25 @@
 <title>Report Hasil Pendapatan Daerah Tangerang selatan</title>
 <style>
     table {
-        border: 0.1px solid #ddd;
+        border-collapse: collapse;
+        width: 100%;
     }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #bb5e08;
+        color: white;
+    }
+
 </style>
 
 <center>
@@ -18,25 +35,23 @@
 <table>
     <thead>
         <tr>
-            <td>No</td>
-            <td>Uraian</td>
-            <td>Pagu Anggaran</td>
-            <td colspan="3">Jumlah Realisasi (Rp.)</td>
-            <td colspan="2">Lebih Kurang<br /></td>
+            <th>No</th>
+            <th>Uraian</th>
+            <th>Pagu Anggaran</th>
+            <th colspan="3">Jumlah Realisasi (Rp.)</th>
+            <th colspan="2">Lebih Kurang<br /></th>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>S/D Periode Lalu</td>
-            <td>Periode Ini</td>
-            <td>Total</td>
-            <td>(Rp.)</td>
-            <td>%</td>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>S/D Periode Lalu</th>
+            <th>Periode Ini</th>
+            <th>Total</th>
+            <th>(Rp.)</th>
+            <th>%</th>
         </tr>
-        <tr style="
-        background: yellow;
-        text-align: center;">
+        <tr style="background: greenyellow">
             <td>1</td>
             <td>2</td>
             <td>3</td>

@@ -129,7 +129,7 @@ class Menu_app
         <div class="collapse" id="penerimaan">
             <ul class="nav nav-collapse">';
                     $menu .= self::set_menu('laporan', 'Laporan Pendapatan'); 
-                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Bulan');
+                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Keseluruhan');
                     //$menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
                     $menu .= '
@@ -225,7 +225,7 @@ class Menu_app
                 <div class="collapse" id="report">
                     <ul class="nav nav-collapse">';
                     $menu .= self::set_menu('laporan', 'Laporan Penerimaan'); 
-                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Bulan');
+                    $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Keseluruhan');
                     $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
 
                     $menu .= '
