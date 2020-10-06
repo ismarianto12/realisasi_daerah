@@ -2,34 +2,34 @@
 <html> 
 <head> 
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
-</head>
-
-<body>
-
-    <style>
-        table{
-            font-size: 11;
-        }
-        table,
-        td,
-        th {
-            border: 0.1px solid #000; 
-        } 
+</head>  
+<body> 
+    <style> 
         table { 
+            border-left: 0.1px solid #000;
             border-collapse: collapse;
             width: 100%;
-        } 
-        th {
-            text-align: left;
+        }    
+        th,
+        td {
+            text-align: left;  
         }
+    
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    
+        th {
+            background-color: #bb5e08;
+            color: white;
+        }
+  
     </style>
     <center> 
        <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>							
        <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>							
        <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>		
-
-   </center>
-
+   </center> 
    <table style="border: 1px">
     <tbody>
         <tr>
