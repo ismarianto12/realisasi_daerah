@@ -303,6 +303,14 @@ function selectOnChange(){
 
 $('#datatable').on('click','#detail',function(e){
     e.preventDefault();
+    
+    $(this).toggleClass('selected');
+    c = $(this).children('td:first').children('input[type=checkbox]');
+    if(!c.is(':disabled')){
+        c.prop('checked', false);
+    }
+
+
     var page = $(this).attr('to'); 
     $('.load_page').load(page);
     $('#modal_loader').modal('show');  
@@ -330,7 +338,8 @@ function del(){
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="width: auto;">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad di laporkan .</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad di laporkan .
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

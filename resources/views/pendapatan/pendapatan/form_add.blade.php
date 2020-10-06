@@ -146,7 +146,7 @@
             $('#tmrekening_akun_kelompok_id').html(option);
             $('#tmrekening_akun_kelompok_jenis_id').html(option);
             $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            // selectOnChange();
+            selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
             url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
@@ -162,7 +162,7 @@
                     $('#tmrekening_akun_kelompok_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    // selectOnChange();
+                    selectOnChange();
                 }
             }, 'JSON');
         }
@@ -175,7 +175,7 @@
         if(val == ""){
             $('#tmrekening_akun_kelompok_jenis_id').html(option);
             $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            // selectOnChange();
+            selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
             url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
@@ -190,7 +190,7 @@
                 }else{
                     $('#tmrekening_akun_kelompok_jenis_id').html(option);
                     $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    // selectOnChange();
+                    selectOnChange();
                 }
             }, 'JSON');
         }
@@ -201,7 +201,7 @@
         option = "<option value=''>&nbsp;</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            // selectOnChange();
+            selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
             url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
@@ -215,7 +215,7 @@
                  $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
              }else{
                 $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    // selectOnChange();
+                    selectOnChange();
                 }
             }, 'JSON');
             
@@ -238,6 +238,18 @@
 
 function selectOnChange()
 { 
+    var val_id     = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+    var satker_id  = $('#tmsikd_satker_id').val();
+    if(val_id == '' && val_id == 0){
+        $.alert('Silahkan pilih satuan  jenis object rincian terlebih dahulu','keterangan');
+    }else if(satker_id == ''){
+        $.alert('Silahkan pilih satuan kerja terlebih dahulu ','keterangan');
+    }else{
+     var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
+     $.get(form_url,{satker_id : satker_id },function(data){
+         $('.entri_rek').html(data); 
+     }); 
+    } 
 }  
 
   //save data if true
@@ -280,8 +292,7 @@ add();
       $(this).addClass('was-validated');
     }
   });
-
-
+ 
   {{-- $("#jumlah_mak").live('keypress', function (event) {
     var alpha = new Array();
     alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\{", "\}", "\[", "\]", "=", "+", "-", "_", "|", "\\", "/", ",", "'", "?", "\"", ":", ";", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","."];

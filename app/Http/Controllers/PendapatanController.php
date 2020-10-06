@@ -30,6 +30,7 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 
 use App\Helpers\Properti_app;
 use App\Libraries\List_pendapatan;
+use App\Models\Tmopd;
 
 class PendapatanController extends Controller
 {
@@ -151,9 +152,10 @@ class PendapatanController extends Controller
     function pendapatandetail($id)
     {
         $data = Tmpendapatan::list()->findOrFail($id);
-        //dd($data);
+        $opd  = Tmopd::Where('kode', $data->tmsikd_satker_id)->first();
         return view($this->view . 'pendapatandetail', [
-            'data' => $data
+            'data' => $data,
+            'opd' => $opd
         ]);
     }
 
@@ -243,22 +245,6 @@ class PendapatanController extends Controller
         if ($cboxInput == null)
             return response()->json(['message' => "Tidak ada data list pendapatan yang dipilih."], 422);
 
-        //$count = count($cboxInput);
-        //dd($count);
-
-        // if ($count == 0) {
-        //     Tmpendapatan::updateOrCreate([
-        //         'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $cboxInputVal[$count],
-        //         'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$count],
-        //         'kd_rekening' => $kd_rekening[$count],
-        //         'tmsikd_satker_id' => $satker_id,
-        //         'volume' => $volume[$count],
-        //         'satuan' => $satuan[$count],
-        //         'jumlah' => $jumlah[$count],
-        //         'harga'  => $harga[$count],
-        //         'tanggal_lapor' => $tanggal_lapor
-        //     ]);
-        // } else {
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
             $sub_rek = ($cboxInputVal[$key]) ? $cboxInputVal[$key] : 0;
@@ -274,8 +260,7 @@ class PendapatanController extends Controller
                 'tanggal_lapor' => $tanggal_lapor
             ]);
         }
-        //update tanggal raport
-        //}
+
         return response()->json([
             'message' => "Data " . $this->title . " Berhasil Tersimpan"
         ]);
