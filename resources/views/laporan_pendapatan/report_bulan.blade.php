@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html>
-
-<head>
+<html> 
+<head> 
+    <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
 </head>
 
 <body>
 
     <style>
+        table{
+            font-size: 11;
+        }
         table,
         td,
         th {
-            border: 0.1px solid #000;
-            padding: 5px 5px 0px;
-        }
-
+            border: 0.1px solid #000; 
+        } 
         table { 
             border-collapse: collapse;
             width: 100%;
