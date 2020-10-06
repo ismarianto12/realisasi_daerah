@@ -10,8 +10,7 @@
             <div class="card-body">
                 <h3>Setting Akses {{ $nama_rincian }}</h3>
                 <br />
-                <br />
-
+                <br /> 
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <nav>

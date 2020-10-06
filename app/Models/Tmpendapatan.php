@@ -53,12 +53,16 @@ class Tmpendapatan extends Model
             'tmpendapatan.*',
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
+
             'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
             'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
+            
             'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
             'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj',
+            
             'tmrekening_akun_kelompok_jenis.kd_rek_jenis',
             'tmrekening_akun_kelompok_jenis.nm_rek_jenis',
+            
             'tmrekening_akun_kelompoks.kd_rek_kelompok',
             'tmrekening_akun_kelompoks.nm_rek_kelompok',
             // 'tmsikd_sumber_anggarans.nm_sumber_anggaran',
@@ -76,9 +80,9 @@ class Tmpendapatan extends Model
                     Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 3) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
         )
         
-            ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub')
+            ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub','LEFT')
 
-            ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
+            ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj','LEFT')
             
             ->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
             

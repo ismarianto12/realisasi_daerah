@@ -264,11 +264,17 @@
             } 
         }); 
 
+           
+
     });
+
 function selectOnChange(){
     table.api().ajax.reload();
     var url = "{{ route($route.'create') }}?rincian_obj_id=" + $('#tmrekening_akun_kelompok_jenis_objek_rincian_id').val();
     $('#btnCreate').attr('href',url);
 }
+
+
+
 </script>
 @endsection

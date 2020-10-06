@@ -100,7 +100,6 @@ class PendapatanController extends Controller
 
     public function api(Request $request)
     {
-
         $data = Tmpendapatan::list();
 
         $tahun_id = $request->tahun_id;
@@ -125,25 +124,15 @@ class PendapatanController extends Controller
             $data->where('tmpendapatan.tanggal_lapor', '<=', $sampai);
         }
         if ($tmsikd_satker_id != '') {
-            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+            $data->where('tmpendapatan.tmsikd_satker_id', $tmsikd_satker_id);
         }
-        $data = $data->get();
+        $data->get();
         return DataTables::of($data)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
             })
-            ->editColumn('kd_rek_jenis', function ($p) {
-                return '<td><strong>' . $p->kd_rek_jenis . '</strong></td><td>' . $p->nm_rek_jenis . '</td><td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_jenis) . '</td><td>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</td>';
-            })
-            ->editColumn('kd_rek_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td><td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_obj) . '</td><td>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</td>';
-            })
             ->editColumn('kd_rek_rincian_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_rincian_obj . '</strong></td><td>' . $p->nm_rek_rincian_obj . '</td>
-            <td align="right" colspan="2">' . Html_number::decimal($p->jml_rek_rincian_obj) . '</td><td>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</td>';
-            })
-            ->editColumn('kd_rek_rincian_objek_sub', function ($p) {
-                return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->kd_rek_rincian_objek_sub . "</a>";
+                return "<a to='" . route($this->route . 'pendapatandetail', $p->id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
             ->editColumn('tgl_lapor', function ($p) {
                 return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
@@ -154,8 +143,17 @@ class PendapatanController extends Controller
             ->editColumn('jumlah', function ($p) {
                 return Html_number::decimal($p->jumlah);
             })
-            ->rawColumns(['id', 'kd_rek_rincian_obj', 'kd_rek_obj', 'kd_rek_jenis', 'kd_rek_rincian_objek_sub', 'tgl_lapor'])
+            ->rawColumns(['id', 'kd_rek_rincian_obj', 'tgl_lapor'])
             ->toJson();
+    }
+
+
+    function pendapatandetail($id)
+    {
+        $data = Tmpendapatan::list()->find($id);
+        return view($this->view . 'pendapatandetail', [
+            'data' => $data
+        ]);
     }
 
     public function create(Request $request)
