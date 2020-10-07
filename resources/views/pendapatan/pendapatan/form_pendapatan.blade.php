@@ -30,10 +30,6 @@
         @php
         $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
         $check_sub = ($kd_rincian_sub) ? '' : '';
-          dd($rincianSub['kd_rek']['val']); 
-        @endphp
-
-
         $style = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
         @endphp
 
@@ -47,22 +43,26 @@
             </td>
             </td>
             <td style="{{ $style }}">{{ $rincianSub['nm_rek']['val'] }}</td>
+            
             <td style="{{ $style }}">
                 <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
                     onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
                     \="" {{ $check_sub}}>
             </td>
+
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
                     autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="" {{ $check_sub}}>
             </td>
+
             <td style="{{ $style }}">
                 <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
                     {{ $check_sub}}>
             </td>
         </tr>
+
         <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden"
             value="{{ $rincianSub['kd_rek']['val'] }}" />
         <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden"
