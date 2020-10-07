@@ -95,11 +95,11 @@ class ReportController extends Controller
         $jenis    = $request->jenis;
         if ($jenis == 'xls') {
             $namaFile = 'Pendapatan_daerah.xls';
-            $this->headerdownload($namaFile);
+            //   $this->headerdownload($namaFile);
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-            $this->headerdownload($namaFile);
+            //  $this->headerdownload($namaFile);
         }
 
         $tahun_id          = $request->tahun_id;
@@ -182,7 +182,7 @@ class ReportController extends Controller
         $dari             = $request->dari;
         $sampai           = $request->sampai;
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
-
+        $tmpendapatan   = new Tmpendapatan;
         return view($this->view . '.index_perbulan', [
             'tahun_id' => $tahuns,
             'tahuns' => $tahuns,
@@ -200,11 +200,11 @@ class ReportController extends Controller
         $jenis    = $request->jenis;
         if ($jenis == 'xls') {
             $namaFile = 'Pendapatan_daerah.xls';
-            $this->headerdownload($namaFile);
+            //$this->headerdownload($namaFile);
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-            $this->headerdownload($namaFile);
+           // $this->headerdownload($namaFile);
         }
 
         $tahun_id          = $request->tahun_id;
@@ -220,6 +220,7 @@ class ReportController extends Controller
         $kelompok_object      = new Tmrekening_akun_kelompok_jenis_objek;
         $kelompok_rincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+        $tmpendapatan         = new Tmpendapatan;
 
         $opd = Sikd_satker::find($request->tmsikd_satker_id);
 
@@ -232,7 +233,7 @@ class ReportController extends Controller
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
                 'listarget' => $listarget,
-                // 'tmpendapatan' => $tmpendapatan,
+                'tmpendapatan' => $tmpendapatan,
                 // 'jenisobject' => $jenisobject,
                 // 'objectrincian' => $objectrincian,
                 // 'objectrinciansub' => $objectrinciansub,
@@ -252,6 +253,7 @@ class ReportController extends Controller
                 'tmsikd_satker_id' => $tmsikd_satker_id,
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
+                'tmpendapatan' => $tmpendapatan,
                 'listarget' => $listarget,
                 'akun_kelompok' => $akun_kelompok,
                 'kelompok_jenis' => $kelompok_jenis,

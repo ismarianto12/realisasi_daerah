@@ -27,8 +27,7 @@ class TmpegawaiController extends Controller
             asset('assets/template/js/plugin/datatables/datatables.min.js'),
         ]);
         return view($this->view . '.tmpegawai_list', compact('load_script', 'route'));
-    }
-
+    } 
     /**
      * Show the form for creating a new resource.
      *
@@ -40,30 +39,30 @@ class TmpegawaiController extends Controller
         $pegawaidata = Tmpegawai::with(['tmdinas', 'tmjabatan'])->get();
         if ($params) {
             return DataTables::of($pegawaidata)
-                ->editColumn('select', function ($p) {
-                    return '<button data-id="' . $p->id . '" id="pilih" data-nama="' . $p->n_pegawai . '" class="btn btn-primary btn-xs"><i class="fa fa-check"></i>Pilih</button>';
-                }, TRUE)
-                ->editColumn('nama_dinas', function ($p) {
-                    if ($p->n_dinas == '') {
-                        return 'Kosong';
-                    } else {
-                        return $p->n_dinas;
-                    }
-                }, TRUE)
-                ->addIndexColumn()
-                ->rawColumns(['select'])
-                ->toJson();
+            ->editColumn('select', function ($p) {
+                return '<button data-id="' . $p->id . '" id="pilih" data-nama="' . $p->n_pegawai . '" class="btn btn-primary btn-xs"><i class="fa fa-check"></i>Pilih</button>';
+            }, TRUE)
+            ->editColumn('nama_dinas', function ($p) {
+                if ($p->n_dinas == '') {
+                    return 'Kosong';
+                } else {
+                    return $p->n_dinas;
+                }
+            }, TRUE)
+            ->addIndexColumn()
+            ->rawColumns(['select'])
+            ->toJson();
         } else {
 
             return DataTables::of($pegawaidata)
-                ->editColumn('action', function ($p) {
-                    return '<button to="' . route($this->route . 'edit', $p->id) . '" class="edit btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit </button>
-                            <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i>Delete</button>
-                            ';
-                }, TRUE)
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->toJson();
+            ->editColumn('action', function ($p) {
+                return '<button to="' . route($this->route . 'edit', $p->id) . '" class="edit btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit </button>
+                <button onclick="javascript:confirm_del()" id="' .   $p->id . '" class="btn btn-primary btn-xs"><i class="fa fa-trash"></i>Delete</button>
+                ';
+            }, TRUE)
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->toJson();
         }
     }
 
@@ -163,7 +162,7 @@ class TmpegawaiController extends Controller
     public function edit($id)
     {
         $data = Tmpegawai::find($id);
- 
+        $pegawaiid  = $data->id;
         $satuankerjaid = $data->satuankerjaid;
         $jabatanid = $data->jabatanid;
         $pegawaistatusid = $data->pegawaistatusid;
