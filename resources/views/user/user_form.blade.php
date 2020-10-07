@@ -103,7 +103,7 @@
             <div class="col-sm-8">
                 <select class="form-control select2" name="sikd_satker_id">
                     @foreach($satker as $data)
-                    <option value="{{ $data->id }}" @if($data->id == $sikd_satker_id) ? checked @endif
+                    <option value="{{ $data->id }}" @if($data->id == $sikd_satker_id) ? selected="selected" @endif
                         >[{{ $data->kode }}] {{ $data->nama }}</option>
                     @endforeach
                 </select>
@@ -117,7 +117,7 @@
                 <select class="form-control select2" name="tmuser_level_id">
                     @foreach($level as $lv)
                     @php
-                    $lcheck = ($lv['id'] == $tmuser_level_id) ? 'checked="checked"' : '';
+                    $lcheck = ($lv['id'] == $tmuser_level_id) ? 'selected="selected"' : '';
                     @endphp
                     <option value="{{ $lv['id'] }}" {{ $lcheck }}>{{ $lv['description'] }}</option>
                     @endforeach
