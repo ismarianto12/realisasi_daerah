@@ -134,8 +134,7 @@ class UserController extends Controller
             'realname'   => 'required',
             'password'   => 'required',
             'telp'       => 'required',
-            'c_status'   => 'required',
-            'photo'      => 'required',
+            'c_status'   => 'required'
 
         ];
         $valid = Validator::make($request->all(), $rules);

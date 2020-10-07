@@ -22,12 +22,25 @@
 
         @php $idx = 0; $ttlMak = count($dataSet); @endphp
         @foreach($dataSet as $rincianSub)
-        @php $style = (isset($rincianSub['style']) ? $rincianSub['style'] : ''); @endphp
+
+        {{-- @php
+            dd($rincianSub); 
+        @endphp --}}
+
+        @php
+        $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
+        $check_sub = ($kd_rincian_sub) ? '' : '';
+          dd($rincianSub['kd_rek']['val']); 
+        @endphp
+
+
+        $style = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
+        @endphp
+
         <tr>
             <td style="{{ $style }}" align="center">
                 <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"
-                    @if(isset($rincianSub['cbox']['accRight']))  @else value="{{ $idx }}" @endif
-                    \="">
+                    @if(isset($rincianSub['cbox']['accRight'])) @else value="{{ $idx }}" @endif \="" {{ $check_sub}}>
             </td>
             <td style="{{ $style }}">
                 {{ $rincianSub['kd_rek']['val'] }}
@@ -38,15 +51,16 @@
                 <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
                     onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
-                    \="">
+                    \="" {{ $check_sub}}>
             </td>
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="">
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="" {{ $check_sub}}>
             </td>
             <td style="{{ $style }}">
                 <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
-                    class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title="">
+                    class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
+                    {{ $check_sub}}>
             </td>
         </tr>
         <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden"

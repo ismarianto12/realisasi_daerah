@@ -6,7 +6,7 @@
 <body> 
     <style> 
         table { 
-            border-left: 0.1px solid #000;
+            border: 0.1px solid #000;
             border-collapse: collapse;
             width: 100%;
         }    
