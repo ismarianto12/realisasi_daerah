@@ -13,6 +13,7 @@
                 </div>
 
                 @if($actionform == 'edit')
+                <input type="hidden" name="id" value="{{ $user_id }}">
                 <label>Nama Pegawai yang di pilih sebelumnya : {{ $pegawainm }}</label>
                 @else
                 @endif
@@ -213,11 +214,15 @@
                                 html += '<div class="alert alert-danger msg">' + data.msg[count] + '</div>';
                             }  
                         }
-                        $('#msg_error').html(html).fadeOut();
+                        $('#msg_error').html(html);
                         $("#datauser").DataTable().ajax.reload(); 
                     },
-                    error: function(xhr, error, status) { 
-                        alert(error)
+                    error: function(data) {  
+                        err = ''; respon = data.responseJSON;
+                        $.each(respon.errors, function(index, value){
+                            err += "<li>" + value +"</li>";
+                        });
+                        $('#msg_error').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
                     }
                 });
               }

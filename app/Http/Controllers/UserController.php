@@ -220,6 +220,7 @@ class UserController extends Controller
         $paraf = $edit->paraf;
         $tmuser_level_id = ($edit['tmuser_level_id']) ? $edit['tmuser_level_id'] : 0;
         $jenis = $edit->jenis;
+        $user_id = $edit->id;
         $level = Tmuser_level::get();
         $p12 = $edit->p12;
         //dd($level);
@@ -232,6 +233,7 @@ class UserController extends Controller
                 'actionform',
                 'tmpegawai_id',
                 'username',
+                'user_id',
                 'sikd_satker_id',
                 'satker',
                 'realname',
@@ -263,23 +265,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rules =  [
-            'tmpegawai_id' => 'required',
-            'username' => 'required',
-            'realname' => 'required',
+        
+        $data  = User::Where('id', $request->id)->first();
+        $rules =  [  
             'password' => 'required',
-            'last_login' => 'required',
-            'telp' => 'required',
-            'c_status' => 'required',
-            'photo' => 'required',
-            'd_entry' => 'required',
-            'd_update' => 'required',
-            'ttd' => 'required',
-            'paraf' => 'required',
-            'tmuser_level_id' => 'required',
-            'jenis' => 'required',
-            'p12' => 'required',
-        ];
+         ];
         $valid = Validator::make($request->all(), $rules);
         if ($valid->fails()) {
             return response()->json([
@@ -288,8 +278,7 @@ class UserController extends Controller
             ]);
         }
         $file = $request->file('photo');
-        if ($file) {
-            $data  = User::Where('id', $request->id)->first();
+        if ($file) { 
             $fileloc  = './file/photo_user/' . $data->photo;
             $filename = public_path($fileloc);
             if (File::exists($filename)) {
@@ -306,8 +295,7 @@ class UserController extends Controller
         User::find($request->id)->update([
             'tmpegawai_id' => $request->tmpegawai_id,
             'sikd_satker_id' => $request->sikd_satker_id,
-            'username' => $request->username,
-            'realname' => $request->realname,
+            'username' => $request->username, 
             'password' => bcrypt($request->password),
             'last_login' => $request->last_login,
             'telp' => $request->telp,

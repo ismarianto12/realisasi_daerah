@@ -192,14 +192,12 @@ class Tmpendapatan extends Model
     public static function pendapatantahun($par)
     {
 
-
-
         $where = [ 
             'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'=> $par['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'],
             'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'=> $par['tmrekening_akun_kelompok_jenis_objek_rincian_id']
         ];
-
-        return Tmpendapatan::where($where)->select(
+        return Tmpendapatan::where($where)
+        ->select(
             'tmpendapatan.*',
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id as rek_rincian_sub_id',
             'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
