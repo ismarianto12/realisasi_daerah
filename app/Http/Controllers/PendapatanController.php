@@ -352,8 +352,12 @@ class PendapatanController extends Controller
                 ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
                 ->get();
             foreach ($rekSubs as $key => $rekSub) {
+                //$dataSet[$idx]['disabled'] =  $rekSub->kd_rek_rincian_objek_sub;
+             
+
                 $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
                 $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
+                $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
                 $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
                 $dataSet[$idx]['nm_rek']['val'] = $rekSub->nm_rek_rincian_objek_sub;
                 $idx++;

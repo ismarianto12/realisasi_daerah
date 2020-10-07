@@ -90,8 +90,7 @@ class Tmpendapatan extends Model
 
         ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.kd_rek_kelompok')
 
-        ->groupBy('tmpendapatan.id')
-        ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')            
+        ->groupBy('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id')
         ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');
     }
 
@@ -188,62 +187,11 @@ class Tmpendapatan extends Model
     }
 
     //check pendapatan perbulan 
-
     public static function pendapatantahun($par)
     {
-
-        $where = [ 
-            'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'=> $par['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'],
-            'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'=> $par['tmrekening_akun_kelompok_jenis_objek_rincian_id']
-        ];
-        return Tmpendapatan::where($where)
-        ->select(
-            'tmpendapatan.*',
-            'tmrekening_akun_kelompok_jenis_objek_rincian_subs.id as rek_rincian_sub_id',
-            'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub',
-            'tmrekening_akun_kelompok_jenis_objek_rincian_subs.nm_rek_rincian_objek_sub',
-
-            'tmrekening_akun_kelompok_jenis_objek_rincians.id as id_rek_rincians',
-            'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
-            'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
-
-            'tmrekening_akun_kelompok_jenis_objek_rincians.id as tmrekening_akun_kelompok_jenis_objek_rincians_id',
-            'tmrekening_akun_kelompok_jenis_objeks.id as id_rek_obj',
-            'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
-            'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj',
-
-            'tmrekening_akun_kelompok_jenis.id as id_rek_jenis',
-            'tmrekening_akun_kelompok_jenis.kd_rek_jenis',
-            'tmrekening_akun_kelompok_jenis.nm_rek_jenis',
-
-            'tmrekening_akun_kelompoks.id as id_rek_kelompok',
-            'tmrekening_akun_kelompoks.kd_rek_kelompok',
-            'tmrekening_akun_kelompoks.nm_rek_kelompok', 
-
-            \DB::raw('(
-                SELECT SUM(rincian.jumlah) 
-                FROM tmpendapatan AS rincian 
-                Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 7) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
-            \DB::raw('(
-                SELECT SUM(rincian.jumlah) 
-                FROM tmpendapatan AS rincian 
-                Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 5) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
-            \DB::raw('(
-                SELECT SUM(rincian.jumlah) 
-                FROM tmpendapatan AS rincian 
-                Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 3) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
-        )
-        ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub')
-
-        ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
-
-        ->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
-
-        ->join('tmrekening_akun_kelompok_jenis', 'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', 'tmrekening_akun_kelompok_jenis.kd_rek_jenis')
-
-        ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.kd_rek_kelompok') 
-        ->orderBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub');  
-
+        return Tmpendapatan::select(\DB::raw('sum(jumlah) as totalp'))
+        ->where($par)
+        ->get();
     }
 
 }

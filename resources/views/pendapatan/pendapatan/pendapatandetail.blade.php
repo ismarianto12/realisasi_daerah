@@ -2,8 +2,7 @@
 
 <div style="text-align: right;">
 <a href="{{ Url('pendapatan/'.$pendapatan_id.'/edit') }}" class="btn btn btn-warning" target="_blank"><i class="fa fa-edit"></i>Edit data</a>
-</div>
-
+</div> 
 <hr />
 
 <table class="table table-striped"> 
