@@ -75,7 +75,7 @@
         <tbody>
             @foreach($akun_kelompok as $kelompok)
             @php
-                $total_pad = $tmpendapatan::tbykelompok($kelompok['kd_rek_kelompok'])->first();
+            $total_pad = $tmpendapatan::tbykelompok($kelompok['kd_rek_kelompok'])->first();
             @endphp
             <tr style="
             background: #4e72d5;
@@ -97,16 +97,17 @@
                 <td></td>
             </tr>
             @php
+            //table tmrekening_akun_kelompok_jenis
             $qkjenis = $kelompok_jenis::where('tmrekening_akun_kelompok_id',$kelompok['id'])->get();
             @endphp
             @foreach($qkjenis as $kjenis)
             @php
             $where = [
             'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id'=>$kjenis['kd_rek_jenis'],
+            'tmpendapatan.tahun'=>$tahun
             ];
             $rjenis = $tmpendapatan::tbykelompok_jenis($where)->first();
-
-            $jml_rek_jenis = ($rjenis['jumlah']) ? $rjenis['jumlah'] : 0;
+            $jml_rek_jenis = ($rjenis['jumlah_obj']) ? $rjenis['jumlah_obj'] : 0;
             @endphp
             <tr>
                 <td colspan="2"><b>{{ $kjenis['kd_rek_jenis'] }}</b></td>
@@ -129,8 +130,8 @@
             $qkjenis_obj = $kelompok_object::where('tmrekening_akun_kelompok_jenis_id',$kjenis['kd_rek_jenis'])->get();
             @endphp
             @foreach($qkjenis_obj as $rjenis_obj)
-            @php 
-              $kd_rek_obj = $rjenis_obj['kd_rek_obj'];
+            @php
+            $kd_rek_obj = $rjenis_obj['kd_rek_obj'];
             @endphp
             <tr>
                 <td></td>
@@ -138,7 +139,7 @@
                 <td colspan="1">{{ $rjenis_obj['kd_rek_obj'] }}</td>
                 <td colspan="1">{{ $rjenis_obj['nm_rek_obj'] }}</td>
                 <td></td>
-                <td></td> 
+                <td></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,1) }}</b></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,2) }}</b></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,3) }}</b></td>
@@ -149,7 +150,7 @@
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,8) }}</b></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,9) }}</b></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,10) }}</b></td>
-                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,11) }}</b></td> 
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,11) }}</b></td>
                 <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,12) }}</b></td>
             </tr>
             @endforeach

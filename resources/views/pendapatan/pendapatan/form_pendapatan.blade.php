@@ -10,11 +10,11 @@
         </tr>
     </thead>
     <tbody>
-        @if($dataSet == '' || $dataSet == 0)
+        @if(count($dataSet) == 0)
         <tr>
             <td colspan="6">
                 <div class="alert alert-danger">
-                    <center>Data rincian object kosong.</center>
+                    <h3>Data rincian object kosong.</h3>
                 </div>
             </td>
         </tr>
@@ -22,11 +22,7 @@
 
         @php $idx = 0; $ttlMak = count($dataSet); @endphp
         @foreach($dataSet as $rincianSub)
-
-        {{-- @php
-            dd($rincianSub); 
-        @endphp --}}
-
+ 
         @php
         $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
         $check_sub = ($kd_rincian_sub) ? '' : '';
