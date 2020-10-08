@@ -23,9 +23,9 @@
             <div class="card-body">
                 <div class="form-group form-show-validation row">
                     <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
-                        class="required-label">*</span></label>
-                        <div class="col-sm-6">
-                            <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
+                            class="required-label">*</span></label>
+                    <div class="col-sm-6">
+                        <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
                             autocomplete="off" onchange="selectOnChange()">
                             @foreach ($tahuns as $tahun)
                             <option value="{{$tahun->id}}">{{$tahun->tahun}}</option>
@@ -36,10 +36,17 @@
                 <div class="form-group form-show-validation row">
                     <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
                         <span class="required-label">*</span></label>
-                        <div class="col-sm-6">
-                            <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
+                    <div class="col-sm-6">
+                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
                             onchange="selectOnChange('tmsikd_satker_id')">
+                            @php
+                            $level = Properti_app::getlevel();
+                            @endphp
+                            @if($level == 3)
+                            @else
                             <option value="0">Semua Satuan kerja</option>
+                            @endif
+
                             @foreach($tmsikd_satkers as $tmsikd_satker)
                             <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                 selected="selected"@endif>
@@ -55,27 +62,27 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row form-inline">
-                        <div class="col-md-12"> 
+                        <div class="col-md-12">
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
-                                    class="required-label">*</span></label>
-                                    <div class="col-sm-4">
-                                        <input type="date" id="dari" class="form-control" placeholder="Dari .."
+                                        class="required-label">*</span></label>
+                                <div class="col-sm-4">
+                                    <input type="date" id="dari" class="form-control" placeholder="Dari .."
                                         value="{{ $dari }}">
-                                    </div>
-                                    S /D
-                                    <div class="col-sm-4">
-                                        <input type="date" class="form-control" id="sampai" placeholder="Sampai dengan"
-                                        value="{{ $sampai }}">
-                                    </div>
                                 </div>
+                                S /D
+                                <div class="col-sm-4">
+                                    <input type="date" class="form-control" id="sampai" placeholder="Sampai dengan"
+                                        value="{{ $sampai }}">
+                                </div>
+                            </div>
 
-                                <div class="col-md-12">
-                                    <div class="form-group m-0">
-                                        <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
-                                        Akun :</strong></label>
-                                        <div class="col-md-5 p-0 mb-2">
-                                            <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
+                            <div class="col-md-12">
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                            Akun :</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
                                             id="tmrekening_akun_id">
                                             <option value="0">&nbsp;</option>
                                             @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
@@ -88,47 +95,47 @@
                                 </div>
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_kelompok_id"
-                                    class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
+                                        class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
                                     <div class="col-md-5 p-0 mb-2">
                                         <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
-                                        id="tmrekening_akun_kelompok_id">
-                                        <option value="0">&nbsp;</option>
-                                    </select>
+                                            id="tmrekening_akun_kelompok_id">
+                                            <option value="0">&nbsp;</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_kelompok_jenis_id"
+                                        class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
+                                    <div class="col-md-5 p-0 mb-2">
+                                        <select name="tmrekening_akun_kelompok_jenis_id"
+                                            class="form-control r-0 s-12 select2"
+                                            id="tmrekening_akun_kelompok_jenis_id">
+                                            <option value="0">&nbsp;</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group m-0">
-                                <label for="tmrekening_akun_kelompok_jenis_id"
-                                class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
-                                <div class="col-md-5 p-0 mb-2">
-                                    <select name="tmrekening_akun_kelompok_jenis_id"
-                                    class="form-control r-0 s-12 select2"
-                                    id="tmrekening_akun_kelompok_jenis_id">
-                                    <option value="0">&nbsp;</option>
-                                </select>
-                            </div>
-                        </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6">
+                    <div class="form-group m-0">
+                        <select class="form-control select2" id="type_params">
+                            <option value="0">- Pilih Jenis File -</option>
+                            <option value="pdf">PDF</option>
+                            <option value="rtf">WORD (RTF)</option>
+                            <option value="xls">XLS</option>
+                        </select>
+                        <hr />
+                        <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="col-md-6">
-            <div class="form-group m-0">
-                <select class="form-control select2" id="type_params">
-                    <option value="0">- Pilih Jenis File -</option>
-                    <option value="pdf">PDF</option> 
-                    <option value="rtf">WORD (RTF)</option>
-                    <option value="xls">XLS</option>
-                </select>
-                <hr />
-                <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
-            </div>
-        </div>
-    </div>
-</div>
-</div> 
-<div id="btn_cetak"></div>
+    <div id="btn_cetak"></div>
 </div>
 @section('script')
 <script>
