@@ -68,8 +68,16 @@ class Tmpendapatan extends Model
             ->select('tmpendapatan.jumlah as jumlah')
             ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
             ->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
-            ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
-        }
+            ->groupBy('tmrekening_akun_kelompok_jenis_objeks.id');
+    }
+
+    public static function tbykelompok_object($where)
+    {
+        return Tmpendapatan::SELECT(\DB::raw('sum(jumlah) as total'))
+            ->where($where) 
+            ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
+      //      ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id');
+    }
 
     public static function list()
     {

@@ -262,6 +262,7 @@ class ReportController extends Controller
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
                 'tmpendapatan' => $tmpendapatan,
+                'total_pad' => $total_pad,
                 'listarget' => $listarget,
                 'akun_kelompok' => $akun_kelompok,
                 'kelompok_jenis' => $kelompok_jenis,

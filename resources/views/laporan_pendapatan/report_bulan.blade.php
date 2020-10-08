@@ -6,12 +6,29 @@
 </head>
 
 <body>
-    <style>  
-        table{
-            border: 0.1px solid #000;
-        }  
-    </style>
 
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #bb5e08;
+            color: white;
+            width: auto;
+            height: auto;
+        }
+    </style>
 
 
     <center>
@@ -20,11 +37,11 @@
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
     <table>
-        <tbody>
+        <thead>
             <tr>
                 <th colspan="5">URAIAN</th>
                 <th>APBD {{ $tahun }}</th>
-                <th style="width: 106pt;">JANUARI</th>
+                <th>JANUARI</th>
                 <th>FEBRUARI</th>
                 <th>MARET</th>
                 <th>APRIL</th>
@@ -54,11 +71,15 @@
                 <td>11</td>
                 <td>12</td>
             </tr>
+        </thead>
+        <tbody>
             @foreach($akun_kelompok as $kelompok)
-            <tr>
+            <tr style="
+            background: #4e72d5;
+            color: #fff;">
                 <td colspan="2"><b>{{ $kelompok['kd_rek_kelompok'] }}</b></td>
                 <td colspan="3"><b>{{ $kelompok['nm_rek_kelompok'] }}</b></td>
-                <td>{{ $total_pad['total_pad'] }}</td>
+                <td>{{ number_format($total_pad['total_pad'],0,0,'.') }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -79,16 +100,15 @@
             @php
             $where = [
             'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id'=>$kjenis['kd_rek_jenis'],
-            'tmpendapatan.tahun'=>$tahun
             ];
-            $rjenis        = $tmpendapatan::tbykelompok_jenis($where)->first(); 
-           
+            $rjenis = $tmpendapatan::tbykelompok_jenis($where)->first();
+
             $jml_rek_jenis = ($rjenis['jumlah']) ? $rjenis['jumlah'] : 0;
             @endphp
             <tr>
                 <td colspan="2"><b>{{ $kjenis['kd_rek_jenis'] }}</b></td>
                 <td colspan="3"><b>{{ $kjenis['nm_rek_jenis'] }}</b></td>
-                <td>{{ $jml_rek_jenis }}</td>
+                <td>{{ number_format($jml_rek_jenis,0,0,'.') }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -107,18 +127,19 @@
             @endphp
             @foreach($qkjenis_obj as $rjenis_obj)
             @php
-            $rjenis = $tmpendapatan::pertahun([
-            'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj'=> $rjenis_obj['kd_rek_obj'],
-            'tmpendapatan.tahun'=> $tahun
-            ])->first();
-            $jml_rek_obj = $rjenis['jml_rek_obj'];
+            $where = [
+            'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id'=>
+            $rjenis_obj['kd_rek_obj'],
+            ];
+             $rjenis = $tmpendapatan::tbykelompok_object($where)->first();
+             $jmlah  = ($rjenis['total']) ?  $rjenis['total'] : 0; 
             @endphp
             <tr>
                 <td></td>
                 <td></td>
                 <td colspan="1">{{ $rjenis_obj['kd_rek_obj'] }}</td>
                 <td colspan="1">{{ $rjenis_obj['nm_rek_obj'] }}</td>
-                <td>{{ $jml_rek_obj }}</td>
+                <td>{{ $jmlah }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -136,7 +157,7 @@
             @endforeach
             @endforeach
             @endforeach
-        </tbody>
+
         </tbody>
     </table>
 </body>
