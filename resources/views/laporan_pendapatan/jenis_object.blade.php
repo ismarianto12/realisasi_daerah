@@ -1,13 +1,14 @@
 <title>Report Hasil Pendapatan Daerah Tangerang selatan</title>
+
 <style>
     table {
         border-collapse: collapse;
         width: 100%;
-    }    
+    }
+
     th,
     td {
         text-align: left;
-        padding: 8px;
     }
 
     tr:nth-child(even) {
@@ -15,11 +16,13 @@
     }
 
     th {
-        background-color: #bb5e08;
-        color: white;
+        background-color: #ddd;
+        color: #000;
+        width: auto;
+        height: auto;
     }
-
 </style>
+
 
 <center>
     <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
@@ -31,9 +34,11 @@
     PERIODE : {{ $dari }} S/D {{ $sampai }}
     <br />
 </center>
+<br />
+<br />
 <table>
     <thead>
-        <tr>
+        <tr style="border-bottom: 0.1px solid #000">
             <th>No</th>
             <th>Uraian</th>
             <th>Pagu Anggaran</th>
