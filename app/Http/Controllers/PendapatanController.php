@@ -133,9 +133,9 @@ class PendapatanController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
             })
             ->editColumn('kd_rek_rincian_obj', function ($p) {
-                return "<a to='" . route($this->route . 'pendapatandetail', $p->id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
+                return "<a to='" . route($this->route . 'pendapatandetail', $p->tmrekening_akun_kelompok_jenis_objek_rincian_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
-            ->editColumn('tgl_lapor', function ($p) {
+            ->editColumn('tanggal_lapor', function ($p) {
                 return ($p->tanggal_lapor) ?  '<b>' . Properti_app::tgl_indo($p->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
             })
             ->editColumn('volume', function ($p) {
@@ -144,19 +144,31 @@ class PendapatanController extends Controller
             ->editColumn('jumlah', function ($p) {
                 return Html_number::decimal($p->jumlah);
             })
-            ->rawColumns(['id', 'kd_rek_rincian_obj', 'tgl_lapor'])
+            ->rawColumns(['id', 'kd_rek_rincian_obj', 'tanggal_lapor'])
             ->toJson();
     }
 
 
     function pendapatandetail($id)
     {
-        $data = Tmpendapatan::list()->findOrFail($id);
+        //$id adalah rincian rekening pendpatan rincian
+        $where = [
+            'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id
+        ];
+        $data  = Tmpendapatan::list()->where($where)->firstOrFail();
+        // $nilobj              = substr($data[''])
+        // $rj_object           = Tmpendapatan::select(\DB::raw('sum(jumlah) as totak_robject'))
+        //                         ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'),$) 
+
+        // $jml_rek_rincian_obj = '';
+        // $jml_rek_obj         =  '';
+        // $jml_rek_jenis       =  ''; 
+
         $opd  = Tmopd::Where('kode', $data->tmsikd_satker_id)->first();
         return view($this->view . 'pendapatandetail', [
             'data' => $data,
             'pendapatan_id' => $id,
-            'opd' => $opd
+            'opd' => $opd, 
         ]);
     }
 
@@ -353,7 +365,7 @@ class PendapatanController extends Controller
                 ->get();
             foreach ($rekSubs as $key => $rekSub) {
                 //$dataSet[$idx]['disabled'] =  $rekSub->kd_rek_rincian_objek_sub;
-             
+
 
                 $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
                 $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;

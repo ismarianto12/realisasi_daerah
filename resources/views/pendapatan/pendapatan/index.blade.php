@@ -189,7 +189,7 @@
         {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj',orderable: false, searchable: false},
         {data: 'volume', name: 'volume', className: 'text-right'},  
         {data: 'jumlah', name: 'jumlah', className: 'text-right'},  
-        {data: 'tgl_lapor', name: 'tgl_lapor', className: 'text-right'},   
+        {data: 'tanggal_lapor', name: 'tanggal_lapor', className: 'text-right'},   
         ], 
     });        
     @include('layouts._includes.tablechecked')
