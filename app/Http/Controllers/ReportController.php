@@ -253,7 +253,7 @@ class ReportController extends Controller
                 'kelompok_sub_rincian' => $kelompok_sub_rincian,
             ]);
         } else {
-            $customPaper = array(0, 0, 567.00, 1000);
+            $customPaper = array(0, 0, 567.00, 1200);
             $pdf = PDF::loadView($this->view . 'report_bulan', [
                 'tahun' => $tahun,
                 'dari' => $dari,

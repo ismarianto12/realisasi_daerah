@@ -71,12 +71,18 @@ class Tmpendapatan extends Model
             ->groupBy('tmrekening_akun_kelompok_jenis_objeks.id');
     }
 
-    public static function tbykelompok_object($where)
+    public static function tbykelompok_object($kd_rek_obj, $bulan)
     {
-        return Tmpendapatan::SELECT(\DB::raw('sum(jumlah) as total'))
-            ->where($where) 
-            ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
-      //      ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id');
+        $data = Tmpendapatan::SELECT(\DB::raw('sum(jumlah) as total'))
+            ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
+            ->where(
+                'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id',
+                $kd_rek_obj
+            )
+            ->where(\DB::raw('MONTH(tanggal_lapor)'), $bulan)
+            ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id')->first();
+        $jmlah  = ($data['total']) ?  $data['total'] : 0;
+        return number_format($jmlah, 0, 0, '.');
     }
 
     public static function list()

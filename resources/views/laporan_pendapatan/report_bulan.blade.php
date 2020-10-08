@@ -126,33 +126,28 @@
             $qkjenis_obj = $kelompok_object::where('tmrekening_akun_kelompok_jenis_id',$kjenis['kd_rek_jenis'])->get();
             @endphp
             @foreach($qkjenis_obj as $rjenis_obj)
-            @php
-            $where = [
-            'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id'=>
-            $rjenis_obj['kd_rek_obj'],
-            ];
-             $rjenis = $tmpendapatan::tbykelompok_object($where)->first();
-             $jmlah  = ($rjenis['total']) ?  $rjenis['total'] : 0; 
+            @php 
+              $kd_rek_obj = $rjenis_obj['kd_rek_obj'];
             @endphp
             <tr>
                 <td></td>
                 <td></td>
                 <td colspan="1">{{ $rjenis_obj['kd_rek_obj'] }}</td>
                 <td colspan="1">{{ $rjenis_obj['nm_rek_obj'] }}</td>
-                <td>{{ $jmlah }}</td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td></td> 
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,1) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,2) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,3) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,4) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,5) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,6) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,7) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,8) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,9) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,10) }}</b></td>
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,11) }}</b></td> 
+                <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,12) }}</b></td>
             </tr>
             @endforeach
             @endforeach
