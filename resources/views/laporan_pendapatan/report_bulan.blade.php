@@ -6,6 +6,14 @@
 </head>
 
 <body>
+    <style>  
+        table{
+            border: 0.1px solid #000;
+        }  
+    </style>
+
+
+
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
         <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>
@@ -73,11 +81,9 @@
             'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id'=>$kjenis['kd_rek_jenis'],
             'tmpendapatan.tahun'=>$tahun
             ];
-            $rjenis = $tmpendapatan::tbykelompok_jenis($where)->get();
-            dd($rjenis);
+            $rjenis        = $tmpendapatan::tbykelompok_jenis($where)->first(); 
            
-            //$jml_rek_jenis = $rjenis['jumlah'];
-            
+            $jml_rek_jenis = ($rjenis['jumlah']) ? $rjenis['jumlah'] : 0;
             @endphp
             <tr>
                 <td colspan="2"><b>{{ $kjenis['kd_rek_jenis'] }}</b></td>
