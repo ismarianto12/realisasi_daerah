@@ -204,9 +204,8 @@ class ReportController extends Controller
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-           // $this->headerdownload($namaFile);
+            // $this->headerdownload($namaFile);
         }
-
         $tahun_id          = $request->tahun_id;
         $tmsikd_satker_id  = $request->tmsikd_satker_id;
         $dari              = $request->dari;
@@ -222,7 +221,12 @@ class ReportController extends Controller
         $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan         = new Tmpendapatan;
 
-        $opd = Sikd_satker::find($request->tmsikd_satker_id);
+        $opd                  = Sikd_satker::find($request->tmsikd_satker_id);
+        //get jumlah data per rek obj 
+        $tbyrincian     = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian');
+        $tbyrincian_sub = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
+
+        $total_pad = Tmpendapatan::select(\DB::raw('sum(jumlah) as total_pad'))->where(['tahun' => $tahun])->first();
 
         if ($jenis == 'rtf' || $jenis == 'xls') {
             return view($this->view . 'report_bulan', [
@@ -238,6 +242,10 @@ class ReportController extends Controller
                 // 'objectrincian' => $objectrincian,
                 // 'objectrinciansub' => $objectrinciansub,
                 // get list rekening pendapatan
+                'total_pad' => $total_pad,
+                'tbyrincian' => $tbyrincian,
+                'tbyrincian_sub' => $tbyrincian_sub,
+
                 'akun_kelompok' => $akun_kelompok,
                 'kelompok_jenis' => $kelompok_jenis,
                 'kelompok_object' => $kelompok_object,

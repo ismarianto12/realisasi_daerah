@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="http://demo.themekita.com/atlantis/livepreview/examples/assets/img/icon.ico"
-        type="image/x-icon" />
+    <link rel="icon" href="{{ asset('assets\template\img/icon.ico') }}" />
+
     <script src="{{ asset('/assets/template/') }}/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
@@ -22,10 +22,8 @@
             active: function () {
                 sessionStorage.fonts = true;
             }
-        });
-
-    </script>
-
+        }); 
+    </script> 
     <link rel="stylesheet" href="{{ asset('/assets/template/') }}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('/assets/template/') }}/css/atlantis.css">
 </head>
@@ -58,8 +56,7 @@
                             <strong>{{ $errors->first('password') }}</strong>
                         </b>
                     @endif
-                        <label for="password" class="placeholder"><b>Password</b></label>
-                        <a href="#" class="link float-right">Lupa Password ?</a>
+                        <label for="password" class="placeholder"><b>Password</b></label> 
                         <div class="position-relative">
                              <input id="password" name="password" type="password" class="form-control" required>
                             <div class="show-password">

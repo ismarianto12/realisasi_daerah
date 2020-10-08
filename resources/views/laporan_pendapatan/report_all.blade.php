@@ -115,7 +115,8 @@
     <div class="card-body">
         <div class="col-md-6">
             <div class="form-group m-0">
-                <select class="form-control" id="type_params">
+                <select class="form-control select2" id="type_params">
+                    <option value="0">- Pilih Jenis File -</option>
                     <option value="pdf">PDF</option> 
                     <option value="rtf">WORD (RTF)</option>
                     <option value="xls">XLS</option>
