@@ -71,6 +71,14 @@ class Tmpendapatan extends Model
             ->groupBy('tmrekening_akun_kelompok_jenis_objeks.id');
     }
 
+
+    public static function tbykelompok($kelompok_id)
+    {
+        return Tmpendapatan::select(\DB::raw('sum(jumlah) as total_pad'))
+            ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,2)'), $kelompok_id)
+            ->get();
+    }
+
     public static function tbykelompok_object($kd_rek_obj, $bulan)
     {
         $data = Tmpendapatan::SELECT(\DB::raw('sum(jumlah) as total'))

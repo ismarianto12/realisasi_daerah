@@ -200,11 +200,11 @@ class ReportController extends Controller
         $jenis    = $request->jenis;
         if ($jenis == 'xls') {
             $namaFile = 'Pendapatan_daerah.xls';
-            $this->headerdownload($namaFile);
+          //  $this->headerdownload($namaFile);
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-            $this->headerdownload($namaFile);
+         //   $this->headerdownload($namaFile);
         }
         $tahun_id          = $request->tahun_id;
         $tmsikd_satker_id  = $request->tmsikd_satker_id;

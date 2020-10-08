@@ -74,6 +74,9 @@
         </thead>
         <tbody>
             @foreach($akun_kelompok as $kelompok)
+            @php
+                $total_pad = $tmpendapatan::tbykelompok($kelompok['kd_rek_kelompok'])->first();
+            @endphp
             <tr style="
             background: #4e72d5;
             color: #fff;">
