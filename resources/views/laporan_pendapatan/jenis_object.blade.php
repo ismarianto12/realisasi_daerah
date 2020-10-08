@@ -65,7 +65,7 @@
         @foreach ($render as $list)
         @php
         $target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$list['id_rek_obj'])->first();
-        $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : 0;
+        $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : 'Target Kosong';
         @endphp
         <tr>
             <td><b>{{ $list['kd_rek_jenis'] }}</b></td>
