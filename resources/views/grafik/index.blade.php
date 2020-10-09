@@ -50,13 +50,13 @@
                 <div class="card-header">
                     <div class="card-title">Total Pendapatan Daerah </div>
                     <div class="card-category">Per @php
-                        echo date('Y-m-d')
+                          echo Properti_app::tahun_sekarang()
                         @endphp
                     </div>
                 </div>
                 <div class="card-body pb-0">
                     <div class="mb-4 mt-2">
-                        <h1>$4,578.58</h1>
+                        <h1><div class="tpadtahun"></div></h1>
                     </div>
                     <div class="pull-in">
                         <canvas id="dailySalesChart"></canvas>
@@ -135,6 +135,16 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script>
+
+    
+    $(function(){     
+        //jumlah tahun ini
+        $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
+            $('.tpadtahun').text(data.total);
+        });
+     
+    )};
+
     Highcharts.chart('container', {
 
         title: {

@@ -127,7 +127,7 @@ class ReportController extends Controller
         }
         $filldata =  $data->get();
         // dd($data);
-        $tahun             = date('Y');
+        $tahun             = Properti_app::tahun_sekarang();
         $listarget         = new TmpendapatantargetModel;
         $jenisobject       = new Tmrekening_akun_kelompok_jenis;
         $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
@@ -211,7 +211,7 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
 
-        $tahun             = date('Y');
+        $tahun             = Properti_app::tahun_sekarang();
         $listarget         = new TmpendapatantargetModel;
 
         $akun_kelompok        = Tmrekening_akun_kelompok::get();
@@ -285,7 +285,7 @@ class ReportController extends Controller
             return abort(403, 'jenis rekenin tidak di temukan');
         }
 
-        $tsekarang      = date('Y');
+        $tsekarang      = Properti_app::tahun_sekarang();
         $par = [
             'tahun' => $tsekarang
         ];

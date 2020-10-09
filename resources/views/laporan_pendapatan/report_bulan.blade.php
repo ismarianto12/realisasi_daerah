@@ -5,8 +5,7 @@
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
 </head>
 
-<body>
-
+<body> 
     <style>
         table {
             border-collapse: collapse;

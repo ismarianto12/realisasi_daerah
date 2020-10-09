@@ -121,9 +121,9 @@
         //jumlah tahun ini
         $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
             $('.tpadtahun').text(data.total);
-        });
+        }); 
         
-            //jumlmah hari ini
+        //jumlmah hari ini
         $.getJSON('{{ Url("api_grafik/total_pad?tanggal_lapor=1") }}',function(data){ 
             $('.tpadharini').text(data.total);
         });

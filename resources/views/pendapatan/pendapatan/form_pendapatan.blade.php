@@ -14,21 +14,19 @@
         <tr>
             <td colspan="6">
                 <div class="alert alert-danger">
-                    <h3>Data rincian object kosong.</h3>
+                    <h3>Data rincian object kosong (dinas opd pada rincian object ini belum di tambahkan).</h3>
                 </div>
             </td>
         </tr>
         @else
 
         @php $idx = 0; $ttlMak = count($dataSet); @endphp
-        @foreach($dataSet as $rincianSub)
- 
+        @foreach($dataSet as $rincianSub) 
         @php
         $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
         $check_sub = ($kd_rincian_sub) ? '' : '';
         $style = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
-        @endphp
-
+        @endphp 
         <tr>
             <td style="{{ $style }}" align="center">
                 <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"

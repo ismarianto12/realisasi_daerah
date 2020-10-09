@@ -66,7 +66,6 @@ class Tmpendapatan extends Model
     {
         return Tmpendapatan::where($where)
         ->select(\DB::raw('sum(tmpendapatan.jumlah) as jumlah_obj'))
-        
         ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
 
         ->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
