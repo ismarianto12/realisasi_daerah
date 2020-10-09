@@ -138,7 +138,7 @@ class Tmpendapatan extends Model
 
         ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.kd_rek_kelompok')
 
-        ->groupBy('tmpendapatan.tanggal_lapor'); 
+        ->groupBy('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'); 
     }
 
     public static function report_pendapatan($where, $groupBy)
