@@ -127,8 +127,7 @@
         $.getJSON('{{ Url("api_grafik/total_pad?tanggal_lapor=1") }}',function(data){ 
             $('.tpadharini').text(data.total);
         });
-        
-    
+     
         $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=1") }}',function(data){
          rek_obj = data.data;
          Circles.create({

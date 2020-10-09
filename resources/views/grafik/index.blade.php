@@ -9,7 +9,7 @@
             <div>
                 <h2 class="text-white pb-2 fw-bold">Grafik Pendapatan</h2>
                 <h5 class="text-white op-7 mb-2">Pendapatan asli daerah </h5>
-            </div> 
+            </div>
         </div>
     </div>
 </div>
@@ -50,13 +50,15 @@
                 <div class="card-header">
                     <div class="card-title">Total Pendapatan Daerah </div>
                     <div class="card-category">Per @php
-                          echo Properti_app::tahun_sekarang()
+                        echo Properti_app::tahun_sekarang()
                         @endphp
                     </div>
                 </div>
                 <div class="card-body pb-0">
                     <div class="mb-4 mt-2">
-                        <h1><div class="tpadtahun"></div></h1>
+                        <h1>
+                            <div class="tpadtahun"></div>
+                        </h1>
                     </div>
                     <div class="pull-in">
                         <canvas id="dailySalesChart"></canvas>
@@ -123,11 +125,13 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 {{--  section higth chart  --}}
 
+
+@section('script')
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -135,16 +139,15 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script>
-
-    
     $(function(){     
         //jumlah tahun ini
         $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
             $('.tpadtahun').text(data.total);
-        });
-     
-    )};
+        }); 
+    }); 
+</script>
 
+<script>
     Highcharts.chart('container', {
 
         title: {
@@ -215,12 +218,10 @@
         }
     
     });
+ 
 
 </script>
 
 
-
-
-{{--  endsection  --}}
-
+@endsection
 @endsection
