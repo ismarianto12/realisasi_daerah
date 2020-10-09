@@ -227,10 +227,14 @@
        var val_id     = $(this).val();
        var satker_id  = $('#tmsikd_satker_id').val();
 
+       $('#tmrekening_akun_kelompok_jenis_objek_id option[value="'+val_id+'"]').prop('selected', true);
+
         var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
         $.get(form_url,{satker_id : satker_id },function(data){
-            $('.entri_rek').html(data); 
+           $('.entri_rek').html(data);   
+         
         }); 
+       
     });
  
 }); 
