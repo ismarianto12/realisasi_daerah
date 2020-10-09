@@ -1,5 +1,6 @@
 @extends('layouts.template')
 @section('content')
+@section('title', 'Form Pelaporan Pendapatan')
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
