@@ -127,8 +127,8 @@ class PendapatanController extends Controller
         if ($tmsikd_satker_id != '') {
             $data->where('tmpendapatan.tmsikd_satker_id', $tmsikd_satker_id);
         }
-        $data->get();
-        return DataTables::of($data)
+       $filldata = $data->get();
+        return DataTables::of($filldata)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
             })
