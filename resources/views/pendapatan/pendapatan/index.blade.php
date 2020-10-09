@@ -29,6 +29,15 @@
                     <div class="col-sm-6">
                         <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
                             onchange="selectOnChange()">
+                        @php
+                            $levelid = Properti_app::getlevel();                             
+                        @endphp
+                        @if($levelid == 3)
+                            
+                        @else
+                          <option value="0">--Semua Satuan OPD (SATKER)--</option>
+                        @endif
+
                             @foreach($tmsikd_satkers as $tmsikd_satker)
                             <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
                                 selected="selected"@endif>

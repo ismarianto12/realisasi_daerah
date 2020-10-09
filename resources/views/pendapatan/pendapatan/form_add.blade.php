@@ -246,8 +246,9 @@ function selectOnChange()
 { 
     var val_id     = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
     var satker_id  = $('#tmsikd_satker_id').val();
-    if(val_id == '' && val_id == 0){
-        $.alert('Silahkan pilih satuan  jenis object rincian terlebih dahulu','keterangan');
+    if(val_id == '' || val_id == 0 || val_id == 0){
+        $.alert('Silahkan List Rekening Mata Anggaran
+sampai pada  jenis object rincian terlebih dahulu','keterangan');
     }else if(satker_id == ''){
         $.alert('Silahkan pilih satuan kerja terlebih dahulu ','keterangan');
     }else{
