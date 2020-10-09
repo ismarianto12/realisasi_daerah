@@ -24,7 +24,7 @@
         @foreach($dataSet as $rincianSub) 
         @php
         $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
-        $check_sub = ($kd_rincian_sub) ? '' : '';
+        $check_sub      = $rincianSub['disabled']['val'];
         $style = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
         @endphp 
         <tr>
@@ -37,7 +37,6 @@
             </td>
             </td>
             <td style="{{ $style }}">{{ $rincianSub['nm_rek']['val'] }}</td>
-            
             <td style="{{ $style }}">
                 <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"

@@ -168,7 +168,7 @@ class PendapatanController extends Controller
         return view($this->view . 'pendapatandetail', [
             'data' => $data,
             'pendapatan_id' => $id,
-            'opd' => $opd, 
+            'opd' => $opd,
         ]);
     }
 
@@ -329,11 +329,6 @@ class PendapatanController extends Controller
             ->pluck('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id')
             ->toArray();
 
-        // if ($level_id == 1) {
-        //     $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-        //         ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
-        //         ->get();
-        // } else {
         $satker['tmsikd_satkers_id']  = $fsatker_id;
         if (empty($cond['tmrekening_akun_kelompok_jenis_objek_id'])) {
             $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($satker)
@@ -350,6 +345,16 @@ class PendapatanController extends Controller
         $idx = 0;
         $dataSet = [];
         foreach ($rekRincians as $key => $rekRincian) {
+            $rekSubcheck = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rekRincian->id)
+                ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
+                ->first();
+ 
+            if ($rekRincian['kd_rek_rincian_obj'] == $rekSubcheck['tmrekening_akun_kelompok_jenis_objek_rincian_id']) {
+                $dataSet[$idx]['disabled']['val'] = 'disabled';
+            } else {
+                $dataSet[$idx]['disabled']['val'] = '';
+            } 
+
             $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val'] = '';
             $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val']     = $rekRincian->id;
             $dataSet[$idx]['kd_rek']['val'] = $rekRincian->kd_rek_rincian_obj;
@@ -358,20 +363,47 @@ class PendapatanController extends Controller
             $dataSet[$idx]["style"] = "background:#ECECD7";
             $dataSet[$idx]["kd_rek"]["no_url"] = true;
             $idx++;
+            //check jika ada satker 
+            $getSatker = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where('tmsikd_satkers_id', '!=', NULL)->get();
+            foreach ($getSatker as $tsatker) {
+                $satkerid[] = $tsatker['tmsikd_satkers_id'];
+            }
+            $rincian_satker_id = implode(',', $satkerid);
 
             $rekSubs = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::wheretmrekening_akun_kelompok_jenis_objek_rincian_id($rekRincian->id)
                 ->whereNotIn('id', $notIn)
                 ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
                 ->get();
+            //end sub object
+
+             
+         //  dd($dataSet);
+
             foreach ($rekSubs as $key => $rekSub) {
-                //$dataSet[$idx]['disabled'] =  $rekSub->kd_rek_rincian_objek_sub;
 
+                if ($rekSub['tmsikd_satkers_id'] != '') {
+                    $where = [
+                        'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rekRincian->id,
+                        'tmsikd_satkers_id' => $fsatker_id
+                    ];
+                    $subBySat = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where($where)
+                        ->whereNotIn('id', $notIn)
+                        ->select('id', 'kd_rek_rincian_objek_sub', 'nm_rek_rincian_objek_sub')
+                        ->first();
 
-                $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
-                $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
-                $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
-                $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
-                $dataSet[$idx]['nm_rek']['val'] = $rekSub->nm_rek_rincian_objek_sub;
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $subBySat->id;
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
+                    $dataSet[$idx]['kd_rek']['val'] = $subBySat->kd_rek_rincian_objek_sub;
+                    $dataSet[$idx]['kd_rek']['val'] = $subBySat->kd_rek_rincian_objek_sub;
+                    $dataSet[$idx]['nm_rek']['val'] = $subBySat->nm_rek_rincian_objek_sub;
+                } else {
+                    //$dataSet[$idx]['disabled'] =  $rekSub->kd_rek_rincian_objek_sub;
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']['val']    = $rekSub->id;
+                    $dataSet[$idx]['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'] = $rekRincian->id;
+                    $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
+                    $dataSet[$idx]['kd_rek']['val'] = $rekSub->kd_rek_rincian_objek_sub;
+                    $dataSet[$idx]['nm_rek']['val'] = $rekSub->nm_rek_rincian_objek_sub;
+                }
                 $idx++;
             }
         }

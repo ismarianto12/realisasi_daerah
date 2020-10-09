@@ -151,7 +151,7 @@
     Highcharts.chart('container', {
 
         title: {
-            text: 'Solar Employment Growth by Sector, 2010-2016'
+            text: 'Pertumbuhan pendapatan daerah tahun {{ Properti_app::tahun_sekarang() }}'
         },
     
         subtitle: {
