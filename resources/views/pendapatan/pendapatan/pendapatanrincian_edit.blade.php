@@ -9,7 +9,62 @@
             <th width="15%">Jumlah Transaksi</th>
         </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+        @if(count($rekrincian) == 0)
+        <tr>
+            <td colspan="6">
+                <div class="alert alert-danger">
+                    <h3>Data rincian object kosong (dinas opd pada rincian object ini belum di tambahkan).</h3>
+                </div>
+            </td>
+        </tr>
+        @else
+
+        @php $idx = 0; $ttlMak = count($rekrincian); @endphp
+        @foreach($rekrincian as $rinci)
+        @php
+        $pendapatan =
+         $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rinci['kd_rek_rincian_obj'])->first();
+        $style = '';
+        @endphp
+        <tr>
+            <td style="{{ $style }}" align="center">
+                <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"
+                    value="{{ $idx }}">
+            </td>
+            <td style="{{ $style }}">
+                {{ $rinci['kd_rek_rincian_obj'] }}
+            </td>
+            </td>
+            <td style="{{ $style }}">{{ $rinci['nm_rek_rincian_obj'] }}</td>
+            <td style="{{ $style }}">
+                <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
+                    class="form-control auto" autocomplete="off"
+                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
+                    \="" value="{{ $pendapatan['volume'] }}">
+            </td>
+
+            <td style="{{ $style }}">
+                <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="{{ $pendapatan['satuan'] }}">
+            </td>
+
+            <td style="{{ $style }}">
+                <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
+                    class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
+                    value="{{ $pendapatan['jumlah'] }}">
+            </td>
+        </tr> 
+        <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="" />
+        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="" />
+        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="" />
+        @php $idx++ @endphp
+        @endforeach
+        @endif
+
+
+
+    </tbody>
 </table>
 <script src="{{ asset('assets/template/js/validate_form.js') }}"></script>
 <script src="{{ asset('assets/template/js/autoNumeric.js') }}"></script>
