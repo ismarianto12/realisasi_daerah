@@ -1,7 +1,7 @@
 <h2>Detail Pelaporan Satuan kerja opd</h2>
 
 <div style="text-align: right;">
-<a href="{{ Url('pendapatan/'.$pendapatan_id.'/edit') }}" class="btn btn btn-warning" target="_blank"><i class="fa fa-edit"></i>Edit data</a>
+<a href="{{ Url('pendapatan/'.$pendapatan_id.'/edit?satker_id='.$data->tmsikd_satker_id) }}" class="btn btn btn-warning" target="_blank"><i class="fa fa-edit"></i>Edit data</a>
 </div> 
 <hr />
 

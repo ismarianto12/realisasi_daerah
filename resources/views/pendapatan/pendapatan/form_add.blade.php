@@ -1,10 +1,12 @@
 @extends('layouts.template')
 @section('content')
-@if($raction == 'edit')
-  @section('title', 'Edit Pelaporan Rekengin Uraian : '.$nmtitledit)
-@else if($raction == 'add')
-  @section('title', 'Tambah Pelaporan Pendapatan')
-@endif
+@php
+ 
+$pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'. $nmtitledit;
+@endphp
+
+@section('title', $pagetitle)
+
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
@@ -64,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @else if($raction == 'add')
+                            @elseif($raction == 'add')
                             <div class="card-header">
                                 <h6>List Rekening Mata Anggaran</h6>
                             </div>

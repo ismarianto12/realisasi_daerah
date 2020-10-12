@@ -237,7 +237,7 @@ class PendapatanController extends Controller
             $jumlahmax    = $jumlahMax['total'];
             $satkerid     = $request->satker_id;
         } else {
-            $raction      = 'tambah';
+            $raction      = 'add';
             $jumlahmax    = '';
             $rincianid    = '';
             $satkerid     = '';
@@ -458,8 +458,7 @@ class PendapatanController extends Controller
     //form pendapatan edit jika request data nya adlah edit 
     public function form_pendapatan_edit(Request $request, $jenis_object)
     {
-        //dd($jenis_object);
-        // $id ada nilai balik dari parmaeter rincian object
+        //dd($jenis_object); 
         $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
         $level_id  = Properti_app::getlevel();
 

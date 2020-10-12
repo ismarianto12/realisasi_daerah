@@ -25,7 +25,7 @@
         @php
         $kd_rincian_sub = $rincianSub['tmrekening_akun_kelompok_jenis_objek_rincian_id']['val'];
         $check_sub      = $rincianSub['disabled']['val'];
-        $style = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
+        $style          = (isset($rincianSub['style']) ? $rincianSub['style'] : '');
         @endphp 
         <tr>
             <td style="{{ $style }}" align="center">
