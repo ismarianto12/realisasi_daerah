@@ -55,9 +55,9 @@
                     value="{{ $pendapatan['jumlah'] }}">
             </td>
         </tr> 
-        <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="" />
-        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="" />
-        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="" />
+        <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'] }}" />
+        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_id'] }}" />
+        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_id'] }}" />
         @php $idx++ @endphp
 
 

@@ -225,13 +225,17 @@ class PendapatanController extends Controller
 
             $raction      = 'edit';
             $where_data   = [
-                'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id' => $request->id,
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $request->id,
             ];
-            $row   = Tmpendapatan::getpadbyrekrinci($where_data)->first();
-
+            $rows   = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where($where_data)->first();
+            if ($rows == '') {
+                $row = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $request->id)->first();
+            } else {
+                $row = $rows;
+            }
             $kd_rek_rincian_obj = $row['kd_rek_rincian_obj'];
             $nm_rek_rincian_obj = $row['nm_rek_rincian_obj'];
-            $nmtitledit   = '['.$kd_rek_rincian_obj.'] ' . $nm_rek_rincian_obj;
+            $nmtitledit   = '[' . $kd_rek_rincian_obj . '] ' . $nm_rek_rincian_obj;
 
             $rincianid    = $request->id;
             $jumlahmax    = $jumlahMax['total'];
@@ -459,8 +463,8 @@ class PendapatanController extends Controller
     public function form_pendapatan_edit(Request $request, $jenis_object)
     {
         //dd($jenis_object); 
-     if($request->satker_id == '') return abort(403,'Satker tidak di temukan');
-     
+        if ($request->satker_id == '') return abort(403, 'Satker tidak di temukan');
+
         $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
         $level_id  = Properti_app::getlevel();
 
