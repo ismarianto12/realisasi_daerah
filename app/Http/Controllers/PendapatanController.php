@@ -459,6 +459,8 @@ class PendapatanController extends Controller
     public function form_pendapatan_edit(Request $request, $jenis_object)
     {
         //dd($jenis_object); 
+     if($request->satker_id == '') return abort(403,'Satker tidak di temukan');
+     
         $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
         $level_id  = Properti_app::getlevel();
 
