@@ -1,6 +1,15 @@
 @extends('layouts.template')
 @section('content')
-@section('title', 'Form Pelaporan Pendapatan')
+@if($raction == 'edit')
+//set baris"
+@section('title', 'Edit Pelaporan Rekengin Uraian : '.$nmtitledit)
+
+@else if($raction == 'add')
+@section('title', 'Tambah Pelaporan Pendapatan')
+@endif
+
+
+
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
@@ -13,7 +22,7 @@
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
                                         class="required-label">*</span></label>
-                                <div class="col-sm-6">
+                                <div c""lass="col-sm-6">
                                     <select name="tahun_id" id="tahun_id" placeholder=""
                                         class="form-control select2 r-0 light" autocomplete="off"
                                         onchange="selectOnChange()">
@@ -42,6 +51,39 @@
                                 </div>
                             </div>
 
+                            @if($raction == 'edit')
+                            <div class="card-body">
+                                <div class="form-row form-inline">
+                                    <div class="col-md-8">
+                                        <hr />
+                                        <div class="form-group form-show-validation row">
+                                            <div class="form-group">
+                                                <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
+                                                <div class="col-md-8">
+                                                    <input name="jumlah_mak" id="jumlah_mak" type="text" placeholder=""
+                                                        class="form-control number" autocomplete="off"
+                                                        value="{{ $jumlahmax }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table class="table table-striped">
+                                    <tr>
+                                        <td>Kelopok Rekeing</td>
+                                        <td></td>
+                                        <td>Kelopok Object Rekeing</td>
+                                        <td></td>
+                                        <td>Kelompok Rincian Oject</td>
+                                        <td></td>
+                                        <td>Kelopok Rincian Sub Rekeing</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            @else if($raction == 'add')
                             <div class="card-header">
                                 <h6>List Rekening Mata Anggaran</h6>
                             </div>
@@ -49,8 +91,8 @@
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <div class="form-group form-show-validation row">
-                                            <label for="name" class="col-md-3 text-right">Tanggal Lapor Realisasi <span
-                                                    class="required-label">*</span></label>
+                                            <label for="name" class="col-md-3 text-right">Tanggal Lapor Realisasi
+                                                <span class="required-label">*</span></label>
                                             <div class="col-sm-8">
                                                 <input type="date" name="tanggal_lapor" id="tanggal_lapor"
                                                     class="form-control" placeholder="Dari .." value="{{ $dari }}">
@@ -111,6 +153,7 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <hr />
                                             <div class="form-group">
                                                 <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
                                                 <div class="col-md-8">
@@ -122,10 +165,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="card-body">
-                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal tidak di
-                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap hapus
+                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
+                                tidak di
+                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap
+                                hapus
                                 dan entri kembali </div>
                             <div class="entri_rek"></div>
                         </div>
@@ -139,6 +185,15 @@
 @section('script')
 <script>
     $(function(){
+        @if($raction == 'edit')
+        var id_rincian = {{ $rincianid }};    
+        var satker_id  = {{ $satkerid }};
+        var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',id_rincian);
+          $.get(form_url,{satker_id : satker_id },function(data){
+          $('.entri_rek').html(data); 
+        }); 
+     @endif
+
     $('.entri_rek').html('<div class="alert alert-success">Sedang meload data ...</div>'); 
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
@@ -228,12 +283,20 @@
        var val_id     = $(this).val();
        var satker_id  = $('#tmsikd_satker_id').val();
 
-         var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
-        $.get(form_url,{satker_id : satker_id },function(data){
-           $('.entri_rek').html(data);   
-         
-        }); 
        
+     @if($raction == 'edit')
+     var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
+       $.get(form_url,{satker_id : satker_id },function(data){
+       $('.entri_rek').html(data); 
+     });
+
+      @elseif($raction == 'add') 
+       var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
+        $.get(form_url,{satker_id : satker_id },function(data){
+        $('.entri_rek').html(data); 
+      });
+    @endif 
+        
     });
 
     $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
@@ -252,10 +315,19 @@ function selectOnChange()
     }else if(satker_id == ''){
         $.alert('Silahkan pilih satuan kerja terlebih dahulu ','keterangan');
     }else{
-     var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
-     $.get(form_url,{satker_id : satker_id },function(data){
+    
+     @if($raction == 'edit')
+      var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
+        $.get(form_url,{satker_id : satker_id },function(data){
+        $('.entri_rek').html(data); 
+      });
+
+       @elseif($raction == 'add') 
+        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
+         $.get(form_url,{satker_id : satker_id },function(data){
          $('.entri_rek').html(data); 
-     }); 
+       });
+     @endif 
     } 
 }  
 
