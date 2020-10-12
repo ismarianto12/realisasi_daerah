@@ -1,15 +1,10 @@
 @extends('layouts.template')
 @section('content')
 @if($raction == 'edit')
-//set baris"
-@section('title', 'Edit Pelaporan Rekengin Uraian : '.$nmtitledit)
-
+  @section('title', 'Edit Pelaporan Rekengin Uraian : '.$nmtitledit)
 @else if($raction == 'add')
-@section('title', 'Tambah Pelaporan Pendapatan')
+  @section('title', 'Tambah Pelaporan Pendapatan')
 @endif
-
-
-
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
@@ -22,7 +17,7 @@
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
                                         class="required-label">*</span></label>
-                                <div c""lass="col-sm-6">
+                                <div class="col-sm-6">
                                     <select name="tahun_id" id="tahun_id" placeholder=""
                                         class="form-control select2 r-0 light" autocomplete="off"
                                         onchange="selectOnChange()">
@@ -68,20 +63,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <table class="table table-striped">
-                                    <tr>
-                                        <td>Kelopok Rekeing</td>
-                                        <td></td>
-                                        <td>Kelopok Object Rekeing</td>
-                                        <td></td>
-                                        <td>Kelompok Rincian Oject</td>
-                                        <td></td>
-                                        <td>Kelopok Rincian Sub Rekeing</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
                             </div>
                             @else if($raction == 'add')
                             <div class="card-header">
