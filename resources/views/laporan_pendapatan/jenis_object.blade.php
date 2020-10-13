@@ -4,8 +4,7 @@
     table {
         border-collapse: collapse;
         width: 100%;
-    }
-
+    } 
     th,
     td {
         text-align: left;
@@ -70,7 +69,9 @@
         @foreach ($render as $list)
         @php
         $target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$list['id_rek_obj'])->first();
-        $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : 'Target Kosong';
+        $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : '0';
+        $selisih = ($list['jumlah'] - $dtarget);
+       // $total   =  ($list['jumlah'] - $dtarget); 
         @endphp
         <tr>
             <td><b>{{ $list['kd_rek_jenis'] }}</b></td>
@@ -79,7 +80,7 @@
             <td></td>
             <td><b>{{ number_format($list['jml_rek_jenis'],0,0,'.') }}</b></td>
             <td></td>
-            <td></td>
+            <td>{{ $selisih }}</td>
             <td></td>
         </tr>
         @php
@@ -94,7 +95,7 @@
             <td></td>
             <td><b>{{ number_format($ls['jml_rek_obj'],0,0,'.') }}</b></td>
             <td></td>
-            <td></td>
+            <td>{{ $selisih }}</td>
             <td></td>
         </tr>
         @php
@@ -109,7 +110,7 @@
             <td></td>
             <td>{{ number_format($item['jml_rek_rincian_obj'],0,0,'.') }}</td>
             <td></td>
-            <td></td>
+            <td>{{ $selisih }}</td>
             <td></td>
         </tr>
 
@@ -125,7 +126,7 @@
             <td></td>
             <td>{{ number_format($r['jumlah'],0,0,'.') }}</td>
             <td></td>
-            <td></td>
+            <td>{{ $selisih }}</td>
             <td></td>
         </tr>
         @endforeach

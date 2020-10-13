@@ -1,6 +1,21 @@
 @extends('layouts.template')
 @section('title','Halaman depan aplikasi')
 @section('content')
+@php  
+    $level_id = Properti_app::getlevel();
+    $username = Auth::user()->username;
+@endphp
+@if($level_id == 3)
+    <script>
+        $(function(){
+            $.confirm({title : 'Hy {{ $username }} silahkan laporkan pendpatan hari ini',
+                       content : 'Pendapatan yang belum di laporkan : Pada {{ date('Y-m-d') }}'});
+        }) 
+    </script>
+    
+@endif
+
+
 
 
 <div class="panel-header bg-primary-gradient">
@@ -56,7 +71,9 @@
                                             <div class="col-7 col-stats">
                                                 <div class="numbers">
                                                     <p class="card-category">TOTAL PAD TAHUN INI</p>
-                                                    <h4 class="card-title"><div class="tpadtahun"></div></h4>
+                                                    <h4 class="card-title">
+                                                        <div class="tpadtahun"></div>
+                                                    </h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -75,15 +92,17 @@
                                             <div class="col-7 col-stats">
                                                 <div class="numbers">
                                                     <p class="card-category">TOTAL PAD HARI INI</p>
-                                                    <h4 class="card-title"><div class="tpadharini"></div></h4>
+                                                    <h4 class="card-title">
+                                                        <div class="tpadharini"></div>
+                                                    </h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
- 
+
                     </div>
                 </div>
             </div>
@@ -108,6 +127,7 @@
 
 </div>
 
+ 
 
 @section('script')
 

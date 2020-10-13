@@ -6,7 +6,7 @@
             <th width="30%">Uraian</th>
             <th width="7%">Volume Transaksi</th>
             <th width="7%">Satuan</th>
-            <th width="15%">Jumlah Transaksi</th>
+            <th width="15%">Jumlah Transaksi</th> 
         </tr>
     </thead>
     <tbody>
@@ -42,8 +42,7 @@
                     class="form-control auto" autocomplete="off"
                     onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
                     \="" value="{{ $pendapatan['volume'] }}">
-            </td>
-
+            </td> 
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
                     autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="{{ $pendapatan['satuan'] }}">

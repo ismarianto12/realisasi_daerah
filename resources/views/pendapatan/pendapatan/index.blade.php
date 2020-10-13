@@ -29,14 +29,14 @@
                     <div class="col-sm-6">
                         <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
                             onchange="selectOnChange()">
-                        @php
-                            $levelid = Properti_app::getlevel();                             
-                        @endphp
-                        @if($levelid == 3)
-                            
-                        @else
-                          <option value="0">--Semua Satuan OPD (SATKER)--</option>
-                        @endif
+                            @php
+                            $levelid = Properti_app::getlevel();
+                            @endphp
+                            @if($levelid == 3)
+
+                            @else
+                            <option value="0">--Semua Satuan OPD (SATKER)--</option>
+                            @endif
 
                             @foreach($tmsikd_satkers as $tmsikd_satker)
                             <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
@@ -48,28 +48,22 @@
                     </div>
                 </div>
 
-                <div class="card-header">
+                {{--  <div class="card-header">
                     <h6>List Rekening Pendapatan</h6>
-                </div>
+                </div>  --}}
                 <div class="card-body">
                     <div class="form-row form-inline">
                         <div class="col-md-12">
 
                             <div class="form-group form-show-validation row">
-                                <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
+                                <label for="name" class="col-md-3 text-right">Tanggal Lapor <span
                                         class="required-label">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="date" id="dari" class="form-control" placeholder="Dari .."
-                                        value="{{ $dari }}">
-                                </div>
-                                S /D
-                                <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="sampai" placeholder="Sampai dengan"
-                                        value="{{ $sampai }}">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
+                                    <input type="text" id="tgl_lapor" class="datepicker form-control" placeholder="Dari .."
+                                        value="{{ $dari }}" onclick="selectOnChange()">
+                                </div> 
+                            </div> 
+                            {{--  <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
                                             Akun :</strong></label>
@@ -117,22 +111,25 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div>  --}}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <center>
-                    <div class="satker_show"></div>
-                </center>
-            </div>
+               </div>
         </div>
     </div>
     <div id="btn_cetak"></div>
     <div class="card">
         <div class="card-body">
             <small>Klik kode rekening untuk melihat rincian .</small>
+            <center>
+                <div class="satker_show"></div>
+            </center>
+            @if($tgl_lapor != '')
+                <div class="alert alert-danger">Data berhasil di tambahkan Silahkan cek rincian pelaporan pada tanggal {{ Properti_app::tgl_indo($tgl_lapor) }}</div>  
+            @endif
             <table id="datatable" class="table table-striped no-b" style="width:100%">
                 <thead>
                     <tr>
@@ -142,6 +139,7 @@
                         <th width="10%">Volume Transaksi</th>
                         <th width="15%">Jumlah Transaksi</th>
                         <th width="15%">Tanggal Lapor</th>
+                        <th width="15%">Status Lapor</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -184,8 +182,8 @@
             data:function(data){ 
                 data.tahun_id  = $('#tahun_id').val();
                 data.tmsikd_satker_id  = $('#tmsikd_satker_id').val();
-                data.dari  = $('#dari').val();
-                data.sampai  = $('#sampai').val();
+                data.tgl_lapor  = $('#tgl_lapor').val(); 
+
                 data.tmrekening_akun_id  = $('#tmrekening_akun_id').val();
                 data.tmrekening_akun_kelompok_id  = $('#tmrekening_akun_kelompok_id').val();
                 data.tmrekening_akun_kelompok_jenis_id  = $('#tmrekening_akun_kelompok_jenis_id').val();
@@ -194,12 +192,23 @@
         },  
         columns: [ 
         {data: 'id', name: 'id', orderable: false, searchable: false, className: 'text-center'},
-        {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj',orderable: false, searchable: false},
-        {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj',orderable: false, searchable: false},
-        {data: 'volume', name: 'volume', className: 'text-right'},  
-        {data: 'jumlah', name: 'jumlah', className: 'text-right'},  
-        {data: 'tanggal_lapor', name: 'tanggal_lapor', className: 'text-right'},   
+        {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj'},
+        {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
+        {data: 'volume', name: 'volume', className: 'text-right',orderable: false, searchable: false},  
+        {data: 'jumlah_lapor', name: 'jumlah', className: 'text-right',orderable: false, searchable: false},  
+        {data: 'tanggal_lapor', name: 'tanggal_lapor', className: 'text-right',orderable: false, searchable: false},   
+        {data: 'action', name: 'action', className: 'text-right',orderable: false, searchable: false},   
+        
         ], 
+        rowGroup: {
+            startRender: function(rows, group){
+                return $('<tr/>')
+                    .append('<td></td>')
+                    .append(group)
+            },
+            endRender: null,
+            dataSrc: ['r_kd_rek_obj']
+        }
     });        
     @include('layouts._includes.tablechecked')
 
@@ -290,8 +299,7 @@ $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
 $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
 
 function selectOnChange(){
- var dari   = $('#dari').val();
- var sampai = $('#sampai').val();
+ var tgl_lapor   = $('#tgl_lapor').val(); 
 
    // 'tahun_id='+$('tahun_id').val() +'&tmrapbd_id='+$('tmrapbd_id').val()+'&tmsikd_satker_id='+$('tmsikd_satker_id').val();
    table.api().ajax.reload();
@@ -301,7 +309,7 @@ function selectOnChange(){
   url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
   $.get(url,function(data){
    if(data){ 
-    $('.satker_show').html('<div class="alert alert-success"><b> ['+data.kode+']['+data.satker_name+' ] PERIODE DARI : '+dari+' S/D '+sampai +'</b></div>')
+    $('.satker_show').html('<div class="alert alert-success"><h3> ['+data.kode+']['+data.satker_name+' ] BERDASARKAN TANGGAL LAPOR : '+tgl_lapor+'</h3></div>')
 }else{ 
     $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
 }  
@@ -337,6 +345,11 @@ function del(){
                 reload();
             });
         }
+    }
+
+    function get_info(n){
+        alert(n);
+
     }
 </script>
 

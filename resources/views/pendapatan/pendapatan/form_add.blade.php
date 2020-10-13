@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('content')
 @php
- 
+
 $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'. $nmtitledit;
 @endphp
 
@@ -339,7 +339,7 @@ add();
           url = (save_method == 'add') ? "{{ route($route.'store') }}" : "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
           $.post(url, $(this).serialize(), function(data){
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
-              document.location.href = "{{ route($route.'index') }}";
+              document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
           }, "JSON").fail(function(data){
               err = ''; respon = data.responseJSON;
               $.each(respon.errors, function(index, value){

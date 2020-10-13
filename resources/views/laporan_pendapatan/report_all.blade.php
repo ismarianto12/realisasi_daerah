@@ -67,12 +67,12 @@
                                 <label for="name" class="col-md-3 text-right">Periode (Tanggal) <span
                                         class="required-label">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="date" id="dari" class="form-control" placeholder="Dari .."
+                                    <input type="text" id="dari" class="datepicker form-control" placeholder="Dari .."
                                         value="{{ $dari }}">
                                 </div>
                                 S /D
                                 <div class="col-sm-4">
-                                    <input type="date" class="form-control" id="sampai" placeholder="Sampai dengan"
+                                    <input type="text" class="datepicker form-control" id="sampai" placeholder="Sampai dengan"
                                         value="{{ $sampai }}">
                                 </div>
                             </div>

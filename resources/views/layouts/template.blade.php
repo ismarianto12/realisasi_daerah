@@ -46,8 +46,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/template/') }}/css/tooltipster.bundle.min.css">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('/assets/template/') }}/css/tooltipster-sideTip-borderless.min.css">
-
-    <script src="{{ asset('/assets/template/js/aplikasi.js') }}"></script>
+  
 </head>
 
 <body>
@@ -265,7 +264,7 @@
                                                     <span class="text">Report Hasil PAD</span>
                                                 </div>
                                             </a>
-                                        
+
                                         </div>
                                     </div>
                                 </div>
@@ -419,6 +418,9 @@
 
     <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/template') }}/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{ asset('assets/template/js/aplikasi.js') }}"></script>
 
     <!-- jQuery Scrollbar -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js">
@@ -529,6 +531,7 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
     @yield('script')
+
 
     <script>
         $(function(){

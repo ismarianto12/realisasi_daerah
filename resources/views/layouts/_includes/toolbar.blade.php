@@ -24,20 +24,28 @@
             </div>
             @if(in_array('r', $toolbar))
             <a class="btn btn-outline-secondary  btn-info btn-sm" title="Tampilkan List Data" href="{{ route($route.'index') }}"
-                id="btnRead"><i class="fa fa-list"></i> Semua Data</a>
+                id="btnRead" style="
+                color: #fff;
+            "><i class="fa fa-list"></i> Semua Data</a>
             @endif
             <div class="btn-group" style="color: #fff">
                 @if(in_array('c', $toolbar))
                 <a class="btn btn-outline-secondary btn-info btn-sm" title="Masukan Data Baru"
-                    href="{{ route($route.'create') }}" id="btnCreate"><i class="fa fa-plus"></i> Tambah</a>
+                    href="{{ route($route.'create') }}" id="btnCreate" style="
+                    color: #fff;
+                "><i class="fa fa-plus"></i> Tambah</a>
                 @endif
                 @if(in_array('u', $toolbar))
                 <a class="btn btn-outline-secondary btn-sm" title="Edit Data" href="{{ route($route.'edit', $id) }}"
-                    id="btnEdit"><i class="fa fa-edit"></i> Edit</a>
+                    id="btnEdit" style="
+                    color: #fff;
+                "><i class="fa fa-edit"></i> Edit</a>
                 @endif
                 @if(in_array('d', $toolbar))
                 <a class="btn btn-outline-secondary btn-danger btn-sm" title="Hapus Data" id="btnDelete" href="#"
-                    onclick="javascript:confirm_del()"><i class="fa fa-trash"></i> Hapus</a>
+                    onclick="javascript:confirm_del()" style="
+                    color: #fff;
+                "><i class="fa fa-trash"></i> Hapus</a>
                 @endif
                 @if(in_array('rs', $toolbar))
                 <a class="btn btn-outline-secondary btn-sm" title="Batalkan" id="btnCancel" href="#"
