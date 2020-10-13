@@ -214,7 +214,7 @@ class PendapatanController extends Controller
         return view($this->view . 'pendapatandetail', [
             'data' => $data,
             'pendapatan_id' => $id,
-            'opd' => $opd,
+            'opd' => $opd
         ]);
     }
 
