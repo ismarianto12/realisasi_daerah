@@ -302,9 +302,8 @@ function selectOnChange(){
  var tgl_lapor   = $('#tgl_lapor').val(); 
 
    // 'tahun_id='+$('tahun_id').val() +'&tmrapbd_id='+$('tmrapbd_id').val()+'&tmsikd_satker_id='+$('tmsikd_satker_id').val();
-   table.api().ajax.reload();
-   $('#btnCreate').attr('href', "{{ route($route.'create') }}?tahun_id="+$('tahun_id').val()+"&tmrapbd_id="+$('tmrapbd_id').val()+"&tmsikd_satker_id="+$('tmsikd_satker_id').val()+"tmrekening_akun_id=" + $('#tmrekening_akun_id').val() + "&tmrekening_akun_kelompok_id=" + $('#tmrekening_akun_kelompok_id').val() + "&tmrekening_akun_kelompok_jenis_id=" + $('#tmrekening_akun_kelompok_jenis_id').val() + "&tmrekening_akun_kelompok_jenis_objek_id=" + $('#tmrekening_akun_kelompok_jenis_objek_id').val());
-  //get data afetr change satker_id
+  table.api().ajax.reload();
+  
   val_satker_id  = $('#tmsikd_satker_id').val();
   url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
   $.get(url,function(data){

@@ -2,7 +2,7 @@
 @section('content')
 @php
 
-$pagetitle = 'Tambah Pelaporan Pad';
+$pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'. $nmtitledit;
 @endphp
 
 @section('title', $pagetitle)
@@ -30,8 +30,46 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                     </select>
                                 </div>
                             </div>
- 
 
+                            <div class="form-group form-show-validation row">
+                                <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
+                                    <span class="required-label">*</span></label>
+                                <div class="col-sm-6">
+                                    <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
+                                        required onchange="selectOnChange()">
+                                        @foreach($tmsikd_satkers as $tmsikd_satker)
+                                        <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->
+                                            id)
+                                            selected="selected"@endif>
+                                            [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            @if($raction == 'edit')
+                            <div class="card-body">
+                                <div class="form-row form-inline">
+                                    <div class="col-md-8">
+                                        <hr />
+                                        <div class="form-group form-show-validation row">
+                                            <div class="form-group">
+                                                <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
+                                                <div class="col-md-8">
+                                                    <input name="jumlah_mak" id="jumlah_mak" type="text" placeholder=""
+                                                        class="form-control number" autocomplete="off"
+                                                        value="{{ $jumlahmax }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @elseif($raction == 'add')
+                            <div class="card-header">
+                                <h6>List Rekening Mata Anggaran</h6>
+                            </div>
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
@@ -64,7 +102,8 @@ $pagetitle = 'Tambah Pelaporan Pad';
 
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            @endif
                         </div>
                         <div class="card-body">
                             <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
@@ -83,15 +122,17 @@ $pagetitle = 'Tambah Pelaporan Pad';
 </div>
 @section('script')
 <script>
-    $(function(){ 
-       $('.entri_rek').html('<div class="alert alert-success">Sedang meload data ...</div>');  
-        var rek_obj = {{ $kd_rek_obj }};    
-        var satker_id  = {{ $fsatker_id }};
-        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',rek_obj);
+    $(function(){
+        @if($raction == 'edit')
+        var id_rincian = {{ $rincianid }};    
+        var satker_id  = {{ $satkerid }};
+        var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',id_rincian);
           $.get(form_url,{satker_id : satker_id },function(data){
           $('.entri_rek').html(data); 
         }); 
-          
+     @endif
+
+    $('.entri_rek').html('<div class="alert alert-success">Sedang meload data ...</div>'); 
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
         option = "<option value=''>&nbsp;</option>";
@@ -174,13 +215,47 @@ $pagetitle = 'Tambah Pelaporan Pad';
             
         }
     });  
-   
+ 
+ 
+        
+     var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
+       $.get(form_url,{satker_id : satker_id },function(data){
+       $('.entri_rek').html(data); 
+     }); 
+
+ 
     $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
         var val_id     = $(this).val(); 
         $('#tmrekening_akun_kelompok_jenis_objek_id option[value="'+val_id+'"]').prop('selected', true);
    });  
 }); 
-  
+ 
+
+function selectOnChange()
+{ 
+    var val_id     = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
+    var satker_id  = $('#tmsikd_satker_id').val();
+    if(val_id == '' || val_id == 0 || satker_id == 0){
+        $.alert('Silahkan List Rekening Mata Anggaran sampai pada  jenis object rincian terlebih dahulu','keterangan');
+    }else if(satker_id == ''){
+        $.alert('Silahkan pilih satuan kerja terlebih dahulu ','keterangan');
+    }else{
+    
+     @if($raction == 'edit')
+      var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
+        $.get(form_url,{satker_id : satker_id },function(data){
+        $('.entri_rek').html(data); 
+      });
+
+       @elseif($raction == 'add') 
+        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
+         $.get(form_url,{satker_id : satker_id },function(data){
+         $('.entri_rek').html(data); 
+       });
+     @endif 
+    } 
+}  
+
   //save data if true
   function add(){
     save_method = "add";

@@ -69,9 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
 		// grafik pendapatan 
-		Route::resource('grafik', 'GrafikController');
-
-
+		Route::resource('grafik', 'GrafikController');   
 	});
 
 	Route::prefix('akses')->name('akses.')->group(function () {
@@ -138,7 +136,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('trtargetrincian_form/{id}', 'TrtargetrincianController@form')->name('trtargetrincian_form');
 		Route::get('trtargetrincian_form_edit/{id}', 'TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
 
-
+		//pendapatan create
+		Route::get('create/{id}', 'PendapatanController@create')->name('create');  
+		
 		// get frm isian pendapatan
 		Route::get('form_pendapatan/{id}', 'PendapatanController@form_pendapatan')->name('form_pendapatan');
 		Route::get('pendapatandetail/{id}','PendapatanController@pendapatandetail')->name('pendapatandetail');
