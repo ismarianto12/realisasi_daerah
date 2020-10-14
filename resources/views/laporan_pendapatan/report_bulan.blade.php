@@ -29,6 +29,9 @@
         }
     </style>
 
+    <div style="float:left">
+        <img src="{{ asset('assets/template/img/logo_tangsel.png') }}" style="width: 60px;height:60px;margin-top:15px">
+    </div>
 
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>

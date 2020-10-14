@@ -115,21 +115,22 @@ class PendapatanController extends Controller
         ];
         $data = Tmpendapatan::datatable($where);
 
-        $tahun_id = $request->tahun_id;
+        //$tahun_id = $request->tahun_id;
         $tmsikd_satker_id = $request->tmsikd_satker_id;
         $tgl_lapor = $request->tgl_lapor;
 
-        $tmrekening_akun_id = $request->tmrekening_akun_id;
-        $tmrekening_akun_kelompok_id = $request->tmrekening_akun_kelompok_id;
-        $tmrekening_akun_kelompok_jenis_id = $request->tmrekening_akun_kelompok_jenis_id;
-        $tmrekening_akun_kelompok_jenis_objek_id = $request->tmrekening_akun_kelompok_jenis_objek_id;
+        // $tmrekening_akun_id = $request->tmrekening_akun_id;
+        // $tmrekening_akun_kelompok_id = $request->tmrekening_akun_kelompok_id;
+        
+        // $tmrekening_akun_kelompok_jenis_id = $request->tmrekening_akun_kelompok_jenis_id;
+        // $tmrekening_akun_kelompok_jenis_objek_id = $request->tmrekening_akun_kelompok_jenis_objek_id;
 
-        if ($tmrekening_akun_kelompok_jenis_objek_id != 0) {
-            $data->where('tmrekening_akun_kelompok_jenis_objeks.id', '=', $tmrekening_akun_kelompok_jenis_objek_id);
-        }
-        if ($tmrekening_akun_kelompok_jenis_id != 0) {
-            $data->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', $tmrekening_akun_kelompok_jenis_id);
-        }
+        // if ($tmrekening_akun_kelompok_jenis_objek_id != 0) {
+        //     $data->where('tmrekening_akun_kelompok_jenis_objeks.id', '=', $tmrekening_akun_kelompok_jenis_objek_id);
+        // }
+        // if ($tmrekening_akun_kelompok_jenis_id != 0) {
+        //     $data->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', $tmrekening_akun_kelompok_jenis_id);
+        // }
 
         if ($tmsikd_satker_id != '') {
             $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $tmsikd_satker_id);
@@ -190,8 +191,9 @@ class PendapatanController extends Controller
             $tgl_lapor  = $par['tgl_lapor'];
             $satker_id  = $par['satker_id'];
             //dd
-            $rincian_id = $p->tmrekening_akun_kelompok_jenis_objek_rincian_id;  
+            $rincian_id = $p->kd_rek_rincian_obj;  
             $pad = Tmpendapatan::where('tanggal_lapor', $tgl_lapor)
+            
             ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
             ->first();
 
