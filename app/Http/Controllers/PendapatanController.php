@@ -262,7 +262,9 @@ class PendapatanController extends Controller
             $fsatker_id = $request->satker_id;
         }
         $whred  = [
-            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id
+            //id adalah jenis object rincian 
+            'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj'=> $id,
+            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id 
         ];
         $kd_rek_obj = $id;
         $rekeningdatas = Tmpendapatan::getrekeningbySatker($whred)->first();
