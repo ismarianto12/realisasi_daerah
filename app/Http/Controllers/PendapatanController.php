@@ -198,7 +198,7 @@ class PendapatanController extends Controller
             ->first();
 
             if ($pad['tmrekening_akun_kelompok_jenis_objek_rincian_id'] == '') {   
-                return '<a href="' . route('pendapatan.create', $rincian_id.'?satker_id='.$satker_id) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
+                return '<a href="' . route('pendapatan.create', $rincian_id.'?satker_id='.$satker_id.'&tgl='.$tgl_lapor) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
                 <br />
                 <small>(Klik Tombol Untuk Lapor)</small>';
             } else {
@@ -235,7 +235,7 @@ class PendapatanController extends Controller
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
         $level_id  = Properti_app::getlevel();
-        if ($request->satker_id == '') return abort(403, 'Satuan kerja tidak bisa kosong');
+        if ($request->satker_id == '' || $request->tgl == '') return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : '.md5('ismarianto'));
 
         //jika akses satker berbeda 
         if ($satker_id == '' && $level_id != 3) {
@@ -255,6 +255,8 @@ class PendapatanController extends Controller
         $sampai           = $new_date;
 
         $idrincian        = $request->id;
+        $tgl_lapor        = $request->tgl;
+
 
         if ($level_id == 3) {
             $fsatker_id = $satker_id;
@@ -266,12 +268,15 @@ class PendapatanController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj'=> $id,
             'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id 
         ];
-        $kd_rek_obj = $id;
-        $rekeningdatas = Tmpendapatan::getrekeningbySatker($whred)->first();
+        $kd_rek_obj     = $id;
+        $rekeningdatas  = Tmpendapatan::getrekeningbySatker($whred)->first();
+        $jam            = Carbon::now()->format('H:i:s');
         return view($this->view . 'form_add', compact(
             'title',
             'tahun_active',
             'rekeningdatas',
+            'jam',
+            'tgl_lapor',
             'kd_rek_obj',
             'route',
             'tahuns',

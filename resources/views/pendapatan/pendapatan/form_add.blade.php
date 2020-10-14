@@ -36,6 +36,15 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <table class="table table-striped">
+                                                <tr>
+                                                    <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}">
+                                                    <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}"> 
+                                                    <td>Tanggal Lapor</td><td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
+                                                </tr> 
+                                            </table> 
+
+                                            <h2>Rincian PAD <sup><a href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8" title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan </h2>
+                                        <table class="table table-striped">
                                             <tr>
                                                 <td>Kelompok Jenis Rekening</td>
                                                 <td>[{{ $rekeningdatas['kd_rek_jenis'] }}] -
