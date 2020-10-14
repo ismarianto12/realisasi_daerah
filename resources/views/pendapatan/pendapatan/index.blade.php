@@ -59,10 +59,10 @@
                                 <label for="name" class="col-md-3 text-right">Tanggal Lapor <span
                                         class="required-label">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="text" id="tgl_lapor" class="datepicker form-control" placeholder="Dari .."
-                                        value="{{ $dari }}" onclick="selectOnChange()">
-                                </div> 
-                            </div> 
+                                    <input type="text" id="tgl_lapor" class="datepicker form-control"
+                                        placeholder="Dari .." value="{{ $dari }}" onclick="selectOnChange()">
+                                </div>
+                            </div>
                             {{--  <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
@@ -73,79 +73,78 @@
                                             <option value="0">&nbsp;</option>
                                             @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
                                             <option value="{{ $tmrekening_akun->id }}">
-                                                {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_kelompok_id"
-                                        class="col-form-label s-12 col-md-3"><strong>Rek. Kelompok :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
-                                            id="tmrekening_akun_kelompok_id">
-                                            <option value="0">&nbsp;</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_kelompok_jenis_id"
-                                        class="col-form-label s-12 col-md-3"><strong>Rek. Jenis</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmrekening_akun_kelompok_jenis_id"
-                                            class="form-control r-0 s-12 select2"
-                                            id="tmrekening_akun_kelompok_jenis_id">
-                                            <option value="0">&nbsp;</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmrekening_akun_kelompok_jenis_objek_id"
-                                        class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
-                                    <div class="col-md-5 p-0 mb-2">
-                                        <select name="tmrekening_akun_kelompok_jenis_objek_id"
-                                            class="form-control r-0 s-12 select2"
-                                            id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
-                                            <option value="0">&nbsp;</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>  --}}
+                            {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                            </option>
+                            @endforeach
+                            </select>
                         </div>
                     </div>
-                </div>
+                    <div class="form-group m-0">
+                        <label for="tmrekening_akun_kelompok_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                Kelompok :</strong></label>
+                        <div class="col-md-5 p-0 mb-2">
+                            <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
+                                id="tmrekening_akun_kelompok_id">
+                                <option value="0">&nbsp;</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-0">
+                        <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                Jenis</strong></label>
+                        <div class="col-md-5 p-0 mb-2">
+                            <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2"
+                                id="tmrekening_akun_kelompok_jenis_id">
+                                <option value="0">&nbsp;</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-0">
+                        <label for="tmrekening_akun_kelompok_jenis_objek_id"
+                            class="col-form-label s-12 col-md-3"><strong>Rek. Obj :</strong></label>
+                        <div class="col-md-5 p-0 mb-2">
+                            <select name="tmrekening_akun_kelompok_jenis_objek_id" class="form-control r-0 s-12 select2"
+                                id="tmrekening_akun_kelompok_jenis_objek_id" onchange="selectOnChange();">
+                                <option value="0">&nbsp;</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
-            <div class="card-body">
-               </div>
         </div>
     </div>
-    <div id="btn_cetak"></div>
-    <div class="card">
-        <div class="card-body">
-            <small>Klik kode rekening untuk melihat rincian .</small>
-            <center>
-                <div class="satker_show"></div>
-            </center>
-            @if($tgl_lapor != '')
-                <div class="alert alert-danger">Data berhasil di tambahkan Silahkan cek rincian pelaporan pada tanggal {{ Properti_app::tgl_indo($tgl_lapor) }}</div>  
-            @endif
-            <table id="datatable" class="table table-striped no-b" style="width:100%">
-                <thead>
-                    <tr>
-                        <th width="5%">&nbsp;</th>
-                        <th width="10%">Kode Rekening</th>
-                        <th width="35%">Uraian</th>
-                        <th width="10%">Volume Transaksi</th>
-                        <th width="15%">Jumlah Transaksi</th>
-                        <th width="15%">Tanggal Lapor</th>
-                        <th width="15%">Status Lapor</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+</div>
+<div class="card-body">
+</div>
+</div>
+</div>
+<div id="btn_cetak"></div>
+<div class="card">
+    <div class="card-body">
+        <small>Klik kode rekening untuk melihat rincian .</small>
+        <center>
+            <div class="satker_show"></div>
+        </center>
+        @if($tgl_lapor != '')
+        <div class="alert alert-danger">Data berhasil di tambahkan Silahkan cek rincian pelaporan pada tanggal
+            {{ Properti_app::tgl_indo($tgl_lapor) }}</div>
+        @endif
+        <table id="datatable" class="table table-striped no-b" style="width:100%">
+            <thead>
+                <tr>
+                    <th width="5%">&nbsp;</th>
+                    <th width="10%">Kode Rekening</th>
+                    <th width="35%">Uraian</th>
+                    <th width="10%">Volume Transaksi</th>
+                    <th width="15%">Jumlah Transaksi</th>
+                    <th width="15%">Tanggal Lapor</th>
+                    <th width="15%">Status Lapor</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+</div>
 </div>
 
 @section('script')
@@ -325,12 +324,15 @@ $('#datatable').on('click','#detail',function(e){
     if(!c.is(':disabled')){
         c.prop('checked', false);
     }
-
-
+ 
     var page = $(this).attr('to'); 
-    $('.load_page').load(page);
-    $('#modal_loader').modal('show');  
-});
+     $.get(page,function(data){
+        $('.load_page').load(page);
+        $('#modal_loader').modal('show');  
+    }).fail(function(){ 
+        $.alert('halaman tidak bisa di load kesalahan ... ','terjadi ganguan');
+    });
+ });
 
 function del(){
         var c = new Array();
@@ -366,7 +368,7 @@ function del(){
                 </button>
             </div>
             <div class="modal-body">
-                <div class="load_page"></div>
+                <div class="load_page"><i class="fa fa-share fa-spin"></i>Loading ...</div>
             </div>
         </div>
     </div>
