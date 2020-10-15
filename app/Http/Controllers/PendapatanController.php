@@ -187,7 +187,7 @@ class PendapatanController extends Controller
                 return ($r['volume'] == 0 ? '' : Html_number::decimal($r['volume']));
             })
             ->editColumn('jumlah_lapor', function ($p) use ($par) {
-               
+
                 $tgl_lapor = $par['tgl_lapor'];
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
@@ -201,18 +201,17 @@ class PendapatanController extends Controller
             ->editColumn('action', function ($p) use ($par) {
 
                 $tgl_lapor  = $par['tgl_lapor'];
-                $satker_id  = $par['satker_id']; 
+                $satker_id  = $par['satker_id'];
 
-                $rincian_id = $p->kd_rek_rincian_obj; 
+                $rincian_id = $p->kd_rek_rincian_obj;
 
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
                 if ($par['level_id'] == 3) {
                     $pad->where('is_deleted', 0);
                 } else {
-                
                 }
-                $r = $pad->first(); 
+                $r = $pad->first();
                 if ($r['jumlah'] == '' || $r['jumlah'] == NULL) {
                     return '<a href="' . route('pendapatan.create', $rincian_id . '?satker_id=' . $satker_id . '&tgl=' . $tgl_lapor) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
                   <br />
@@ -307,9 +306,14 @@ class PendapatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'tmsikd_setup_tahun_anggaran_id' => 'required', 
-            'tmsikd_satker_id'               => 'required'
+            'tmsikd_satker_id' => 'required',
+            'cboxInputRinci' => 'required',
+            'tanggal_lapor'    => 'required'
         ]);
+
+        $ftahun = Carbon::now()->format('Y');
+        $tskrg  = Properti_app::tahun_sekarang();
+        $tahun =  ($tskrg) ? $tskrg : $ftahun;
 
         $level_id      = Properti_app::getlevel();
         if ($level_id  == 3) {
@@ -344,7 +348,9 @@ class PendapatanController extends Controller
                 'satuan' => $satuan[$key],
                 'jumlah' => $jumlah[$key],
                 'harga'  => $harga[$key],
-                'tanggal_lapor' => $tanggal_lapor
+                'tanggal_lapor' => $tanggal_lapor,
+                'is_deleted' => 0,
+                'tahun' => $tahun
             ]);
         }
 
