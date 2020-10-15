@@ -12,6 +12,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
     <div class="container-fluid my-3">
         <div id="alert"></div>
         <form class="needs-validation" id="form" method="POST" novalidate>
+           {{ method_field('PUT') }}
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
@@ -232,14 +233,7 @@ function selectOnChange()
 }  
 
   //save data if true
-  function add(){
-    save_method = "add";
-    $('#form').trigger('reset');
-    $('input[name=_method]').val('POST');
-    $('#txtSave').html('');
-}
-add();
-
+ 
 
   function save(){ $('#form').submit(); }
   $('#form').on('submit', function (event) {
@@ -253,7 +247,8 @@ add();
       }else{
           $('#alert').html('');
           $('#btnSave').attr('disabled', true);
-          url = (save_method == 'add') ? "{{ route($route.'store') }}" : "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
+          url = "{{ route($route.'update', $id) }}";
+
           $.post(url, $(this).serialize(), function(data){
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
               document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;

@@ -287,7 +287,13 @@ class PendapatanController extends Controller
         $kd_rek_obj     = $id;
         $rekeningdatas  = Tmpendapatan::getrekeningbySatker($whred)->first();
         $jam            = Carbon::now()->format('H:i:s');
+
+        $action       =  route($this->route . 'store');
+        $method_field =  method_field('post');
+
         return view($this->view . 'form_add', compact(
+            'action',
+            'method_field',
             'title',
             'tahun_active',
             'rekeningdatas',
@@ -371,8 +377,7 @@ class PendapatanController extends Controller
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
         $level_id  = Properti_app::getlevel();
-        if ($request->satker_id == '') return abort(403, 'Satuan kerja tidak bisa kosong');
-
+        if ($request->satker_id == '' || $request->tgl == '') return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : ' . md5('ismarianto'));
 
         //jika akses satker berbeda 
         if ($satker_id == '' && $level_id != 3) {
@@ -440,13 +445,18 @@ class PendapatanController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id
         ];
         $rekeningdatas = Tmpendapatan::getrekeningbySatker($whred)->first();
-        
+
         $tgl_lapor        = $request->tgl;
         $jam              = Carbon::now()->format('s:i:s');
-        
+
+        $action       =  route($this->route . 'update', $id);
+        $method_field =  method_field('put');
+        $id           =  $id;
         return view($this->view . 'form_edit', compact(
             'title',
             'route',
+            'action',
+            'method_field',
             'toolbar',
             'rekeningdatas',
             'rincianid',
@@ -463,9 +473,74 @@ class PendapatanController extends Controller
             'tmrekening_akuns',
             'tmsikd_satkers',
             'dari',
-            'sampai'
+            'sampai',
+            'id'
         ));
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tmsikd_satker_id' => 'required',
+            'cboxInputRinci' => 'required',
+            'tanggal_lapor'    => 'required'
+        ]);
+
+        $ftahun = Carbon::now()->format('Y');
+        $tskrg  = Properti_app::tahun_sekarang();
+        $tahun =  ($tskrg) ? $tskrg : $ftahun;
+
+        $level_id      = Properti_app::getlevel();
+        if ($level_id  == 3) {
+            $satker_id = Auth::user()->sikd_satker_id;
+        } else {
+            $satker_id = $request->tmsikd_satker_id;
+        }
+
+        $cboxInput      = $request->cboxInput;
+        $cboxInputVal   = $request->cboxInputVal;
+        $cboxInputRinci = $request->cboxInputRinci;
+        $kd_rekening    = $request->kd_rekening;
+
+        $kd_rekening_sub   = $request->kd_rekening_sub;
+        $volume            = $request->volume;
+        $satuan            = $request->satuan;
+        $jumlah            = $request->jumlah;
+        $harga             = $request->harga;
+        $tanggal_lapor     = $request->tanggal_lapor;
+
+
+        if ($cboxInput == null)
+            return response()->json(['message' => "Tidak ada data list pendapatan yang dipilih."], 422);
+
+        for ($i = 0; $i < count($cboxInput); $i++) {
+            $key = $i;
+            $sub_rek = ($kd_rekening_sub[$key]) ? $kd_rekening_sub[$key] : 0;
+
+            $where = [
+                'tmpendapatan.tanggal_lapor' => $request->tanggal_lapor,
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $sub_rek
+            ];
+            Tmpendapatan::Where($where)->update([
+                'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$key],
+                'kd_rekening' => $cboxInputRinci[$key],
+                'tmsikd_satker_id' => $satker_id,
+                'volume' => $volume[$key],
+                'satuan' => $satuan[$key],
+                'jumlah' => $jumlah[$key],
+                'harga'  => $harga[$key],
+                'tanggal_lapor' => $tanggal_lapor,
+                'is_deleted' => 0,
+                'tahun' => $tahun
+            ]);
+        }
+
+        return response()->json([
+            'message' => "Data " . $this->title . " Berhasil Tersimpan"
+        ]);
+    }
+
 
     public function show($id)
     {
