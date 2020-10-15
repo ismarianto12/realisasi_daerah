@@ -147,13 +147,5 @@
         }
         document.getElementById('jumlah_mak').value = ttlMak;
         return true;
-    }
-   
-    function add(){
-        save_method = "add";
-        $('#form').trigger('reset');
-        $('input[name=_method]').val('POST');
-        $('#txtSave').html('');
-    }
-    add();
+    } 
 </script>

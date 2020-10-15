@@ -433,8 +433,7 @@ class PendapatanController extends Controller
         $rincianid    = $request->id;
         $jumlahmax    = $jumlahMax['total'];
         $satkerid     = $request->satker_id;
-
-
+ 
         //opert variable daa 
         if ($level_id == 3) {
             $fsatker_id = $satker_id;
@@ -450,13 +449,13 @@ class PendapatanController extends Controller
         $jam              = Carbon::now()->format('s:i:s');
 
         $action       =  route($this->route . 'update', $id);
-        $method_field =  method_field('put');
+       // $method_field =  method_field('put');
         $id           =  $id;
         return view($this->view . 'form_edit', compact(
             'title',
             'route',
             'action',
-            'method_field',
+            //'method_field',
             'toolbar',
             'rekeningdatas',
             'rincianid',

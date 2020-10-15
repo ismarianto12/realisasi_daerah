@@ -118,10 +118,13 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	//pendapatan route
+	
 	Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
-		Route::resource("", "PendapatanController");
-
+      	Route::patch('updateas/{id}','PendapatanController@update')->name('updateas');
+ 	
+ 		Route::resource("", "PendapatanController");
 		Route::get("{id}/edit", "PendapatanController@edit")->name('edit');
+		 
 		Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
 
 		Route::post('api', 'PendapatanController@api')->name('api');
@@ -138,7 +141,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		//pendapatan create
 		Route::get('create/{id}', 'PendapatanController@create')->name('create');  
-		
+
 		// get frm isian pendapatan
 		Route::get('form_pendapatan/{id}', 'PendapatanController@form_pendapatan')->name('form_pendapatan');
 		Route::get('pendapatandetail/{id}','PendapatanController@pendapatandetail')->name('pendapatandetail');

@@ -11,7 +11,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
     <div class="container-fluid my-3">
         <div id="alert"></div>
         <form class="needs-validation" id="form" method="POST" novalidate>
-            {{ method_field('PACTH') }}
+            {{ method_field('PATCH') }}
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
@@ -208,33 +208,10 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
 
 function selectOnChange()
 { 
-    var val_id     = $('#tmrekening_akun_kelompok_jenis_objek_id').val();
-    var satker_id  = $('#tmsikd_satker_id').val();
-    if(val_id == '' || val_id == 0 || satker_id == 0){
-        $.alert('Silahkan List Rekening Mata Anggaran sampai pada  jenis object rincian terlebih dahulu','keterangan');
-    }else if(satker_id == ''){
-        $.alert('Silahkan pilih satuan kerja terlebih dahulu ','keterangan');
-    }else{
-    
-     @if($raction == 'edit')
-      var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
-        $.get(form_url,{satker_id : satker_id },function(data){
-        $('.entri_rek').html(data); 
-      });
-
-       @elseif($raction == 'add') 
-        var form_url = "{{ route('pendapatan.form_pendapatan',':id') }}".replace(':id',val_id);
-         $.get(form_url,{satker_id : satker_id },function(data){
-         $('.entri_rek').html(data); 
-       });
-     @endif 
-    } 
-}  
-
+    //silent 
+ } 
   //save data if true
- 
-
-  function save(){ $('#form').submit(); }
+ function save(){ $('#form').submit(); }
   $('#form').on('submit', function (event) {
       event.preventDefault();
       var tanggal_lapor = $('#tanggal_lapor').val();
@@ -246,17 +223,13 @@ function selectOnChange()
       }else{
           $('#alert').html('');
           $('#btnSave').attr('disabled', true);
-
-          url = "{{ route($route.'update', $id) }}"; 
+          url = "{{ route('pendapatan.updateas', $id) }}"; 
           $.ajax({
-             method :'PACTH',
-             action : url,
-             data   : $(this).serialize(), 
-             headers : {
-                _method : 'PACTH',
-             },
+             type   : 'POST',
+             url    : url,
+             data   : $(this).serialize(),
             success:function(data){
-              $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+              $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong>Data berhasil di edit </div>");
               document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
            },error:function(data){
               err = ''; respon = data.responseJSON;
@@ -265,8 +238,7 @@ function selectOnChange()
               });
               $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Kesalaha Sedikti Bossq : </strong> " + respon.message + "<ol class='pl-3'>" + err + "</ol></div>");
             }
-          });
-          return false;
+          }); 
        }
        $(this).addClass('was-validated');
     }
