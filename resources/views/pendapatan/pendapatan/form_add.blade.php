@@ -37,12 +37,11 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                     <div class="col-md-12">
                                         <table class="table table-striped">
                                                 <tr>
-                                                    <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}">
+                                                    <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}" id="tanggal_lapor">
                                                     <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}"> 
                                                     <td>Tanggal Lapor</td><td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
                                                 </tr> 
-                                            </table> 
-
+                                            </table>  
                                             <h2>Rincian PAD <sup><a href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8" title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan </h2>
                                         <table class="table table-striped">
                                             <tr>
@@ -215,7 +214,7 @@ add();
           url = (save_method == 'add') ? "{{ route($route.'store') }}" : "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
           $.post(url, $(this).serialize(), function(data){
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
-              document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
+              document.location.href = "{{ url('pendapatan') }}?tgl_lapor={{ $tgl_lapor }}";
           }, "JSON").fail(function(data){
               err = ''; respon = data.responseJSON;
               $.each(respon.errors, function(index, value){

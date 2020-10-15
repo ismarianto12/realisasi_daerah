@@ -3,8 +3,7 @@
 @section('title','Pendapatan Daerah')
 @section('content')
 @include('layouts._includes.toolbar')
-
-
+ 
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="card">
@@ -298,15 +297,18 @@ $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
 $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
 
 function selectOnChange(){
- var tgl_lapor   = $('#tgl_lapor').val(); 
 
+ var tgl_lapor   = $('#tgl_lapor').val(); 
+  
+ $('.satker_show').html('<div class="alert alert-danger">sedang mencari data di tanggal '+ tgl_lapor,'please wait ...</div>');
    // 'tahun_id='+$('tahun_id').val() +'&tmrapbd_id='+$('tmrapbd_id').val()+'&tmsikd_satker_id='+$('tmsikd_satker_id').val();
   table.api().ajax.reload();
   
   val_satker_id  = $('#tmsikd_satker_id').val();
   url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
   $.get(url,function(data){
-   if(data){ 
+   if(data){  
+    //$('#halaman_isi').html('data berhasil di tampilkan pada tanggal : '+ tgl_lapor,'Pencarian selesai ');
     $('.satker_show').html('<div class="alert alert-success"><h3> ['+data.kode+']['+data.satker_name+' ] BERDASARKAN TANGGAL LAPOR : '+tgl_lapor+'</h3></div>')
 }else{ 
     $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
@@ -369,6 +371,26 @@ function del(){
             </div>
             <div class="modal-body">
                 <div class="load_page"><i class="fa fa-share fa-spin"></i>Loading ...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{--  modal loading  --}}
+<div class="modal fade" id="loading_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Sedang Mencari Data ....
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="halaman_isi"><i class="fa fa-share fa-spin"></i>Loading ...</div>
             </div>
         </div>
     </div>

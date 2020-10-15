@@ -7,7 +7,7 @@ namespace App\Helpers;
 use App\Models\User;
 use App\Models\Setupsikd\Tmsikd_satker;
 use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -24,6 +24,22 @@ class Properti_app
 	{
 		$session = (Session::get('year')) ?  Session::get('year') : '';
 		return $session;
+	}
+
+	public static function user_satker()
+	{
+		$user_id = Auth::user()->id;
+		$query   = DB::table('user')
+			->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
+			->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
+			->where('user.id', $user_id);
+
+		$levelid = $query->first()->level_id;
+		if ($levelid == 3) {
+			return Auth::user()->sikd_satker_id;
+		} else {
+			return 0;
+		}
 	}
 
 	public static function load_js(array $url)
@@ -44,8 +60,8 @@ class Properti_app
 			->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
 			->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
 			->where('user.id', $user_id)
-			->get();
-		return $query->first()->level_id;
+			->first();
+		return $query->level_id;
 	}
 
 

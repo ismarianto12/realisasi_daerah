@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers;
 
-use Access;
 use DataTables;
 use Html_number;
 use Sikd_list_option;
@@ -140,6 +139,7 @@ class PendapatanController extends Controller
         if ($tgl_lapor != '') {
             $par = [
                 'tgl_lapor' => $tgl_lapor,
+                'level_id' => $level_id = Properti_app::getlevel(),
                 'satker_id' => $satker_id
 
             ];
@@ -147,10 +147,11 @@ class PendapatanController extends Controller
             $sekarang = Carbon::now()->format('Y-m-d');
             $par = [
                 'tgl_lapor' => $sekarang,
+                'level_id' => $level_id = Properti_app::getlevel(),
                 'satker_id' => $satker_id
             ];
         }
-
+        // dd($par);
         $data->get();
         return DataTables::of($data)
             ->editColumn('id', function ($p) {
@@ -163,42 +164,60 @@ class PendapatanController extends Controller
                 return "<a to='" . Url('pendapatan/pendapatandetail/' . $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
             ->editColumn('tanggal_lapor',  function ($p) use ($par) {
-                $tgl_lapor = $par['tgl_lapor'];
-                $pad       = Tmpendapatan::where('tmpendapatan.tanggal_lapor', $tgl_lapor)
-                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
-                    ->first();
 
-                return ($pad['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($pad->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+                $tgl_lapor = $par['tgl_lapor'];
+                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
+                if ($par['level_id'] == 3) {
+                    $pad->where('is_deleted', 0);
+                } else {
+                }
+                $r = $pad->first();
+                return ($r['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($r->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
             })
             ->editColumn('volume',  function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
-                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor)
-                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
-                    ->first();
-
-                return ($pad['volume'] == 0 ? '' : Html_number::decimal($pad->volume));
+                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
+                if ($par['level_id'] == 3) {
+                    $pad->where('is_deleted', 0);
+                } else {
+                }
+                $r = $pad->first();
+                return ($r['volume'] == 0 ? '' : Html_number::decimal($r['volume']));
             })
             ->editColumn('jumlah_lapor', function ($p) use ($par) {
+               
                 $tgl_lapor = $par['tgl_lapor'];
-                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor)
-                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
-                    ->first();
-
-                return ($pad['jumlah']) ? Html_number::decimal($pad['jumlah']) : '<b>Kosong. </b>';
+                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
+                if ($par['level_id'] == 3) {
+                    $pad->where('is_deleted', 0);
+                } else {
+                }
+                $r = $pad->first();
+                return ($r['jumlah']) ? Html_number::decimal($r['jumlah']) : '<b>Kosong. </b>';
             })
             ->editColumn('action', function ($p) use ($par) {
 
                 $tgl_lapor  = $par['tgl_lapor'];
-                $satker_id  = $par['satker_id'];
-                //dd
-                $rincian_id = $p->kd_rek_rincian_obj;
-                $pad = Tmpendapatan::where('tanggal_lapor', $tgl_lapor)
-                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
-                    ->first();
-                if ($pad['jumlah'] == '' || $pad['jumlah'] == NULL) {
+                $satker_id  = $par['satker_id']; 
+
+                $rincian_id = $p->kd_rek_rincian_obj; 
+
+                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
+                if ($par['level_id'] == 3) {
+                    $pad->where('is_deleted', 0);
+                } else {
+                
+                }
+                $r = $pad->first(); 
+                if ($r['jumlah'] == '' || $r['jumlah'] == NULL) {
                     return '<a href="' . route('pendapatan.create', $rincian_id . '?satker_id=' . $satker_id . '&tgl=' . $tgl_lapor) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
                   <br />
-                <small>(Klik Tombol Untuk Lapor)</small>';
+                <small>(Klik Tombol Untuk Lapor)</small>
+                <br />';
                 } else {
                     return '<a href="" class="btn btn-primary btn-xs" title="Silahkan Laporkan jumlah Pad"><i class="fa fa-check"></i>Sudah Lapor</a>';
                 }
@@ -534,11 +553,15 @@ class PendapatanController extends Controller
 
     public function destroy(Request $request)
     {
+        $level_id = Properti_app::getlevel();
         if (is_array($request->id)) {
-            Tmpendapatan::whereIn('id', $request->id)->delete();
-        } else {
-            $tmrka = Tmpendapatan::whereid($request->id)->firstOrFail();
-            $tmrka->delete();
+            if ($level_id == 3) {
+                Tmpendapatan::whereIn('id', $request->id)->update([
+                    'is_deleted' => 1
+                ]);
+            } else {
+                Tmpendapatan::whereIn('id', $request->id)->delete();
+            }
         }
         return ['message' => "Data " . $this->title . " berhasil dihapus."];
     }

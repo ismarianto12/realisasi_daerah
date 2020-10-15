@@ -41,17 +41,17 @@
                 <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
                     onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
-                    \="" value="{{ $pendapatan['volume'] }}">
+                    \="" value="">
             </td> 
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="{{ $pendapatan['satuan'] }}">
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="">
             </td>
 
             <td style="{{ $style }}">
                 <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
-                    value="{{ $pendapatan['jumlah'] }}">
+                    value="">
             </td>
         </tr> 
         <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'] }}" />
