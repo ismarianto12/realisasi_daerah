@@ -326,11 +326,13 @@ class PendapatanController extends Controller
         $cboxInputVal   = $request->cboxInputVal;
         $cboxInputRinci = $request->cboxInputRinci;
         $kd_rekening    = $request->kd_rekening;
-        $volume         = $request->volume;
-        $satuan         = $request->satuan;
-        $jumlah         = $request->jumlah;
-        $harga          = $request->harga;
-        $tanggal_lapor  = $request->tanggal_lapor;
+
+        $kd_rekening_sub   = $request->kd_rekening_sub;
+        $volume            = $request->volume;
+        $satuan            = $request->satuan;
+        $jumlah            = $request->jumlah;
+        $harga             = $request->harga;
+        $tanggal_lapor     = $request->tanggal_lapor;
 
 
         if ($cboxInput == null)
@@ -338,11 +340,11 @@ class PendapatanController extends Controller
 
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
-            $sub_rek = ($cboxInputVal[$key]) ? $cboxInputVal[$key] : 0;
+            $sub_rek = ($kd_rekening_sub[$key]) ? $kd_rekening_sub[$key] : 0;
             Tmpendapatan::updateOrCreate([
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
                 'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$key],
-                'kd_rekening' => $kd_rekening[$key],
+                'kd_rekening' => $cboxInputRinci[$key],
                 'tmsikd_satker_id' => $satker_id,
                 'volume' => $volume[$key],
                 'satuan' => $satuan[$key],

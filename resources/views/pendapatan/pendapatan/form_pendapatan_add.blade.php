@@ -92,7 +92,7 @@
                 <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title="">
             </td>
-            <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="{{ $sub_rinci['kd_rek_rincian_objek_sub'] }}" />
+            <input name="kd_rekening_sub[{{ $idx }}]" id="kd_rekening_sub{{ $idx }}" type="hidden" value="{{ $sub_rinci['kd_rek_rincian_objek_sub'] }}" />
         </tr> 
         @endforeach
         @endforeach
