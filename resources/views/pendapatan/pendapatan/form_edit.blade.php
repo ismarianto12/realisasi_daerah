@@ -6,13 +6,12 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
 @endphp
 
 @section('title', $pagetitle)
-
 <div class="page bg-light">
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
         <div id="alert"></div>
         <form class="needs-validation" id="form" method="POST" novalidate>
-           {{ method_field('PUT') }}
+            {{ method_field('PACTH') }}
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
@@ -192,8 +191,8 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
         }
     });  
  
- 
-        
+    
+     val_id = "{{ $id }}";       
      var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',val_id);
        $.get(form_url,{satker_id : satker_id },function(data){
        $('.entri_rek').html(data); 
@@ -247,23 +246,29 @@ function selectOnChange()
       }else{
           $('#alert').html('');
           $('#btnSave').attr('disabled', true);
-          url = "{{ route($route.'update', $id) }}";
 
-          $.post(url, $(this).serialize(), function(data){
+          url = "{{ route($route.'update', $id) }}"; 
+          $.ajax({
+             method :'PACTH',
+             action : url,
+             data   : $(this).serialize(), 
+             headers : {
+                _method : 'PACTH',
+             },
+            success:function(data){
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
               document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
-          }, "JSON").fail(function(data){
+           },error:function(data){
               err = ''; respon = data.responseJSON;
               $.each(respon.errors, function(index, value){
                   err += "<li>" + value +"</li>";
               });
               $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Kesalaha Sedikti Bossq : </strong> " + respon.message + "<ol class='pl-3'>" + err + "</ol></div>");
-          }).always(function(){
-              $('#btnSave').removeAttr('disabled');
+            }
           });
           return false;
-      }
-      $(this).addClass('was-validated');
+       }
+       $(this).addClass('was-validated');
     }
   });
  
