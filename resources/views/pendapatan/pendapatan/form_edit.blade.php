@@ -228,7 +228,8 @@ function selectOnChange()
              type   : 'POST',
              url    : url,
              data   : $(this).serialize(),
-            success:function(data){
+             success:function(data){
+              //  $('#alert').html(data);
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong>Data berhasil di edit </div>");
               document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
            },error:function(data){

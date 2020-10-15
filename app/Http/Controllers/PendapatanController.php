@@ -479,6 +479,8 @@ class PendapatanController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($id);
+
         $request->validate([
             'tmsikd_satker_id' => 'required',
             'cboxInputRinci' => 'required',
@@ -518,7 +520,7 @@ class PendapatanController extends Controller
 
             $where = [
                 'tmpendapatan.tanggal_lapor' => $request->tanggal_lapor,
-                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $sub_rek
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id
             ];
             Tmpendapatan::Where($where)->update([
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
