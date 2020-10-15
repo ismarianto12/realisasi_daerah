@@ -31,48 +31,23 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                 </div>
                             </div>
 
-                            <div class="form-group form-show-validation row">
-                                <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
-                                    <span class="required-label">*</span></label>
-                                <div class="col-sm-6">
-                                    <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 "
-                                        required onchange="selectOnChange()">
-                                        @foreach($tmsikd_satkers as $tmsikd_satker)
-                                        <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->
-                                            id)
-                                            selected="selected"@endif>
-                                            [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
 
-                            @if($raction == 'edit')
-                            <div class="card-body">
-                                <div class="form-row form-inline">
-                                    <div class="col-md-8">
-                                        <hr />
-                                        <div class="form-group form-show-validation row">
-                                            <div class="form-group">
-                                                <label for="jumlah_mak" class="col-md-3">Jumlah :</label>
-                                                <div class="col-md-8">
-                                                    <input name="jumlah_mak" id="jumlah_mak" type="text" placeholder=""
-                                                        class="form-control number" autocomplete="off"
-                                                        value="{{ $jumlahmax }}" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @elseif($raction == 'add')
-                            <div class="card-header">
-                                <h6>List Rekening Mata Anggaran</h6>
-                            </div>
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}"
+                                                    id="tanggal_lapor">
+                                                <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}">
+                                                <td>Tanggal Lapor</td>
+                                                <td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
+                                            </tr>
+                                        </table>
+                                        <h2>Rincian PAD <sup><a
+                                                    href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
+                                                    title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
+                                        </h2>
                                         <table class="table table-striped">
                                             <tr>
                                                 <td>Kelompok Jenis Rekening</td>
@@ -103,8 +78,8 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                     </div>
                                 </div>
                             </div>
-                            @endif
                         </div>
+
                         <div class="card-body">
                             <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
                                 tidak di

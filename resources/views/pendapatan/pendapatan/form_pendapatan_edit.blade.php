@@ -54,9 +54,9 @@
                     value="{{ $pendapatan['jumlah'] }}">
             </td>
         </tr> 
-        <input name="kd_rekening[{{ $idx }}]" id="kd_rekening_{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'] }}" />
-        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_id'] }}" />
-        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="{{ $pendapatan['tmrekening_akun_kelompok_jenis_objek_rincian_id'] }}" />
+        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden" value="{{ $rinci['kd_rek_rincian_obj'] }}" />
+        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden" value="{{ $rinci['kd_rek_rincian_obj'] }}" />
+        
         @php $idx++ @endphp
 
 
@@ -94,6 +94,8 @@
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
                     value="{{ $pendapatan['jumlah'] }}">
             </td>
+            <input name="kd_rekening_sub[{{ $idx }}]" id="kd_rekening_sub{{ $idx }}" type="hidden" value="{{ $sub_rinci['kd_rek_rincian_objek_sub'] }}" />
+      
         </tr> 
         @endforeach
         @endforeach

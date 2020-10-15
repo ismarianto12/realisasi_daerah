@@ -31,6 +31,8 @@ class Tmpendapatan extends Model
         'kd_rekening',
         'harga',
         'jumlah',
+        'volume',
+        'satuan',
         'keterangan',
         'tanggal_lapor',
         'is_deleted',

@@ -440,7 +440,10 @@ class PendapatanController extends Controller
             'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id
         ];
         $rekeningdatas = Tmpendapatan::getrekeningbySatker($whred)->first();
-
+        
+        $tgl_lapor        = $request->tgl;
+        $jam              = Carbon::now()->format('s:i:s');
+        
         return view($this->view . 'form_edit', compact(
             'title',
             'route',
@@ -448,11 +451,14 @@ class PendapatanController extends Controller
             'rekeningdatas',
             'rincianid',
             'jumlahmax',
+            'tgl_lapor',
             'raction',
+            'jam',
             'tahun_active',
             'tmsikd_satker_id',
             'tahuns',
             'nmtitledit',
+            'fsatker_id',
             'satkerid',
             'tmrekening_akuns',
             'tmsikd_satkers',
