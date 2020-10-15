@@ -45,7 +45,7 @@
             </td> 
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \value="{{ $pendapatan['satuan'] }}">
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " value="{{ $pendapatan['satuan'] }}">
             </td>
 
             <td style="{{ $style }}">
@@ -86,7 +86,7 @@
 
             <td style="{{ $style }}">
                 <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \value="{{ $pendapatan['satuan'] }}">
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " value="{{ $pendapatan['satuan'] }}">
             </td>
 
             <td style="{{ $style }}">
