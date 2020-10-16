@@ -142,18 +142,19 @@ class ReportController extends Controller
         //get periode lalu 
         $dperiode = $tahun . '-01-01';
         $speriode = date($sampai, strtotime('-1 day'));
- 
-        $periode_lalu    = Tmpendapatan::report_pendapatan([],'tmrekening_akun_kelompok_jenis.id');
+
+        $periode_lalu    = Tmpendapatan::report_pendapatan([], 'tmrekening_akun_kelompok_jenis.id');
         if ($rekjenis_id != 0) {
-            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
+            $periode_lalu->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
         }
         if ($dari != '' && $sampai != '') {
-            $data->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
-            $data->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
+            $periode_lalu->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
+            $periode_lalu->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
         }
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
-            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        }  
+            $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }
+        $rperiode_lalu = $periode_lalu;
 
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
@@ -169,7 +170,7 @@ class ReportController extends Controller
                 'jenisobject' => $jenisobject,
                 'objectrincian' => $objectrincian,
                 'objectrinciansub' => $objectrinciansub,
-                'periode_lalu'=> $periode_lalu
+                'rperiode_lalu' => $rperiode_lalu
             ]);
         } else {
             $pdf = PDF::loadView(
@@ -187,6 +188,7 @@ class ReportController extends Controller
                     'jenisobject' => $jenisobject,
                     'objectrincian' => $objectrincian,
                     'objectrinciansub' => $objectrinciansub,
+                    'rperiode_lalu' => $rperiode_lalu
                 ]
             )
                 ->setPaper('A4', 'landscape');
