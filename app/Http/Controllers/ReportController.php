@@ -97,13 +97,12 @@ class ReportController extends Controller
         $opd = Sikd_satker::find($request->tmsikd_satker_id);
         //report per rekening jenis 
         $jenis    = $request->jenis;
-        if ($jenis == 'xls') { 
-            $namaFile  = 'Laporan Perekening jenis satuan kerja'.$opd->kode.'-'.$opd->n_opd;
-         //   $fnamaFile  = str_replace($namaFile,'-',''); 
+        if ($jenis == 'xls') {
+            $namaFile  = 'Laporan Perekening jenis satuan kerja' . $opd->kode . '-' . $opd->n_opd;
+            //   $fnamaFile  = str_replace($namaFile,'-',''); 
             $data      = new Exportpendapatan($request);
-            return Excel::download($data, $namaFile.'.xlsx'); 
-
-        }else if($jenis == 'rtf') {
+            return Excel::download($data, $namaFile . '.xlsx');
+        } else if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
             $this->headerdownload($namaFile);
         }
@@ -128,9 +127,9 @@ class ReportController extends Controller
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
             $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
         }
-        if ($tmsikd_satker_id == 0) {
-            $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
-        }
+        // if ($tmsikd_satker_id == 0) {
+        //     $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
+        // }
         $filldata =  $data->get();
         // dd($data);
         $tahun             = Properti_app::tahun_sekarang();
@@ -139,7 +138,23 @@ class ReportController extends Controller
         $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan      = new Tmpendapatan;
+
+        //get periode lalu 
+        $dperiode = $tahun . '-01-01';
+        $speriode = date($sampai, strtotime('-1 day'));
  
+        $periode_lalu    = Tmpendapatan::report_pendapatan([],'tmrekening_akun_kelompok_jenis.id');
+        if ($rekjenis_id != 0) {
+            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
+        }
+        if ($dari != '' && $sampai != '') {
+            $data->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
+            $data->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
+        }
+        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
+            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }  
+
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
@@ -154,6 +169,7 @@ class ReportController extends Controller
                 'jenisobject' => $jenisobject,
                 'objectrincian' => $objectrincian,
                 'objectrinciansub' => $objectrinciansub,
+                'periode_lalu'=> $periode_lalu
             ]);
         } else {
             $pdf = PDF::loadView(

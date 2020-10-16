@@ -29,10 +29,10 @@ use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-  
+
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
- 
+
 class Exportpendapatan implements ShouldAutoSize, FromView
 {
 
@@ -44,7 +44,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView
 
     public function view(): View
     {
-  
+
         $tahun_id          = $this->request['tahun_id'];
         $tmsikd_satker_id  = $this->request['tmsikd_satker_id'];
         $dari              = $this->request['dari'];
@@ -78,7 +78,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView
         $tmpendapatan      = new Tmpendapatan;
         $opd = Sikd_satker::find($this->request['tmsikd_satker_id']);
 
-        return view('laporan_pendapatan.jenis_object', [
+        return view('laporan_pendapatan.jenis_object_excel', [
             'tahun' => $tahun,
             'dari' => $dari,
             'opd' => $opd,
@@ -96,11 +96,17 @@ class Exportpendapatan implements ShouldAutoSize, FromView
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class    => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
-                 //all get event now
+                //all get event now
+                $event->sheet->setAllBorders('thin');
+                $event->sheet->setSize(array(
+                    'A1' => array(
+                        'width'     => 10,
+                        'height'    => 0
+                    )
+                ));
                 $event->sheet->getColumnDimension('B')->setAutoSize(true);
-
             },
         ];
     }

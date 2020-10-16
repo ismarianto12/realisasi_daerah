@@ -363,32 +363,12 @@ class Tmpendapatan extends Model
             // /->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id',$)
             ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_subs.id');
     }
+ 
 
 
-    // SELECT
-    //     *
-    // FROM
-    //     tmrekening_akun_kelompoks
-    //     INNER JOIN
-    //     tmrekening_akun_kelompok_jenis
-    //     ON 
-    //         tmrekening_akun_kelompoks.id = tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id
-    //     INNER JOIN
-    //     tmrekening_akun_kelompok_jenis_objeks
-    //     ON 
-    //         tmrekening_akun_kelompok_jenis.kd_rek_jenis = tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id
-    //     INNER JOIN
-    //     tmrekening_akun_kelompok_jenis_objek_rincians
-    //     ON 
-    //         tmrekening_akun_kelompok_jenis_objeks.id = tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id
-    //     INNER JOIN
-    //     tmrekening_akun_kelompok_jenis_objek_rincian_subs
-    //     ON 
-    //         tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj = tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id
-    // WHERE
-    //     ( tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id = 110201 )
-    // GROUP BY
-    //     tmrekening_akun_kelompok_jenis_objek_rincian_subs.id
-
+    // public function static getPeriodeLalu()
+    // {
+    //     # code...
+    // }
 
 }

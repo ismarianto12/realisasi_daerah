@@ -21,25 +21,38 @@
         width: auto;
         height: auto;
     }
-</style>
+</style> 
 
+<table>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <b> PEMERINTAH KOTA TANGERANG SELATAN </b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </b>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b> PER REKENING JENIS</b>
+        </td>
+    </tr>
+    <tr>
+        <td> TAHUN ANGGARAN {{ $tahun }}</td>
+    </tr>
+    <tr>
+        <td><b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b></td>
+    </tr>
+    <tr>
+        <td> PERIODE : {{ $dari }} S/D {{ $sampai }}</td>
+    </tr>
 
-<div style="float:left">
-    <img src="{{ asset('assets/template/img/logo_tangsel.png') }}" style="width: 60px;height:60px;margin-top:15px">
-</div> 
-
-<center>
-    <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
-    <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
-    <h4> PER REKENING JENIS</h4>
-    TAHUN ANGGARAN {{ $tahun }}
-    <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
-    <br />
-    PERIODE : {{ $dari }} S/D {{ $sampai }}
-    <br />
-</center>
-<br />
-<br />
+</table>
 <table>
     <thead>
         <tr style="border-bottom: 0.1px solid #000">
@@ -73,7 +86,6 @@
     <tbody>
         @foreach ($render as $list)
         @php
-        //$gperiode_lalu = $periode_lalu::first();
         $target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$list['id_rek_obj'])->first();
         $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : '0';
         $sjenis = ($dtarget - $list['jml_rek_jenis']);
@@ -108,20 +120,14 @@
         @php
         $b = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objeks.id' => $ls->id_rek_obj],
         'tmrekening_akun_kelompok_jenis_objek_rincians.id')->get();
- 
-        @endphp
-        @foreach ($b as $item)
-        @php
-            
-        $rincian_target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$item['id_rek_rincians'])->first();
-        $rtarget = ($rincian_target['jumlah']) ? number_format($rincian_target['jumlah'],0,0,'.') : '0';
-        $srinci  = ($rincian_target['jumlah'] - $list['jml_rek_rincian']);
+        $srinci = ($dtarget - $list['jml_rek_rincian']);
 
         @endphp
+        @foreach ($b as $item)
         <tr>
             <td>{{ $item['id_rek_rincians'] }}</td>
             <td>{{ $item['nm_rek_rincian_obj'] }}</td>
-            <td>{{ $rtarget }}</td>
+            <td></td>
             <td></td>
             <td><b>{{ number_format($item['jml_rek_rincian'],0,0,'.') }}</b></td>
             <td></td>
