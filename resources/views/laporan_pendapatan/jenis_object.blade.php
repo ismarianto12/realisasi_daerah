@@ -4,15 +4,17 @@
     table {
         border-collapse: collapse;
         width: 100%;
+        border : 0.1pt dashed #000;
     }
 
     th,
     td {
-        text-align: left;
+        text-align: left; 
+        border : 0.1pt dashed #000;
     }
 
     tr:nth-child(even) {
-        background-color: #f2f2f2
+        background-color: #f2f2f2  
     }
 
     th {
