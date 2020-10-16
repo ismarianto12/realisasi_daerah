@@ -107,7 +107,7 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
         $jreport           = 1;
-        $rekjenis_id       = $request->tmrekening_akun_kelompok_jenis_id;
+        $rekjenis_id       = $request->rekjenis_id;
 
         $groupby           = 'tmrekening_akun_kelompok_jenis.id';
         $data              = Tmpendapatan::report_pendapatan([], $groupby);
