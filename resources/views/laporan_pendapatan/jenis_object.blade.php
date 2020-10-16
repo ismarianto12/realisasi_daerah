@@ -4,7 +4,8 @@
     table {
         border-collapse: collapse;
         width: 100%;
-    } 
+    }
+
     th,
     td {
         text-align: left;
@@ -22,11 +23,7 @@
     }
 </style>
 
-<div style="float:left">
-    <img src="{{ asset('assets/template/img/logo_tangsel.png') }}" style="width: 60px;height:60px;margin-top:10px">
-</div>
-
-
+ 
 <center>
     <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
     <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
@@ -74,8 +71,7 @@
         @php
         $target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$list['id_rek_obj'])->first();
         $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : '0';
-        $sjenis = ($list['jml_rek_jenis'] - $dtarget);
-       // $total   =  ($list['jumlah'] - $dtarget); 
+        $sjenis = ($dtarget - $list['jml_rek_jenis']); 
         @endphp
         <tr>
             <td><b>{{ $list['kd_rek_jenis'] }}</b></td>
@@ -90,8 +86,8 @@
         @php
         $a = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis.id' => $list->id_rek_jenis],
         'tmrekening_akun_kelompok_jenis_objeks.id')->get();
-        $sobj = ($list['jml_rek_obj'] - $dtarget);
-       
+        $sobj = ($dtarget - $list['jml_rek_obj']);
+
         @endphp
         @foreach ($a as $ls)
         <tr>
@@ -107,8 +103,8 @@
         @php
         $b = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objeks.id' => $ls->id_rek_obj],
         'tmrekening_akun_kelompok_jenis_objek_rincians.id')->get();
-        $srinci = ($list['jml_rek_rincian'] - $dtarget);
-   
+        $srinci = ($dtarget - $list['jml_rek_rincian']);
+
         @endphp
         @foreach ($b as $item)
         <tr>
@@ -116,29 +112,41 @@
             <td>{{ $item['nm_rek_rincian_obj'] }}</td>
             <td></td>
             <td></td>
-            <td>{{ number_format($item['jml_rek_rincian'],0,0,'.') }}</td>
+            <td><b>{{ number_format($item['jml_rek_rincian'],0,0,'.') }}</b></td>
             <td></td>
             <td>{{ number_format($srinci,0,0,'.') }}</td>
             <td></td>
         </tr>
 
         @php
-         $c = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objek_rincians.id' =>
-         $ls->id_rek_rincians], 'rek_rincian_sub_id')->get();
-         $srinci_sub = ($list['jml_rek_rincian_sub'] - $dtarget);
+        $c = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objek_rincians.id' =>
+        $ls->id_rek_rincians], 'rek_rincian_sub_id')->get();
+        $srinci_sub = ($dtarget - $list['jml_rek_rincian_sub']);
         @endphp
+        @if ($c->count() == 0 || $c == NULL)
+        @else
         @foreach ($c as $r)
+
         <tr>
             <td>{{ $r['rek_rincian_sub_id'] }}</td>
             <td>{{ $r['nm_rek_rincian_objek_sub'] }}</td>
             <td></td>
             <td></td>
-            <td>{{ number_format($r['jml_rek_rincian_sub'],0,0,'.') }}</td>
+            <td>  
+            @if($r['jml_rek_rincian_sub'] == 0)
+               @else
+                  {{ number_format($r['jml_rek_rincian_sub'],0,0,'.') }}
+             @endif
             <td></td>
-            <td>{{ $srinci_sub }}</td>
+            <td>@if($srinci_sub == 0) 
+                @else
+                {{ number_format($srinci_sub,0,0,'.') }};
+                @endif
+            </td>
             <td></td>
         </tr>
         @endforeach
+        @endif
         @endforeach
 
         @endforeach

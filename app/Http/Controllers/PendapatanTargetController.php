@@ -75,7 +75,7 @@ class PendapatanTargetController extends Controller
                 return '<b>' . $pad_jenis['nm_rek_obj'] . '</b>';
             })
             ->editColumn('djumlah', function ($p) {
-                return "<b><a href='" . route($this->route . 'edit', $p->tmrekening_akun_kelompok_jenis_objek_rincian_id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
+                return "<b><a href='" . route($this->route . 'edit', $p->rekneing_rincian_akun_jenis_objek_id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
             })
             ->editColumn('djumlah_perubahan', function ($p) {
                 return "<b>" . number_format($p->jumlah, 0, 0, '.') . "</b>";

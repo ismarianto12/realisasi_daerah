@@ -179,11 +179,13 @@ class Tmpendapatan extends Model
                 SELECT SUM(jumlah) 
                 FROM tmpendapatan  
                 Where tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id = tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub) AS jml_rek_rincian_sub'),
+             
                 \DB::raw('(
                     SELECT SUM(rincian.jumlah) 
                     FROM tmpendapatan AS rincian 
                     Where rincian.tmrekening_akun_kelompok_jenis_objek_rincian_id = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian'),
-                \DB::raw('(
+            
+               \DB::raw('(
                 SELECT SUM(rincian.jumlah) 
                 FROM tmpendapatan AS rincian 
                 Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_id, 1, 5) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),

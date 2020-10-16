@@ -40,6 +40,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use function PHPSTORM_META\map;
 use Barryvdh\DomPDF\Facade as PDF;
+use Excel;
+
+use App\Export\Exportpendapatan;
 
 
 class ReportController extends Controller
@@ -88,16 +91,19 @@ class ReportController extends Controller
         header("Content-Transfer-Encoding: binary ");
     }
 
-    //all data report
+    //expport data perekening jenis
     function action_all(Request $request)
     {
+        $opd = Sikd_satker::find($request->tmsikd_satker_id);
         //report per rekening jenis 
         $jenis    = $request->jenis;
-        if ($jenis == 'xls') {
-            $namaFile = 'Pendapatan_daerah.xls';
-            $this->headerdownload($namaFile);
-        }
-        if ($jenis == 'rtf') {
+        if ($jenis == 'xls') { 
+            $namaFile  = 'Laporan Perekening jenis satuan kerja'.$opd->kode.'-'.$opd->n_opd;
+            $fnamaFile  = str_replace($namaFile,'-',''); 
+            $data      = new Exportpendapatan($request);
+            return Excel::download($data, $fnamaFile.'.xlsx'); 
+
+        }else if($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
             $this->headerdownload($namaFile);
         }
@@ -133,9 +139,8 @@ class ReportController extends Controller
         $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
         $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan      = new Tmpendapatan;
-        $opd = Sikd_satker::find($request->tmsikd_satker_id);
-
-        if ($jenis == 'rtf' || $jenis == 'xls') {
+ 
+        if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
                 'dari' => $dari,
@@ -151,8 +156,8 @@ class ReportController extends Controller
                 'objectrinciansub' => $objectrinciansub,
             ]);
         } else {
-            $pdf = PDF::loadView( 
-                 $this->view . 'jenis_object',
+            $pdf = PDF::loadView(
+                $this->view . 'jenis_object',
                 [
                     'tahun' => $tahun,
                     'dari' => $dari,
@@ -168,12 +173,13 @@ class ReportController extends Controller
                     'objectrinciansub' => $objectrinciansub,
                 ]
             )
-            ->setPaper('A4', 'landscape');
-             return $pdf->stream('report_pad');
+                ->setPaper('A4', 'landscape');
+            return $pdf->stream('report_pad');
         }
     }
 
-    // bulan bulan     
+
+
     public function perbulan(Request $request)
     {
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
