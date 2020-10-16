@@ -84,7 +84,7 @@
             <td></td>
             <td><b>{{ number_format($list['jml_rek_jenis'],0,0,'.') }}</b></td>
             <td></td>
-            <td>{{ $sjenis }}</td>
+            <td>{{ number_format($sjenis,0,0,'.') }}</td>
             <td></td>
         </tr>
         @php
@@ -101,7 +101,7 @@
             <td></td>
             <td><b>{{ number_format($ls['jml_rek_obj'],0,0,'.') }}</b></td>
             <td></td>
-            <td>{{ $sobj }}</td>
+            <td>{{ number_format($sobj,0,0,'.') }}</td>
             <td></td>
         </tr>
         @php
@@ -118,7 +118,7 @@
             <td></td>
             <td>{{ number_format($item['jml_rek_rincian'],0,0,'.') }}</td>
             <td></td>
-            <td>{{ $srinci }}</td>
+            <td>{{ number_format($srinci,0,0,'.') }}</td>
             <td></td>
         </tr>
 

@@ -151,9 +151,8 @@ class ReportController extends Controller
                 'objectrinciansub' => $objectrinciansub,
             ]);
         } else {
-            // $pdf = PDF::loadView
-            return view(
-                $this->view . 'jenis_object',
+            $pdf = PDF::loadView( 
+                 $this->view . 'jenis_object',
                 [
                     'tahun' => $tahun,
                     'dari' => $dari,
@@ -168,9 +167,9 @@ class ReportController extends Controller
                     'objectrincian' => $objectrincian,
                     'objectrinciansub' => $objectrinciansub,
                 ]
-            );
-            //     ->setPaper('A4', 'landscape');
-            // return $pdf->stream('report_pad');
+            )
+            ->setPaper('A4', 'landscape');
+             return $pdf->stream('report_pad');
         }
     }
 
