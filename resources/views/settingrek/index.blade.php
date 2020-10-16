@@ -96,7 +96,7 @@
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
                                     id="tmrekening_akun_id">
-                                    <option value="0">&nbsp;</option>
+                                    <option value="0">--Pilihan Data--</option>
                                     @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
                                     <option value="{{ $tmrekening_akun->id }}">
                                         {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
@@ -112,7 +112,7 @@
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_kelompok_id" class="form-control r-0 s-12 select2"
                                     id="tmrekening_akun_kelompok_id" onchange="selectOnChange();">
-                                    <option value="0">&nbsp;</option>
+                                    <option value="0">--Pilihan Data--</option>
                                 </select>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                             <div class="col-md-5 p-0 mb-2">
                                 <select name="tmrekening_akun_kelompok_jenis_id" class="form-control r-0 s-12 select2"
                                     id="tmrekening_akun_kelompok_jenis_id" onchange="selectOnChange();">
-                                    <option value="0">&nbsp;</option>
+                                    <option value="0">--Pilihan Data--</option>
                                 </select>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                                 <select name="tmrekening_akun_kelompok_jenis_objek_id"
                                     class="form-control r-0 s-12 select2" id="tmrekening_akun_kelompok_jenis_objek_id"
                                     onchange="selectOnChange();">
-                                    <option value="0">&nbsp;</option>
+                                    <option value="0">--Pilihan Data--</option>
                                 </select>
                             </div>
                         </div>

@@ -70,9 +70,7 @@
                                         </div>
                                     </div>
 
-
-
-
+  
                                     <div class="form-group form-show-validation row">
                                         <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
                                             Tahun Pendapatan.
