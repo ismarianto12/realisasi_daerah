@@ -152,7 +152,6 @@
             <td></td>
             <td>@if($srinci_sub == 0)
                 @else
-                {{ number_format($srinci_sub,0,0,'.') }};
                 @endif
             </td>
             <td></td>
