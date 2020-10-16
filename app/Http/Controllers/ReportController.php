@@ -99,9 +99,9 @@ class ReportController extends Controller
         $jenis    = $request->jenis;
         if ($jenis == 'xls') { 
             $namaFile  = 'Laporan Perekening jenis satuan kerja'.$opd->kode.'-'.$opd->n_opd;
-            $fnamaFile  = str_replace($namaFile,'-',''); 
+         //   $fnamaFile  = str_replace($namaFile,'-',''); 
             $data      = new Exportpendapatan($request);
-            return Excel::download($data, $fnamaFile.'.xlsx'); 
+            return Excel::download($data, $namaFile.'.xlsx'); 
 
         }else if($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
