@@ -74,8 +74,8 @@
         @php
         $target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$list['id_rek_obj'])->first();
         $dtarget = ($target['jumlah']) ? number_format($target['jumlah'],0,0,'.') : '0';
-        $selisih = ($list['jumlah'] - $dtarget);
-       //$total   =  ($list['jumlah'] - $dtarget); 
+        $sjenis = ($list['jml_rek_jenis'] - $dtarget);
+       // $total   =  ($list['jumlah'] - $dtarget); 
         @endphp
         <tr>
             <td><b>{{ $list['kd_rek_jenis'] }}</b></td>
@@ -84,12 +84,14 @@
             <td></td>
             <td><b>{{ number_format($list['jml_rek_jenis'],0,0,'.') }}</b></td>
             <td></td>
-            <td>{{ $selisih }}</td>
+            <td>{{ $sjenis }}</td>
             <td></td>
         </tr>
         @php
         $a = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis.id' => $list->id_rek_jenis],
         'tmrekening_akun_kelompok_jenis_objeks.id')->get();
+        $sobj = ($list['jml_rek_obj'] - $dtarget);
+       
         @endphp
         @foreach ($a as $ls)
         <tr>
@@ -99,12 +101,14 @@
             <td></td>
             <td><b>{{ number_format($ls['jml_rek_obj'],0,0,'.') }}</b></td>
             <td></td>
-            <td>{{ $selisih }}</td>
+            <td>{{ $sobj }}</td>
             <td></td>
         </tr>
         @php
         $b = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objeks.id' => $ls->id_rek_obj],
         'tmrekening_akun_kelompok_jenis_objek_rincians.id')->get();
+        $srinci = ($list['jml_rek_rincian'] - $dtarget);
+   
         @endphp
         @foreach ($b as $item)
         <tr>
@@ -112,15 +116,16 @@
             <td>{{ $item['nm_rek_rincian_obj'] }}</td>
             <td></td>
             <td></td>
-            <td>{{ number_format($item['jml_rek_rincian_obj'],0,0,'.') }}</td>
+            <td>{{ number_format($item['jml_rek_rincian'],0,0,'.') }}</td>
             <td></td>
-            <td>{{ $selisih }}</td>
+            <td>{{ $srinci }}</td>
             <td></td>
         </tr>
 
         @php
-        $c = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objek_rincians.id' =>
-        $ls->id_rek_rincians], 'rek_rincian_sub_id')->get();
+         $c = $tmpendapatan->report_pendapatan(['tmrekening_akun_kelompok_jenis_objek_rincians.id' =>
+         $ls->id_rek_rincians], 'rek_rincian_sub_id')->get();
+         $srinci_sub = ($list['jml_rek_rincian_sub'] - $dtarget);
         @endphp
         @foreach ($c as $r)
         <tr>
@@ -128,9 +133,9 @@
             <td>{{ $r['nm_rek_rincian_objek_sub'] }}</td>
             <td></td>
             <td></td>
-            <td>{{ number_format($r['jumlah'],0,0,'.') }}</td>
+            <td>{{ number_format($r['jml_rek_rincian_sub'],0,0,'.') }}</td>
             <td></td>
-            <td>{{ $selisih }}</td>
+            <td>{{ $srinci_sub }}</td>
             <td></td>
         </tr>
         @endforeach

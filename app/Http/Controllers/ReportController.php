@@ -99,7 +99,7 @@ class ReportController extends Controller
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-             $this->headerdownload($namaFile);
+            $this->headerdownload($namaFile);
         }
 
         $tahun_id          = $request->tahun_id;
@@ -151,7 +151,8 @@ class ReportController extends Controller
                 'objectrinciansub' => $objectrinciansub,
             ]);
         } else {
-            $pdf = PDF::loadView(
+            // $pdf = PDF::loadView
+            return view(
                 $this->view . 'jenis_object',
                 [
                     'tahun' => $tahun,
@@ -167,9 +168,9 @@ class ReportController extends Controller
                     'objectrincian' => $objectrincian,
                     'objectrinciansub' => $objectrinciansub,
                 ]
-            )
-                ->setPaper('A4', 'landscape');
-            return $pdf->stream('report_pad');
+            );
+            //     ->setPaper('A4', 'landscape');
+            // return $pdf->stream('report_pad');
         }
     }
 
@@ -204,7 +205,7 @@ class ReportController extends Controller
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
-             $this->headerdownload($namaFile);
+            $this->headerdownload($namaFile);
         }
         $tahun_id          = $request->tahun_id;
         $tmsikd_satker_id  = $request->tmsikd_satker_id;
@@ -297,7 +298,7 @@ class ReportController extends Controller
         // dd($tmrekening_rincian);
         foreach ($tmrekening_rincian as $rinci) {
             $didrincian[] = $rinci['id'];
-        } 
+        }
         $rekening_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_id', $didrincian)->get();
         foreach ($rekening_sub as $sub) {
             $dsubs[] = $sub['id'];

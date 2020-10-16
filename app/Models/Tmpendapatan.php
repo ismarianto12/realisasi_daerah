@@ -174,20 +174,26 @@ class Tmpendapatan extends Model
                 'tmrekening_akun_kelompoks.kd_rek_kelompok',
                 'tmrekening_akun_kelompoks.nm_rek_kelompok',
                 // 'tmsikd_sumber_anggarans.nm_sumber_anggaran',
+
                 \DB::raw('(
-                SELECT SUM(rincian.jumlah) 
-                FROM tmpendapatan AS rincian 
-                Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 7) = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian_obj'),
+                SELECT SUM(jumlah) 
+                FROM tmpendapatan  
+                Where tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id = tmrekening_akun_kelompok_jenis_objek_rincian_subs.kd_rek_rincian_objek_sub) AS jml_rek_rincian_sub'),
+                \DB::raw('(
+                    SELECT SUM(rincian.jumlah) 
+                    FROM tmpendapatan AS rincian 
+                    Where rincian.tmrekening_akun_kelompok_jenis_objek_rincian_id = tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj) AS jml_rek_rincian'),
                 \DB::raw('(
                 SELECT SUM(rincian.jumlah) 
                 FROM tmpendapatan AS rincian 
                 Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 5) = tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj) AS jml_rek_obj'),
+
                 \DB::raw('(
                 SELECT SUM(rincian.jumlah) 
                 FROM tmpendapatan AS rincian 
                 Where SUBSTR(rincian.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id, 1, 3) = tmrekening_akun_kelompok_jenis.kd_rek_jenis) AS jml_rek_jenis')
-            )
 
+            ) 
             ->join('tmrekening_akun_kelompok_jenis_objek_rincians', 'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj', 'LEFT')
 
 
