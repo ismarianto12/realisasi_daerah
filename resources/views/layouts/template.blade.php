@@ -164,7 +164,11 @@
                                             class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> 
+                        @php
+                        $level = Properti_app::getLevel();
+                        @endphp
+                        @if ($level != 3)
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -184,11 +188,13 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="see-all" href="javascript:void(0);">Lihat Semua Pendapatan .<i
+                                    <a class="see-all" href="{{ route('pendapatan') }}">Lihat Semua Pendapatan .<i
                                             class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
                         </li>
+                        @endif
+
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                                 <i class="fas fa-layer-group"></i>
@@ -497,6 +503,7 @@
 
     <script>
         $(function(){
+        $('.notif_opd').html('<div class="alert alert-danger">Loading ..</div>');
             url = '{{ route('aplikasi.opdinput') }}';
             $.get(url,function(data){
             hasil = '';  

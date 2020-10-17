@@ -115,14 +115,13 @@ class IdentitasController extends Controller
             ->get();
         $satker_t = [];
         foreach ($satkers as $satker) {
-            // dd($satker);
-
+            // dd($satker); 
             $data   = Tmpendapatan::where('tanggal_lapor', $now)
                 ->where('tmsikd_satker_id', $satker['id'])->first();
             if ($satker['sikd_satker_id'] != $data['tmsikd_satker_id']) {
                 $r             =  [];
                 $r['image']    = '<img src="' . asset('./file/photo_user/' . Properti_app::propuser('photo')) . '" alt="Tidak ada foto" class="avatar-img rounded-circle"
-                onerror="this.src=' . asset('assets/template/img/no-image.png') . '">';
+                onerror="this.src="' . asset('assets/template/img/no-image.png') . '"">';
                 $r['opd_kode'] = $satker->tmsikd_satker->kode;
                 $r['opn_nm']   = $satker->tmsikd_satker->nama;
                 $row[]         = $r;
