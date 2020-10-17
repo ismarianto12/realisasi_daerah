@@ -3,7 +3,7 @@
 @section('title','Pendapatan Daerah')
 @section('content')
 @include('layouts._includes.toolbar')
- 
+
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="card">
@@ -13,7 +13,7 @@
                             class="required-label">*</span></label>
                     <div class="col-sm-6">
                         <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
-                            autocomplete="off" onchange="selectOnChange()">
+                            autocomplete="off">
                             @foreach ($tahuns as $tahun)
                             <option value="{{$tahun->id}}" @if($tahun_active==$tahun->id)
                                 selected="selected"@endif>{{$tahun->tahun}}</option>
@@ -26,8 +26,7 @@
                     <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Satuan Kerja
                         <span class="required-label">*</span></label>
                     <div class="col-sm-6">
-                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
-                            onchange="selectOnChange()">
+                        <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required>
                             @php
                             $levelid = Properti_app::getlevel();
                             @endphp
@@ -59,9 +58,17 @@
                                         class="required-label">*</span></label>
                                 <div class="col-sm-4">
                                     <input type="text" id="tgl_lapor" class="datepicker form-control"
-                                        placeholder="Dari .." value="{{ $dari }}" onclick="selectOnChange()">
+                                        placeholder="Dari .." value="{{ $dari }}">
                                 </div>
                             </div>
+                            <hr />
+                            <div class="form-group form-show-validation row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-primary btn-xs" id="cari_data"><i
+                                            class="fa fa-search"></i>Tampilkan Data</button>
+                                </div>
+                            </div>
+
                             {{--  <div class="col-md-12">
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Rek.
@@ -179,7 +186,7 @@
             method: 'POST',
             data:function(data){ 
                 data.tahun_id  = $('#tahun_id').val();
-                data.tmsikd_satker_id  = $('#tmsikd_satker_id').val();
+                data.tmsikd_satker_id = $('#tmsikd_satker_id').val();
                 data.tgl_lapor  = $('#tgl_lapor').val(); 
 
                 data.tmrekening_akun_id  = $('#tmrekening_akun_id').val();
@@ -295,29 +302,28 @@ $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
 });   
 
 $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
+ 
 
-function selectOnChange(){
-
- var tgl_lapor   = $('#tgl_lapor').val(); 
+$('#cari_data').on('click',function(e){
+ e.preventDefault();     
+ var tgl_lapor      =  $('#tgl_lapor').val();  
+ var tahun_id       = $('#tahun_id').val();
+ var val_satker_id  = $('#tmsikd_satker_id').val();
   
- $('.satker_show').html('<div class="alert alert-danger">sedang mencari data di tanggal '+ tgl_lapor,'please wait ...</div>');
+  $('.satker_show').html('<div class="alert alert-danger">sedang mencari data di tanggal '+ tgl_lapor,'please wait ...</div>');
    // 'tahun_id='+$('tahun_id').val() +'&tmrapbd_id='+$('tmrapbd_id').val()+'&tmsikd_satker_id='+$('tmsikd_satker_id').val();
   table.api().ajax.reload();
-  
-  val_satker_id  = $('#tmsikd_satker_id').val();
   url = "{{ route('aplikasi.get_satker',':id') }}".replace(':id',val_satker_id);
   $.get(url,function(data){
-   if(data){  
-    //$('#halaman_isi').html('data berhasil di tampilkan pada tanggal : '+ tgl_lapor,'Pencarian selesai ');
+ if(data){  
+    $.alert('data berhasil di tampilkan pada tanggal : '+ tgl_lapor,'Pencarian selesai ');
     $('.satker_show').html('<div class="alert alert-success"><h3> ['+data.kode+']['+data.satker_name+' ] BERDASARKAN TANGGAL LAPOR : '+tgl_lapor+'</h3></div>')
 }else{ 
     $('.satker_show').html('<div class="alert alert-danger">Belum ada satuan kerja yang di pilih .</div>')
 }  
-
+}) 
 })
-
-}
-
+ 
 $('#datatable').on('click','#detail',function(e){
     e.preventDefault();
     

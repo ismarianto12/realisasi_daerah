@@ -27,7 +27,7 @@ class KodeakunController extends Controller
     {
         $title = $this->title;
         $route = $this->route;
-        $toolbar = ['c','d'];
+        $toolbar = ['c'];
         return view($this->view . 'index', compact('title', 'route', 'toolbar'));
     }
 
@@ -126,11 +126,10 @@ class KodeakunController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        if (is_array($request->id))
-            Tmrekening_akun::whereIn('id', $request->id)->delete();
-        else
-            Tmrekening_akun::whereid($request->id)->delete();
-
-        return ['message' => "Data rekening kode akun berhasil dihapus."];
+        // if (is_array($request->id))
+        //     Tmrekening_akun::whereIn('id', $request->id)->delete();
+        // else
+        //     Tmrekening_akun::whereid($request->id)->delete();
+        // return ['message' => "Data rekening kode akun berhasil dihapus."];
     }
 }

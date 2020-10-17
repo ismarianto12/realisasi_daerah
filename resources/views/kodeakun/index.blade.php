@@ -7,6 +7,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive no-b">
+                    <div class="alert alert-danger">Read Only ..</div>
+                    <hr />
                     <table id="datatable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                             <th width="30"></th>
