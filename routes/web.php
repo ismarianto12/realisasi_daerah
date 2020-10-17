@@ -102,6 +102,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('get_satker/{id}', 'TmopdController@get_satker')->name('get_satker');
 		//settting user
 		Route::resource('identitas', 'IdentitasController');
+		//opd api
+		Route::get('opdinput', 'IdentitasController@notifopd')->name('opdinput');		
 	});
 
 	Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');

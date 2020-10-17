@@ -46,7 +46,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/template/') }}/css/tooltipster.bundle.min.css">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('/assets/template/') }}/css/tooltipster-sideTip-borderless.min.css">
-  
+
 </head>
 
 <body>
@@ -169,56 +169,17 @@
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell"></i>
-                                <span class="notification">4</span>
+                                <span class="notification">Loading ...</span>
                             </a>
                             <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                 <li>
-                                    <div class="dropdown-title">Opd yang belum input realisasi pendapatan</div>
+                                    <div class="dropdown-title">Opd yang belum input realisasi pendapatan pada
+                                        {{ Properti_app::tgl_indo(date('Y-m-d')) }}</div>
                                 </li>
                                 <li>
                                     <div class="notif-scroll scrollbar-outer">
                                         <div class="notif-center">
-                                            <a href="#">
-                                                <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i>
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Dinas Permukiman Umum dan Tanah
-                                                    </span>
-                                                    <span class="time">5 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-icon notif-success"> <i class="fa fa-comment"></i>
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Rahmad commented on Admin
-                                                    </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{ asset('/assets/template/') }}/img/profile2.jpg"
-                                                        alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Reza send messages to you
-                                                    </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Farrah liked Admin
-                                                    </span>
-                                                    <span class="time">17 minutes ago</span>
-                                                </div>
-                                            </a>
+                                            <div class="notif_opd"></div>
                                         </div>
                                     </div>
                                 </li>
@@ -418,7 +379,9 @@
 
     <script src="{{ asset('/assets/template/') }}/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
     <script src="{{ asset('assets/template') }}/js/plugin/datepicker/bootstrap-datetimepicker.min.js"></script>
     <script src="{{ asset('assets/template/js/aplikasi.js') }}"></script>
 
@@ -531,6 +494,25 @@
     <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
     </script>
     @yield('script')
+
+    <script>
+        $(function(){
+            url = '{{ route('aplikasi.opdinput') }}';
+            $.get(url,function(data){
+            hasil = '';  
+            $.each(data, function(index, value){
+                hasil += '<a href="#"><div class="notif-img">'+value.image+'</div> <div class="notif-content"><span class="block">'+value.opd_kode+'</span><span class="time">'+value.opn_nm+'</span></div></a>';
+             });
+             $('.notif_opd').html('<li>'+hasil+'</li>'); 
+           },'JSON');     
+          //
+           url = '{{ route('aplikasi.opdinput') }}?total=1';
+          $.get(url,function(data){
+            $('.notification').html(data);
+         },'JSON'); 
+      }); 
+    </script>
+
 
 
     <script>
