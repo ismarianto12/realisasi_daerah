@@ -164,7 +164,7 @@
                                             class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                         @php
                         $level = Properti_app::getLevel();
                         @endphp
@@ -355,6 +355,27 @@
             <div class="container">
                 @yield('content')
             </div>
+
+
+            <div class="modal fade" id="modalopdetail" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content" style="width: auto;">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad di
+                                laporkan .
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="loadingopd_content"><i class="fa fa-share fa-spin"></i>Loading ...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">
@@ -374,7 +395,8 @@
                     <div class="copyright ml-auto">
                         @php
                         echo date('Y')
-                        @endphp, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
+                        @endphp <i class="fa fa-heart heart text-danger"></i> by <a href="#"> copyright {{ date('Y') }}
+                            BADAN PENDAPATAN DAERAH TANGERANG SELATAN</a>
                     </div>
                 </div>
             </footer>
@@ -425,15 +447,7 @@
 
 
     <script src="{{ asset('/assets/template/') }}/js/core/bootstrap.min.js"></script>
-
-
-
-    <!-- Google Maps Plugin -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/gmaps/gmaps.js"></script>
-
-    <!-- Dropzone -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/dropzone/dropzone.min.js"></script>
-
+ 
     <!-- Fullcalendar -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/fullcalendar/fullcalendar.min.js">
     </script>
@@ -441,15 +455,7 @@
     <!-- DateTimePicker -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/datepicker/bootstrap-datetimepicker.min.js">
     </script>
-
-    <!-- Bootstrap Tagsinput -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-tagsinput/bootstrap-tagsinput.min.js">
-    </script>
-
-    <!-- Bootstrap Wizard -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-wizard/bootstrapwizard.js">
-    </script>
-
+  
     <!-- jQuery Validation -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.validate/jquery.validate.min.js">
     </script>
@@ -465,15 +471,7 @@
     <!-- Sweet Alert -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/sweetalert/sweetalert.min.js">
     </script>
-
-    <!-- Owl Carousel -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/owl-carousel/owl.carousel.min.js">
-    </script>
-
-    <!-- Magnific Popup -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.magnific-popup/jquery.magnific-popup.min.js">
-    </script>
-
+ 
     <!-- Atlantis JS -->
     <script src="{{ asset('/assets/template/') }}/js/atlantis.min.js"></script>
     <!-- Moment JS -->
@@ -482,23 +480,7 @@
 
     <!-- Chart JS -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/chart.js/chart.min.js"></script>
-
-    <!-- jQuery Sparkline -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/jquery.sparkline/jquery.sparkline.min.js">
-    </script>
-
-    <!-- Chart Circle -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/chart-circle/circles.min.js">
-    </script>
-
-    <!-- jQuery Vector Maps -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="{{ asset('/assets/template/') }}/js/plugin/jqvmap/maps/jquery.vmap.world.js">
-    </script>
-
-    <!-- Bootstrap Notify -->
-    <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-notify/bootstrap-notify.min.js">
-    </script>
+  
     @yield('script')
 
     <script>
@@ -508,7 +490,7 @@
             $.get(url,function(data){
             hasil = '';  
             $.each(data, function(index, value){
-                hasil += '<a href="#"><div class="notif-img">'+value.image+'</div> <div class="notif-content"><span class="block">'+value.opd_kode+'</span><span class="time">'+value.opn_nm+'</span></div></a>';
+                hasil += '<a href="#" class="modal_opd"><div class="notif-img">'+value.image+'</div> <div class="notif-content"><span class="block">'+value.opd_kode+'</span><span class="time">'+value.opn_nm+'</span></div></a>';
              });
              $('.notif_opd').html('<li>'+hasil+'</li>'); 
            },'JSON');     
@@ -519,11 +501,13 @@
          },'JSON'); 
       }); 
     </script>
-
-
-
     <script>
         $(function(){
+            $('.modal_opd').on('click',function(e){
+                e.preventDefault();
+                $('#modalopdetail').modal('show'); 
+            });
+
             $('.select2').select2({
                 dropdownAutoWidth : true,
                 width: 'auto'

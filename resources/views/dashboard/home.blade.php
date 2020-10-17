@@ -61,15 +61,10 @@
                             <div class="col-md-6">
                                 <div class="card card-stats card-warning card-round">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-interface-6"></i>
-                                                </div>
-                                            </div>
+                                        <div class="row"> 
                                             <div class="col-7 col-stats">
                                                 <div class="numbers">
-                                                    <p class="card-category">TOTAL PAD TAHUN INI</p>
+                                                    <p class="card-category">TOTAL PAD TAHUN {{ Properti_app::getTahun() }}</p>
                                                     <h4 class="card-title">
                                                         <div class="tpadtahun"></div>
                                                     </h4>
