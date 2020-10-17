@@ -188,7 +188,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="see-all" href="{{ route('pendapatan') }}">Lihat Semua Pendapatan .<i
+                                    <a class="see-all" href="{{ route('pendapatan.index') }}">Lihat Semua Pendapatan .<i
                                             class="fa fa-angle-right"></i> </a>
                                 </li>
                             </ul>
