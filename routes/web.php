@@ -149,7 +149,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('pendapatandetail/{id}','PendapatanController@pendapatandetail')->name('pendapatandetail');
 		
 		Route::get('edit_pendapatan_form/{id}', 'PendapatanController@form_pendapatan_edit')->name('edit_pendapatan_form');
-
+		//pendapatan data rincian
+		Route::get('dapatkanpadopd/{id}','PendapatanController@dapatkanpadopd')->name('dapatkanpadopd');
 	});
 	//route datatable api
 	Route::prefix('api')->group(function () {

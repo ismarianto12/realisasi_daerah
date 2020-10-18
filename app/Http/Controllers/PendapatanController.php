@@ -433,7 +433,7 @@ class PendapatanController extends Controller
         $rincianid    = $request->id;
         $jumlahmax    = $jumlahMax['total'];
         $satkerid     = $request->satker_id;
- 
+
         //opert variable daa 
         if ($level_id == 3) {
             $fsatker_id = $satker_id;
@@ -449,7 +449,7 @@ class PendapatanController extends Controller
         $jam              = Carbon::now()->format('s:i:s');
 
         $action       =  route($this->route . 'update', $id);
-       // $method_field =  method_field('put');
+        // $method_field =  method_field('put');
         $id           =  $id;
         return view($this->view . 'form_edit', compact(
             'title',
@@ -641,18 +641,59 @@ class PendapatanController extends Controller
         );
     }
 
+
+    public function dapatkanpadopd(Request $request, $id)
+    {
+        $level_id     = Properti_app::getlevel();
+        if ($level_id == 3) {
+            $satkerid = Auth::user()->sikd_satker_id;
+        } else {
+            $satkerid  = $id;
+        }
+        $tmopd          = Tmopd::where('kode', $id)->firstOrfail();
+
+
+        $satker_kd    = $tmopd['kode'];
+        $satkernm     = $tmopd['n_opd'];
+
+        $sekarang     = Carbon::now()->format('Y-m-d');
+        $where        = [
+            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $id
+        ];
+        $rekeningdatas  = Tmpendapatan::getrekeningbySatker($where)->first();
+        $tmpendapatan   = new Tmpendapatan;
+
+        return view($this->view . 'detailpadopd', compact(
+            'satker_kd',
+            'satkernm',
+            'rekeningdatas',
+            'tmopd',
+            'tmpendapatan'
+        ));
+    }
+
     public function destroy(Request $request)
     {
         $level_id = Properti_app::getlevel();
+        $sekarang = Carbon::now()->format('Y-m-d');
+        $lewats   =  date($sekarang, strtotime('-1 day'));
+
         if (is_array($request->id)) {
             if ($level_id == 3) {
-                Tmpendapatan::whereIn('id', $request->id)->update([
-                    'is_deleted' => 1
+                $check = Tmpendapatan::where([
+                    'tanggal_lapor' => $lewats,
+                    'id' => $request->id
                 ]);
+                if ($check > 0) {
+                    return ['message' => "Pelaporan PAD gagal di hapus karena sudah melewati masa penghapusan silahkan edit jika ada kesalahan."];
+                } else {
+                    Tmpendapatan::whereIn('id', $request->id)->delete();
+                    return ['message' => "Data " . $this->title . " berhasil dihapus."];
+                }
             } else {
                 Tmpendapatan::whereIn('id', $request->id)->delete();
+                return ['message' => "Data " . $this->title . " berhasil dihapus."];
             }
         }
-        return ['message' => "Data " . $this->title . " berhasil dihapus."];
     }
 }

@@ -468,23 +468,18 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="width: auto;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad yang belum
-                        terlapor oleh OPD
-                        laporkan .
-                    </h5>
+                    <div class="alert alert-success">
+                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad yang
+                            belum
+                            di lapor pada {{ date('Y-m-d') }}
+                        </h4>
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-striped">
-                        <tr>
-                            <td>Pajak Dearah</td>
-                            <td>tgl ( {{ date('Y-m-d') }})</td>
-                            <td>Retribusi Dearah (Jasa Umum)</td>
-                            <td>{{ date('Y-m-d') }}</td>
-                        </tr>
-                    </table>
+                    <div class="contentdata_opd"></div>
                 </div>
             </div>
         </div>
@@ -523,6 +518,13 @@
 
      function detail_data(n) 
      { 
+         var url   = "{{ Url('pendapatan/dapatkanpadopd/:id') }}".replace(':id',n);
+         $('.contentdata_opd').html('<div class="alert alert-succcess">Sedang meload halaman harap bersabar ....</div>');   
+         $.get(url,function(data){  
+            $('.contentdata_opd').html(data);
+         }).fail(function(data){
+            $('.contentdata').load('Maaf gagal meload halaman karena suatu kesalahan'); 
+         });
          $('#modalopdetail').modal('show');
          $('.nav-item dropdown hidden-caret submenu').attr('open');
      }

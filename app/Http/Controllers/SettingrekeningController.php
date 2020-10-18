@@ -308,4 +308,5 @@ class SettingrekeningController extends Controller
     public function destroy(Request $request, $id)
     {
     }
+ 
 }
