@@ -87,10 +87,10 @@ class ProfileController extends Controller
             $data['realname']  = $request->realname;
             $data['password'] = bcrypt($request->password);
             $data['telp']     = $request->telp;
-            $request->file('photo')->move('./file/photo_user/', $file);
+            $request->file('photo')->move('public/file/photo_user/', $file);
             $data['photo']    = $file; 
-            if (file_exists('./file/photo_user' . $result->photo)) {
-                @unlink('./file/photo_user' . $result->photo);
+            if (file_exists('public/file/photo_user' . $result->photo)) {
+                @unlink('public/file/photo_user' . $result->photo);
             }
         } else {
             $data['realname']  = $request->realname;

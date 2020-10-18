@@ -148,9 +148,9 @@ class UserController extends Controller
         $file = $request->file('photo');
         if ($file) {
             $dt    =  Carbon::now();
-            $ext   =  $file->getClientOriginalExtension();
+            $ext   =  $request->file('photo')->getClientOriginalExtension();
             $setfm = rand(1122, 111) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
-            $request->file('photo')->move('./file/photo_user', $setfm);
+            $request->file('photo')->move('public/file/photo_user', $setfm);
             $photo = $setfm;
         } else {
             $photo = 'default.jpg';
@@ -286,9 +286,9 @@ class UserController extends Controller
                 File::delete($filename);
             }
             $dt    =  Carbon::now();
-            $ext   =  $file->getClientOriginalExtension();
+            $ext   =  $request->file('photo')->getClientOriginalExtension();
             $setfm = rand(1122, 111) . '-' . $dt->format('Y-m-d-H-i-s') . '.' . $ext;
-            $request->file('photo')->move('./file/photo_user/', $setfm);
+            $request->file('photo')->move('public/file/photo_user/', $setfm);
             $photo = $setfm;
         } else {
             $photo = 'default.jpg';
