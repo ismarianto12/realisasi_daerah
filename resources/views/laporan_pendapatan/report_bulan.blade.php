@@ -5,16 +5,19 @@
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
 </head>
 
-<body> 
+<body>
+
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
+            border: 0.1pt dashed #000;
         }
 
         th,
         td {
             text-align: left;
+            border: 0.1pt dashed #000;
         }
 
         tr:nth-child(even) {
@@ -22,13 +25,12 @@
         }
 
         th {
-            background-color: #bb5e08;
-            color: white;
+            background-color: #ddd;
+            color: #000;
             width: auto;
             height: auto;
         }
-    </style>
-
+    </style> 
     <div style="float:left">
         <img src="{{ asset('assets/template/img/logo_tangsel.png') }}" style="width: 60px;height:60px;margin-top:15px">
     </div>

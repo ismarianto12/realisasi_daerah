@@ -63,6 +63,6 @@ class LoginController extends Controller
         $this->setYear($request->input('year'));
         $this->setPath();
         $request->session()->put('year', $request->input('year'));
-        return redirect()->intended($this->getPath());
+        return redirect()->intended('/');
     }
 }

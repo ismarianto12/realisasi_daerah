@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->middleware('auth')->name('/');
+ 
 
 Route::get('/logout', function () {
 	return redirect('/');
@@ -69,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
 		// grafik pendapatan 
-		Route::resource('grafik', 'GrafikController');   
+		Route::resource('grafik', 'GrafikController');
 	});
 
 	Route::prefix('akses')->name('akses.')->group(function () {
@@ -89,7 +90,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('api_data_setting_sub/{id}', 'SettingrekeningController@api_rincian_sub')->name('api_data_setting_sub');
 		//patch
 		Route::patch('update_rincian_sub', 'SettingrekeningController@update_rincian_sub')->name('update_rincian_sub');
-
 	});
 
 	Route::prefix('aplikasi')->name('aplikasi.')->group(function () {
@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth'], function () {
 		//settting user
 		Route::resource('identitas', 'IdentitasController');
 		//opd api
-		Route::get('opdinput', 'IdentitasController@notifopd')->name('opdinput');		
+		Route::get('opdinput', 'IdentitasController@notifopd')->name('opdinput');
 	});
 
 	Route::resource('setuptahunanggaran', 'SetupTahunAnggaranController');
@@ -120,13 +120,13 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 	});
 	//pendapatan route
-	
+
 	Route::prefix('pendapatan')->name('pendapatan.')->group(function () {
-      	Route::patch('updateas/{id}','PendapatanController@update')->name('updateas');
- 	
- 		Route::resource("", "PendapatanController");
+		Route::patch('updateas/{id}', 'PendapatanController@update')->name('updateas');
+
+		Route::resource("", "PendapatanController");
 		Route::get("{id}/edit", "PendapatanController@edit")->name('edit');
-		 
+
 		Route::delete("destroy", "PendapatanController@destroy")->name('destroy');
 
 		Route::post('api', 'PendapatanController@api')->name('api');
@@ -142,15 +142,15 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('trtargetrincian_form_edit/{id}', 'TrtargetrincianController@form_edit')->name('trtargetrincian_form_edit');
 
 		//pendapatan create
-		Route::get('create/{id}', 'PendapatanController@create')->name('create');  
+		Route::get('create/{id}', 'PendapatanController@create')->name('create');
 
 		// get frm isian pendapatan
 		Route::get('form_pendapatan/{id}', 'PendapatanController@form_pendapatan')->name('form_pendapatan');
-		Route::get('pendapatandetail/{id}','PendapatanController@pendapatandetail')->name('pendapatandetail');
-		
+		Route::get('pendapatandetail/{id}', 'PendapatanController@pendapatandetail')->name('pendapatandetail');
+
 		Route::get('edit_pendapatan_form/{id}', 'PendapatanController@form_pendapatan_edit')->name('edit_pendapatan_form');
 		//pendapatan data rincian
-		Route::get('dapatkanpadopd/{id}','PendapatanController@dapatkanpadopd')->name('dapatkanpadopd');
+		Route::get('dapatkanpadopd/{id}', 'PendapatanController@dapatkanpadopd')->name('dapatkanpadopd');
 	});
 	//route datatable api
 	Route::prefix('api')->group(function () {
