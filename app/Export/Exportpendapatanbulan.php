@@ -33,12 +33,12 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use Maatwebsite\Excel\Concerns\WithProperties;
 
 use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\BeforeExport; 
+use Maatwebsite\Excel\Events\BeforeExport;
 
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class Exportpendapatanbulan implements ShouldAutoSize, FromView
+class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, WithStyles
 {
 
     protected $request;
@@ -99,27 +99,25 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView
     {
         return [
             BeforeExport::class  => function (BeforeExport $event) {
-                $event->writer->setCreator('Patrick');
+                $event->writer->setCreator('Ismarianto');
             },
             AfterSheet::class    => function (AfterSheet $event) {
                 $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-                $event->sheet->styleCells(
-                    'A1:I1',
-                    [
-                        'borders' => [
-                            'outline' => [
-                                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                                'color' => ['argb' => 'FFFF0000'],
-                            ],
-                        ]
-                    ]
-                );
+
+                $event->sheet->getStyle('A1:R54')->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
             },
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->getStyle('B2')->getFont()->setBold(true);
     }
 }
