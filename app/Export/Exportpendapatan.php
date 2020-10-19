@@ -130,7 +130,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView, WithEvents
                         ],
                     ],
                 ]);
-                $event->sheet->mergeCells('A1:H1');
+                //$event->sheet->mergeCells('A1:H1');
             },
         ];
     }
