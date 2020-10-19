@@ -8,6 +8,8 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\BeforeExport;
+
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
@@ -19,28 +21,24 @@ class RetribusiExport implements ShouldAutoSize, FromView, WithEvents
         //$report = Report::find($this->id);
         return view('penerimaan.excel_penerimaan');
     }
+     
     public function registerEvents(): array
     {
-
         return [
+            BeforeExport::class  => function (BeforeExport $event) {
+                $event->writer->setCreator('Ismarianto');
+            },
             AfterSheet::class    => function (AfterSheet $event) {
-                $styleArray = [
-                    'font' => [
-                        'bold' => true,
-                    ],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
-                    ],
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); 
+                $event->sheet->getStyle('A1:H1')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
                         ],
-
-                    ], 
-                ];
-
-                $to = $event->sheet->getDelegate()->getHighestColumn();
-                $event->sheet->getDelegate()->getStyle('A1:' . $to . '3')->applyFromArray($styleArray);
+                    ],
+                ]);
+                $event->sheet->mergeCells('A1:H1');    
             },
         ];
     }
