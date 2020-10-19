@@ -78,11 +78,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             'tahun_id' => $tahun_id,
             'sampai' => $sampai,
             'listarget' => $listarget,
-            'tmpendapatan' => $tmpendapatan,
-            // 'jenisobject' => $jenisobject,
-            // 'objectrincian' => $objectrincian,
-            // 'objectrinciansub' => $objectrinciansub,
-            // get list rekening pendapatan
+            'tmpendapatan' => $tmpendapatan,  
             'total_pad' => $total_pad,
             'tbyrincian' => $tbyrincian,
             'tbyrincian_sub' => $tbyrincian_sub,
@@ -120,6 +116,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
 
     public function styles(Worksheet $sheet)
     {
+
         $sheet->getStyle('B2')->getFont()->setBold(true);
     }
 }
