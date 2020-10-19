@@ -1,8 +1,7 @@
 <table>
     <tr>
         <td></td>
-        <td></td>
-        <td></td>
+        <td></td> 
         <td><h3>REALISASI PENDAPATAN DAERAH {{ Properti_app::tgl_indo(date('Y-m-d')) }}</h3>
            <br /><h4><small>Badan Pendapatan Daerah Tangerang Selatan .</small></h4>
         </td>
@@ -87,7 +86,7 @@
         <tr>
             <td colspan="2"><b>{{ $kjenis['kd_rek_jenis'] }}</b></td>
             <td colspan="3"><b>{{ $kjenis['nm_rek_jenis'] }}</b></td>
-            <td style="text-align:right;">{{ number_format($jml_rek_jenis,0,0,'.') }}</td>
+            <td style="text-align:right;"><b>{{ number_format($jml_rek_jenis,0,0,'.') }}</b></td>
             <td></td>
             <td></td>
             <td></td>

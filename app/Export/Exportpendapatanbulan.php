@@ -65,8 +65,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan         = new Tmpendapatan;
 
-        $opd                  = Sikd_satker::find($this->request['tmsikd_satker_id']);
-        //get jumlah data per rek obj 
+        $opd                  = Sikd_satker::find($this->request['tmsikd_satker_id']); 
         $tbyrincian     = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian');
         $tbyrincian_sub = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
 
@@ -114,8 +113,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
     }
 
     public function styles(Worksheet $sheet)
-    {
-
+    { 
         $sheet->getStyle('B2')->getFont()->setBold(true);
     }
 }
