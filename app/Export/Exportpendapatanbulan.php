@@ -47,6 +47,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         $this->request = $request;
     }
 
+    
     public function view(): View
     {
         $tahun_id          = $this->request['tahun_id'];

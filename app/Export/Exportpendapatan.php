@@ -95,8 +95,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
             $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
         }
-        $rperiode_lalu = $periode_lalu;
- 
+        $rperiode_lalu = $periode_lalu; 
         return view('laporan_pendapatan.jenis_object_excel', [
             'tahun' => $tahun,
             'dari' => $dari,
