@@ -1,5 +1,19 @@
+ 
+<table>
+    
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>REALISASI PENDAPATAN DAERAH {{ Properti_app::tgl_indo(date('Y-m-d')) }}
+
+            <br /><small>Badan Pendapatan Daerah Tangerang Selatan .</small>
+        </td>
+    </tr>
+</table>
+
 <table border="1">
-    <thead>
+    <thead> 
         <tr>
             <th colspan="5">URAIAN</th>
             <th>APBD {{ $tahun }}</th>

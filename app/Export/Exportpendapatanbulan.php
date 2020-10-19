@@ -104,7 +104,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             AfterSheet::class    => function (AfterSheet $event) {
                 $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
 
-                $event->sheet->getStyle('A1:R54')->applyFromArray([
+                $event->sheet->getStyle('A3:R56')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
