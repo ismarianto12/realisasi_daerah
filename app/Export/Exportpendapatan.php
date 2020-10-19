@@ -2,7 +2,7 @@
 
 namespace App\Export;
 
-use App\Invoice;
+use App\ReportController;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -131,6 +131,11 @@ class Exportpendapatan implements ShouldAutoSize, FromView
                 $cellRange = 'B1:I1';
                 $event->cells->setAlignment('center');
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
+           
+                $event->sheet->cells('A1:C1', function($cells) {
+                    $cells->setBorder('thin', 'thin', 'thin', 'thin');
+                });
+                $event->sheet->mergeCells('A1:C1');
             },
         ];
     }

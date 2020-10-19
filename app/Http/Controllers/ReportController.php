@@ -43,6 +43,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Excel;
 
 use App\Export\Exportpendapatan;
+use App\Export\Exportpendapatanbulan;
 
 
 class ReportController extends Controller
@@ -221,10 +222,16 @@ class ReportController extends Controller
     public function action_bulan(Request $request)
     {
         //report per rekening jenis 
-        $jenis    = $request->jenis;
+        $opd                  = Sikd_satker::find($request->tmsikd_satker_id);
+        $jenis                = $request->jenis;
+        $tahun                = Properti_app::tahun_sekarang();
+
+
         if ($jenis == 'xls') {
-            $namaFile = 'Pendapatan_daerah.xls';
-            $this->headerdownload($namaFile);
+            $namaFile  = 'Laporan Pad Tahun' . $tahun;
+            //   $fnamaFile  = str_replace($namaFile,'-',''); 
+            $data      = new Exportpendapatanbulan($request);
+            return Excel::download($data, $namaFile . '.xlsx');
         }
         if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
@@ -235,7 +242,6 @@ class ReportController extends Controller
         $dari              = $request->dari;
         $sampai            = $request->sampai;
 
-        $tahun             = Properti_app::tahun_sekarang();
         $listarget         = new TmpendapatantargetModel;
 
         $akun_kelompok        = Tmrekening_akun_kelompok::get();
@@ -245,7 +251,6 @@ class ReportController extends Controller
         $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan         = new Tmpendapatan;
 
-        $opd                  = Sikd_satker::find($request->tmsikd_satker_id);
         //get jumlah data per rek obj 
         $tbyrincian     = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian');
         $tbyrincian_sub = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
