@@ -87,7 +87,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             'kelompok_jenis' => $kelompok_jenis,
             'kelompok_object' => $kelompok_object,
             'kelompok_rincian' => $kelompok_rincian,
-            'kelompok_sub_rincian' => $kelompok_sub_rincian,
+            'kelompok_sub_rincian' => $kelompok_sub_rincian
         ]);
     }
 
