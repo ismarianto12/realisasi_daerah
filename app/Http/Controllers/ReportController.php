@@ -228,7 +228,7 @@ class ReportController extends Controller
 
 
         if ($jenis == 'xls') {
-            $namaFile  = 'Laporan Pad Tahun' . $tahun;
+            $namaFile  = 'Laporan Pad Tahun - ' . $tahun;
             //   $fnamaFile  = str_replace($namaFile,'-',''); 
             $data      = new Exportpendapatanbulan($request);
             return Excel::download($data, $namaFile . '.xlsx');

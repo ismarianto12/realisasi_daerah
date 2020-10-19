@@ -303,12 +303,11 @@ class Tmpendapatan extends Model
     }
     //list data pendapatan 
 
-    public static function datatable($where)
+    public static function datatable($satker_id)
     {
 
-        return Tmrekening_akun_kelompok_jenis_objek_rincian::where($where)
-
-            ->select(
+        return Tmrekening_akun_kelompok_jenis_objek_rincian::whereIn('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id',$satker_id)
+             ->select(
                 'tmpendapatan.*',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.id as id_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',

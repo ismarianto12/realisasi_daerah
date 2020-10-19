@@ -68,7 +68,7 @@ class SettingrekeningController extends Controller
             $data->join('tmrekening_akun_kelompok_jenis_objeks', function ($join) use ($tmrekening_akun_kelompok_jenis_id) {
                 $join->on('tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.id')
                     ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $tmrekening_akun_kelompok_jenis_id);
-            });
+                });
         } elseif ($request->tmrekening_akun_kelompok_id != 0) {
             $data->join('tmrekening_akun_kelompok_jenis_objeks', function ($join) {
                 $join->on('tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.id');
@@ -93,7 +93,11 @@ class SettingrekeningController extends Controller
                 $join->on('tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.id')
                     ->where('tmrekening_akun_kelompoks.tmrekening_akun_id', $tmrekening_akun_id);
             });
-        }
+        } 
+        // $data->with(['tmsikd_satker'=> function($par){ 
+            
+        //    // 'tmsikd_satkers.id','=','tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satker_id');
+        // }]); 
         if ($request->tmsikd_satker_id != 0) {
             $satker_id = $request->tmsikd_satker_id;
             $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $satker_id);
@@ -113,20 +117,14 @@ class SettingrekeningController extends Controller
                 return "<a href='" . route($this->route . 'show', $p->id) . "' target='_self'>" . $p->nm_rek_rincian_obj . "</a>";
             })
             ->editColumn('nm_satker', function ($p) {
-                $f = Tmsikd_satker::where('id', $p->tmsikd_satkers_id);
-                if ($f->count() == '') {
-                    return '<span style="color: red"><b>Kosong</b></span><br /><small>Belum di setting.</small>';
-                } else {
-                    return "<b>" . $f->first()->nama . "</b>";
-                }
-            })
-            ->editColumn('nm_satker', function ($p) {
-                $f = Tmsikd_satker::where('id', $p->tmsikd_satkers_id);
-                if ($f->count() == '') {
-                    return '<span style="color: red"><b>Kosong</b></span><br /><small>Belum di setting.</small>';
-                } else {
-                    return "<b>" . $f->first()->nama . "</b>";
-                }
+                $exp   = explode(',', $p->tmsikd_satkers_id);
+                $datas = Tmsikd_satker::whereIn('id',$exp)->get();
+                $hasil = [];
+                foreach($datas as $result){
+                  $hasil[] =  ($result['nama']) ? $result['nama'] : '<span color="red"><b>Belum di setting</b></span>';
+                }     
+                $r = implode(',',$hasil); 
+                return $r;
             })
             ->rawColumns(['id', 'nm_rek_rincian_obj', 'nm_satker', 'action'])
             ->toJson();
@@ -308,5 +306,4 @@ class SettingrekeningController extends Controller
     public function destroy(Request $request, $id)
     {
     }
- 
 }

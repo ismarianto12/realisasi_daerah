@@ -108,12 +108,9 @@ class PendapatanController extends Controller
             $satker_id = Auth::user()->sikd_satker_id;
         } else {
             $satker_id = $request->tmsikd_satker_id;
-        }
-        $where = [
-            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $satker_id
-        ];
-        $data = Tmpendapatan::datatable($where);
-
+        } 
+        $fsatkerid = explode(',',$satker_id);    
+        $data      = Tmpendapatan::datatable($fsatkerid); 
         //$tahun_id = $request->tahun_id;
         $tmsikd_satker_id = $request->tmsikd_satker_id;
         $tgl_lapor = $request->tgl_lapor;
@@ -134,7 +131,6 @@ class PendapatanController extends Controller
         if ($tmsikd_satker_id != '') {
             $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $tmsikd_satker_id);
         }
-
         //with satkerid
         if ($tgl_lapor != '') {
             $par = [

@@ -32,6 +32,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use Maatwebsite\Excel\Concerns\WithProperties;
 
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\BeforeExport; 
+
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+
 class Exportpendapatanbulan implements ShouldAutoSize, FromView
 {
 
@@ -87,5 +93,33 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView
             'kelompok_rincian' => $kelompok_rincian,
             'kelompok_sub_rincian' => $kelompok_sub_rincian,
         ]);
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            BeforeExport::class  => function (BeforeExport $event) {
+                $event->writer->setCreator('Patrick');
+            },
+            AfterSheet::class    => function (AfterSheet $event) {
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                $event->sheet->styleCells(
+                    'A1:I1',
+                    [
+                        'borders' => [
+                            'outline' => [
+                                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                                'color' => ['argb' => 'FFFF0000'],
+                            ],
+                        ]
+                    ]
+                );
+            },
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->getStyle('A1')->getFont()->setBold(true);
     }
 }

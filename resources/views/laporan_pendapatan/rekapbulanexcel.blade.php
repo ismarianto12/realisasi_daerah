@@ -45,7 +45,7 @@
             color: #fff;">
             <td colspan="2"><b>{{ $kelompok['kd_rek_kelompok'] }}</b></td>
             <td colspan="3"><b>{{ $kelompok['nm_rek_kelompok'] }}</b></td>
-            <td style="text-align:right;">{{ number_format($total_pad['total_pad'],0,0,'.') }}</td>
+            <td style="text-align:right;"><b>{{ number_format($total_pad['total_pad'],0,0,'.') }}</b></td>
             <td></td>
             <td></td>
             <td></td>
