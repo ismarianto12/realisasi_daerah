@@ -13,13 +13,11 @@
         <td>[{{ $rekeningdatas['kd_rek_obj'] }}] -
             {{ $rekeningdatas['nm_rek_obj'] }}</td>
     </tr>
-
     <tr>
         <td>Kelompok Rekening Jenis Object Rincian</td>
         <td>[{{ $rekeningdatas['kd_rek_rincian_obj'] }}] -
             {{ $rekeningdatas['nm_rek_rincian_obj'] }}</td>
-    </tr>
-
+    </tr> 
     <tr>
         <td>Kelompok Rekening Jenis Object Rincian Sub</td>
         <td>[{{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}] -

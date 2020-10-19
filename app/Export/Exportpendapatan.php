@@ -32,6 +32,8 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use Maatwebsite\Excel\Concerns\WithProperties;
+
 
 class Exportpendapatan implements ShouldAutoSize, FromView
 {
@@ -77,7 +79,24 @@ class Exportpendapatan implements ShouldAutoSize, FromView
         $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan      = new Tmpendapatan;
         $opd = Sikd_satker::find($this->request['tmsikd_satker_id']);
+        
+        //periode lalu
+        $dperiode = $tahun . '-01-01';
+        $speriode = date($sampai, strtotime('-1 day'));
 
+        $periode_lalu    = Tmpendapatan::report_pendapatan([], 'tmrekening_akun_kelompok_jenis.id');
+        if ($rekjenis_id != 0) {
+            $periode_lalu->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
+        }
+        if ($dari != '' && $sampai != '') {
+            $periode_lalu->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
+            $periode_lalu->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
+        }
+        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
+            $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
+        }
+        $rperiode_lalu = $periode_lalu;
+ 
         return view('laporan_pendapatan.jenis_object_excel', [
             'tahun' => $tahun,
             'dari' => $dari,
@@ -90,7 +109,8 @@ class Exportpendapatan implements ShouldAutoSize, FromView
             'tmpendapatan' => $tmpendapatan,
             'jenisobject' => $jenisobject,
             'objectrincian' => $objectrincian,
-            'objectrinciansub' => $objectrinciansub,
+            'objectrinciansub' => $objectrinciansub, 
+            'rperiode_lalu' => $rperiode_lalu
         ]);
     }
     public function registerEvents(): array
@@ -107,7 +127,12 @@ class Exportpendapatan implements ShouldAutoSize, FromView
                     )
                 ));
                 $event->sheet->getColumnDimension('B')->setAutoSize(true);
+                $event->sheet->setCellValue('A1:I1', 'STUDENT PERFORMANCE');
+                $cellRange = 'B1:I1';
+                $event->cells->setAlignment('center');
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
             },
         ];
     }
+    
 }

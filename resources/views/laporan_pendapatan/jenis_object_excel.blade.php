@@ -22,21 +22,27 @@
         height: auto;
     }
 </style>
-  
-<center>
-    <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
-    <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
-    <h4> PER REKENING JENIS</h4>
-    TAHUN ANGGARAN {{ $tahun }}
-    <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
-    <br />
-    PERIODE : {{ $dari }} S/D {{ $sampai }}
-    <br />
-</center>
-<br />
-<br />
+
 <table>
     <thead>
+        <tr>
+            <th></th>
+            <th>
+                <center>
+                    <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
+                    <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
+                    <h4> PER REKENING JENIS</h4>
+                    TAHUN ANGGARAN {{ $tahun }}
+                    <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
+                    <br />
+                    PERIODE : {{ $dari }} S/D {{ $sampai }}
+                    <br />
+                </center>
+                <br />
+                <br />
+            </th>
+        </tr> 
+
         <tr style="border-bottom: 0.1px solid #000">
             <th>No</th>
             <th>Uraian</th>
@@ -68,7 +74,8 @@
     <tbody>
         @foreach ($render as $list)
         @php
-        $rjenis_old = $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'),$list['kd_rek_jenis'])
+        $rjenis_old =
+        $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'),$list['kd_rek_jenis'])
         ->first();
         $targetby_jenis = $listarget::select(\DB::raw('sum(jumlah) as
         tjenis'))->where(\DB::raw('substr(rekneing_rincian_akun_jenis_objek_id,1,3)'),$list['kd_rek_jenis'])->first();
@@ -90,7 +97,8 @@
         @endphp
         @foreach ($a as $ls)
         @php
-        $robj_old =  $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'),$list['kd_rek_obj'])
+        $robj_old =
+        $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'),$list['kd_rek_obj'])
         ->first();
 
         $object_target = $listarget::select(\DB::raw('sum(jumlah) as
@@ -115,12 +123,14 @@
         @foreach ($b as $item)
         @php
 
-        $rincian_target = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$item['kd_rek_rincian_obj'])->first();
+        $rincian_target =
+        $listarget::where('rekneing_rincian_akun_jenis_objek_id',$item['kd_rek_rincian_obj'])->first();
         $rtarget = ($rincian_target['jumlah']) ? number_format($rincian_target['jumlah'],0,0,'.') : '0';
         $srinci = ($rincian_target['jumlah'] - $list['jml_rek_rincian']);
-        $rrinci_old =  $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'),$item['kd_rek_rincian_obj'])
+        $rrinci_old =
+        $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'),$item['kd_rek_rincian_obj'])
         ->first();
-       
+
         @endphp
         <tr>
             <td>{{ $item['id_rek_rincians'] }}</td>
@@ -141,11 +151,12 @@
         @if ($c->count() == 0 || $c == NULL)
         @else
         @foreach ($c as $r)
-          @php
-          $rrinci_sub_old =  $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'),$item['rek_rincian_sub_id'])
-          ->first();
-   
-          @endphp  
+        @php
+        $rrinci_sub_old =
+        $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'),$item['rek_rincian_sub_id'])
+        ->first();
+
+        @endphp
         <tr>
             <td>{{ $r['rek_rincian_sub_id'] }}</td>
             <td>{{ $r['nm_rek_rincian_objek_sub'] }}</td>
