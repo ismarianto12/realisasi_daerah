@@ -1,26 +1,3 @@
-<style>
-
-    #cell {
-        background-color: #000000;
-        color: #ffffff;
-    }
-    
-    .cell {
-        background-color: blueviolet;
-        color: #ffffff;
-    }
-    
-    tr td {
-        background-color: #ffffff;
-    }
-    
-    tr > td {
-        border-bottom: 1px solid #000000;
-    }
-
-</style>
-
-
 <table>
     <tr>
         <td></td>
