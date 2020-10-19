@@ -1,12 +1,7 @@
 @extends('layouts.template')
-@section('title', 'Tambah target pendapatan')
+@section('title', 'Setting target pendapatan')
 @section('content')
-
-{{-- @php
-    dd($trekening);
-    @endphp --}}
-
-
+ 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
