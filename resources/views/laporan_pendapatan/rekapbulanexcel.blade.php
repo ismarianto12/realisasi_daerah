@@ -1,3 +1,26 @@
+<style>
+
+    #cell {
+        background-color: #000000;
+        color: #ffffff;
+    }
+    
+    .cell {
+        background-color: blueviolet;
+        color: #ffffff;
+    }
+    
+    tr td {
+        background-color: #ffffff;
+    }
+    
+    tr > td {
+        border-bottom: 1px solid #000000;
+    }
+
+</style>
+
+
 <table>
     <tr>
         <td></td>
@@ -9,12 +32,13 @@
     </tr>
 </table>
 
+
 <table border="1">
     <thead> 
         <tr>
-            <th colspan="5">URAIAN</th>
-            <th>APBD {{ $tahun }}</th>
-            <th>JANUARI</th>
+            <th colspan="5" class="cell">URAIAN</th>
+            <th class="cell">APBD {{ $tahun }}</th>
+            <th class="cell">JANUARI</th>
             <th>FEBRUARI</th>
             <th>MARET</th>
             <th>APRIL</th>
