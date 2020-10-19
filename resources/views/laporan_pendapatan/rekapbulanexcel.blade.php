@@ -1,4 +1,4 @@
-<table>
+<table border=1>
     <thead>
         <tr>
             <th colspan="5">URAIAN</th>
@@ -45,7 +45,7 @@
             color: #fff;">
             <td colspan="2"><b>{{ $kelompok['kd_rek_kelompok'] }}</b></td>
             <td colspan="3"><b>{{ $kelompok['nm_rek_kelompok'] }}</b></td>
-            <td>{{ number_format($total_pad['total_pad'],0,0,'.') }}</td>
+            <td style="text-align:right;">{{ number_format($total_pad['total_pad'],0,0,'.') }}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -75,7 +75,7 @@
         <tr>
             <td colspan="2"><b>{{ $kjenis['kd_rek_jenis'] }}</b></td>
             <td colspan="3"><b>{{ $kjenis['nm_rek_jenis'] }}</b></td>
-            <td>{{ number_format($jml_rek_jenis,0,0,'.') }}</td>
+            <td style="text-align:right;">{{ number_format($jml_rek_jenis,0,0,'.') }}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -103,18 +103,18 @@
             <td colspan="1">{{ $rjenis_obj['nm_rek_obj'] }}</td>
             <td></td>
             <td></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,1) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,2) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,3) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,4) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,5) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,6) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,7) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,8) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,9) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,10) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,11) }}</b></td>
-            <td><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,12) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,1) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,2) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,3) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,4) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,5) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,6) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,7) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,8) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,9) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,10) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,11) }}</b></td>
+            <td style="text-align:right;"><b>{{ $tmpendapatan::tbykelompok_object($kd_rek_obj,12) }}</b></td>
         </tr>
         @endforeach
         @endforeach
