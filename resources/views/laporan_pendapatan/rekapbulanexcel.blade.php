@@ -6,8 +6,7 @@
            <br /><h4><small>Badan Pendapatan Daerah Tangerang Selatan .</small></h4>
         </td>
     </tr>
-</table>
-
+</table> 
 
 <table border="1">
     <thead> 
