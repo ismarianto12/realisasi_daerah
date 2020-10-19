@@ -81,8 +81,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             'tmpendapatan' => $tmpendapatan,  
             'total_pad' => $total_pad,
             'tbyrincian' => $tbyrincian,
-            'tbyrincian_sub' => $tbyrincian_sub,
-
+            'tbyrincian_sub' => $tbyrincian_sub, 
             'akun_kelompok' => $akun_kelompok,
             'kelompok_jenis' => $kelompok_jenis,
             'kelompok_object' => $kelompok_object,
@@ -98,8 +97,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                 $event->writer->setCreator('Ismarianto');
             },
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); 
                 $event->sheet->getStyle('A3:R56')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
