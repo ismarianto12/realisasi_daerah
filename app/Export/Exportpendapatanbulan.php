@@ -112,6 +112,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                         ],
                     ],
                 ]);
+                $event->sheet->mergeCells('A1:R1'); 
             },
         ];
     }

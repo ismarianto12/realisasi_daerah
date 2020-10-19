@@ -1,13 +1,10 @@
- 
 <table>
-    
     <tr>
         <td></td>
         <td></td>
         <td></td>
         <td><h3>REALISASI PENDAPATAN DAERAH {{ Properti_app::tgl_indo(date('Y-m-d')) }}</h3>
-
-            <br /><h4><small>Badan Pendapatan Daerah Tangerang Selatan .</small></h4>
+           <br /><h4><small>Badan Pendapatan Daerah Tangerang Selatan .</small></h4>
         </td>
     </tr>
 </table>
