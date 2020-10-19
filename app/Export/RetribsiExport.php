@@ -39,6 +39,7 @@ class RetribusiExport implements ShouldAutoSize, FromView, WithEvents
                     ],
                 ]);
                 $event->sheet->mergeCells('A1:H1');    
+                
             },
         ];
     }

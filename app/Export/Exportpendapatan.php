@@ -34,8 +34,10 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use Maatwebsite\Excel\Concerns\WithProperties;
 
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\BeforeExport;
 
-class Exportpendapatan implements ShouldAutoSize, FromView
+class Exportpendapatan implements ShouldAutoSize, FromView, WithEvents
 {
 
     protected $request;
@@ -79,7 +81,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView
         $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan      = new Tmpendapatan;
         $opd = Sikd_satker::find($this->request['tmsikd_satker_id']);
-        
+
         //periode lalu
         $dperiode = $tahun . '-01-01';
         $speriode = date($sampai, strtotime('-1 day'));
@@ -94,8 +96,8 @@ class Exportpendapatan implements ShouldAutoSize, FromView
         }
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
             $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        } 
-        $rperiode_lalu = $periode_lalu; 
+        }
+        $rperiode_lalu = $periode_lalu;
         return view('laporan_pendapatan.jenis_object_excel', [
             'tahun' => $tahun,
             'dari' => $dari,
@@ -108,35 +110,28 @@ class Exportpendapatan implements ShouldAutoSize, FromView
             'tmpendapatan' => $tmpendapatan,
             'jenisobject' => $jenisobject,
             'objectrincian' => $objectrincian,
-            'objectrinciansub' => $objectrinciansub, 
+            'objectrinciansub' => $objectrinciansub,
             'rperiode_lalu' => $rperiode_lalu
         ]);
     }
     public function registerEvents(): array
     {
         return [
+            BeforeExport::class  => function (BeforeExport $event) {
+                $event->writer->setCreator('Ismarianto');
+            },
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->getDelegate()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
-                //all get event now
-                $event->sheet->setAllBorders('thin');
-                $event->sheet->setSize(array(
-                    'A1' => array(
-                        'width'     => 10,
-                        'height'    => 0
-                    )
-                ));
-                $event->sheet->getColumnDimension('B')->setAutoSize(true);
-                $event->sheet->setCellValue('A1:I1', 'STUDENT PERFORMANCE');
-                $cellRange = 'B1:I1';
-                $event->cells->setAlignment('center');
-                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
-           
-                $event->sheet->cells('A1:C1', function($cells) {
-                    $cells->setBorder('thin', 'thin', 'thin', 'thin');
-                });
-                $event->sheet->mergeCells('A1:C1');
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                $event->sheet->getStyle('A1:H1')->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+                $event->sheet->mergeCells('A1:H1');
             },
         ];
     }
-    
 }
