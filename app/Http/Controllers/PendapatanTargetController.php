@@ -203,9 +203,8 @@ class PendapatanTargetController extends Controller
     public function edit($id)
     {
 
-        $data                                  = TmpendapatantargetModel::find($id);
+        $data                                  = TmpendapatantargetModel::Where('rekneing_rincian_akun_jenis_objek_id', $id)->first();
         $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
-
         $method_field                          = method_field('PATCH');
         $jumlah                                = number_format($data['jumlah'], 0, 0, ',');
         $jumlah_perubahan                      = $data['jumlah_perubahan'];
@@ -222,7 +221,7 @@ class PendapatanTargetController extends Controller
         //dd($rincian_obj_id);
         $trekening       =  Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
         $method          = 'edit';
-        $targetid        = $id;
+        $targetid        =  $data['id'];
 
         return view($this->view . 'target_form', compact(
             'action',

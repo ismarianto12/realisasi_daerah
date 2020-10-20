@@ -229,9 +229,8 @@ class PendapatanController extends Controller
         $where = [
             'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id
         ];
-        $data  = Tmpendapatan::list()->where($where)->firstOrFail();
-
-        $opd  = Tmopd::Where('kode', $data->tmsikd_satker_id)->first();
+        $data  = Tmpendapatan::list()->where($where)->firstOrFail(); 
+        $opd   = Tmopd::Where('kode', $data->tmsikd_satker_id)->first();
         return view($this->view . 'pendapatandetail', [
             'data' => $data,
             'pendapatan_id' => $id,
