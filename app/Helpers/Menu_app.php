@@ -105,8 +105,7 @@ class Menu_app
                     $menu .= '
                   </ul>
                 </div>
-            </li>';
-
+            </li>'; 
                     $menu .= '<li class="nav-item">
             <a data-toggle="collapse" href="#laporan">
                 <i class="fas fa-book"></i>
@@ -120,7 +119,8 @@ class Menu_app
               </ul>
             </div>
         </li>';
-                    $menu .= '<li class="nav-item">
+                    $menu .= '<li class="nav-item">git ad .
+                    
         <a data-toggle="collapse" href="#penerimaan">
             <i class="fas fa-file"></i>
             <p>Report</p>
