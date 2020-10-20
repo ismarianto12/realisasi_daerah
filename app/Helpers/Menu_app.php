@@ -131,7 +131,7 @@ class Menu_app
                     $menu .= self::set_menu('laporan', 'Laporan Pendapatan'); 
                     $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Keseluruhan');
                     //$menu .= self::set_menu('report_penerimaan', 'Laporan Penerimaan Per OPD');
-                    $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
+                    $menu .= self::set_menu('grafik', 'Grafik Penerimaan');
                     $menu .= '
           </ul>
         </div>

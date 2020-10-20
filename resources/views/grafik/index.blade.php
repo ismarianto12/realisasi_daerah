@@ -191,7 +191,7 @@
           @endphp
         {   
             name: '{{ $key["nm_rek_jenis"] }}',
-            data: [{{ $jumlah['jumlah']  }}]
+            data:  [{{ $jumlah['jumlah']  }}]
         },
         @endforeach
         ],
