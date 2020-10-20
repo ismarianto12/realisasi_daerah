@@ -18,8 +18,7 @@ class Menu_app
             }
 
         return $structure;
-    }
-
+    } 
 
     private static function parent_dropdown($judul, $icon = NULL)
     {
@@ -119,8 +118,7 @@ class Menu_app
               </ul>
             </div>
         </li>';
-                    $menu .= '<li class="nav-item">git ad .
-                    
+                    $menu .= '<li class="nav-item">
         <a data-toggle="collapse" href="#penerimaan">
             <i class="fas fa-file"></i>
             <p>Report</p>

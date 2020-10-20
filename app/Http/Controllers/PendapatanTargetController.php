@@ -269,7 +269,7 @@ class PendapatanTargetController extends Controller
         $r->tahun                                = $request->tahun;
         $r->save();
 
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 0; $i <= 12; $i++) {
             $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
             $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
             Trtargetrincian::where('tmtarget_id', $id)->update([
