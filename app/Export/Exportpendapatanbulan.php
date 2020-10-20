@@ -37,6 +37,7 @@ use Maatwebsite\Excel\Events\BeforeExport;
 
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, WithStyles
 {
@@ -47,7 +48,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         $this->request = $request;
     }
 
-    
+
     public function view(): View
     {
         $tahun_id          = $this->request['tahun_id'];
@@ -65,7 +66,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
         $tmpendapatan         = new Tmpendapatan;
 
-        $opd                  = Sikd_satker::find($this->request['tmsikd_satker_id']); 
+        $opd                  = Sikd_satker::find($this->request['tmsikd_satker_id']);
         $tbyrincian     = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian');
         $tbyrincian_sub = Tmpendapatan::with('Tmrekening_akun_kelompok_jenis_objek_rincian_sub');
 
@@ -78,10 +79,10 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             'tahun_id' => $tahun_id,
             'sampai' => $sampai,
             'listarget' => $listarget,
-            'tmpendapatan' => $tmpendapatan,  
+            'tmpendapatan' => $tmpendapatan,
             'total_pad' => $total_pad,
             'tbyrincian' => $tbyrincian,
-            'tbyrincian_sub' => $tbyrincian_sub, 
+            'tbyrincian_sub' => $tbyrincian_sub,
             'akun_kelompok' => $akun_kelompok,
             'kelompok_jenis' => $kelompok_jenis,
             'kelompok_object' => $kelompok_object,
@@ -97,7 +98,41 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                 $event->writer->setCreator('Ismarianto');
             },
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); 
+
+                $event->sheet->styleCells(
+                    'A1:R2',
+                    [
+                        'alignment' => [
+                            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                        ],
+                        'font' => [
+                            'name' => 'Century Gothic',
+                            'size' => 17,
+                            'bold' => true,
+                            'color' => ['argb' => '000'],
+                        ]
+                    ]
+                );
+                $event->sheet->getStyle('A3:R4')->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setARGB('007bff');
+
+                $event->sheet->styleCells(
+                    'A3:R4',
+                    [
+                        'alignment' => [
+                            'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                        ],
+                        'font' => [
+                            'name' => 'Century Gothic',
+                            'size' => 14,
+                            'bold' => true,
+                            'color' => ['argb' => 'ffffff'],
+                        ]
+                    ]
+                );
+
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $event->sheet->getStyle('A3:R56')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
@@ -108,18 +143,17 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                 ]);
                 // $event->sheet->mergeCells('A1:R1');
                 // $event->sheet->mergeCells('A2:R2');  
-                
+
                 $event->sheet->mergeCells('A3:E3');
                 $event->sheet->mergeCells('A4:E4');
-                
-                $event->sheet->mergeCells('F3:F4');  
-                  
+
+                $event->sheet->mergeCells('F3:F4');
             },
         ];
     }
 
     public function styles(Worksheet $sheet)
-    { 
+    {
         $sheet->getStyle('B2')->getFont()->setBold(true);
     }
 }

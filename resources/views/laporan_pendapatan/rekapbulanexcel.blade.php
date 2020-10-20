@@ -1,15 +1,18 @@
 <table>
     <tr>
         <td></td>
-        <td></td> 
-        <td><h3>REALISASI PENDAPATAN DAERAH {{ Properti_app::tgl_indo(date('Y-m-d')) }}</h3>
-           <br /><h4><small>Badan Pendapatan Daerah Tangerang Selatan .</small></h4>
+        <td></td>
+        <td></td>
+        <td>
+            REALISASI PENDAPATAN DAERAH TAHUN {{ Properti_app::tahun_sekarang() }}
+            <br />
+            Badan Pendapatan Daerah Tangerang Selatan .
         </td>
     </tr>
-</table> 
+</table>
 
 <table border="1">
-    <thead> 
+    <thead>
         <tr>
             <th colspan="5" class="cell">URAIAN</th>
             <th class="cell">APBD {{ $tahun }}</th>
@@ -26,25 +29,25 @@
             <th>NOVEMBER</th>
             <th>DESEMBER</th>
         </tr>
-            </thead>
-        <tr>
-            <td colspan="2"></td>
-            <td colspan="3"></td>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-        </tr>
- 
+    </thead>
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="3"></td>
+        <td></td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+    </tr>
+
     <tbody>
         @foreach($akun_kelompok as $kelompok)
         @php
