@@ -20,7 +20,7 @@ use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
 use App\Models\Tmpendapatan;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use App\Models\Setupsikd\Tmrekening_akun;
-use App\Models\Rka\Tmrapbd;
+use App\Models\Tmrapbd;
 
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
@@ -31,6 +31,7 @@ use App\Helpers\Properti_app;
 use App\Libraries\List_pendapatan;
 use App\Models\Tmopd;
 use Illuminate\Support\Carbon;
+
 
 class PendapatanController extends Controller
 {
