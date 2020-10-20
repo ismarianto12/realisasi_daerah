@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'HomeController@index')->middleware('auth')->name('/');
- 
+
 
 Route::get('/logout', function () {
 	return redirect('/');
@@ -69,8 +69,12 @@ Route::group(['middleware' => 'auth'], function () {
 		//resource data perbulan 
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
-		// grafik pendapatan 
-		Route::resource('grafik', 'GrafikController');
+		// grafik pendapatan  
+
+	});
+	Route::prefix('grafik')->name('grafik.')->group(function () {
+		Route::get('', 'GrafikController@index')->name('/');
+		Route::get('perrekjenis', 'GrafikController@tampilgrafik')->name('perrekjenis');
 	});
 
 	Route::prefix('akses')->name('akses.')->group(function () {
