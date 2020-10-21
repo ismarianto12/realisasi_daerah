@@ -21,6 +21,8 @@
         color: #000;
         width: auto;
         height: auto;
+        font-size : 12.5px;
+        padding :10px 10px 10px;
     }
 </style>
 
