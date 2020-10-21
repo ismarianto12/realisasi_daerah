@@ -83,7 +83,6 @@
                                     <div class="col-md-5 p-0 mb-2">
                                         <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
                                             id="tmrekening_akun_id">
-                                            <option value="0">--Pilihan Data--</option>
                                             <?php $__currentLoopData = $tmrekening_akuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmrekening_akun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($tmrekening_akun->id); ?>">
                                                 <?php echo e('['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun); ?>
@@ -114,26 +113,23 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group m-0">
+                                    <label for="tmrekening_akun_kelompok_jenis_id"
+                                        class="col-form-label s-12 col-md-3"><strong>Jenis file</strong></label>
+                                    <div class="col-md-5 p-0 mb-2"> 
+                                        <select class="form-control select2" id="type_params">
+                                            <option value="0">- Pilih Jenis File -</option>
+                                            <option value="pdf">PDF</option>
+                                            <option value="rtf">WORD (RTF)</option>
+                                            <option value="xls">XLS</option>
+                                        </select>
+                                    </div>
+                                    <hr />
+                                    <button id="tampilkan" class="btn btn-primary"><i
+                                            class="fa fa-search"></i>Tampilkan</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="col-md-6">
-                    <div class="form-group m-0">
-                        <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Jenis file</strong></label>
-                        <div class="col-md-5 p-0 mb-2">
-
-                            <select class="form-control select2" id="type_params">
-                                <option value="0">- Pilih Jenis File -</option>
-                                <option value="pdf">PDF</option>
-                                <option value="rtf">WORD (RTF)</option>
-                                <option value="xls">XLS</option>
-                            </select>
-                        </div>
-                        <hr />
-                        <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
                     </div>
                 </div>
             </div>
@@ -268,4 +264,4 @@ function selectOnChange()
 
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/laporan_pendapatan//report_all.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/laporan_pendapatan//report_peropd.blade.php ENDPATH**/ ?>

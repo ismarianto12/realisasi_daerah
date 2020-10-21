@@ -68,7 +68,7 @@ class ReportController extends Controller
         $sampai           = date(date('Y-m-d'), strtotime('+1 day'));
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
 
-        return view($this->view . '.report_all', [
+        return view($this->view . '.report_peropd', [
             'tahun_id' => $tahuns,
             'tahuns' => $tahuns,
             'tmrekening_akuns' => $tmrekening_akuns,
