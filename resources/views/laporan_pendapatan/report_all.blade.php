@@ -122,8 +122,7 @@
             <div class="card-body">
                 <div class="col-md-6">
                     <div class="form-group m-0">
-                        <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Rek.
-                                Jenis</strong></label>
+                        <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Jenis file</strong></label>
                         <div class="col-md-5 p-0 mb-2">
 
                             <select class="form-control select2" id="type_params">

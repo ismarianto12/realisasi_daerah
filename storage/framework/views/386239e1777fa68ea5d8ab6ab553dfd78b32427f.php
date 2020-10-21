@@ -122,12 +122,17 @@
             <div class="card-body">
                 <div class="col-md-6">
                     <div class="form-group m-0">
-                        <select class="form-control select2" id="type_params">
-                            <option value="0">- Pilih Jenis File -</option>
-                            <option value="pdf">PDF</option>
-                            <option value="rtf">WORD (RTF)</option>
-                            <option value="xls">XLS</option>
-                        </select>
+                        <label for="tmrekening_akun_kelompok_jenis_id" class="col-form-label s-12 col-md-3"><strong>Rek.
+                                Jenis</strong></label>
+                        <div class="col-md-5 p-0 mb-2">
+
+                            <select class="form-control select2" id="type_params">
+                                <option value="0">- Pilih Jenis File -</option>
+                                <option value="pdf">PDF</option>
+                                <option value="rtf">WORD (RTF)</option>
+                                <option value="xls">XLS</option>
+                            </select>
+                        </div>
                         <hr />
                         <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
                     </div>
