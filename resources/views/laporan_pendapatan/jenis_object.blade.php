@@ -26,7 +26,7 @@
 
 
 <div style="float:left">
-    <img src="{{ asset('assets/template/img/logo_tangsel.png') }}" style="width: 60px;height:60px;margin-top:25px">
+    <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:25px">
 </div>
 
 <center>
@@ -75,16 +75,13 @@
         @foreach ($render as $list)
         @php
         $rjenis_old     =  $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'),$list['kd_rek_jenis'])->first();
-        $targetby_jenis = $listarget::select(\DB::raw('sum(jumlah) as
-        tjenis'))->where(\DB::raw('substr(rekneing_rincian_akun_jenis_objek_id,1,3)'),$list['kd_rek_jenis'])->first();
-        
+        $targetby_jenis = $listarget::select(\DB::raw('sum(jumlah) as tjenis'))->where(\DB::raw('substr(rekneing_rincian_akun_jenis_objek_id,1,3)'),$list['kd_rek_jenis'])->first();
         $sjenis         = ($targetby_jenis['tjenis'] - $list['jml_rek_jenis']);
-        //total pad
         $trek_jenis     = ($rjenis_old['jml_rek_jenis'] + $list['jml_rek_jenis']);
 
 
         @endphp
-        <tr>
+        <tr style="background:#fff">
             <td><b>{{ $list['kd_rek_jenis'] }}</b></td>
             <td><b>{{ $list['nm_rek_jenis'] }}</b></td>
             <td><b>{{ number_format($targetby_jenis['tjenis'],0,0,'.') }}</b></td>
@@ -101,13 +98,13 @@
         @foreach ($a as $ls)
         @php
         $robj_old      = $rperiode_lalu->where(\DB::raw('substr(tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'),$list['kd_rek_obj'])->first(); 
-        $object_target = $listarget::select(\DB::raw('sum(jumlah) as tjenis_objek'))->where(\DB::raw('substr(rekneing_rincian_akun_jenis_objek_id,1,3)'),$ls['kd_rek_obj'])->first();
+        $object_target = $listarget::select(\DB::raw('sum(jumlah) as tjenis_objek'))->where(\DB::raw('substr(rekneing_rincian_akun_jenis_objek_id,1,5)'),$ls['kd_rek_obj'])->first();
         $sobj          = ($object_target['tjenis_objek'] - $ls['jml_rek_obj']);
 
         //perekening jenis report
         $trek_rincian  = ($robj_old['tjenis_objek'] + $ls['jml_rek_obj']); 
         @endphp
-        <tr>
+        <tr style="background:#fff">
             <td><b>{{ $ls['kd_rek_obj'] }}</b></td>
             <td><b>{{ $ls['nm_rek_obj'] }}</b></td>
             <td>{{ number_format($object_target['tjenis_objek'],0,0,'.') }}</td>
@@ -131,7 +128,7 @@
         $rrinci_old          = $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'),$item['kd_rek_rincian_obj'])->first();
         $trek_rincian_sub    = ($rrinci_old['jml_rek_rincian'] + $item['jml_rek_rincian']); 
         @endphp
-        <tr>
+        <tr style="background:#fff">
             <td>{{ $item['id_rek_rincians'] }}</td>
             <td>{{ $item['nm_rek_rincian_obj'] }}</td>
             <td>{{ $rtarget }}</td>
