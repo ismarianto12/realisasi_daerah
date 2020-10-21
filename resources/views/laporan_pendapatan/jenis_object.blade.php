@@ -60,7 +60,7 @@
             <th>(Rp.)</th>
             <th>%</th>
         </tr>
-        <tr style="background: #000">
+        <tr>
             <td>1</td>
             <td>2</td>
             <td>3</td>
@@ -80,7 +80,7 @@
         
         $sjenis         = ($targetby_jenis['tjenis'] - $list['jml_rek_jenis']);
         //total pad
-        $trek_jenis     = ($rjenis_old['jml_rek_jenis'] - $lis['jml_rek_jenis']);
+        $trek_jenis     = ($rjenis_old['jml_rek_jenis'] - $list['jml_rek_jenis']);
 
 
         @endphp
@@ -105,7 +105,7 @@
         $sobj          = ($object_target['tjenis_objek'] - $ls['jml_rek_obj']);
 
         //perekening jenis report
-        $trek_rincian  = ($rjenis_old['tjenis_objek'] - $lis['jml_rek_obj']); 
+        $trek_rincian  = ($rjenis_old['tjenis_objek'] - $list['jml_rek_obj']); 
         @endphp
         <tr>
             <td><b>{{ $ls['kd_rek_obj'] }}</b></td>
@@ -127,7 +127,7 @@
 
         $rincian_target      = $listarget::where('rekneing_rincian_akun_jenis_objek_id',$item['kd_rek_rincian_obj'])->first();
         $rtarget             = ($rincian_target['jumlah']) ? number_format($rincian_target['jumlah'],0,0,'.') : '0';
-        $srinci              = ($rincian_target['jumlah'] - $list['jml_rek_rincian']);
+        $srinci              = ($rincian_target['jumlah'] - $item['jml_rek_rincian']);
         $rrinci_old          = $rperiode_lalu->where(\DB::raw('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id'),$item['kd_rek_rincian_obj'])->first();
         $trek_rincian_sub    = ($rperiode_lalu['jml_rek_rician'] - $item['jml_rek_rincian']); 
         @endphp
