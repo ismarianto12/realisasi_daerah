@@ -1,6 +1,5 @@
-@extends('layouts.template')
-@section('title','Pendapatan Daerah')
-@section('content')
+<?php $__env->startSection('title','Pendapatan Daerah'); ?>
+<?php $__env->startSection('content'); ?>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -26,9 +25,9 @@
                     <div class="col-sm-6">
                         <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
                             autocomplete="off" onchange="selectOnChange()">
-                            @foreach ($tahuns as $tahun)
-                            <option value="{{$tahun->id}}">{{$tahun->tahun}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $tahuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($tahun->id); ?>"><?php echo e($tahun->tahun); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -51,7 +50,7 @@
     </div>
     <div id="btn_cetak"></div>
 </div>
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
     $(function(){
 
@@ -65,7 +64,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.kodejenis.kodekelompokByKodeakun', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -94,7 +93,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.kodeobjek.kodejenisByKodekelompok', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -120,7 +119,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -162,9 +161,9 @@
             $.alert('jenis laporan tidak boleh kosong');
         }else{ 
             if(jenis == 'pdf'){
-                window.open("{{ route('laporan.action_bulan') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');
+                window.open("<?php echo e(route('laporan.action_bulan')); ?>?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');
             }else{ 
-               window.location.href= "{{ route('laporan.action_bulan') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis;
+               window.location.href= "<?php echo e(route('laporan.action_bulan')); ?>?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis;
            } 
        } 
    }
@@ -178,5 +177,6 @@ function selectOnChange()
 
 </script>
 
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/laporan_pendapatan//index_perbulan.blade.php ENDPATH**/ ?>

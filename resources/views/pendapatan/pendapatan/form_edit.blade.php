@@ -110,7 +110,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
     $('.entri_rek').html('<div class="alert alert-success">Sedang meload data ...</div>'); 
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
+        option = "<option value='0'>--Semua Data--</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_id').html(option);
             $('#tmrekening_akun_kelompok_jenis_id').html(option);
@@ -140,7 +140,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
 
     $('#tmrekening_akun_kelompok_id').on('change', function(){
         val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
+        option = "<option value='0'>--Semua Data--</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_jenis_id').html(option);
             $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
@@ -167,7 +167,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
 
     $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
         val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
+        option = "<option value='0'>--Semua Data--</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
             selectOnChange();

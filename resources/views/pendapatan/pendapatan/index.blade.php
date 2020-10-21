@@ -221,7 +221,7 @@
 
 $('#tmrekening_akun_id').on('change', function(){
     val = $(this).val();
-    option = "<option value=''>&nbsp;</option>";
+    option = "<option value='0'>--Semua Data--</option>";
     if(val == ""){
         $('#tmrekening_akun_kelompok_id').html(option);
         $('#tmrekening_akun_kelompok_jenis_id').html(option);
@@ -251,7 +251,7 @@ $('#tmrekening_akun_id').on('change', function(){
 
 $('#tmrekening_akun_kelompok_id').on('change', function(){
     val = $(this).val();
-    option = "<option value=''>&nbsp;</option>";
+    option = "<option value='0'>--Semua Data--</option>";
     if(val == ""){
         $('#tmrekening_akun_kelompok_jenis_id').html(option);
         $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
@@ -278,7 +278,7 @@ $('#tmrekening_akun_kelompok_id').on('change', function(){
 
 $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
     val = $(this).val();
-    option = "<option value=''>&nbsp;</option>";
+    option = "<option value='0'>--Semua Data--</option>";
     if(val == ""){
         $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
         selectOnChange();

@@ -68,7 +68,7 @@
 
     $('#tmrekening_akun_id').on('change', function(){
         val = $(this).val();
-        option = "<option value=''>&nbsp;</option>";
+        option = "<option value='0'>--Semua Data--</option>";
         if(val == ""){
             $('#tmrekening_akun_kelompok_id').html(option);
         }else{
