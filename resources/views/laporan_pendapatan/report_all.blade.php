@@ -72,8 +72,8 @@
                                 </div>
                                 S /D
                                 <div class="col-sm-4">
-                                    <input type="text" class="datepicker form-control" id="sampai" placeholder="Sampai dengan"
-                                        value="{{ $sampai }}">
+                                    <input type="text" class="datepicker form-control" id="sampai"
+                                        placeholder="Sampai dengan" value="{{ $sampai }}">
                                 </div>
                             </div>
 
@@ -240,8 +240,6 @@
             $.alert('tanggal awal tidak boleh kosong');
         }else if(sampai == ''){
             $.alert('tanggal akhir tidak boleh kosong');
-        }else if(rekjenis_id == ''){
-            $.alert('rekening jenis object tidak boleh kosong');
         }else{ 
          var jenis = $('#type_params').val();
          if(jenis == '' || jenis == 0){

@@ -64,8 +64,8 @@ class ReportController extends Controller
         $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
         $tmsikd_satkers   = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
         $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
-        $dari             = $request->dari;
-        $sampai           = $request->sampai;
+        $dari             = date('Y-m-d');
+        $sampai           = date(date('Y-m-d'), strtotime('+1 day'));
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
 
         return view($this->view . '.report_all', [
@@ -132,7 +132,6 @@ class ReportController extends Controller
         //     $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
         // }
         $filldata =  $data->get();
-        // dd($data);
         $tahun             = Properti_app::tahun_sekarang();
         $listarget         = new TmpendapatantargetModel;
         $jenisobject       = new Tmrekening_akun_kelompok_jenis;
@@ -156,7 +155,6 @@ class ReportController extends Controller
             $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
         }
         $rperiode_lalu = $periode_lalu;
-
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
