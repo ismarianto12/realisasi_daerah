@@ -154,7 +154,7 @@ class ReportController extends Controller
         if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
             $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
         }
-        $rperiode_lalu = $periode_lalu;
+        $rperiode_lalu = $periode_lalu->get();
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
