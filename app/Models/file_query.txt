@@ -1,0 +1,22 @@
+SELECT
+	*
+FROM
+	tmrekening_akun_kelompok_jenis_objek_rincians
+	INNER JOIN
+	tmrekening_akun_kelompok_jenis_objeks
+	ON 
+		tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id = tmrekening_akun_kelompok_jenis_objeks.id
+	INNER JOIN
+	tmrekening_akun_kelompok_jenis
+	ON 
+		tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id = tmrekening_akun_kelompok_jenis.id
+	INNER JOIN
+	tmrekening_akun_kelompoks
+	ON 
+		tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id = tmrekening_akun_kelompoks.id
+	LEFT JOIN
+	tmrekening_akun_kelompok_jenis_objek_rincian_subs
+	ON 
+		tmrekening_akun_kelompok_jenis_objek_rincians.id = tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id
+WHERE
+	tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id = 110201

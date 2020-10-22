@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @if(count($rekrincian) == 0)
+        <?php if(count($rekrincian) == 0): ?>
         <tr>
             <td colspan="6">
                 <div class="alert alert-danger">
@@ -18,89 +18,91 @@
                 </div>
             </td>
         </tr>
-        @else
+        <?php else: ?>
 
-        @php $idx = 0; $ttlMak = count($rekrincian); @endphp
-        @foreach($rekrincian as $rinci)
-        @php
+        <?php $idx = 0; $ttlMak = count($rekrincian); ?>
+        <?php $__currentLoopData = $rekrincian; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rinci): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
         $pendapatan =
         $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rinci['kd_rek_rincian_obj'])->first();
         $style = '';
-        @endphp
+        ?>
         <tr>
-            <td style="{{ $style }}" align="center">
-                <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"
-                    value="{{ $idx }}">
+            <td style="<?php echo e($style); ?>" align="center">
+                <input name="cboxInput[]" id="cboxInput_<?php echo e($idx); ?>" type="checkbox" style="margin-right:0px !important"
+                    value="<?php echo e($idx); ?>">
             </td>
-            <td style="{{ $style }}">
-                {{ $rinci['kd_rek_rincian_obj'] }}
+            <td style="<?php echo e($style); ?>">
+                <?php echo e($rinci['kd_rek_rincian_obj']); ?>
+
             </td>
             </td>
-            <td style="{{ $style }}">{{ $rinci['nm_rek_rincian_obj'] }}</td>
-            <td style="{{ $style }}">
-                <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
+            <td style="<?php echo e($style); ?>"><?php echo e($rinci['nm_rek_rincian_obj']); ?></td>
+            <td style="<?php echo e($style); ?>">
+                <input name="volume[<?php echo e($idx); ?>]" id="volume_<?php echo e($idx); ?>" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
-                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
+                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak(<?php echo e($ttlMak); ?>); "
                     \="" value="">
             </td>
-            <td style="{{ $style }}">
-                <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
+            <td style="<?php echo e($style); ?>">
+                <input name="satuan[<?php echo e($idx); ?>]" id="satuan_<?php echo e($idx); ?>" type="text" class="form-control"
                     autocomplete="off" maxlength="20" onblur="cboxChecked(this); " \="">
             </td>
 
-            <td style="{{ $style }}">
-                <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
+            <td style="<?php echo e($style); ?>">
+                <input name="jumlah[<?php echo e($idx); ?>]" id="jumlah_<?php echo e($idx); ?>" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title="" value="">
             </td>
         </tr>
-        <input name="cboxInputVal[{{ $idx }}]" id="cboxInputVal_{{ $idx }}" type="hidden"
-            value="{{ $rinci['kd_rek_rincian_obj'] }}" />
-        <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden"
-            value="{{ $rinci['kd_rek_rincian_obj'] }}" />
-        @php $idx++ @endphp
+        <input name="cboxInputVal[<?php echo e($idx); ?>]" id="cboxInputVal_<?php echo e($idx); ?>" type="hidden"
+            value="<?php echo e($rinci['kd_rek_rincian_obj']); ?>" />
+        <input name="cboxInputRinci[<?php echo e($idx); ?>]" id="cboxInputRinci<?php echo e($idx); ?>" type="hidden"
+            value="<?php echo e($rinci['kd_rek_rincian_obj']); ?>" />
+        <?php $idx++ ?>
 
 
-        @php $sub_rincis =
+        <?php $sub_rincis =
         $rekrincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rinci['kd_rek_rincian_obj'])->get();
-        @endphp
-        @foreach($sub_rincis as $sub_rinci)
-        @php
+        ?>
+        <?php $__currentLoopData = $sub_rincis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub_rinci): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
         $pendapatan =
         $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id',$sub_rinci['kd_rek_rincian_objek_sub'])->first();
         $style = '';
-        @endphp
+        ?>
         <tr>
-            <td style="{{ $style }}" align="center">
-                <input name="cboxInput[]" id="cboxInput_{{ $idx }}" type="checkbox" style="margin-right:0px !important"
-                    value="{{ $idx }}">
+            <td style="<?php echo e($style); ?>" align="center">
+                <input name="cboxInput[]" id="cboxInput_<?php echo e($idx); ?>" type="checkbox" style="margin-right:0px !important"
+                    value="<?php echo e($idx); ?>">
             </td>
-            <td style="{{ $style }}">
-                {{ $sub_rinci['kd_rek_rincian_obj'] }}
+            <td style="<?php echo e($style); ?>">
+                <?php echo e($sub_rinci['kd_rek_rincian_obj']); ?>
+
             </td>
             </td>
-            <td style="{{ $style }}">{{ $sub_rinci['nm_rek_rincian_obj'] }}</td>
-            <td style="{{ $style }}">
-                <input name="volume[{{ $idx }}]" id="volume_{{ $idx }}" type="text" style="text-align:right"
+            <td style="<?php echo e($style); ?>"><?php echo e($sub_rinci['nm_rek_rincian_obj']); ?></td>
+            <td style="<?php echo e($style); ?>">
+                <input name="volume[<?php echo e($idx); ?>]" id="volume_<?php echo e($idx); ?>" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
-                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak({{ $ttlMak }}); "
+                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak(<?php echo e($ttlMak); ?>); "
                     \="">
             </td>
 
-            <td style="{{ $style }}">
-                <input name="satuan[{{ $idx }}]" id="satuan_{{ $idx }}" type="text" class="form-control"
+            <td style="<?php echo e($style); ?>">
+                <input name="satuan[<?php echo e($idx); ?>]" id="satuan_<?php echo e($idx); ?>" type="text" class="form-control"
                     autocomplete="off" maxlength="20" onblur="cboxChecked(this); ">
             </td>
 
-            <td style="{{ $style }}">
-                <input name="jumlah[{{ $idx }}]" id="jumlah_{{ $idx }}" type="number" style="text-align:right"
+            <td style="<?php echo e($style); ?>">
+                <input name="jumlah[<?php echo e($idx); ?>]" id="jumlah_<?php echo e($idx); ?>" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title="">
             </td>
-            <input name="kd_rekening_sub[{{ $idx }}]" id="kd_rekening_sub{{ $idx }}" type="hidden"
-                value="{{ $sub_rinci['kd_rek_rincian_objek_sub'] }}" />
+            <input name="kd_rekening_sub[<?php echo e($idx); ?>]" id="kd_rekening_sub<?php echo e($idx); ?>" type="hidden"
+                value="<?php echo e($sub_rinci['kd_rek_rincian_objek_sub']); ?>" />
         </tr>
-        @endforeach
-        @endforeach
-        @endif
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php endif; ?>
 
     </tbody>
 </table>
@@ -122,8 +124,8 @@
         </td>
     </tr>
 </table>
-<script src="{{ asset('assets/template/js/validate_form.js') }}"></script>
-<script src="{{ asset('assets/template/js/autoNumeric.js') }}"></script>
+<script src="<?php echo e(asset('assets/template/js/validate_form.js')); ?>"></script>
+<script src="<?php echo e(asset('assets/template/js/autoNumeric.js')); ?>"></script>
 
 
 <script type="text/javascript">
@@ -176,4 +178,4 @@
         $('#txtSave').html('');
     }
     add();
-</script>
+</script><?php /**PATH D:\xampp64\www\retribusi\resources\views/pendapatan/pendapatan/form_pendapatan_add.blade.php ENDPATH**/ ?>

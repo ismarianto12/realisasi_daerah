@@ -32,10 +32,12 @@
                     <h2> PEMERINTAH KOTA TANGERANG SELATAN </h2>
                     <h3>LAPORAN REALISASI ANGGARAN PENDAPATAN DAN BELANJA PEMDA </h3>
                     <h4> PER REKENING JENIS</h4>
-                    TAHUN ANGGARAN {{ $tahun }}
-                    <b>[{{ $opd['kode'] }}] - [{{ $opd['nama'] }}]</b>
+                    TAHUN ANGGARAN <?php echo e($tahun); ?>
+
+                    <b>[<?php echo e($opd['kode']); ?>] - [<?php echo e($opd['nama']); ?>]</b>
                     <br />
-                    PERIODE : {{ $dari }} S/D {{ $sampai }}
+                    PERIODE : <?php echo e($dari); ?> S/D <?php echo e($sampai); ?>
+
                     <br />
                 </center>
                 <br />
@@ -72,21 +74,21 @@
         </tr>
     </thead>
     <tbody>
-        @php
+        <?php
         $idx = 0; count($render);
-        @endphp
-        @foreach ($render as $list)
+        ?>
+        <?php $__currentLoopData = $render; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <tr>
-            <td @if($list['bold']['val']==TRUE) style="font-weight:bold" @endif>{{ $list['kd_rek']['val'] }}</td>
-            <td @if($list['bold']['val']==TRUE) style="font-weight:bold" @endif>{{ $list['nm_rek']['val'] }}</td>
-            <td>{{ $list['pagu']['val'] }}</td>
-            <td>{{ $list['periode_lalu']['val'] }}</td>
-            <td>{{ $list['periode_ini']['val'] }}</td>
-            <td>{{ $list['total']['val'] }}</td>
-            <td>{{ $list['divide']['val'] }}</td>
-            <td>{{ $list['persen']['val'] }}</td>
+            <td <?php if($list['bold']['val']==TRUE): ?> style="font-weight:bold" <?php endif; ?>><?php echo e($list['kd_rek']['val']); ?></td>
+            <td <?php if($list['bold']['val']==TRUE): ?> style="font-weight:bold" <?php endif; ?>><?php echo e($list['nm_rek']['val']); ?></td>
+            <td><?php echo e($list['pagu']['val']); ?></td>
+            <td><?php echo e($list['periode_lalu']['val']); ?></td>
+            <td><?php echo e($list['periode_ini']['val']); ?></td>
+            <td><?php echo e($list['total']['val']); ?></td>
+            <td><?php echo e($list['divide']['val']); ?></td>
+            <td><?php echo e($list['persen']['val']); ?></td>
         </tr>
-        @php $idx++ @endphp
-        @endforeach
+        <?php $idx++ ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </tbody>
-</table>
+</table><?php /**PATH D:\xampp64\www\retribusi\resources\views/laporan_pendapatan/jenis_object_excel.blade.php ENDPATH**/ ?>

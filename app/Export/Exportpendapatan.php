@@ -55,49 +55,23 @@ class Exportpendapatan implements ShouldAutoSize, FromView, WithEvents
         $sampai            = $this->request['sampai'];
         $jreport           = 1;
         $rekjenis_id       = $this->request['rekjenis_id'];
-
-        $groupby           = 'tmrekening_akun_kelompok_jenis.id';
-        $data              = Tmpendapatan::report_pendapatan([], $groupby);
-
-        if ($rekjenis_id != 0) {
-            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
-        }
-        if ($dari != '' && $sampai != '') {
-            $data->where('tmpendapatan.tanggal_lapor', '>=', $dari);
-            $data->where('tmpendapatan.tanggal_lapor', '<=', $sampai);
-        }
-        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
-            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        }
-        if ($tmsikd_satker_id == 0) {
-            $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
-        }
-        $filldata =  $data->get();
-        // dd($data);
         $tahun             = Properti_app::tahun_sekarang();
-        $listarget         = new TmpendapatantargetModel;
-        $jenisobject       = new Tmrekening_akun_kelompok_jenis;
-        $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
-        $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
-        $tmpendapatan      = new Tmpendapatan;
-        $opd = Sikd_satker::find($this->request['tmsikd_satker_id']);
-
-        //periode lalu
+        //get periode lalu 
         $dperiode = $tahun . '-01-01';
-        $speriode = date($sampai, strtotime('-1 day'));
+        $speriode = date('Y-m-d', strtotime($sampai . ' -1 day'));
 
-        $periode_lalu    = Tmpendapatan::report_pendapatan([], 'tmrekening_akun_kelompok_jenis.id');
-        if ($rekjenis_id != 0) {
-            $periode_lalu->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
-        }
-        if ($dari != '' && $sampai != '') {
-            $periode_lalu->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
-            $periode_lalu->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
-        }
-        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
-            $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        }
-        $rperiode_lalu = $periode_lalu;
+        $par = [
+            'tahun_id' => $tahun_id,
+            'tmsikd_satker_id' => $tmsikd_satker_id,
+            'dari' => $dari,
+            'sampai' => $sampai,
+            'tahun' => $tahun,
+            'dperiode' => $dperiode,
+            'speriode' => $speriode
+        ];
+        $rpendapatan = Tmpendapatan::report_pendapatan($par);
+        // dd($rpendapatan);  
+        $opd = Sikd_satker::find($this->request['tmsikd_satker_id']);
         return view('laporan_pendapatan.jenis_object_excel', [
             'tahun' => $tahun,
             'dari' => $dari,
@@ -105,13 +79,7 @@ class Exportpendapatan implements ShouldAutoSize, FromView, WithEvents
             'tmsikd_satker_id' => $tmsikd_satker_id,
             'tahun_id' => $tahun_id,
             'sampai' => $sampai,
-            'render' => $filldata,
-            'listarget' => $listarget,
-            'tmpendapatan' => $tmpendapatan,
-            'jenisobject' => $jenisobject,
-            'objectrincian' => $objectrincian,
-            'objectrinciansub' => $objectrinciansub,
-            'rperiode_lalu' => $rperiode_lalu
+            'render' => $rpendapatan,
         ]);
     }
     public function registerEvents(): array

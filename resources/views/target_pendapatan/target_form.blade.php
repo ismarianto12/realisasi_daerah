@@ -40,7 +40,7 @@
                                         <li> {{ $key->Tmrekening_akun_kelompok_jenis_objek->nm_rek_obj }}.
                                             <ul>
                                                 <li>{{ $key['nm_rek_rincian_obj'] }}</li>
-                                                <input type="hidden" name="rekneing_rincian_akun_jenis_objek_id"
+                                                <input type="hidden" name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
                                                     value="{{ $key['id'] }}">
                                             </ul>
                                         </li>

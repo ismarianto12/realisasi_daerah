@@ -95,19 +95,6 @@ class ReportController extends Controller
     //expport data perekening jenis
     function action_all(Request $request)
     {
-        $opd = Sikd_satker::find($request->tmsikd_satker_id);
-        //report per rekening jenis 
-        $jenis    = $request->jenis;
-        if ($jenis == 'xls') {
-            $namaFile  = 'Laporan Perekening jenis satuan kerja' . $opd->kode . '-' . $opd->n_opd;
-            //   $fnamaFile  = str_replace($namaFile,'-',''); 
-            $data      = new Exportpendapatan($request);
-            return Excel::download($data, $namaFile . '.xlsx');
-        } else if ($jenis == 'rtf') {
-            $namaFile = 'Pendapatan_daerah.rtf';
-            $this->headerdownload($namaFile);
-        }
-
         $tahun_id          = $request->tahun_id;
         $tmsikd_satker_id  = $request->tmsikd_satker_id;
         $dari              = $request->dari;
@@ -115,46 +102,36 @@ class ReportController extends Controller
         $jreport           = 1;
         $rekjenis_id       = $request->rekjenis_id;
 
-        $groupby           = 'tmrekening_akun_kelompok_jenis.id';
-        $data              = Tmpendapatan::report_pendapatan([], $groupby);
-
-        if ($rekjenis_id != 0) {
-            $data->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
-        }
-        if ($dari != '' && $sampai != '') {
-            $data->where('tmpendapatan.tanggal_lapor', '>=', $dari);
-            $data->where('tmpendapatan.tanggal_lapor', '<=', $sampai);
-        }
-        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
-            $data->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        }
-        // if ($tmsikd_satker_id == 0) {
-        //     $data->where('tmpendapatan.tmsikd_satker_id', '!=', NULL);
-        // }
-        $filldata =  $data->get();
         $tahun             = Properti_app::tahun_sekarang();
-        $listarget         = new TmpendapatantargetModel;
-        $jenisobject       = new Tmrekening_akun_kelompok_jenis;
-        $objectrincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
-        $objectrinciansub  = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
-        $tmpendapatan      = new Tmpendapatan;
-
         //get periode lalu 
         $dperiode = $tahun . '-01-01';
-        $speriode = date($sampai, strtotime('-1 day'));
+        $speriode = date('Y-m-d', strtotime($sampai . ' -1 day'));
 
-        $periode_lalu    = Tmpendapatan::report_pendapatan([], 'tmrekening_akun_kelompok_jenis.id');
-        if ($rekjenis_id != 0) {
-            $periode_lalu->where('tmrekening_akun_kelompok_jenis.id', '=', $rekjenis_id);
-        }
-        if ($dari != '' && $sampai != '') {
-            $periode_lalu->where('tmpendapatan.tanggal_lapor', '>=', $dperiode);
-            $periode_lalu->where('tmpendapatan.tanggal_lapor', '<=', $speriode);
-        }
-        if ($tmsikd_satker_id != '' || $tmsikd_satker_id != 0) {
-            $periode_lalu->where('tmpendapatan.tmsikd_satker_id', '=', $tmsikd_satker_id);
-        }
-        $rperiode_lalu = $periode_lalu;
+        $par = [
+            'tahun_id' => $tahun_id,
+            'tmsikd_satker_id' => $tmsikd_satker_id,
+            'dari' => $dari,
+            'sampai' => $sampai,
+            'tahun' => $tahun,
+            'dperiode' => $dperiode,
+            'speriode' => $speriode
+        ];
+        $rpendapatan = Tmpendapatan::report_pendapatan($par);
+        // dd($rpendapatan);
+
+
+        $opd = Sikd_satker::find($request->tmsikd_satker_id);
+        //report per rekening jenis 
+        $jenis    = $request->jenis;
+        if ($jenis == 'xls') {
+            $namaFile  = 'Laporan Perekening jenis satuan kerja' . $opd->kode . '-' . $opd->n_opd;
+            //   $fnamaFile  = str_replace($namaFile,'-',''); 
+            $export      = new Exportpendapatan($request);
+            return Excel::download($export, $namaFile . '.xlsx');
+        } else if ($jenis == 'rtf') {
+            $namaFile = 'Pendapatan_daerah.rtf';
+            $this->headerdownload($namaFile);
+        } 
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
@@ -163,15 +140,10 @@ class ReportController extends Controller
                 'tmsikd_satker_id' => $tmsikd_satker_id,
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
-                'render' => $filldata,
-                'listarget' => $listarget,
-                'tmpendapatan' => $tmpendapatan,
-                'jenisobject' => $jenisobject,
-                'objectrincian' => $objectrincian,
-                'objectrinciansub' => $objectrinciansub,
-                'rperiode_lalu' => $rperiode_lalu
+                'render' => $rpendapatan,
             ]);
         } else {
+            $customPaper = array(0, 0, 567.00, 1200);
             $pdf = PDF::loadView(
                 $this->view . 'jenis_object',
                 [
@@ -181,16 +153,9 @@ class ReportController extends Controller
                     'tmsikd_satker_id' => $tmsikd_satker_id,
                     'tahun_id' => $tahun_id,
                     'sampai' => $sampai,
-                    'render' => $filldata,
-                    'listarget' => $listarget,
-                    'tmpendapatan' => $tmpendapatan,
-                    'jenisobject' => $jenisobject,
-                    'objectrincian' => $objectrincian,
-                    'objectrinciansub' => $objectrinciansub,
-                    'rperiode_lalu' => $rperiode_lalu
+                    'render' => $rpendapatan,
                 ]
-            )
-                ->setPaper('A4', 'landscape');
+            )->setPaper('F4', 'landscape');
             return $pdf->stream('report_pad');
         }
     }

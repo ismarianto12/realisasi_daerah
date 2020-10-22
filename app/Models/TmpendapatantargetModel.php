@@ -13,7 +13,7 @@ class TmpendapatantargetModel extends Model
 
     function Tmrekening_akun_kelompok_jenis_objek_rincian()
     {
-        return  $this->belongsTo(Tmrekening_akun_kelompok_jenis_objek_rincian::class,'rekneing_rincian_akun_jenis_objek_id');
+        return  $this->belongsTo(Tmrekening_akun_kelompok_jenis_objek_rincian::class,'tmrekening_akun_kelompok_jenis_objek_rincian_id');
     }
     
 }

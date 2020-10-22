@@ -83,6 +83,7 @@
                                     <div class="col-md-5 p-0 mb-2">
                                         <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
                                             id="tmrekening_akun_id">
+                                            <option value="0">--Pilih Rekening Akun--</option>
                                             <?php $__currentLoopData = $tmrekening_akuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmrekening_akun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($tmrekening_akun->id); ?>">
                                                 <?php echo e('['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun); ?>
@@ -116,7 +117,7 @@
                                 <div class="form-group m-0">
                                     <label for="tmrekening_akun_kelompok_jenis_id"
                                         class="col-form-label s-12 col-md-3"><strong>Jenis file</strong></label>
-                                    <div class="col-md-5 p-0 mb-2"> 
+                                    <div class="col-md-5 p-0 mb-2">
                                         <select class="form-control select2" id="type_params">
                                             <option value="0">- Pilih Jenis File -</option>
                                             <option value="pdf">PDF</option>
@@ -243,7 +244,7 @@
         }else{ 
          var jenis = $('#type_params').val();
          if(jenis == '' || jenis == 0){
-            $.alert('jenis laporan tidak boleh kosong');
+            $.alert('Pilih jenis File ');
         }else{ 
             if(jenis == 'pdf'){
                 window.open("<?php echo e(route('laporan.action_all')); ?>?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');

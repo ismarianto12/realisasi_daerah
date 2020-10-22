@@ -63,7 +63,7 @@ class PendapatanTargetController extends Controller
         }
         if ($request->tmrekening_akun_kelompok_jenis_objek_id != 0) {
             $rincian_rek_id =  $request->tmrekening_akun_kelompok_jenis_objek_id;
-            $ls = $ls->where('rekneing_rincian_akun_jenis_objek_id', $rincian_rek_id);
+            $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian_rek_id);
         }
         return DataTables::of($ls)
             ->editColumn('id', function ($p) {
@@ -75,7 +75,7 @@ class PendapatanTargetController extends Controller
                 return '<b>' . $pad_jenis['nm_rek_obj'] . '</b>';
             })
             ->editColumn('djumlah', function ($p) {
-                return "<b><a href='" . route($this->route . 'edit', $p->rekneing_rincian_akun_jenis_objek_id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
+                return "<b><a href='" . route($this->route . 'edit', $p->tmrekening_akun_kelompok_jenis_objek_rincian_id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
             })
             ->editColumn('djumlah_perubahan', function ($p) {
                 return "<b>" . number_format($p->jumlah, 0, 0, '.') . "</b>";
@@ -100,7 +100,7 @@ class PendapatanTargetController extends Controller
 
         $jumlah                               = '';
         $jumlah_perubahan                     = '';
-        $rekneing_rincian_akun_jenis_objek_id = '';
+        $tmrekening_akun_kelompok_jenis_objek_rincian_id = '';
         $dasar_hukum                          = '';
         $keterangan                           = '';
         $tgl_perubahan                        = '';
@@ -123,7 +123,7 @@ class PendapatanTargetController extends Controller
                 'trekening',
                 'jumlah',
                 'jumlah_perubahan',
-                'rekneing_rincian_akun_jenis_objek_id',
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id',
                 'dasar_hukum',
                 'keterangan',
                 'tgl_perubahan',
@@ -144,7 +144,7 @@ class PendapatanTargetController extends Controller
         $request->validate([
             'jumlah' => 'required',
             'tperubahan' => 'required',
-            'rekneing_rincian_akun_jenis_objek_id' => 'required|unique:tmpendapatan_target,rekneing_rincian_akun_jenis_objek_id',
+            'tmrekening_akun_kelompok_jenis_objek_rincian_id' => 'required|unique:tmpendapatan_target,tmrekening_akun_kelompok_jenis_objek_rincian_id',
             'dasar_hukum'     => 'required',
             'keterangan'      => 'required',
             'tahun'           => 'required'
@@ -156,7 +156,7 @@ class PendapatanTargetController extends Controller
         $r                                       = new TmpendapatantargetModel;
         $r->jumlah                               = $jumlah;
         $r->jumlah_perubahan                     = $jumlahperubahan;
-        $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
+        $r->tmrekening_akun_kelompok_jenis_objek_rincian_id = $request->tmrekening_akun_kelompok_jenis_objek_rincian_id;
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
         $r->tgl_perubahan                        = $request->tgl_perubahan;
@@ -203,12 +203,12 @@ class PendapatanTargetController extends Controller
     public function edit($id)
     {
 
-        $data                                  = TmpendapatantargetModel::Where('rekneing_rincian_akun_jenis_objek_id', $id)->first();
+        $data                                  = TmpendapatantargetModel::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $id)->first();
         $tahuns                                = Tmsikd_setup_tahun_anggaran::get();
         $method_field                          = method_field('PATCH');
         $jumlah                                = number_format($data['jumlah'], 0, 0, ',');
         $jumlah_perubahan                      = $data['jumlah_perubahan'];
-        $rekneing_rincian_akun_jenis_objek_id  = $data['rekneing_rincian_akun_jenis_objek_id'];
+        $tmrekening_akun_kelompok_jenis_objek_rincian_id  = $data['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         $dasar_hukum     =  $data['dasar_hukum'];
         $keterangan      =  $data['keterangan'];
         $tgl_perubahan   =  $data['tgl_perubahan'];
@@ -217,7 +217,7 @@ class PendapatanTargetController extends Controller
         } else {
             $action      =  route($this->route . 'update', $data['id']);
         }
-        $rincian_obj_id  =  $data['rekneing_rincian_akun_jenis_objek_id'];
+        $rincian_obj_id  =  $data['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
         //dd($rincian_obj_id);
         $trekening       =  Tmrekening_akun_kelompok_jenis_objek_rincian::with(['Tmrekening_akun_kelompok_jenis_objek'])->wherekd_rek_rincian_obj($rincian_obj_id)->get();
         $method          = 'edit';
@@ -228,7 +228,7 @@ class PendapatanTargetController extends Controller
             'targetid',
             'jumlah',
             'jumlah_perubahan',
-            'rekneing_rincian_akun_jenis_objek_id',
+            'tmrekening_akun_kelompok_jenis_objek_rincian_id',
             'dasar_hukum',
             'keterangan',
             'tgl_perubahan',
@@ -262,7 +262,7 @@ class PendapatanTargetController extends Controller
         $r = TmpendapatantargetModel::find($id);
         $r->jumlah                               = $jumlah;
         $r->jumlah_perubahan                     = $jumlahperubahan;
-        $r->rekneing_rincian_akun_jenis_objek_id = $request->rekneing_rincian_akun_jenis_objek_id;
+        $r->tmrekening_akun_kelompok_jenis_objek_rincian_id = $request->tmrekening_akun_kelompok_jenis_objek_rincian_id;
         $r->dasar_hukum                          = $request->dasar_hukum;
         $r->keterangan                           = $request->keterangan;
         $r->tgl_perubahan                        = $request->tgl_perubahan;

@@ -200,7 +200,7 @@ class PendapatanController extends Controller
                 $tgl_lapor  = $par['tgl_lapor'];
                 $satker_id  = $par['satker_id'];
 
-                $rincian_id = $p->kd_rek_rincian_obj;
+                $rincian_id = $p->kd_rek_obj;
 
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
@@ -564,7 +564,7 @@ class PendapatanController extends Controller
 
 
     //get forim isian rincian ketika satker mengisi jumlah pendapatan pada app
-    public function form_pendapatan(Request $request, $jenis_object)
+    public function form_pendapatan(Request $request, $id)
     {
         //dd($jenis_object); 
         if ($request->satker_id == '') return abort(403, 'Satker tidak di temukan');
@@ -579,7 +579,7 @@ class PendapatanController extends Controller
             $fsatker_id = $rsatker_id;
         }
 
-        $cond = ['kd_rek_rincian_obj' => $jenis_object];
+        $cond = ['tmrekening_akun_kelompok_jenis_objek_id' => $id];
         $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
             ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
             ->get();
