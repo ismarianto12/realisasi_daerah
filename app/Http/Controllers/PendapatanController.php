@@ -128,10 +128,7 @@ class PendapatanController extends Controller
         // if ($tmrekening_akun_kelompok_jenis_id != 0) {
         //     $data->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', $tmrekening_akun_kelompok_jenis_id);
         // }
-
-        if ($tmsikd_satker_id != '') {
-            $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $tmsikd_satker_id);
-        }
+ 
         //with satkerid
         if ($tgl_lapor != '') {
             $par = [
@@ -148,6 +145,10 @@ class PendapatanController extends Controller
                 'satker_id' => $satker_id
             ];
         }
+
+        if ($tmsikd_satker_id != 0 || $tmsikd_satker_id != '') {
+            $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $tmsikd_satker_id);
+        } 
         // dd($par);
         $data->get();
         return DataTables::of($data)
@@ -616,8 +617,7 @@ class PendapatanController extends Controller
             $fsatker_id = $request->satker_id;
         } else {
             $fsatker_id = $rsatker_id;
-        }
-
+        } 
         $cond = ['kd_rek_rincian_obj' => $jenis_object];
         $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
             ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
