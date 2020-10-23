@@ -250,11 +250,19 @@ class SettingrekeningController extends Controller
     public function update(Request $request, $id)
     {
         $r      = new Tmrekening_akun_kelompok_jenis_objek_rincian;
+        
         $satker = $request->satker_id;
         $id     = $request->id;
 
+        $rsatker = count($satker);
+        if($rsatker == 1){
+            $fsatker = $satker[0];
+        }else{
+            $fsatker = implode(',',$satker);
+        }
+        //dd($fsatker); 
         $r->whereIn('id', $id)->update([
-            'tmsikd_satkers_id' => $satker
+            'tmsikd_satkers_id' => $fsatker
         ]);
         return response()->json([
             'msg' => 'data berhasil di simpan'
@@ -268,8 +276,14 @@ class SettingrekeningController extends Controller
         $satker = $request->satker_id;
         $id     = $request->id;
 
+        $rsatker = count($satker);
+        if($rsatker == 1){
+            $fsatker = $satker[0];
+        }else{
+            $fsatker = implode(',',$satker);
+        }
         $r->whereIn('id', $id)->update([
-            'tmsikd_satkers_id' => $satker
+            'tmsikd_satkers_id' => $fsatker
         ]);
         return response()->json([
             'msg' => 'data berhasil di simpan'

@@ -397,12 +397,12 @@ $('#nav-profile-tab').click(function(){
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
+                        <i>Jika Satuan Kerja Lebih Dari Satu .</i>
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
                                     Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih"
-                                    class="form-control select2 " required>
+                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih" class="form-control js-example-basic-multiple" multiple="multiple" style="width:450px;height:300px">
                                     <option value="0">Semua Satker</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">

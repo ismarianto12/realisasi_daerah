@@ -401,8 +401,7 @@ $('#nav-profile-tab').click(function(){
                                     Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih"
-                                    class="form-control select2 " required>
+                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih" class="form-control js-example-basic-multiple" multiple="multiple" style="width:450px;height:300px">
                                     <option value="0">Semua Satker</option>
                                     <?php $__currentLoopData = $tmsikd_satkers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tmsikd_satker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($tmsikd_satker->id); ?>">

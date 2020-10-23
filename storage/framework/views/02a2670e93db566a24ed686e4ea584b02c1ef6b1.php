@@ -516,6 +516,9 @@
                 dropdownAutoWidth : true,
                 width: 'auto'
             });
+            
+             $('.js-example-basic-multiple').select2();
+
         }); 
 
      function detail_data(n) 
