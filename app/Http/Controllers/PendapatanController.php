@@ -578,7 +578,10 @@ class PendapatanController extends Controller
             $fsatker_id = $rsatker_id;
         }
 
-        $cond = ['tmrekening_akun_kelompok_jenis_objek_id' => $id];
+        $cond = [
+                  'tmrekening_akun_kelompok_jenis_objek_id' => $id,
+                  'tmsikd_satkers_id'=>$fsatker_id 
+                ];
         $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
             ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
             ->get();
