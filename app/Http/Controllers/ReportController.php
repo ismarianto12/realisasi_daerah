@@ -104,8 +104,8 @@ class ReportController extends Controller
 
         $tahun             = Properti_app::tahun_sekarang();
         //get periode lalu 
-        $dperiode = $tahun . '-01-01';
-        $speriode = date('Y-m-d', strtotime($sampai . ' -1 day'));
+        $dperiode          = $tahun . '-01-01';
+        $speriode          = date('Y-m-d'); //date('Y-m-d', strtotime($sampai . ' -1 day'));
 
         $par = [
             'tahun_id' => $tahun_id,
@@ -131,7 +131,7 @@ class ReportController extends Controller
         } else if ($jenis == 'rtf') {
             $namaFile = 'Pendapatan_daerah.rtf';
             $this->headerdownload($namaFile);
-        } 
+        }
         if ($jenis == 'rtf') {
             return view($this->view . 'jenis_object', [
                 'tahun' => $tahun,
