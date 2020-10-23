@@ -171,7 +171,7 @@ class Tmpendapatan extends Model
                 ->where('tanggal_lapor', '<=', $par['sampai'])
                 ->first();
 
-            $kurleb_kjenis      = ($pagu_kjenis['trlalu'] - $periode_ini_kjenis['total']);
+            $kurleb_kjenis      = ($pagu_kjenis['total'] - $periode_ini_kjenis['total']);
             $persen_kjenis      = 0;
             $total_kjenis       = ($periode_ini_kjenis['total'] + $periodel_kjenis['trlalu']);
               
@@ -207,7 +207,7 @@ class Tmpendapatan extends Model
                 // $kurleb_jobj      = 0;
                 // $persen_jobj      = 0;
 
-                $kurleb_jobj      = ($pagu_jobj['trlalu'] - $periode_ini_jobj['total']);
+                $kurleb_jobj      = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
                 $persen_jobj      = 0;
                 $total_jobj       = ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
                
@@ -242,7 +242,7 @@ class Tmpendapatan extends Model
                         ->where('tanggal_lapor', '<=', $par['sampai'])
                         ->first();
                      
-                $kurleb_rincian      = ($pagu_rincian['trlalu'] - $periode_rincian['total']);
+                $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['total']);
                 $persen_rincian      = 0;
                 $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
                
