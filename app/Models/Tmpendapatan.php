@@ -15,6 +15,8 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 
+use App\Libraries\Html\Html_number;
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -169,18 +171,19 @@ class Tmpendapatan extends Model
                 ->where('tanggal_lapor', '<=', $par['sampai'])
                 ->first();
 
-            $kurleb_kjenis      = 0;
+            $kurleb_kjenis      = ($pagu_kjenis['trlalu'] - $periode_ini_kjenis['total']);
             $persen_kjenis      = 0;
-
+            $total_kjenis       = ($periode_ini_kjenis['total'] + $periodel_kjenis['trlalu']);
+              
             $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
             $dataset[$idx]['nm_rek']['val']       = $jenis['nm_rek_jenis'];
-            $dataset[$idx]['pagu']['val']         = ($pagu_kjenis['total']) ? number_format($pagu_kjenis['total'], 0, 0, '.') : 0;
-            $dataset[$idx]['periode_lalu']['val'] = ($periodel_kjenis['trlalu']) ? number_format($pagu_kjenis['total'], 0, 0, '.') : 0;
-            $dataset[$idx]['periode_ini']['val']  = ($periode_ini_kjenis['total']) ? number_format($periode_ini_kjenis['total'], 0, 0, '.') : '';
-            $dataset[$idx]['total']['val']        = 0;
-            $dataset[$idx]['divide']['val']       = 0;
+            $dataset[$idx]['pagu']['val']         = ($pagu_kjenis['total']) ? Html_number::decimal($pagu_kjenis['total']) : 0;
+            $dataset[$idx]['periode_lalu']['val'] = ($periodel_kjenis['trlalu']) ? Html_number::decimal($pagu_kjenis['total']) : 0;
+            $dataset[$idx]['periode_ini']['val']  = ($periode_ini_kjenis['total']) ? Html_number::decimal($periode_ini_kjenis['total']) : 0;
+            $dataset[$idx]['total']['val']        = Html_number::decimal($total_kjenis);
+            $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_kjenis);
             $dataset[$idx]['persen']['val']       = 0;
-            $dataset[$idx]['bold']['val']          = true;
+            $dataset[$idx]['bold']['val']         = true;
 
             $idx++;
             //by kelompok jenis obj    
@@ -202,17 +205,22 @@ class Tmpendapatan extends Model
                     ->where('tanggal_lapor', '<=', $par['sampai'])
                     ->first();
 
-                $kurleb_jobj      = 0;
+                // $kurleb_jobj      = 0;
+                // $persen_jobj      = 0;
+
+                $kurleb_jobj      = ($pagu_jobj['trlalu'] - $periode_ini_jobj['total']);
                 $persen_jobj      = 0;
+                $total_jobj       = ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
+               
 
                 $dataset[$idx]['kd_rek']['val']       = $rek_obj['kd_rek_obj'];
                 $dataset[$idx]['nm_rek']['val']       = $rek_obj['nm_rek_obj'];
-                $dataset[$idx]['pagu']['val']         = $pagu_jobj['total'];
-                $dataset[$idx]['periode_lalu']['val'] = $periodel_jobj['trlalu'];
-                $dataset[$idx]['periode_ini']['val']  = $periode_ini_jobj['total'];
-                $dataset[$idx]['total']['val']        = 0;
-                $dataset[$idx]['divide']['val']       = 0;
-                $dataset[$idx]['persen']['val']       = 0;
+                $dataset[$idx]['pagu']['val']         = ($pagu_jobj['total']) ? Html_number::decimal($pagu_jobj['total']) : 0;
+                $dataset[$idx]['periode_lalu']['val'] = ($periodel_jobj['trlalu']) ? Html_number::decimal($periodel_jobj['trlalu']) : 0;
+                $dataset[$idx]['periode_ini']['val']  = ($periode_ini_jobj['total']) ? Html_number::decimal($periodel_jobj['trlalu']) : 0;
+                $dataset[$idx]['total']['val']        = Html_number::decimal($total_jobj);
+                $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_jobj);
+                $dataset[$idx]['persen']['val']       = Html_number::decimal($persen_jobj);
                 $dataset[$idx]['bold']['val']         = true;
                 $idx++;
 
@@ -234,17 +242,19 @@ class Tmpendapatan extends Model
                         ->where('tanggal_lapor', '>=', $par['dari'])
                         ->where('tanggal_lapor', '<=', $par['sampai'])
                         ->first();
-
-                    $kurleb_rincian      = 0;
-                    $persen_rincian      = 0;
+                     
+                $kurleb_rincian      = ($pagu_rincian['trlalu'] - $periode_rincian['total']);
+                $persen_rincian      = 0;
+                $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
+               
 
                     $dataset[$idx]['kd_rek']['val']        = $rincian['kd_rek_rincian_obj'];
                     $dataset[$idx]['nm_rek']['val']        = $rincian['nm_rek_rincian_obj'];
-                    $dataset[$idx]['pagu']['val']          = $pagu_rincian['total'];
-                    $dataset[$idx]['periode_lalu']['val']  = $periodel_rincian['trlalu'];
-                    $dataset[$idx]['periode_ini']['val']   = $periode_rincian['total'];
-                    $dataset[$idx]['total']['val']         = 0;
-                    $dataset[$idx]['divide']['val']        = 0;
+                    $dataset[$idx]['pagu']['val']          = ($pagu_rincian['total']) ? Html_number::decimal($pagu_rincian['total']) : 0;
+                    $dataset[$idx]['periode_lalu']['val']  = ($periodel_rincian['trlalu']) ? Html_number::decimal($periodel_rincian['trlalu']) : 0;
+                    $dataset[$idx]['periode_ini']['val']   = ($periode_rincian['total']) ? Html_number::decimal($periode_rincian['total']) : 0;
+                    $dataset[$idx]['total']['val']         = Html_number::decimal($total_rincian);
+                    $dataset[$idx]['divide']['val']        = Html_number::decimal($kurleb_rincian);
                     $dataset[$idx]['persen']['val']        = 0;
                     $dataset[$idx]['bold']['val']         = false;
                     $idx++;
@@ -268,6 +278,8 @@ class Tmpendapatan extends Model
                             ->where('tanggal_lapor', '>=', $par['dari'])
                             ->where('tanggal_lapor', '<=', $par['sampai'])
                             ->first();
+                      
+                      
                         $pagu_objsub        = 0;
                         $periodel_objsub    = 0;
                         $periode_ini_objsub = 0;
@@ -277,8 +289,8 @@ class Tmpendapatan extends Model
                         $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
                         $dataset[$idx]['nm_rek']['val']       = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
                         $dataset[$idx]['pagu']['val']         = $pagu_rincian_sub;
-                        $dataset[$idx]['periode_lalu']['val'] = $periodel_rincian_sub['trlalu'];
-                        $dataset[$idx]['periode_ini']['val']  = $periode_rincian_sub['total'];
+                        $dataset[$idx]['periode_lalu']['val'] = ($periodel_rincian_sub['trlalu']) ? Html_number::decimal($periodel_rincian_sub['trlalu']) : 0;
+                        $dataset[$idx]['periode_ini']['val']  = ($periode_rincian_sub['total']) ? Html_number::decimal($periode_rincian_sub['total']) : 0;
                         $dataset[$idx]['total']['val']        = 0;
                         $dataset[$idx]['divide']['val']       = 0;
                         $dataset[$idx]['persen']['val']       = 0;
@@ -396,7 +408,6 @@ class Tmpendapatan extends Model
                 'tmrekening_akun_kelompok_jenis_objek_rincians.id as id_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
-
                 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
                 'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj'
             )
