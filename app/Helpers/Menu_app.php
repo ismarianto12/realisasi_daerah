@@ -73,7 +73,7 @@ class Menu_app
                     $menu .= '<li class="nav-item">
                     <a data-toggle="collapse" href="#setting">
                         <i class="fas fa-list"></i>
-                        <p>Setting Retribusi</p>
+                        <p>Setting Pad </p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="setting">
