@@ -184,7 +184,6 @@ class Tmpendapatan extends Model
             $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_kjenis);
             $dataset[$idx]['persen']['val']       = 0;
             $dataset[$idx]['bold']['val']         = true;
-
             $idx++;
             //by kelompok jenis obj    
             $rek_objs = self::getrekeningbySatker($where)

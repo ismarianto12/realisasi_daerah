@@ -568,7 +568,6 @@ class PendapatanController extends Controller
     {
         //dd($jenis_object); 
         if ($request->satker_id == '') return abort(403, 'Satker tidak di temukan');
-
         $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
         $level_id  = Properti_app::getlevel();
 

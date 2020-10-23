@@ -19,7 +19,7 @@
     }
 
     th {
-        background-color: #ddd;
+        background-color: #fff;
         color: #000;
         width: auto;
         height: auto;
@@ -67,14 +67,14 @@
             <th>%</th>
         </tr>
         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+            <th>8</th>
         </tr>
     </thead>
     <tbody>

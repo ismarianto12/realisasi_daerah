@@ -1,0 +1,2 @@
+<td align="center"><a href="#" class="ff text-muted" onclick="javascript:rform(this)" title="Hapus baris ini"><i
+            class="icon-delete"></i></a></td><?php /**PATH D:\xampp64\www\retribusi\resources\views/layouts/_includes/form/deleterow.blade.php ENDPATH**/ ?>
