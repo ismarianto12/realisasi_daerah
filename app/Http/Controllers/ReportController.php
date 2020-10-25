@@ -105,7 +105,7 @@ class ReportController extends Controller
         $tahun             = Properti_app::tahun_sekarang();
         //get periode lalu 
         $dperiode          = $tahun . '-01-01';
-        $speriode          = date('Y-m-d'); //date('Y-m-d', strtotime($sampai . ' -1 day'));
+        $speriode          = date('Y-m-d', strtotime($sampai . '-1 day'));
 
         $par = [
             'tahun_id' => $tahun_id,
