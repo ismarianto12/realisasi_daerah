@@ -1,21 +1,21 @@
 @extends('layouts.template')
 @section('title','Halaman depan aplikasi')
 @section('content')
-@php  
-    $level_id = Properti_app::getlevel();
-    $username = Auth::user()->username;
+@php
+$level_id = Properti_app::getlevel();
+$username = Auth::user()->username;
 @endphp
 @if($level_id == 3)
-    <script>
-        $(function(){
+<script>
+    $(function(){
             $.confirm({title : 'Hy {{ $username }} silahkan laporkan pendpatan hari ini',
                        content : 'Pendapatan yang belum di laporkan : Pada {{ date('Y-m-d') }}'});
         }) 
-    </script>
-    
+</script>
+
 @endif
 
- 
+
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -39,65 +39,8 @@
             <div class="card full-height">
                 <div class="card-body">
                     <div class="card-title">Statistik</div>
-                    <div class="card-category"></div>
-                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-1"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Jumlah Rek Obj</h6>
-                        </div>
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-2"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Jumlah Rek Rincian</h6>
-                        </div>
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-3"></div>
-                            <h6 class="fw-bold mt-3 mb-0">Jumlah Rek Sub Rincian</h6>
-                        </div>
-                    </div>
+                    <div id="growthpad"></div>
                     <hr />
-                    <div class="row">
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card card-stats card-warning card-round">
-                                    <div class="card-body">
-                                        <div class="row"> 
-                                            <div class="col-7 col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">TOTAL PAD TAHUN {{ Properti_app::getTahun() }}</p>
-                                                    <h4 class="card-title">
-                                                        <div class="tpadtahun"></div>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card card-stats card-success card-round">
-                                    <div class="card-body ">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <div class="icon-big text-center">
-                                                    <i class="flaticon-analytics"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-7 col-stats">
-                                                <div class="numbers">
-                                                    <p class="card-category">TOTAL PAD HARI INI</p>
-                                                    <h4 class="card-title">
-                                                        <div class="tpadharini"></div>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -117,11 +60,60 @@
                 </div>
             </div>
         </div>
+
+
+
+
     </div>
+
+    <div class="row row-card-no-pd">
+        <div class="col-sm-6">
+            <div class="card card-stats card-round">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <i class="flaticon-chart-pie text-warning"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-stats">
+                            <div class="numbers">
+                                <p class="card-category">TOTAL PAD TAHUN {{ Properti_app::getTahun() }}</p>
+                                <h4 class="card-title tpadtahun"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card card-stats card-round">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="icon-big text-center">
+                                <i class="flaticon-coins text-success"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 col-stats">
+                            <div class="numbers">
+                                <p class="card-category">PENDAPATAN DAERAH HARI INI </p>
+                                <h4 class="card-title tpadharini"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
 
 </div>
 
- 
+
 
 @section('script')
 
@@ -138,46 +130,7 @@
         }); 
         
         //jumlmah hari ini
-        $.getJSON('{{ Url("api_grafik/total_pad?tanggal_lapor=1") }}',function(data){ 
-            $('.tpadharini').text(data.total);
-        });
-     
-        $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=1") }}',function(data){
-         rek_obj = data.data;
-         Circles.create({
-            id: 'circles-1',
-            radius: 45,
-            value: rek_obj,
-            maxValue: 100,
-            width: 10,
-            text: rek_obj,
-            colors: ['#f1f1f1', '#FF9E27'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-         });
-        });   
-
-        $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=2") }}',function(data){
-            rek_jenis = data.data;
-       
-        Circles.create({
-            id: 'circles-2',
-            radius: 45,
-            value: rek_obj,
-            maxValue: 580,
-            width: 10,
-            text: rek_jenis,
-            colors: ['#f1f1f1', '#2BB930'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
-        });
-    })
+     })
     
     $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=3") }}',function(data){
         rek_jenis_sub = data.data;  
@@ -268,7 +221,100 @@
             lineColor: '#ffa534',
             fillColor: 'rgba(255, 165, 52, .14)'
         });
+     
+</script>
+
+<script>
+    var chart = Highcharts.chart('growthpad', {
+
+        chart: {
+            type: 'column'
+        },
+    
+        title: {
+            text: 'Highcharts responsive chart'
+        },
+    
+        subtitle: {
+            text: 'Resize the frame or click buttons to change appearance'
+        },
+    
+        legend: {
+            align: 'right',
+            verticalAlign: 'middle',
+            layout: 'vertical'
+        },
+    
+        xAxis: {
+            categories: ['Apples', 'Oranges', 'Bananas'],
+            labels: {
+                x: -10
+            }
+        },
+    
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Amount'
+            }
+        },
+    
+        series: [{
+            name: 'Christmas Eve',
+            data: [1, 4, 3]
+        }, {
+            name: 'Christmas Day before dinner',
+            data: [6, 4, 2]
+        }, {
+            name: 'Christmas Day after dinner',
+            data: [8, 4, 3]
+        }],
+    
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        layout: 'horizontal'
+                    },
+                    yAxis: {
+                        labels: {
+                            align: 'left',
+                            x: 0,
+                            y: -5
+                        },
+                        title: {
+                            text: null
+                        }
+                    },
+                    subtitle: {
+                        text: null
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                }
+            }]
+        }
     });
+    
+    document.getElementById('small').addEventListener('click', function () {
+        chart.setSize(400);
+    });
+    
+    document.getElementById('large').addEventListener('click', function () {
+        chart.setSize(600);
+    });
+    
+    document.getElementById('auto').addEventListener('click', function () {
+        chart.setSize(null);
+    });
+    
+
 </script>
 
 @endsection
