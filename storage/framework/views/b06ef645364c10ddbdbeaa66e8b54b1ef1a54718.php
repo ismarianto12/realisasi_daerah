@@ -125,10 +125,11 @@
                                             <option value="xls">XLS</option>
                                         </select>
                                     </div>
-                                    <hr />
+                                 </div>
+                                     <hr />
                                     <button id="tampilkan" class="btn btn-primary"><i
                                             class="fa fa-search"></i>Tampilkan</button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

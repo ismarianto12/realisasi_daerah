@@ -104,7 +104,7 @@
 
     </tbody>
 </table>
-<table class="table table-striped">
+{{--  <table class="table table-striped">
     <tr>
         <td></td>
         <td></td>
@@ -121,7 +121,7 @@
                 onblur="cboxChecked(this); ">
         </td>
     </tr>
-</table>
+</table>  --}}
 <script src="{{ asset('assets/template/js/validate_form.js') }}"></script>
 <script src="{{ asset('assets/template/js/autoNumeric.js') }}"></script>
 
