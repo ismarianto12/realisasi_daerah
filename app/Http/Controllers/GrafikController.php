@@ -10,6 +10,10 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 
 
+use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
+use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
+use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+
 class GrafikController extends Controller
 {
 
@@ -20,6 +24,7 @@ class GrafikController extends Controller
 
     function __construct()
     {
+        $this->middleware('level:|1');
     }
     /**
      * Display a listing of the resource.
@@ -71,11 +76,84 @@ class GrafikController extends Controller
             ->groupBy('tmrekening_akun_kelompok_jenis.kd_rek_jenis')
             ->get();
         $tmpendapatan = new Tmpendapatan;
+        $padbytype    = $this->getdatapie();
+
+        $arr = [];
+        $i = 1;
+        foreach ($padbytype as $value) {
+            if ($i = 1) {
+                $arr[] = [
+                    'name' => $value['nm_rek_jenis']['val'],
+                    'y'  => $value['persen']['val'],
+                    'sliced' => true,
+                    'selected' => true
+                ];
+            } else {
+                $arr[] = [
+                    'name' => $value['nm_rek_jenis']['val'],
+                    'y'  => $value['persen']['val']
+                ];
+            }
+            $i++;
+        }
+        $rpadtype = json_encode($arr);
         return view($this->view . 'index', [
             'title' => $this->title,
+            'rpadtype' => $rpadtype,
             'tmpendapatan' => $tmpendapatan,
             'rekening' => $qdata
         ]);
+    }
+
+    protected function getdatapie()
+    {
+        // index like name and y  
+        $akun_kelompok        = Tmrekening_akun_kelompok::get();
+        $kelompok_jenis       = new Tmrekening_akun_kelompok_jenis;
+        $kelompok_object      = new Tmrekening_akun_kelompok_jenis_objek;
+        $kelompok_rincian     = new Tmrekening_akun_kelompok_jenis_objek_rincian;
+        $kelompok_sub_rincian = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
+        $tmpendapatan         = new Tmpendapatan;
+        // $listarget            = new TmpendapatantargetModel;
+
+        $idx = 0;
+        foreach ($akun_kelompok as $kelompok) {
+            $total_pad = Tmpendapatan::tbykelompok($kelompok['kd_rek_kelompok'])->first();
+            $tahun = Properti_app::getTahun();
+            $qkjenis = $kelompok_jenis::where('tmrekening_akun_kelompok_id', $kelompok['id'])->get();
+            $idx++;
+
+            foreach ($qkjenis as $kjenis) {
+                $where = [
+                    'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id' => $kjenis['kd_rek_jenis'],
+                    'tmpendapatan.tahun' => $tahun
+                ];
+
+                $rjenis             = Tmpendapatan::tbykelompok_jenis($where)->first();
+                $pagu_kjenis        = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $kjenis['kd_rek_jenis'])->first();
+                if ($pagu_kjenis['total'] != NULL || $pagu_kjenis['total'] != '') {
+                    $fpagu_kjenis       =  $pagu_kjenis['total'];
+                } else {
+                    $fpagu_kjenis       = 0;
+                }
+                if ($rjenis['jumlah_obj'] != NULL || $rjenis['jumlah_obj'] != '') {
+                    $fjumlah = $rjenis['jumlah_obj'];
+                } else {
+                    $fjumlah = 0;
+                }
+                if ($fpagu_kjenis != 0 && $fjumlah != 0) {
+                    $persentase    = round($fjumlah / ($fpagu_kjenis / 100), 2);
+                } else {
+                    $persentase  = 0.0;
+                }
+                //get value as val    
+                $dataset[$idx]['kd_rek_jenis']['val'] = $kjenis['kd_rek_jenis'];
+                $dataset[$idx]['nm_rek_jenis']['val'] = $kjenis['nm_rek_jenis'];
+                $dataset[$idx]['persen']['val'] = $persentase;
+                $idx++;
+            }
+        }
+        return $dataset;
     }
 
     /**

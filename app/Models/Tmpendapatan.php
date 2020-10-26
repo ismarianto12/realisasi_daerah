@@ -164,15 +164,17 @@ class Tmpendapatan extends Model
 
         $last_from  = $par['dperiode'];
         $last_to    = $par['speriode'];
-
+        //get pagu total from type by accout object
         // get date range from the filter data
-        foreach ($jeniss as $jenis) {
-            $pagu_kjenis        = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])->first();
-            $periodel_kjenis    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
+         foreach ($jeniss as $jenis) { 
+          $pagu_kjenis        = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])->first();
+          
+          $pagu_rincian      = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $jenis['kd_rek_rincian_obj'])->first();
+          $tot_account_obj   = $pagu_rincian['total'];
+          
+          $periodel_kjenis    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
                 ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])
                 ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-                // ->where('tanggal_lapor', '>=', $last_from)
-                // ->where('tanggal_lapor', '<=', $last_to)
                 ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                 ->first();
 
@@ -189,7 +191,7 @@ class Tmpendapatan extends Model
 
             $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
             $dataset[$idx]['nm_rek']['val']       = $jenis['nm_rek_jenis'];
-            $dataset[$idx]['pagu']['val']         = ($pagu_kjenis['total']) ? Html_number::decimal($pagu_kjenis['total']) : 0;
+            $dataset[$idx]['pagu']['val']         = ($tot_account_obj) ? Html_number::decimal($tot_account_obj) : 0;
             $dataset[$idx]['periode_lalu']['val'] = ($periodel_kjenis['trlalu']) ? Html_number::decimal($periodel_kjenis['trlalu']) : 0;
             $dataset[$idx]['periode_ini']['val']  = ($periode_ini_kjenis['total']) ? Html_number::decimal($periode_ini_kjenis['total']) : 0;
             $dataset[$idx]['total']['val']        = Html_number::decimal($total_kjenis);
@@ -245,7 +247,6 @@ class Tmpendapatan extends Model
                     ->where('tmrekening_akun_kelompok_jenis_objek_id', $rek_obj['kd_rek_obj'])
                     ->groupBy('kd_rek_rincian_obj')->get();
                 foreach ($rincians as $rincian) {
-
                     //get subrincian rek 
                     $pagu_rincian        = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])->first();
                     $periodel_rincian    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))

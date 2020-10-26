@@ -128,7 +128,6 @@
 
 <script type="text/javascript">
     $('.auto').autoNumeric('init');
-
     function cboxChecked(fld) {
         var arr = fld.id.split('_');
         var idx = arr[(arr.length-1)];

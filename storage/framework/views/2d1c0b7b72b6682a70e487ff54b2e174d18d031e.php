@@ -1,7 +1,6 @@
-@extends('layouts.template')
-@section('title','Grafik Pendapatan')
+<?php $__env->startSection('title','Grafik Pendapatan'); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -49,9 +48,9 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <div class="card-title">Total Pendapatan Daerah </div>
-                    <div class="card-category">Per @php
+                    <div class="card-category">Per <?php
                         echo Properti_app::tahun_sekarang()
-                        @endphp
+                        ?>
                     </div>
                 </div>
                 <div class="card-body pb-0">
@@ -121,10 +120,10 @@
     </div>
 </div>
 
-{{--  section higth chart  --}}
 
 
-@section('script')
+
+<?php $__env->startSection('script'); ?>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -134,7 +133,7 @@
 <script>
     $(function(){     
         //jumlah tahun ini
-        $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
+        $.getJSON('<?php echo e(Url("api_grafik/total_pad")); ?>',function(data){
             $('.tpadtahun').text(data.total);
         }); 
     }); 
@@ -144,7 +143,7 @@
     Highcharts.chart('container', {
 
         title: {
-            text: 'Pertumbuhan pendapatan daerah tahun {{ Properti_app::tahun_sekarang() }}'
+            text: 'Pertumbuhan pendapatan daerah tahun <?php echo e(Properti_app::tahun_sekarang()); ?>'
         },
     
         subtitle: {
@@ -159,7 +158,7 @@
     
         xAxis: {
             accessibility: {
-                rangeDescription: 'Tahun : {{ Properti_app::tahun_sekarang() }}'
+                rangeDescription: 'Tahun : <?php echo e(Properti_app::tahun_sekarang()); ?>'
             }
         },
     
@@ -174,19 +173,20 @@
                 label: {
                     connectorAllowed: false
                 },
-                pointStart: {{ Properti_app::tahun_sekarang() }}
+                pointStart: <?php echo e(Properti_app::tahun_sekarang()); ?>
+
             }
         }, 
         series: [
-        @foreach($rekening as $key) 
-          @php
+        <?php $__currentLoopData = $rekening; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+          <?php
               $jumlah = $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$key['id_rek_rincians'])->first();
-          @endphp
+          ?>
         {   
-            name: '{{ $key["nm_rek_jenis"] }}',
-            data:  [{{ $jumlah['jumlah']  }}]
+            name: '<?php echo e($key["nm_rek_jenis"]); ?>',
+            data:  [<?php echo e($jumlah['jumlah']); ?>]
         },
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         ],
     
         responsive: {
@@ -216,7 +216,7 @@
             type: 'pie'
         },
         title: {
-            text: 'Pertumbuhan Pendapatan Daerah tahun {{ Properti_app::getTahun() }}'
+            text: 'Pertumbuhan Pendapatan Daerah tahun <?php echo e(Properti_app::getTahun()); ?>'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -239,7 +239,7 @@
         series: [{
             name: 'Brands',
             colorByPoint: true,
-            data: @php echo $rpadtype @endphp 
+            data: <?php echo $rpadtype ?> 
         }]
     });
 
@@ -250,5 +250,6 @@
 
 
 
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/grafik/index.blade.php ENDPATH**/ ?>
