@@ -8,7 +8,7 @@
     <table class="table table-striped">
       @for($i = 0; $i <= 11; $i++) @php $f=$i + 1; @endphp <tr>
         <td>
-          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $i }}" class="form-control"
+          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $f }}" class="form-control"
             placeholder="Bulan ke  .. {{ $f }}">
         </td>
         </tr>
@@ -24,7 +24,7 @@
     <table class="table table-striped">
       @for($i = 0; $i <= 11; $i++) @php $r=$i + 1; @endphp <tr>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $i }}" class="form-control"
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $r }}" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. {{ $r }}">
         </td>
         </tr>

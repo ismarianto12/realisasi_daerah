@@ -6,10 +6,11 @@
 <div class="col-lg-12">
   <div class="col-md-6" style="float: left;">
     <table class="table table-striped">
-      @for($i = 0; $i <= 11; $i++) <tr>
+      @for($i = 0; $i <= 11; $i++) 
+      @php $f=$i + 1; @endphp<tr>
         <td>
-          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $i }}" class="form-control"
-            placeholder="Bulan ke  .. {{ $i }}" value="{{ $rincian_data[$i]->jumlah }}">
+          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $f }}" class="form-control"
+            placeholder="Bulan ke  .. {{ $f }}" value="{{ $rincian_data[$i]['jumlah'] }}">
         </td>
         </tr>
         @endfor
@@ -22,10 +23,12 @@
   </div>
   <div class="col-md-6" style="float: right;">
     <table class="table table-striped">
-      @for($i = 0; $i <= 11; $i++) <tr>
+      @for($i = 0; $i <= 11; $i++)
+      @php $k=$i + 1; @endphp
+       <tr>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $i }}" class="form-control"
-            placeholder="Target Perubahan Bulan ke  .. {{ $i }}" value="{{ $rincian_data[$i]->jumlah_perubahan }}">
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $k }}" class="form-control"
+            placeholder="Target Perubahan Bulan ke  .. {{ $k }}" value="{{ $rincian_data[$i]['jumlah_perubahan ']}}">
         </td>
         </tr>
         @endfor
@@ -67,7 +70,7 @@
    
   function gettarget(){
      var result = document.getElementById('pbulan_total');
-     var el, i = 0, total = 0; 
+     var el, i = 1, total = 0; 
      while(el = document.getElementById('bulan_'+(i++)) ) {
      el.value = el.value.replace(/\\D/,"");
      nilaib   =  el.value;
@@ -83,7 +86,7 @@
 //get perubahan 
 function getperubahan(){
   var result = document.getElementById('tperubahan');
-  var el, i = 0, total_perubahan = 0; 
+  var el, i = 1, total_perubahan = 0; 
   while(el = document.getElementById('tpbulan_'+(i++)) ) {
   el.value  = el.value.replace(/\\D/,"");
   snilaib   =  el.value;
