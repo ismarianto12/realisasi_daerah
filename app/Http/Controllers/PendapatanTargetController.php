@@ -164,12 +164,14 @@ class PendapatanTargetController extends Controller
         $r->save();
 
         $ctargetid                            = TmpendapatantargetModel::max('id');
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 0; $i <= 11; $i++) {
+            $f = $i + 1;
+
             $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
             $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
             Trtargetrincian::create([
                 'tmtarget_id' => $ctargetid,
-                'bulan' => $i,
+                'bulan' => $f,
                 'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
                 'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
             ]);
@@ -269,11 +271,13 @@ class PendapatanTargetController extends Controller
         $r->tahun                                = $request->tahun;
         $r->save();
 
-        for ($i = 0; $i <= 12; $i++) {
+        for ($i = 0; $i <= 11; $i++) {
+            $f = $i + 1;
+
             $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
             $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
             Trtargetrincian::where('tmtarget_id', $id)->update([
-                'tmtarget_id' => $id,
+                'bulan' => $f,
                 'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
                 'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
             ]);
