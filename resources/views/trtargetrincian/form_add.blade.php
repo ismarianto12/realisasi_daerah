@@ -22,9 +22,7 @@
   </div>
   <div class="col-md-6" style="float: right;">
     <table class="table table-striped">
-      @for($i = 0; $i <= 11; $i++)
-      @php $r=$i + 1; @endphp
-      <tr>
+      @for($i = 0; $i <= 11; $i++) @php $r=$i + 1; @endphp <tr>
         <td>
           <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $i }}" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. {{ $r }}">
@@ -44,16 +42,21 @@
   function nformat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-  @for($i = 1; $i <= 12; $i++)
-  $("#bulan_{{ $i }}").on('keyup', function(){
+  @for($i = 0; $i <= 11; $i++)
+   @php
+      $j = $i+1;   
+   @endphp
+  $("#bulan_{{ $j }}").on('keyup', function(){
     var n = parseInt($(this).val().replace(/\D/g,''),10);
     $(this).val(n.toLocaleString()); 
  });
  @endfor
 
- @for($i = 1; $i <= 12; $i++)
- $("#tpbulan_{{ $i }}").on('keyup', function(){
+ @for($i = 0; $i <= 11; $i++)
+ @php
+   $js = $i+1;   
+ @endphp
+ $("#tpbulan_{{ $js }}").on('keyup', function(){
   var n = parseInt($(this).val().replace(/\D/g,''),10);
   $(this).val(n.toLocaleString()); 
 });

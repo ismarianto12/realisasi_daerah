@@ -7,10 +7,10 @@
   <div class="col-md-6" style="float: left;">
     <table class="table table-striped">
       @for($i = 0; $i <= 11; $i++) <tr>
-        <td> 
-            <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $i }}" class="form-control"
-                placeholder="Bulan ke  .. {{ $i }}" value ="{{ $rincian_data[$i]->jumlah }}">
-         </td>
+        <td>
+          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $i }}" class="form-control"
+            placeholder="Bulan ke  .. {{ $i }}" value="{{ $rincian_data[$i]->jumlah }}">
+        </td>
         </tr>
         @endfor
         <tr>
@@ -39,20 +39,27 @@
 </div>
 
 <script>
-
   function nformat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
   @for($i = 0; $i <= 11; $i++)
-  $("#bulan_{{ $i }}").on('keyup', function(){
+  @php
+  $j = $i+1;   
+@endphp
+
+  $("#bulan_{{ $j }}").on('keyup', function(){
     var n = parseInt($(this).val().replace(/\D/g,''),10);
     $(this).val(n.toLocaleString()); 
  });
  @endfor
 
  @for($i = 0; $i <= 11; $i++)
- $("#tpbulan_{{ $i }}").on('keyup', function(){
+ @php
+ $js = $i+1;   
+@endphp
+
+ $("#tpbulan_{{ $js }}").on('keyup', function(){
   var n = parseInt($(this).val().replace(/\D/g,''),10);
   $(this).val(n.toLocaleString()); 
 });
