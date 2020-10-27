@@ -237,7 +237,7 @@
             }
         },
         series: [{
-            name: 'Brands',
+            name: 'Jumlah Pad',
             colorByPoint: true,
             data: <?php echo $rpadtype ?> 
         }]

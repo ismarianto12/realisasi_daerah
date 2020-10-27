@@ -48,7 +48,7 @@ class PendapatanController extends Controller
     public function index(Request $request)
     {
 
-        $title   = 'Laporan Pendapatan | ' . $this->title;
+        $title   = 'Entri Pendapatan  |' . $this->title;
         $route   =  $this->route;
         $toolbar =  ['r', 'd'];
         // Validasi
@@ -201,7 +201,7 @@ class PendapatanController extends Controller
                 $tgl_lapor  = $par['tgl_lapor'];
                 $satker_id  = $par['satker_id'];
 
-                $rincian_id = $p->kd_rek_obj;
+                $rincian_id = $p->kd_rek_rincian_obj;
 
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
@@ -344,9 +344,10 @@ class PendapatanController extends Controller
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
             $sub_rek = ($kd_rekening_sub[$key]) ? $kd_rekening_sub[$key] : 0;
+            $rincian_id = ($cboxInputRinci[$key]) ? $cboxInputRinci[$key] : 0;
             Tmpendapatan::updateOrCreate([
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
-                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $cboxInputRinci[$key],
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rincian_id,
                 'kd_rekening' => $cboxInputRinci[$key],
                 'tmsikd_satker_id' => $satker_id,
                 'volume' => $volume[$key],
@@ -357,8 +358,7 @@ class PendapatanController extends Controller
                 'is_deleted' => 0,
                 'tahun' => $tahun
             ]);
-        }
-
+        } 
         return response()->json([
             'message' => "Data " . $this->title . " Berhasil Tersimpan"
         ]);
@@ -580,7 +580,7 @@ class PendapatanController extends Controller
         }
 
         $cond = [
-                  'tmrekening_akun_kelompok_jenis_objek_id' => $id,
+                  'kd_rek_rincian_obj' => $id,
                   'tmsikd_satkers_id'=>$fsatker_id 
                 ];
         $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)

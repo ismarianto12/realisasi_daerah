@@ -11,7 +11,6 @@ $username = Auth::user()->username;
                        content : 'Pendapatan yang belum di laporkan : Pada <?php echo e(date('Y-m-d')); ?>'});
         }) 
 </script>
-
 <?php endif; ?>
 
 
@@ -58,11 +57,7 @@ $username = Auth::user()->username;
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
+        </div>    
     </div>
 
     <div class="row row-card-no-pd">
@@ -231,7 +226,7 @@ $username = Auth::user()->username;
         },
     
         title: {
-            text: 'Highcharts responsive chart'
+            text: 'PENDAPATAN BERBANDING TARGET DAN REALISASI'
         },
     
         subtitle: {

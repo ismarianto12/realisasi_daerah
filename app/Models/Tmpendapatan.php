@@ -209,17 +209,12 @@ class Tmpendapatan extends Model
                 $periodel_jobj    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
                     ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'), $rek_obj['kd_rek_obj'])
                     ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-                    // ->where('tanggal_lapor', '>=', $par['dperiode'])
-                    // ->where('tanggal_lapor', '<=', $par['speriode']) 
                     ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                     ->first();
 
                 $periode_ini_jobj = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
                     ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'), $rek_obj['kd_rek_obj'])
                     ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-                    // ->where('tanggal_lapor', '>=', $par['dari'])
-                    // ->where('tanggal_lapor', '<=', $par['sampai'])
-
                     ->whereBetween('tanggal_lapor', [$dari, $sampai])
                     ->first();
 

@@ -106,31 +106,13 @@
 
     </tbody>
 </table>
-<table class="table table-striped">
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
 
-        <td>Total : </td>
-        <td> <input name="" id="" type="text" class="form-control" autocomplete="off" maxlength="20"
-                onblur="cboxChecked(this); ">
-        </td>
-        <td> <input name="" id="" type="text" class="form-control" autocomplete="off" maxlength="20"
-                onblur="cboxChecked(this); ">
-        </td>
-        <td> <input name="" id="" type="text" class="form-control" autocomplete="off" maxlength="20"
-                onblur="cboxChecked(this); ">
-        </td>
-    </tr>
-</table>
 <script src="<?php echo e(asset('assets/template/js/validate_form.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/template/js/autoNumeric.js')); ?>"></script>
 
 
 <script type="text/javascript">
     $('.auto').autoNumeric('init');
-
     function cboxChecked(fld) {
         var arr = fld.id.split('_');
         var idx = arr[(arr.length-1)];
