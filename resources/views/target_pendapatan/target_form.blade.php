@@ -1,7 +1,7 @@
 @extends('layouts.template')
 @section('title', 'Setting target pendapatan')
 @section('content')
- 
+
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -40,7 +40,8 @@
                                         <li> {{ $key->Tmrekening_akun_kelompok_jenis_objek->nm_rek_obj }}.
                                             <ul>
                                                 <li>{{ $key['nm_rek_rincian_obj'] }}</li>
-                                                <input type="hidden" name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
+                                                <input type="hidden"
+                                                    name="tmrekening_akun_kelompok_jenis_objek_rincian_id"
                                                     value="{{ $key['id'] }}">
                                             </ul>
                                         </li>
@@ -58,9 +59,11 @@
                                 <input type="text" class="form-control" placeholder="jumlah target " aria-label="target"
                                     aria-describedby="target-addon" id="tpendapatan" name="jumlah" required
                                     value="{{ $jumlah }}" readonly>
-                                <div class="rincian_jtarget"></div>
                             </div>
                         </div>
+                        <center>
+                            <div class="rincian_jtarget"></div>
+                        </center>
 
                         <div class="form-group form-show-validation row">
                             <label for="tahun_pendapatan" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">
@@ -100,7 +103,7 @@
                                 <input class="simpan btn btn-success btn-sm" type="submit" value="Simpan">
                                 <a href="#" class="btn btn-danger btn-sm" id="cancel">Cancel</a>
                                 <a href="{{ Url('pendapatan/target') }}" class="btn btn-info btn-sm" id="home"><i
-                                        class="fa fa-home"></i>Home</a>
+                                        class="fa fa-preveous"></i>Ke Menu Target</a>
                             </div>
                         </div>
                     </div>
@@ -119,6 +122,7 @@
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }else{ 
+                                        $.alert('Sedang Menghitung Target pendapatan ...');
                                      $('#alert').html('');
                                      $('#btnSave').attr('disabled', true);
                                      url = $(this).attr('action');

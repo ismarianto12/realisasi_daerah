@@ -310,9 +310,17 @@ class PendapatanTargetController extends Controller
         //
         $data = TmpendapatantargetModel::whereIn('id', $request->id);
         if ($data != '') {
+            if ($data->count() == 1) {
+                $rinci = Trtargetrincian::where('tmtarget_id', $request->id);
+                $rinci->delete();
+            } else {
+                $implode = implode(',', $request->id);
+                $rinci = Trtargetrincian::whereIn('tmtarget_id', $implode);
+                $rinci->delete();
+            }
             $data->delete();
             return response()->json([
-                'msg' => 'data berhasil di update'
+                'msg' => 'data berhasil di hapus'
             ]);
         } else {
             return response()->json([

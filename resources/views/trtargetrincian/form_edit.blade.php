@@ -16,6 +16,7 @@
       $f = $i + 1;
       @endphp
       <tr>
+        <td>Bulan Ke - {{ $f }}</td>
         <td>
           <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $f }}" class="form-control"
             placeholder="Bulan ke  .. {{ $f }}" value="{{ $fjumlah['jumlah']['val'] }}">
@@ -26,7 +27,7 @@
       @endphp
       @endforeach
       <tr>
-        <td>Total Target Perbulan <br />
+        <td colspan="2">Total Target Perbulan <br />
           <input type="text" name="t_target" id="pbulan_total" class="form-control" value="{{ $jumlah }}">
         </td>
       </tr>
@@ -43,10 +44,10 @@
       $jumlah_perubahan += $jumper['jumlah_perubahan']['val'];
       $k = $g + 1;
       @endphp
-
       <tr>
+        <td>Perubahan Target Bulan Ke - {{ $k }}</td>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $k }}" class="form-control"
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $g }}" id="tpbulan_{{ $k }}" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. {{ $k }}" value="{{ $jumper['jumlah_perubahan']['val'] }}">
         </td>
       </tr>
@@ -56,7 +57,8 @@
       @endforeach
 
       <tr>
-        <td>Total Target Perbulan <br />
+
+        <td colspan="2">Total Target Perbulan Setelah Perubahan<br />
           <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="{{ $jumlah_perubahan }}">
         </td>
       </tr>

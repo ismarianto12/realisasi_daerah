@@ -16,6 +16,7 @@
       $f = $i + 1;
       ?>
       <tr>
+        <td>Bulan Ke - <?php echo e($f); ?></td>
         <td>
           <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
             placeholder="Bulan ke  .. <?php echo e($f); ?>" value="<?php echo e($fjumlah['jumlah']['val']); ?>">
@@ -26,7 +27,7 @@
       ?>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       <tr>
-        <td>Total Target Perbulan <br />
+        <td colspan="2">Total Target Perbulan <br />
           <input type="text" name="t_target" id="pbulan_total" class="form-control" value="<?php echo e($jumlah); ?>">
         </td>
       </tr>
@@ -43,10 +44,10 @@
       $jumlah_perubahan += $jumper['jumlah_perubahan']['val'];
       $k = $g + 1;
       ?>
-
       <tr>
+        <td>Perubahan Target Bulan Ke - <?php echo e($k); ?></td>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($k); ?>" class="form-control"
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($g); ?>" id="tpbulan_<?php echo e($k); ?>" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. <?php echo e($k); ?>" value="<?php echo e($jumper['jumlah_perubahan']['val']); ?>">
         </td>
       </tr>
@@ -56,7 +57,8 @@
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
       <tr>
-        <td>Total Target Perbulan <br />
+
+        <td colspan="2">Total Target Perbulan Setelah Perubahan<br />
           <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="<?php echo e($jumlah_perubahan); ?>">
         </td>
       </tr>

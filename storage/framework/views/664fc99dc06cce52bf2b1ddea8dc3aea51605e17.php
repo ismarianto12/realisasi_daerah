@@ -8,13 +8,17 @@
     <table class="table table-striped">
       <?php for($i = 0; $i <= 11; $i++): ?> <?php $f=$i + 1; ?> <tr>
         <td>
+          Bulan Ke - <?php echo e($f); ?>
+
+        </td>
+        <td>
           <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
-            placeholder="Bulan ke  .. <?php echo e($f); ?>">
+            placeholder="Bulan ke  .. <?php echo e($f); ?>" value="0">
         </td>
         </tr>
         <?php endfor; ?>
         <tr>
-          <td>Total Target Perbulan <br />
+          <td colspan="2">Total Target Perbulan <br />
             <input type="text" name="t_target" id="pbulan_total" class="form-control">
           </td>
         </tr>
@@ -23,14 +27,20 @@
   <div class="col-md-6" style="float: right;">
     <table class="table table-striped">
       <?php for($i = 0; $i <= 11; $i++): ?> <?php $r=$i + 1; ?> <tr>
+
+        <td>
+          Perubahan Bulan ke - <?php echo e($r); ?>
+
+        </td>
+
         <td>
           <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($r); ?>" class="form-control"
-            placeholder="Target Perubahan Bulan ke  .. <?php echo e($r); ?>">
+            placeholder="Target Perubahan Bulan ke  .. <?php echo e($r); ?>" value="0">
         </td>
         </tr>
         <?php endfor; ?>
         <tr>
-          <td>Total Target Perbulan <br />
+          <td colspan="2">Total Target Perbulan Perubahan <br />
             <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="">
           </td>
         </tr>
