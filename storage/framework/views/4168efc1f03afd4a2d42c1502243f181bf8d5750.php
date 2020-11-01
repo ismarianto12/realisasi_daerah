@@ -2,62 +2,62 @@
 <div class="alert alert-info">
   <tt>Rincian data target pendapatan</tt>
 </div>
-<input type="hidden" name="target_id" value="{{ $targetid }}">
+<input type="hidden" name="target_id" value="<?php echo e($targetid); ?>">
 <div class="col-lg-12">
   <div class="col-md-6" style="float: left;">
     <table class="table table-striped">
-      @php
+      <?php
       $i = 0;
       $jumlah = 0;
-      @endphp
-      @foreach($rincian_data as $fjumlah)
-      @php
+      ?>
+      <?php $__currentLoopData = $rincian_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fjumlah): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php
       $jumlah += $fjumlah['jumlah']['val'];
       $f = $i + 1;
-      @endphp
+      ?>
       <tr>
         <td>
-          <input type="text" onkeyup="gettarget()" name="bulan_{{ $i }}" id="bulan_{{ $f }}" class="form-control"
-            placeholder="Bulan ke  .. {{ $f }}" value="{{ $fjumlah['jumlah']['val'] }}">
+          <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
+            placeholder="Bulan ke  .. <?php echo e($f); ?>" value="<?php echo e($fjumlah['jumlah']['val']); ?>">
         </td>
       </tr>
-      @php
+      <?php
       $i++;
-      @endphp
-      @endforeach
+      ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       <tr>
         <td>Total Target Perbulan <br />
-          <input type="text" name="t_target" id="pbulan_total" class="form-control" value="{{ $jumlah }}">
+          <input type="text" name="t_target" id="pbulan_total" class="form-control" value="<?php echo e($jumlah); ?>">
         </td>
       </tr>
     </table>
   </div>
   <div class="col-md-6" style="float: right;">
     <table class="table table-striped">
-      @php
+      <?php
       $g = 0;
       $jumlah_perubahan = 0;
-      @endphp
-      @foreach($rincian_data as $jumper)
-      @php
+      ?>
+      <?php $__currentLoopData = $rincian_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jumper): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php
       $jumlah_perubahan += $jumper['jumlah_perubahan']['val'];
       $k = $g + 1;
-      @endphp
+      ?>
 
       <tr>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_{{ $i }}" id="tpbulan_{{ $k }}" class="form-control"
-            placeholder="Target Perubahan Bulan ke  .. {{ $k }}" value="{{ $jumper['jumlah_perubahan']['val'] }}">
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($k); ?>" class="form-control"
+            placeholder="Target Perubahan Bulan ke  .. <?php echo e($k); ?>" value="<?php echo e($jumper['jumlah_perubahan']['val']); ?>">
         </td>
       </tr>
-      @php
+      <?php
       $g++;
-      @endphp
-      @endforeach
+      ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
       <tr>
         <td>Total Target Perbulan <br />
-          <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="{{ $jumlah_perubahan }}">
+          <input type="text" name="tperubahan" id="tperubahan" class="form-control" value="<?php echo e($jumlah_perubahan); ?>">
         </td>
       </tr>
     </table>
@@ -71,26 +71,26 @@
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   
-    @for($i = 0; $i <= 11; $i++)
-    @php
+    <?php for($i = 0; $i <= 11; $i++): ?>
+    <?php
     $j = $i+1;   
-  @endphp
+  ?>
   
-    $("#bulan_{{ $j }}").on('keyup', function(){
+    $("#bulan_<?php echo e($j); ?>").on('keyup', function(){
       var n = parseInt($(this).val().replace(/\D/g,''),10);
       $(this).val(n.toLocaleString()); 
    });
-   @endfor
+   <?php endfor; ?>
   
-   @for($i = 0; $i <= 11; $i++)
-   @php
+   <?php for($i = 0; $i <= 11; $i++): ?>
+   <?php
    $js = $i+1;   
-  @endphp
-   $("#tpbulan_{{ $js }}").on('keyup', function(){
+  ?>
+   $("#tpbulan_<?php echo e($js); ?>").on('keyup', function(){
     var n = parseInt($(this).val().replace(/\D/g,''),10);
     $(this).val(n.toLocaleString()); 
   });
-  @endfor
+  <?php endfor; ?>
      
     function gettarget(){
       hitung_bersih();
@@ -141,4 +141,4 @@
    } 
   
   
-</script>
+</script><?php /**PATH D:\xampp64\www\retribusi\resources\views/trtargetrincian/form_edit.blade.php ENDPATH**/ ?>

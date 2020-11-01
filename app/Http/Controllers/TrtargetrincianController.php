@@ -22,7 +22,7 @@ class TrtargetrincianController extends Controller
 
     function __construct()
     {
-       // $this->middleware('level:|1');
+        // $this->middleware('level:|1');
     }
 
     public function index()
@@ -54,17 +54,25 @@ class TrtargetrincianController extends Controller
 
     public function form_edit($id)
     {
-        $rdata  = Trtargetrincian::where('tmtarget_id', $id)->OrderBy('id', 'asc')->get();
         //dd($rincian_data);
-        $rjumlah = $rdata->first()->jumlah;
-        $rjumlah_perubahan = $rdata->first()->jumlah_perubahan;
+        // for ($i = 0; $i < 11; $i++) {
+        //     print($i);
+        // } 
+        $rdata  = Trtargetrincian::where([
+            'tmtarget_id' => $id,
+        ])->OrderBy('id', 'asc')->get();
+        for ($idx = 0; $idx <= 11; $idx++) {
+            $k = $idx + 1;
+            $dataset[$idx]['jumlah']['val']           =  ($rdata[$idx]['jumlah']) ? $rdata[$idx]['jumlah'] : 0;
+            $dataset[$idx]['jumlah_perubahan']['val'] =  ($rdata[$idx]['jumlah_perubahan']) ? $rdata[$idx]['jumlah_perubahan'] : 0;
+        }
 
+        $listdata = isset($dataset) ? $dataset : 0;
+        if ($listdata == 0) return abort(404, 'maaf data tidak ditemukan');
         return view(
             $this->view . 'form_edit',
             [
-                'jumlah' => number_format($rjumlah,0,0,','),
-                'jumlah_perubahan' => number_format($rjumlah_perubahan,0,0,','),
-                'rincian_data' => $rdata,
+                'rincian_data' => $listdata,
                 'targetid' => $id
             ]
         );

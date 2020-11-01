@@ -261,6 +261,13 @@ class PendapatanTargetController extends Controller
         $jumlah          = str_replace(',', '', $request->jumlah);
         $jumlahperubahan = str_replace(',', '', $request->tperubahan);
 
+        // for ($i = 0; $i <= 11; $i++) {
+        //     $f = $i + 1;
+        //     // dd($id);
+        //     dd($request->input('tpbulan_'.$i));
+        //     die;
+        // }
+
         $r = TmpendapatantargetModel::find($id);
         $r->jumlah                               = $jumlah;
         $r->jumlah_perubahan                     = $jumlahperubahan;
@@ -273,14 +280,19 @@ class PendapatanTargetController extends Controller
 
         for ($i = 0; $i <= 11; $i++) {
             $f = $i + 1;
-
             $rinjumlah  = str_replace(',', '', $request->input('bulan_' . $i));
             $trinjumlah = str_replace(',', '', $request->input('tpbulan_' . $i));
-            Trtargetrincian::where('tmtarget_id', $id)->update([
-                'bulan' => $f,
-                'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
-                'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
-            ]);
+            Trtargetrincian::where(
+                [
+                    'tmtarget_id' => $id,
+                    'bulan' => $f
+                ]
+            )
+                ->update([
+                    'bulan' => $f,
+                    'jumlah' => ($rinjumlah) ? $rinjumlah : 0,
+                    'jumlah_perubahan' => ($trinjumlah) ? $trinjumlah : 0
+                ]);
         }
         return response()->json([
             'msg' => 'data berhasil di update'

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trtargetrincian extends Model
 {
-    protected $table = 'trtargetrincian';
-    public $incrementing = FALSE;
-    protected $guarded = [];
+    protected $table         = 'trtargetrincian';
+    public     $incrementing = FALSE;
+    protected $guarded       = [];
 }

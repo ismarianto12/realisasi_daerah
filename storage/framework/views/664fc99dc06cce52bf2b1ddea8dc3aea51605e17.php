@@ -8,7 +8,7 @@
     <table class="table table-striped">
       <?php for($i = 0; $i <= 11; $i++): ?> <?php $f=$i + 1; ?> <tr>
         <td>
-          <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($i); ?>" class="form-control"
+          <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
             placeholder="Bulan ke  .. <?php echo e($f); ?>">
         </td>
         </tr>
@@ -22,11 +22,9 @@
   </div>
   <div class="col-md-6" style="float: right;">
     <table class="table table-striped">
-      <?php for($i = 0; $i <= 11; $i++): ?>
-      <?php $r=$i + 1; ?>
-      <tr>
+      <?php for($i = 0; $i <= 11; $i++): ?> <?php $r=$i + 1; ?> <tr>
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($i); ?>" class="form-control"
+          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($r); ?>" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. <?php echo e($r); ?>">
         </td>
         </tr>
@@ -44,16 +42,21 @@
   function nformat(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-  <?php for($i = 1; $i <= 12; $i++): ?>
-  $("#bulan_<?php echo e($i); ?>").on('keyup', function(){
+  <?php for($i = 0; $i <= 11; $i++): ?>
+   <?php
+      $j = $i+1;   
+   ?>
+  $("#bulan_<?php echo e($j); ?>").on('keyup', function(){
     var n = parseInt($(this).val().replace(/\D/g,''),10);
     $(this).val(n.toLocaleString()); 
  });
  <?php endfor; ?>
 
- <?php for($i = 1; $i <= 12; $i++): ?>
- $("#tpbulan_<?php echo e($i); ?>").on('keyup', function(){
+ <?php for($i = 0; $i <= 11; $i++): ?>
+ <?php
+   $js = $i+1;   
+ ?>
+ $("#tpbulan_<?php echo e($js); ?>").on('keyup', function(){
   var n = parseInt($(this).val().replace(/\D/g,''),10);
   $(this).val(n.toLocaleString()); 
 });
