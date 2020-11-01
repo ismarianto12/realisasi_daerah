@@ -122,7 +122,7 @@
                                         e.preventDefault();
                                         e.stopPropagation();
                                     }else{ 
-                                        $.alert('Sedang Menghitung Target pendapatan ...');
+                                     $.alert('Mohon Tunggu','Sedang Menghitung Target pendapatan ...');
                                      $('#alert').html('');
                                      $('#btnSave').attr('disabled', true);
                                      url = $(this).attr('action');
@@ -134,7 +134,7 @@
                                     $.each(respon.errors, function(index, value){
                                         err += "<li>" + value +"</li>";
                                     });
-                                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Error!</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
+                                    $('#alert').html("<div role='alert' class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Kesalahan Berikut : !</strong> " + respon.message + "<ol class='pl-3 m-0'>" + err + "</ol></div>");
                                 }).always(function(){
                                     $('.simpan').removeAttr('disabled');
                                 });  
