@@ -1,8 +1,6 @@
-@extends('layouts.template')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="page bg-light">
-    @include('layouts._includes.toolbar')
+    <?php echo $__env->make('layouts._includes.toolbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="container-fluid my-3">
         <div class="card">
             <div class="card-body">
@@ -15,11 +13,12 @@
                                 <select name="tmrekening_akun_id" class="form-control r-0 s-12 select2"
                                     id="tmrekening_akun_id" onchange="selectOnChange()">
                                     <option value="0">--Pilihan Data--</option>
-                                    @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
-                                    <option value="{{ $tmrekening_akun->id }}">
-                                        {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                                    <?php $__currentLoopData = $tmrekening_akuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmrekening_akun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($tmrekening_akun->id); ?>">
+                                        <?php echo e('['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun); ?>
+
                                     </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </div>
@@ -43,11 +42,11 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
+<?php $__env->startSection('script'); ?>
+<script type="text/javascript" src="<?php echo e(asset('assets/template/js/plugin/datatables/datatables.min.js')); ?>"></script>
+<script type="text/javascript" src="<?php echo e(asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js')); ?>">
 </script>
 
 <script type="text/javascript">
@@ -65,7 +64,7 @@
         order: [1, 'asc'],
         pageLength: 50,
         ajax: {
-            url: "{{ route($route.'api') }}",
+            url: "<?php echo e(route($route.'api')); ?>",
             method: 'POST',
             data:function(data){
                 data.tmrekening_akun_id = $('#tmrekening_akun_id').val();   
@@ -77,7 +76,7 @@
             {data: 'nm_rek_kelompok', name: 'nm_rek_kelompok'},
          ]
     });
-    @include('layouts._includes.tablechecked')
+    <?php echo $__env->make('layouts._includes.tablechecked', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     
     function del(){
         var c = new Array();
@@ -85,7 +84,7 @@
         if(c.length == 0){
             $.alert("Silahkan memilih data yang akan dihapus.");
         }else{
-            $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+            $.post("<?php echo e(route($route.'destroy', ':id')); ?>", {'_method' : 'DELETE', 'id' : c}, function(data) {
                 table.api().ajax.reload();
             }, "JSON").fail(function(){
                 reload();
@@ -95,7 +94,8 @@
 
     function selectOnChange(){
         table.api().ajax.reload();
-        $('#btnCreate').attr('href', "{{ route($route.'create') }}?tmrekening_akun_id=" + $('#tmrekening_akun_id').val());
+        $('#btnCreate').attr('href', "<?php echo e(route($route.'create')); ?>?tmrekening_akun_id=" + $('#tmrekening_akun_id').val());
     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/kodekelompok/index.blade.php ENDPATH**/ ?>
