@@ -90,6 +90,7 @@ class Properti_app
 	{
 		$satker_id  = Auth::user()->sikd_satker_id;
 		$level_id   = self::getlevel();
+		
 		if ($satker_id != '') {
 			$data = Tmsikd_satker::find($satker_id);
 			if ($data != '') {

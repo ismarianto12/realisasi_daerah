@@ -224,7 +224,7 @@ class Menu_app
                     <ul class="nav nav-collapse">';
                     $menu .= self::set_menu('laporan', 'Laporan Penerimaan'); 
                     $menu .= self::set_menu('laporan/perbulan', 'Laporan Pendapatan Keseluruhan');
-                    $menu .= self::set_menu('laporan/grafik', 'Grafik Penerimaan');
+                    $menu .= self::set_menu('grafik', 'Grafik Penerimaan');
 
                     $menu .= '
                   </ul>

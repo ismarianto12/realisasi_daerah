@@ -166,9 +166,9 @@
                             </ul>
                         </li>
                         @php
-                        $level = Properti_app::getLevel();
+                        $level = Properti_app::getlevel();
                         @endphp
-                        @if ($level != 3)
+                         @if ($level != 3)
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
