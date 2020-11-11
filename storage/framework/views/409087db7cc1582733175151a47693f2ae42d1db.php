@@ -10,7 +10,7 @@
             </div>
             <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-white btn-border btn-round mr-2">Report Penerimaan</a>
-                <a href="#" to="#" class="tambah btn btn-secondary btn-round">Data Penerimaaan </a>
+                <a href="#" to="#" class="tambah btn btn-secondary btn-round">Data Penerimaan </a>
             </div>
         </div>
     </div>

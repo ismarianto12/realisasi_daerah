@@ -113,6 +113,8 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                         ]
                     ]
                 );
+ 
+    
                 $event->sheet->getStyle('A3:R4')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setARGB('007bff');

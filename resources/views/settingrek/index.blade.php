@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-row form-inline">
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
@@ -20,11 +20,23 @@
                                     role="tab" aria-controls="nav-profile" aria-selected="false">List Rekening
                                     Rincian</a>
                             </div>
-                        </nav> 
-                        <br /> 
+                        </nav>
+                        <br />
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
                                 aria-labelledby="nav-home-tab">
+
+                                * ) untuk mengedit satker cukup checklist dan tekan tombol set.
+                                <br /><br />
+                                <hr />
+                                <a class="btn-primary btn-sm" title="Simpan Data" id="btnSave" href="#"
+                                    onclick="javascript:save_rek()"><i class="fa fa-save"></i> Set Rekening
+                                    Satker <span id="txtSave"></span></a>
+
+                                <a class="btn-warning btn-sm" title="Batalkan" id="btnCancel" href="#"
+                                    onclick="javascript:confirm_cancel()"><i class="fa fa-refresh"></i> Batalkan</a>
+                                <hr />
+
 
 
                                 <div class="form-group m-0">
@@ -42,21 +54,7 @@
                                     </div>
 
                                 </div>
-                                <div class="form-group m-0">
-                                    <div class="col-md-5 p-0 mb-2">
-                                        * ) untuk mengedit satker cukup checklist dan tekan tombol set.
-                                        <br /><br />
-                                        <hr />
-                                        <a class="btn-primary btn-sm" title="Simpan Data" id="btnSave" href="#"
-                                            onclick="javascript:save_rek()"><i class="fa fa-save"></i> Set Rekening
-                                            Satker <span id="txtSave"></span></a>
 
-                                            <a class="btn-warning btn-sm" title="Batalkan" id="btnCancel" href="#"
-                                            onclick="javascript:confirm_cancel()"><i class="fa fa-refresh"></i> Batalkan</a>
-                                        <hr />
-
-                                    </div>
-                                </div>
 
                             </div>
                             <div class="tab-pane fade" id="nav-profile" role="tabpanel"
@@ -397,12 +395,14 @@ $('#nav-profile-tab').click(function(){
                 <div class="form-row form-inline">
                     <div class="col-md-12">
                         <div class="form-group m-0">
-                        <i>Jika Satuan Kerja Lebih Dari Satu .</i>
+                            <i>Jika Satuan Kerja Lebih Dari Satu .</i>
                             <label for="tmrekening_akun_id" class="col-form-label s-12 col-md-3"><strong>Filter By Opd /
                                     Satker
                                     :</strong></label>
                             <div class="col-md-5 p-0 mb-2">
-                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih" class="form-control js-example-basic-multiple" multiple="multiple" style="width:450px;height:300px">
+                                <select name="tmsikd_satker_id_pilih" id="tmsikd_satker_id_pilih"
+                                    class="form-control js-example-basic-multiple" multiple="multiple"
+                                    style="width:450px;height:300px">
                                     <option value="0">Semua Satker</option>
                                     @foreach($tmsikd_satkers as $tmsikd_satker)
                                     <option value="{{ $tmsikd_satker->id }}">
@@ -413,7 +413,8 @@ $('#nav-profile-tab').click(function(){
                             </div>
                         </div>
                         <div class="form-group m-0">
-                            <button class="btn btn-primary btn-xs" id="simpandata"><i class="fa fa-save"></i>Simpan Data</button>
+                            <button class="btn btn-primary btn-xs" id="simpandata"><i class="fa fa-save"></i>Simpan
+                                Data</button>
                         </div>
                     </div>
                 </div>
