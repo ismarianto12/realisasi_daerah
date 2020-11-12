@@ -687,9 +687,16 @@ class PendapatanController extends Controller
                     $incomedet = Tmpendapatan::where([
                         'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rek_obj['kd_rek_rincian_obj'],
                         'tanggal_lapor' => $sekarang
-                    ])->first();
+                    ])
+                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id','!=',0)
+                    ->first();
+                  
+                    if($rincian['kd_rek_rincian_obj'] == $incomedet['tmrekening_akun_kelompok_jenis_objek_rincian_id']){
                     $lapor     = ($incomedet['jumlah']) ? '<a class="btn btn-primary">' . number_format($incomedet['jumlah'], 0, 0,'.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
-                    //get subrincian rek  
+                    }else{ 
+                        $lapor = '<a class="btn btn-danger">Belum Lapor</a>';
+                        //get subrincian rek  
+                    }
                     $dataset[$idx]['kd_rek']['val']        = $rincian['kd_rek_rincian_obj'];
                     $dataset[$idx]['nm_rek']['val']        = $rincian['nm_rek_rincian_obj'];
 
@@ -705,11 +712,17 @@ class PendapatanController extends Controller
                         $incomedetsub = Tmpendapatan::where([
                             'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $rek_obj['kd_rek_rincian_objek_sub'],
                             'tanggal_lapor' => $sekarang
-                        ])->first();
-                        $lapor     = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0,'.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
-                        $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
+                        ])
+                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id','!=',0)
+                        ->first();
+                        if($rincian_obj_sub['kd_rek_rincian_objek_sub'] == $incomedetsub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']){
+                            $laporsub     = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0,'.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
+                        }else{
+                            $laporsub    =  '<a class="btn btn-danger">Belum Lapor</a>';
+                        }
+                         $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
                         $dataset[$idx]['nm_rek']['val']       = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
-                        $dataset[$idx]['lapor']['val']        = $lapor;
+                        $dataset[$idx]['lapor']['val']        = $laporsub;
                         $dataset[$idx]['bold']['val']         = false;
                         $idx++;
                     }

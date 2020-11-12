@@ -178,7 +178,7 @@
                             </a>
                             <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                 <li>
-                                    <div class="dropdown-title">Opd yang belum input realisasi pendapatan pada
+                                    <div class="dropdown-title">Status opd yang input pendapatan pada
                                         <?php echo e(Properti_app::tgl_indo(date('Y-m-d'))); ?></div>
                                 </li>
                                 <li>
