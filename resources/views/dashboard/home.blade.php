@@ -13,8 +13,7 @@ $username = Auth::user()->username;
         }) 
 </script>
 @endif
-
-
+ 
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -99,8 +98,7 @@ $username = Auth::user()->username;
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> 
     </div>
 
 

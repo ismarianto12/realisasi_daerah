@@ -456,9 +456,7 @@ class Tmpendapatan extends Model
         // ->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', 110201)
 
     }
-
-
-
+ 
     // public function static getPeriodeLalu()
     // {
     //     # code...

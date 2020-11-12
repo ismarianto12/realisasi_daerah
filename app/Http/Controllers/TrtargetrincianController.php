@@ -15,8 +15,7 @@ use App\Models\Trtargetrincian;
 
 class TrtargetrincianController extends Controller
 {
-
-
+ 
     public $route  = 'pendapatan.target.';
     public $view   = 'trtargetrincian.';
 
@@ -53,11 +52,7 @@ class TrtargetrincianController extends Controller
     }
 
     public function form_edit($id)
-    {
-        //dd($rincian_data);
-        // for ($i = 0; $i < 11; $i++) {
-        //     print($i);
-        // } 
+    { 
         $rdata  = Trtargetrincian::where([
             'tmtarget_id' => $id,
         ])->OrderBy('id', 'asc')->get();
