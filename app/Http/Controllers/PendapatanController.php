@@ -729,7 +729,7 @@ class PendapatanController extends Controller
             'satker_kd',
             'dataset',
             'satkernm',
-            'tmopd',
+            'tmopd'
         ));
     }
 
