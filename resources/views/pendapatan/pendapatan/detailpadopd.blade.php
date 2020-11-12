@@ -2,25 +2,17 @@
 <hr />
 
 <table class="table table-striped">
-    <tr>
-        <td>Kelompok Jenis Rekening</td>
-        <td>[{{ $rekeningdatas['kd_rek_jenis'] }}] -
-            {{ $rekeningdatas['nm_rek_jenis'] }}</td>
-    </tr>
+    @foreach ($dataset as $rekeningdatas)
 
-    <tr>
-        <td>Kelompok Rekening Jenis Object</td>
-        <td>[{{ $rekeningdatas['kd_rek_obj'] }}] -
-            {{ $rekeningdatas['nm_rek_obj'] }}</td>
+    <tr @if($rekeningdatas['bold']['val']==TRUE) style="
+        background: rebeccapurple;
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
+    "; @endif>
+        <td>[{{ $rekeningdatas['kd_rek']['val'] }}] -
+            {{ $rekeningdatas['nm_rek']['val'] }}</td>
+        <td>@php echo $rekeningdatas['lapor']['val'] @endphp
     </tr>
-    <tr>
-        <td>Kelompok Rekening Jenis Object Rincian</td>
-        <td>[{{ $rekeningdatas['kd_rek_rincian_obj'] }}] -
-            {{ $rekeningdatas['nm_rek_rincian_obj'] }}</td>
-    </tr> 
-    <tr>
-        <td>Kelompok Rekening Jenis Object Rincian Sub</td>
-        <td>[{{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}] -
-            {{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}</td>
-    </tr>
+    @endforeach
 </table>

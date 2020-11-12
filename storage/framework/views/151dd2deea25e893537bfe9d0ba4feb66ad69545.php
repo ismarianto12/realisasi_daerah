@@ -240,7 +240,7 @@ $username = Auth::user()->username;
         },
     
         xAxis: {
-            categories: ['Apples', 'Oranges', 'Bananas'],
+            categories: ['Target PAD', 'Realisasi', 'Selisih'],
             labels: {
                 x: -10
             }
@@ -254,13 +254,13 @@ $username = Auth::user()->username;
         },
     
         series: [{
-            name: 'Christmas Eve',
+            name: 'Target PAD Tahun 2020',
             data: [1, 4, 3]
         }, {
-            name: 'Christmas Day before dinner',
+            name: 'Keseluruhan Realisasi Pad',
             data: [6, 4, 2]
         }, {
-            name: 'Christmas Day after dinner',
+            name: 'Selisih Pad & Target',
             data: [8, 4, 3]
         }],
     
