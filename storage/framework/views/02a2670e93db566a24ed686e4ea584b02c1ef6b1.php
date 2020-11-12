@@ -166,9 +166,10 @@
                             </ul>
                         </li>
                         <?php
-                        $level = Properti_app::getlevel();
+                        $flevel = Properti_app::getlevel();
+                        $level = ($flevel) ? $flevel : 3;
                         ?>
-                         <?php if($level != 3): ?>
+                        <?php if($level != 3): ?>
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -470,9 +471,8 @@
             <div class="modal-content" style="width: auto;">
                 <div class="modal-header">
                     <div class="alert alert-success">
-                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Rincian Pad yang
-                            belum
-                            di lapor pada <?php echo e(date('Y-m-d')); ?>
+                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwyat Pad yang di
+                            laporkan oleh semua OPD pada tanggal <?php echo e(Properti_app::tgl_indo(date('Y-m-d'))); ?>
 
                         </h4>
                     </div>
