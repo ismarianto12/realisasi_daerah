@@ -17,7 +17,7 @@
   $getid = request()->segments(3);
  @endphp
  
-<a href="{{ Url('pendapatan/dapatkanpadopd/'.$getid[2]) }}?print=y"><i class="fa fa-print"></i>Print
+<a href="{{ Url('pendapatan/dapatkanpadopd/'.$getid[2]) }}?print=y" class="btn btn-primary btn-xs" target="_blank"><i class="fa fa-print"></i>Print
     Data</a>
 <table class="table table-striped">
     @foreach ($dataset as $rekeningdatas)
