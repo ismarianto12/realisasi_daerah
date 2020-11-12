@@ -4,9 +4,11 @@
 </script>
 @endif
 
-
+<center>
 <h3>Satuan Kerja / OPD <b>[{{ $satker_kd }}] - {{ $satkernm }}</b></h3>
 <hr />
+Pertanggal {{ Properti_app::tgl_indo(date('Y-m-d')) }}
+</center>
 
 @if($dataset == '')
 <div class="alert alert-danger"><i class="fa fa-danger"></i> Satker ini belum ada rekening pad </div>
@@ -31,7 +33,13 @@
      @endif>
         <td>[{{ $rekeningdatas['kd_rek']['val'] }}] -
             {{ $rekeningdatas['nm_rek']['val'] }}</td>
-        <td>@php echo $rekeningdatas['lapor']['val'] @endphp
+        <td>@php 
+          if($rekeningdatas['lapor']['val'] ==''){
+            echo 'Status Lapor OPD'; 
+          }else{ 
+            echo $rekeningdatas['lapor']['val']; 
+          } 
+          @endphp
     </tr>
     @endforeach
 </table>

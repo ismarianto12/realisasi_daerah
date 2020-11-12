@@ -4,9 +4,12 @@
 </script>
 <?php endif; ?>
 
-
+<center>
 <h3>Satuan Kerja / OPD <b>[<?php echo e($satker_kd); ?>] - <?php echo e($satkernm); ?></b></h3>
 <hr />
+Pertanggal <?php echo e(Properti_app::tgl_indo(date('Y-m-d'))); ?>
+
+</center>
 
 <?php if($dataset == ''): ?>
 <div class="alert alert-danger"><i class="fa fa-danger"></i> Satker ini belum ada rekening pad </div>
@@ -17,7 +20,7 @@
   $getid = request()->segments(3);
  ?>
  
-<a href="<?php echo e(Url('pendapatan/dapatkanpadopd/'.$getid[2])); ?>?print=y"><i class="fa fa-print"></i>Print
+<a href="<?php echo e(Url('pendapatan/dapatkanpadopd/'.$getid[2])); ?>?print=y" class="btn btn-primary btn-xs" target="_blank"><i class="fa fa-print"></i>Print
     Data</a>
 <table class="table table-striped">
     <?php $__currentLoopData = $dataset; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rekeningdatas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -31,7 +34,13 @@
      <?php endif; ?>>
         <td>[<?php echo e($rekeningdatas['kd_rek']['val']); ?>] -
             <?php echo e($rekeningdatas['nm_rek']['val']); ?></td>
-        <td><?php echo $rekeningdatas['lapor']['val'] ?>
+        <td><?php 
+          if($rekeningdatas['lapor']['val'] ==''){
+            echo 'Status Lapor OPD'; 
+          }else{ 
+            echo $rekeningdatas['lapor']['val']; 
+          } 
+          ?>
     </tr>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </table>
