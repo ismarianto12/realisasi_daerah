@@ -79,6 +79,7 @@ class Menu_app
                     <div class="collapse" id="setting">
                         <ul class="nav nav-collapse">
                 ';
+                    $menu .= self::set_menu('pendapatan/target', 'Setting Validasi Rekening');
                     $menu .= self::set_menu('pendapatan/target', 'Besaran Target');
                     $menu .= self::set_menu('setuptahunanggaran', 'Tahun Anggaran');
                     $menu .= self::set_menu('settingrek/rek', 'Setting akses user rekening');

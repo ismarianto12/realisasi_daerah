@@ -99,11 +99,7 @@ $username = Auth::user()->username;
                 </div>
             </div>
         </div> 
-    </div>
-
-
-
-
+    </div>   
 </div>
 
 

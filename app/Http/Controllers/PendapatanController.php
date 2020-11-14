@@ -111,26 +111,9 @@ class PendapatanController extends Controller
         } else {
             $satker_id = $request->tmsikd_satker_id;
         }
-        $fsatkerid = explode(',', $satker_id);
-        $data      = Tmpendapatan::datatable($fsatkerid);
-        //$tahun_id = $request->tahun_id;
-        $tmsikd_satker_id = $request->tmsikd_satker_id;
+        $data        = Tmpendapatan::datatable($satker_id)->get();
         $tgl_lapor = $request->tgl_lapor;
 
-        // $tmrekening_akun_id = $request->tmrekening_akun_id;
-        // $tmrekening_akun_kelompok_id = $request->tmrekening_akun_kelompok_id;
-
-        // $tmrekening_akun_kelompok_jenis_id = $request->tmrekening_akun_kelompok_jenis_id;
-        // $tmrekening_akun_kelompok_jenis_objek_id = $request->tmrekening_akun_kelompok_jenis_objek_id;
-
-        // if ($tmrekening_akun_kelompok_jenis_objek_id != 0) {
-        //     $data->where('tmrekening_akun_kelompok_jenis_objeks.id', '=', $tmrekening_akun_kelompok_jenis_objek_id);
-        // }
-        // if ($tmrekening_akun_kelompok_jenis_id != 0) {
-        //     $data->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', $tmrekening_akun_kelompok_jenis_id);
-        // }
-
-        //with satkerid
         if ($tgl_lapor != '') {
             $par = [
                 'tgl_lapor' => $tgl_lapor,
@@ -146,12 +129,6 @@ class PendapatanController extends Controller
                 'satker_id' => $satker_id
             ];
         }
-
-        if ($tmsikd_satker_id != 0 || $tmsikd_satker_id != '') {
-            $data->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', $tmsikd_satker_id);
-        }
-        // dd($par);
-        $data->get();
         return DataTables::of($data)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
@@ -280,10 +257,9 @@ class PendapatanController extends Controller
         $whre  = [
             //id adalah jenis object rincian 
             'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj' => $id,
-            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id
         ];
         $kd_rek_obj     = $id;
-        $rekeningdatas  = Tmpendapatan::getrekeningbySatker($whre)->first();
+        $rekeningdatas  = Tmpendapatan::getrekeningbySatker($whre)->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)->first();
         $jam            = Carbon::now()->format('H:i:s');
 
         $action       =  route($this->route . 'store');
@@ -477,7 +453,6 @@ class PendapatanController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($id);
 
         $request->validate([
             'tmsikd_satker_id' => 'required',
@@ -582,10 +557,11 @@ class PendapatanController extends Controller
 
         $cond = [
             'kd_rek_rincian_obj' => $id,
-            'tmsikd_satkers_id' => $fsatker_id
         ];
         $rekRincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
+            ->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
             ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+            ->groupby('tmrekening_akun_kelompok_jenis_objek_rincians.id')
             ->get();
         $pendapatandata = $data;
         //model tmpendapatan 
@@ -640,7 +616,6 @@ class PendapatanController extends Controller
         );
     }
 
-
     public function dapatkanpadopd(Request $request, $id)
     {
         $level_id     = Properti_app::getlevel();
@@ -656,7 +631,9 @@ class PendapatanController extends Controller
         // query data form reekning get count of money all by opd
         $where    = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $satkerid];
         //by jenis 
-        $jeniss = Tmpendapatan::getrekeningbySatker($where)->groupBy('kd_rek_jenis')->get();
+        $jeniss = Tmpendapatan::getrekeningbySatker([])
+            ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+            ->groupBy('kd_rek_jenis')->get();
         $idx    = 0;
         //get pagu total from type by accout object
         // get date range from the filter data
@@ -669,7 +646,8 @@ class PendapatanController extends Controller
             $dataset[$idx]['lapor']['val']        = '';
             $idx++;
             //by kelompok jenis obj    
-            $rek_objs = Tmpendapatan::getrekeningbySatker($where)
+            $rek_objs = Tmpendapatan::getrekeningbySatker([])
+                ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
                 ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $jenis['kd_rek_jenis'])
                 ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
                 ->get();
@@ -680,20 +658,27 @@ class PendapatanController extends Controller
                 $dataset[$idx]['bold']['val']         = true;
                 $idx++;
                 //by kelompok jenis rincian obj   
-                $rincians = Tmpendapatan::getrekeningbySatker($where)
+                for ($a = 0; $a <= 2; $a++) {
+                    $hasil[] =  $satkerid;
+                }
+                $explode  = implode(',', $hasil);
+                // dd($rek_obj);
+                $rincians = Tmpendapatan::getrekeningbySatker([])
+                    ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
                     ->where('tmrekening_akun_kelompok_jenis_objek_id', $rek_obj['kd_rek_obj'])
-                    ->groupBy('kd_rek_rincian_obj')->get();
+                    ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
+                    ->get();
                 foreach ($rincians as $rincian) {
                     $incomedet = Tmpendapatan::where([
                         'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rek_obj['kd_rek_rincian_obj'],
                         'tanggal_lapor' => $sekarang
                     ])
-                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id','!=',0)
-                    ->first();
-                  
-                    if($rincian['kd_rek_rincian_obj'] == $incomedet['tmrekening_akun_kelompok_jenis_objek_rincian_id']){
-                    $lapor     = ($incomedet['jumlah']) ? '<a class="btn btn-primary">' . number_format($incomedet['jumlah'], 0, 0,'.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
-                    }else{ 
+                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', '!=', 0)
+                        ->first();
+
+                    if ($rincian['kd_rek_rincian_obj'] == $incomedet['tmrekening_akun_kelompok_jenis_objek_rincian_id']) {
+                        $lapor     = ($incomedet['jumlah']) ? '<a class="btn btn-primary">' . number_format($incomedet['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
+                    } else {
                         $lapor = '<a class="btn btn-danger">Belum Lapor</a>';
                         //get subrincian rek  
                     }
@@ -704,23 +689,26 @@ class PendapatanController extends Controller
                     $dataset[$idx]['bold']['val']         = false;
                     $idx++;
                     //by kelompok jenis object rincian sub   
-                    $rincian_subs = Tmpendapatan::getrekeningbySatker($where)
-                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
-                        ->groupBy('kd_rek_rincian_objek_sub')
-                        ->get();
+                   
+                    // dd($rincian); 
+                    $rincian_subs = Tmpendapatan::getrekeningbySatker([])
+                    ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+                    ->where('tmrekening_akun_kelompok_jenis_objek_id', $rincian['kd_rek_rincian_obj'])
+                    ->groupBy('kd_rek_rincian_obj')
+                    ->get();
                     foreach ($rincian_subs as $rincian_obj_sub) {
                         $incomedetsub = Tmpendapatan::where([
                             'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $rek_obj['kd_rek_rincian_objek_sub'],
                             'tanggal_lapor' => $sekarang
                         ])
-                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id','!=',0)
-                        ->first();
-                        if($rincian_obj_sub['kd_rek_rincian_objek_sub'] == $incomedetsub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']){
-                            $laporsub     = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0,'.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
-                        }else{
+                            ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', 0)
+                            ->first();
+                        if ($rincian_obj_sub['kd_rek_rincian_objek_sub'] == $incomedetsub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']) {
+                            $laporsub     = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
+                        } else {
                             $laporsub    =  '<a class="btn btn-danger">Belum Lapor</a>';
                         }
-                         $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
+                        $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
                         $dataset[$idx]['nm_rek']['val']       = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
                         $dataset[$idx]['lapor']['val']        = $laporsub;
                         $dataset[$idx]['bold']['val']         = false;
@@ -768,6 +756,8 @@ class PendapatanController extends Controller
                 Tmpendapatan::whereIn('id', $request->id)->delete();
                 return ['message' => "Data " . $this->title . " berhasil dihapus."];
             }
+        } else {
+            return ['message' => "Data Bukan Array Gays"];
         }
     }
 }
