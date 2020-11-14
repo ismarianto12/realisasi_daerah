@@ -635,8 +635,7 @@ class PendapatanController extends Controller
             ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
             ->groupBy('kd_rek_jenis')->get();
         $idx    = 0;
-        //get pagu total from type by accout object
-        // get date range from the filter data
+        //get pagu total from type by accout object 
 
         foreach ($jeniss as $jenis) {
             $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
