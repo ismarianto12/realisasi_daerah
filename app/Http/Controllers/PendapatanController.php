@@ -872,21 +872,27 @@ class PendapatanController extends Controller
         $lewats   =  date($sekarang, strtotime('-1 day'));
 
         if (is_array($request->id)) {
-            if ($level_id == 3) {
-                $check = Tmpendapatan::where([
-                    'tanggal_lapor' => $lewats,
-                    'id' => $request->id
-                ]);
-                if ($check > 0) {
-                    return ['message' => "Pelaporan PAD gagal di hapus karena sudah melewati masa penghapusan silahkan edit jika ada kesalahan."];
-                } else {
-                    Tmpendapatan::whereIn('id', $request->id)->delete();
-                    return ['message' => "Data " . $this->title . " berhasil dihapus."];
-                }
-            } else {
-                Tmpendapatan::whereIn('id', $request->id)->delete();
-                return ['message' => "Data " . $this->title . " berhasil dihapus."];
-            }
+            Tmpendapatan::whereIn('id', $request->id)->delete();
+            return response()->json(
+                ['message' => "Data " . $this->title . " berhasil dihapus."]
+            );
+
+            // return 
+            // if ($level_id == 3) {
+            //     $check = Tmpendapatan::where([
+            //         'tanggal_lapor' => $lewats,
+            //         'id' => $request->id
+            //     ]);
+            //     if ($check > 0) {
+            //         return ['message' => "Pelaporan PAD gagal di hapus karena sudah melewati masa penghapusan silahkan edit jika ada kesalahan."];
+            //     } else {
+            //         Tmpendapatan::whereIn('id', $request->id)->delete();
+            //         return ['message' => "Data " . $this->title . " berhasil dihapus."];
+            //     }
+            // } else {
+            //     Tmpendapatan::whereIn('id', $request->id)->delete();
+            //     return ['message' => "Data " . $this->title . " berhasil dihapus."];
+            // }
         } else {
             return ['message' => "Data Bukan Array Gays"];
         }

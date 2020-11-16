@@ -297,6 +297,9 @@ $('#datatable').on('click','#detail',function(e){
  });
 
 function del(){
+    $('.load_page').html('<center><h3>Proses Hapus .... </h3><b>Sedang menghapus data harap tunggu ...</b></center>');
+    $('#modal_loader').modal('show');  
+    
         var c = new Array();
         $("input:checked").each(function(){ c.push($(this).val()); });
         if(c.length == 0){
@@ -304,7 +307,9 @@ function del(){
         }else{
             $.post("<?php echo e(route($route.'destroy', ':id')); ?>", {'_method' : 'DELETE', 'id' : c}, function(data) {
                 table.api().ajax.reload();
-            }, "JSON").fail(function(){
+                 $('#modal_loader').modal('hide');  
+
+            }, "JSON").fail(function(){ 
                 reload();
             });
         }
