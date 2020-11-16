@@ -216,13 +216,13 @@ add();
       if ($(this)[0].checkValidity() === false) {
            event.stopPropagation();
       }else{ 
-        $.alert('Menyimpan Data','Sedang Mengirim Ke server ......');
+          $.alert('Menyimpan Data','Sedang Mengirim Ke server ......');
 
           $('#alert').html('');
           $('#btnSave').attr('disabled', true);
           url = (save_method == 'add') ? "{{ route($route.'store') }}" : "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
           $.post(url, $(this).serialize(), function(data){
-              $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
               document.location.href = "{{ url('pendapatan') }}?tgl_lapor={{ $tgl_lapor }}";
           }, "JSON").fail(function(data){
               err = ''; respon = data.responseJSON;

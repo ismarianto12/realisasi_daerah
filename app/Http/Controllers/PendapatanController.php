@@ -220,22 +220,18 @@ class PendapatanController extends Controller
             $datar[$i]['jumlah']['val'] = ($data['jumlah'])  ? number_format($data['jumlah'], 0, 0, '.') : 0;
             $datar[$i]['tanggal_lapor']['val'] = $data['tanggal_lapor'];
 
-            $kond = [
-                'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $data['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'],
-            ];
-            $datas_sub   = Tmpendapatan::where($kond)->get();
+            $rkrinci_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'])->get();
 
-            foreach ($datas_sub as $sub) {
-                $rkrinci_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(
-                    [
-                        'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $data['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'],
-                        'tmsikd_satkers_id' => $request->tmsikd_satker_id
-                    ]
+            foreach ($rkrinci_sub as $sub) {
+                $insub   = Tmpendapatan::where(
+                    'tmrekening_akun_kelompok_jenis_objek_rincian_id',
+                    $sub['kd_rek_rincian_objek_sub']
                 )->first();
-                $datar[$i]['kode_rek']['val'] = $sub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'];
-                $datar[$i]['nama_rek']['val'] = $rkrinci_sub['nm_rek_rincian_objek_sub'];
-                $datar[$i]['jumlah']['val'] = ($sub['jumlah'])  ? number_format($sub['jumlah'], 0, 0, '.') : 0;
-                $datar[$i]['tanggal_lapor']['val'] = $sub['tanggal_lapor'];
+
+                $datar[$i]['kode_rek']['val'] = $sub['kd_rek_rincian_objek_sub'];
+                $datar[$i]['nama_rek']['val'] = $sub['nm_rek_rincian_objek_sub'];
+                $datar[$i]['jumlah']['val'] = ($insub['jumlah'])  ? number_format($insub['jumlah'], 0, 0, '.') : 0;
+                $datar[$i]['tanggal_lapor']['val'] = $insub['tanggal_lapor'];
                 $i++;
             }
             $i++;

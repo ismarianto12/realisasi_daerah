@@ -56,8 +56,7 @@
             value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
 
         <input name="kd_rincian_sub[<?php echo e($idx); ?>]" type="hidden" value="<?php echo e($list['kd_rincian_sub']['val']); ?>" />
-
-
+ 
         <input name="cboxInputRinci[<?php echo e($idx); ?>]" id="cboxInputRinci<?php echo e($idx); ?>" type="hidden"
             value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
         <?php $idx++ ?>
