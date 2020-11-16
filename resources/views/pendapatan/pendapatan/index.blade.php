@@ -327,6 +327,9 @@ $('#cari_data').on('click',function(e){
 $('#datatable').on('click','#detail',function(e){
     e.preventDefault();
     
+    $('.load_page').html('<center><h3>Mohon Bersabar .... </h3><b>Sedang membuka halaman harap tunggu ...</b></center>');
+    $('#modal_loader').modal('show');  
+    
     $(this).toggleClass('selected');
     c = $(this).children('td:first').children('input[type=checkbox]');
     if(!c.is(':disabled')){
