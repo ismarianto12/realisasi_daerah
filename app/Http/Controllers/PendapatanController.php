@@ -525,24 +525,24 @@ class PendapatanController extends Controller
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
             $sub_rek = ($kd_rekening_sub[$key]) ? $kd_rekening_sub[$key] : 0;
+            $rincian_id = ($cboxInputRinci[$key]) ? $cboxInputRinci[$key] : 0;
 
             $where = [
                 'tmpendapatan.tanggal_lapor' => $request->tanggal_lapor,
                 'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id
             ];
-            $pendapatan =  new Tmpendapatan;
-            $pendapatan->tmrekening_akun_kelompok_jenis_objek_rincian_sub_id =  $sub_rek;
-            $pendapatan->tmrekening_akun_kelompok_jenis_objek_rincian_id  =  $cboxInputRinci[$key];
-            $pendapatan->kd_rekening  =  $cboxInputRinci[$key];
-            $pendapatan->tmsikd_satker_id  =  $satker_id;
-            $pendapatan->volume  =  $volume[$key];
-            $pendapatan->satuan  =  $satuan[$key];
-            $pendapatan->jumlah  =  $jumlah[$key];
-            $pendapatan->tanggal_lapor =  $request->tanggal_lapor;
-            $pendapatan->is_deleted  =  0;
-            $pendapatan->tahun  =  $tahun;
-            $pendapatan->where($where);
-            $pendapatan->update();
+            Tmpendapatan::where($where)->update([
+                'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rincian_id,
+                'kd_rekening' => $cboxInputRinci[$key],
+                'tmsikd_satker_id' => $satker_id,
+                'volume' => $volume[$key],
+                'satuan' => $satuan[$key],
+                'jumlah' => $jumlah[$key],
+                'tanggal_lapor' => $tanggal_lapor,
+                'is_deleted' => 0,
+                'tahun' => $tahun
+            ]);
         }
 
         return response()->json([

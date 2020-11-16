@@ -312,6 +312,7 @@ function del(){
             }, "JSON").fail(function(){ 
                 reload();
             });
+            
         }
     }
 
