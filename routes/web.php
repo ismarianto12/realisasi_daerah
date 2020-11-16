@@ -3,11 +3,7 @@
 // @aplication build at 2020  
 
 use Illuminate\Support\Facades\Route;
-
-Auth::routes();
 Route::get('/', 'HomeController@index')->middleware('auth')->name('/');
-
-
 Route::get('/logout', function () {
 	return redirect('/');
 })->middleware('auth');
@@ -75,8 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('grafik')->name('grafik.')->group(function () {
 		Route::get('', 'GrafikController@index')->name('/');
 		Route::get('perrekjenis', 'GrafikController@tampilgrafik')->name('perrekjenis');
+	});  
+	Route::prefix('setting')->name('seeting.')->group(function () {
+		Route::resource('', 'SettingController');
 	});
-
 	Route::prefix('akses')->name('akses.')->group(function () {
 		Route::resource('level', 'TmuserlevelController');
 		Route::post('level_api', 'TmuserlevelController@api')->name('level_api');
@@ -183,3 +181,4 @@ Route::group(['middleware' => 'auth'], function () {
 	//restrict 
 	Route::get('restrict', 'HomeController@restrict')->name('restrict');
 });
+Auth::routes();

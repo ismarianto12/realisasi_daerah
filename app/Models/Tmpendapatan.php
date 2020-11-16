@@ -156,8 +156,7 @@ class Tmpendapatan extends Model
         $where    = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $par['tmsikd_satker_id']];
         //by jenis 
   
-        $idx = 0;
-
+        $idx      = 0; 
         $dari     = $par['dari'];
         $sampai   = $par['sampai'];
         $satkerid = $par['tmsikd_satker_id'];
@@ -232,7 +231,6 @@ class Tmpendapatan extends Model
                 $kurleb_jobj      = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
                 $persen_jobj      = 0;
                 $total_jobj       = ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
-
 
                 $dataset[$idx]['kd_rek']['val']       = $rek_obj['kd_rek_obj'];
                 $dataset[$idx]['nm_rek']['val']       = $rek_obj['nm_rek_obj'];

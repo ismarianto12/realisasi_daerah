@@ -15,6 +15,15 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
+
+                        <div class="card-body">
+                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
+                                tidak di
+                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap
+                                hapus
+                                dan entri kembali </div>
+                            <div class="entri_rek"></div>
+                        </div>
                         <div class="card-body">
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
@@ -80,15 +89,6 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
-                                tidak di
-                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap
-                                hapus
-                                dan entri kembali </div>
-                            <div class="entri_rek"></div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -101,6 +101,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
         <?php if($raction == 'edit'): ?>
         var id_rincian = <?php echo e($rincianid); ?>;    
         var satker_id  = <?php echo e($satkerid); ?>;
+
         var form_url = "<?php echo e(route('pendapatan.edit_pendapatan_form',':id')); ?>".replace(':id',id_rincian);
           $.get(form_url,{satker_id : satker_id },function(data){
           $('.entri_rek').html(data); 
@@ -192,9 +193,15 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
     });  
  
     
+   var tahun         = "<?php echo e($tahun_ang); ?>";
+   var tanggal_lapor = "<?php echo e($tgl_lapor); ?>";
      val_id = "<?php echo e($id); ?>";       
      var form_url = "<?php echo e(route('pendapatan.edit_pendapatan_form',':id')); ?>".replace(':id',val_id);
-       $.get(form_url,{satker_id : satker_id },function(data){
+       $.get(form_url,{
+        satker_id : satker_id,
+        tahun : tahun,
+        tanggal_lapor : tanggal_lapor
+    },function(data){
        $('.entri_rek').html(data); 
      }); 
 
@@ -244,10 +251,7 @@ function selectOnChange()
        $(this).addClass('was-validated');
     }
   });
- 
-  
-
-  
+   
 
 
 </script>

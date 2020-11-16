@@ -14,6 +14,16 @@ $pagetitle = 'Tambah Pelaporan Pad';
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
+
+                        <div class="card-body">
+                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
+                                tidak di
+                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap
+                                hapus
+                                dan entri kembali </div>
+                            <div class="entri_rek"></div>
+                        </div>
+
                         <div class="card-body">
                             <div class="form-group form-show-validation row">
                                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
@@ -29,19 +39,24 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                     </select>
                                 </div>
                             </div>
- 
+
 
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <table class="table table-striped">
-                                                <tr>
-                                                    <input type="hidden" name="tanggal_lapor" value="<?php echo e($tgl_lapor); ?>" id="tanggal_lapor">
-                                                    <input type="hidden" name="tmsikd_satker_id" value="<?php echo e($fsatker_id); ?>"> 
-                                                    <td>Tanggal Lapor</td><td><?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?> Jam <?php echo e($jam); ?></td>
-                                                </tr> 
-                                            </table>  
-                                            <h2>Rincian PAD <sup><a href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8" title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan </h2>
+                                            <tr>
+                                                <input type="hidden" name="tanggal_lapor" value="<?php echo e($tgl_lapor); ?>"
+                                                    id="tanggal_lapor">
+                                                <input type="hidden" name="tmsikd_satker_id" value="<?php echo e($fsatker_id); ?>">
+                                                <td>Tanggal Lapor</td>
+                                                <td><?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?> Jam <?php echo e($jam); ?></td>
+                                            </tr>
+                                        </table>
+                                        <h2>Rincian PAD <sup><a
+                                                    href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
+                                                    title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
+                                        </h2>
                                         <table class="table table-striped">
                                             <tr>
                                                 <td>Kelompok Jenis Rekening</td>
@@ -71,15 +86,7 @@ $pagetitle = 'Tambah Pelaporan Pad';
 
                                     </div>
                                 </div>
-                            </div> 
-                        </div>
-                        <div class="card-body">
-                            <div class="alert alert-danger">Pendapatan daerah yang sudah di entrikan pertanggal
-                                tidak di
-                                muncul kan lagi , jika ada kesalaha pada pengentrian data sebelumnya harap harap
-                                hapus
-                                dan entri kembali </div>
-                            <div class="entri_rek"></div>
+                            </div>
                         </div>
 
                     </div>

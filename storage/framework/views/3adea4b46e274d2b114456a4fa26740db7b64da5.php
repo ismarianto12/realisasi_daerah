@@ -6,11 +6,11 @@
             <th width="30%">Uraian</th>
             <th width="7%">Volume Transaksi</th>
             <th width="7%">Satuan</th>
-            <th width="15%">Jumlah Transaksi</th> 
+            <th width="15%">Jumlah Transaksi</th>
         </tr>
     </thead>
     <tbody>
-        <?php if(count($rekrincian) == 0): ?>
+        <?php if($fdataset == 0): ?>
         <tr>
             <td colspan="6">
                 <div class="alert alert-danger">
@@ -19,13 +19,12 @@
             </td>
         </tr>
         <?php else: ?>
-
-        <?php $idx = 0; $ttlMak = count($rekrincian); ?>
-        <?php $__currentLoopData = $rekrincian; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rinci): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php $idx= 0;
+        $ttlMak = count($fdataset);
+        ?>;
+        <?php $__currentLoopData = $fdataset; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <?php
-        $pendapatan =
-         $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rinci['kd_rek_rincian_obj'])->first();
-        $style = '';
+        $style = $list['style']['val'];
         ?>
         <tr>
             <td style="<?php echo e($style); ?>" align="center">
@@ -33,84 +32,46 @@
                     value="<?php echo e($idx); ?>">
             </td>
             <td style="<?php echo e($style); ?>">
-                <?php echo e($rinci['kd_rek_rincian_obj']); ?>
+                <?php echo e($list['kd_rek']['val']); ?>
 
             </td>
             </td>
-            <td style="<?php echo e($style); ?>"><?php echo e($rinci['nm_rek_rincian_obj']); ?></td>
+            <td style="<?php echo e($style); ?>"><?php echo e($list['nm_rek']['val']); ?></td>
             <td style="<?php echo e($style); ?>">
                 <input name="volume[<?php echo e($idx); ?>]" id="volume_<?php echo e($idx); ?>" type="text" style="text-align:right"
                     class="form-control auto" autocomplete="off"
                     onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak(<?php echo e($ttlMak); ?>); "
-                    \="" value="<?php echo e($pendapatan['volume']); ?>">
-            </td> 
+                    value="<?php echo e($list['rvolume']['val']); ?>">
+            </td>
             <td style="<?php echo e($style); ?>">
                 <input name="satuan[<?php echo e($idx); ?>]" id="satuan_<?php echo e($idx); ?>" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " value="<?php echo e($pendapatan['satuan']); ?>">
+                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); "
+                    value="<?php echo e($list['rsatuan']['val']); ?>">
             </td>
-
             <td style="<?php echo e($style); ?>">
                 <input name="jumlah[<?php echo e($idx); ?>]" id="jumlah_<?php echo e($idx); ?>" type="number" style="text-align:right"
                     class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
-                    value="<?php echo e($pendapatan['jumlah']); ?>">
+                    value="<?php echo e($list['jumlah']['val']); ?>">
             </td>
-        </tr> 
-        <input name="cboxInputVal[<?php echo e($idx); ?>]" id="cboxInputVal_<?php echo e($idx); ?>" type="hidden" value="<?php echo e($rinci['kd_rek_rincian_obj']); ?>" />
-        <input name="cboxInputRinci[<?php echo e($idx); ?>]" id="cboxInputRinci<?php echo e($idx); ?>" type="hidden" value="<?php echo e($rinci['kd_rek_rincian_obj']); ?>" />
-        
+        </tr>
+        <input name="cboxInputVal[<?php echo e($idx); ?>]" id="cboxInputVal_<?php echo e($idx); ?>" type="hidden"
+            value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
+
+        <input name="kd_rincian_sub[<?php echo e($idx); ?>]" type="hidden" value="<?php echo e($list['kd_rincian_sub']['val']); ?>" />
+
+
+        <input name="cboxInputRinci[<?php echo e($idx); ?>]" id="cboxInputRinci<?php echo e($idx); ?>" type="hidden"
+            value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
         <?php $idx++ ?>
-
-
-        <?php $sub_rincis = $rekrincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rinci['kd_rek_rincian_obj'])->get(); ?>
-        <?php $__currentLoopData = $sub_rincis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub_rinci): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <?php
-        $pendapatan =
-         $tmpendapatan::where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id',$sub_rinci['kd_rek_rincian_objek_sub'])->first();
-        $style = '';
-        ?>
-        <tr>
-            <td style="<?php echo e($style); ?>" align="center">
-                <input name="cboxInput[]" id="cboxInput_<?php echo e($idx); ?>" type="checkbox" style="margin-right:0px !important"
-                    value="<?php echo e($idx); ?>">
-            </td>
-            <td style="<?php echo e($style); ?>">
-                <?php echo e($sub_rinci['kd_rek_rincian_obj']); ?>
-
-            </td>
-            </td>
-            <td style="<?php echo e($style); ?>"><?php echo e($sub_rinci['nm_rek_rincian_obj']); ?></td>
-            <td style="<?php echo e($style); ?>">
-                <input name="volume[<?php echo e($idx); ?>]" id="volume_<?php echo e($idx); ?>" type="text" style="text-align:right"
-                    class="form-control auto" autocomplete="off"
-                    onblur="isFloat(this, 'Volume'); cboxChecked(this); calcJumlahMak(this); sumTotalMak(<?php echo e($ttlMak); ?>); "
-                    \="" value="<?php echo e($pendapatan['volume']); ?>">
-            </td>
-
-            <td style="<?php echo e($style); ?>">
-                <input name="satuan[<?php echo e($idx); ?>]" id="satuan_<?php echo e($idx); ?>" type="text" class="form-control"
-                    autocomplete="off" maxlength="20" onblur="cboxChecked(this); " value="<?php echo e($pendapatan['satuan']); ?>">
-            </td>
-
-            <td style="<?php echo e($style); ?>">
-                <input name="jumlah[<?php echo e($idx); ?>]" id="jumlah_<?php echo e($idx); ?>" type="number" style="text-align:right"
-                    class="form-control number" autocomplete="off" onblur="isFloat(this, 'Jumlah');" title=""
-                    value="<?php echo e($pendapatan['jumlah']); ?>">
-            </td>
-            <input name="kd_rekening_sub[<?php echo e($idx); ?>]" id="kd_rekening_sub<?php echo e($idx); ?>" type="hidden" value="<?php echo e($sub_rinci['kd_rek_rincian_objek_sub']); ?>" />
-      
-        </tr> 
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endif; ?>   
+        <?php endif; ?>
     </tbody>
 </table>
-<script src="<?php echo e(asset('assets/template/js/validate_form.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/template/js/autoNumeric.js')); ?>"></script>
 
 
 <script type="text/javascript">
     $('.auto').autoNumeric('init');
-
     function cboxChecked(fld) {
         var arr = fld.id.split('_');
         var idx = arr[(arr.length-1)];
@@ -123,31 +84,5 @@
             document.getElementById('cboxInput_'+idx).checked = false;
         }
     }
-
-    function calcJumlahMak(fld) {
-        var arr = fld.id.split('_');
-        var idx = arr[(arr.length-1)];
-        var vol = document.getElementById('volume_'+idx).value;
-        var harga = document.getElementById('jumlah_'+idx).value;
-        if (vol != '' || harga != '') {
-            document.getElementById('jumlah_mak').value = (vol * harga).toFixed(2);
-        } else {
-            document.getElementById('jumlah_mak').value = '';
-        }
-        return 1;
-    }
-
-    function sumTotalMak(ttlRow) {
-        var ttlMak = 0;
-        var idx = 0;
-        while (idx < ttlRow) {
-            var fldJumlah = document.getElementById('jumlah_'+idx);
-            if (fldJumlah != null && document.getElementById('cboxInput_'+idx).checked) {
-                ttlMak += parseFloat(fldJumlah.value);
-            }
-            idx++;
-        }
-        document.getElementById('jumlah_mak').value = ttlMak;
-        return true;
-    } 
+      
 </script><?php /**PATH D:\xampp64\www\retribusi\resources\views/pendapatan/pendapatan/form_pendapatan_edit.blade.php ENDPATH**/ ?>
