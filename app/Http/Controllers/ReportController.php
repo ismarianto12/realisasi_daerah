@@ -183,11 +183,9 @@ class ReportController extends Controller
 
     public function action_bulan(Request $request)
     {
-        //get data for all report in pdf representation or etc.   
         $jenis                = $request->jenis;
         $tahun                = Properti_app::tahun_sekarang();
         $getdatayears         = $this->reportperyears($tahun);
-        // dd($getdatayears);
 
         if ($jenis == 'xls') {
             $namaFile  = 'Laporan Pad Tahun - ' . $tahun;
@@ -209,17 +207,22 @@ class ReportController extends Controller
             $pdf = PDF::loadView($this->view . 'report_bulan', compact('getdatayears', 'tahun'))
                 ->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
-            // return view($this->view . 'report_bulan', compact('getdatayears', 'tahun'));
+            // return view(
+            //     $this->view . 'report_bulan',
+            //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
+            // );
         }
     }
 
     public function reportperyears($tahun)
     {
-        set_time_limit(0);
         DB::connection()->disableQueryLog();
 
         $idx = 0;
-        $rekenings = Tmrekening_akun::groupBy('kd_rekening')->get();
+        $rekenings = Tmrekening_akun::select(
+            'kd_rek_akun',
+            'nm_rek_akun'
+        )->groupBy('kd_rekening')->get();
         foreach ($rekenings as $rekening) {
             $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
             $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
@@ -227,12 +230,22 @@ class ReportController extends Controller
             //$dataset[$idx]['rekposition']['val']   = 'rek';
             $dataset[$idx]['juraian']['val']  = '<td></td>';
             $dataset[$idx]['table']['val']  = '';
-            for ($j = 1; $j <= 12; $j++) {
-                $dataset[$idx]['bulan_' . $j]['val']     = '<td></td>';
+            for ($t = 1; $t <= 12; $t++) {
+
+                $padtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                    ->where(\DB::raw('MONTH(tanggal_lapor)'), $t)
+                    ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,1)'), $rekening['kd_rek_akun'])
+                    ->where('tahun', $tahun)
+                    ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
+                    ->first();
+                $pad                    = ($padtot['total']) ? number_format($padtot['total'], 0, 0, '.') : '';
+                $dataset[$idx]['bulan_' . $t]['val'] = '<td>' . $pad . '</td>';
             }
+
             $idx++;
             //by kelompok jenis obj     
-            $jeniss = Tmpendapatan::getrekeningbySatker([])
+            $jeniss = Tmpendapatan::report_rek()
+                ->select('kd_rek_jenis', 'nm_rek_jenis')
                 ->where('tmrekening_akun_id', $rekening['kd_rek_akun'])
                 ->groupBy('kd_rek_jenis')
                 ->get();
@@ -242,12 +255,20 @@ class ReportController extends Controller
                 $dataset[$idx]['bold']['val']          = true;
                 $dataset[$idx]['juraian']['val']       = '<td></td>';
                 $dataset[$idx]['table']['val']         = '<td></td>';
-                for ($j = 1; $j <= 12; $j++) {
-                    $dataset[$idx]['bulan_' . $j]['val']     = '<td></td>';
+                for ($y = 1; $y <= 12; $y++) {
+                    $kpadtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                        ->where(\DB::raw('MONTH(tanggal_lapor)'), $y)
+                        ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])
+                        ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
+                        ->where('tahun', $tahun)
+                        ->first();
+                    $pad                    = ($kpadtot['total']) ? number_format($kpadtot['total'], 0, 0, '.') : '';
+                    $dataset[$idx]['bulan_' . $y]['val'] = '<td>' . $pad . '</td>';
                 }
                 $idx++;
                 //by kelompok jenis obj    
-                $rek_objs = Tmpendapatan::getrekeningbySatker([])
+                $rek_objs = Tmpendapatan::report_rek()
+                    ->select('kd_rek_obj', 'nm_rek_obj')
                     ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $jenis['kd_rek_jenis'])
                     ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
                     ->get();
@@ -259,13 +280,20 @@ class ReportController extends Controller
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
                     $dataset[$idx]['juraian']['val']  = '<td></td>';
                     $dataset[$idx]['table']['val']    = '<td></td><td></td>';
-                    for ($j = 1; $j <= 12; $j++) {
-                        // $jumlah = Tmpendapatan::tbykelompok_object($rek_obj['kd_rek_obj'],$j);
-                        $dataset[$idx]['bulan_' . $j]['val'] = '<td></td>';
+                    for ($g = 1; $g <= 12; $g++) {
+                        $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
+                            ->where(\DB::raw('MONTH(tanggal_lapor)'), $g)
+                            ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'), $rek_obj['kd_rek_obj'])
+                            ->where('tahun', $tahun)
+                            ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
+                            ->first();
+                        $obj_jumlah                    = ($obj_data['t_obj']) ? number_format($obj_data['t_obj'], 0, 0, '.') : '';
+                        $dataset[$idx]['bulan_' . $g]['val'] = '<td>' . $obj_jumlah . '</td>';
                     }
                     $idx++;
                     //by kelompok jenis rincian obj   
-                    $rincians = Tmpendapatan::getrekeningbySatker([])
+                    $rincians = Tmpendapatan::report_rek()
+                        ->select('kd_rek_rincian_obj', 'nm_rek_rincian_obj')
                         ->where('tmrekening_akun_kelompok_jenis_objek_id', $rek_obj['kd_rek_obj'])
                         ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
                         ->get();
@@ -275,31 +303,18 @@ class ReportController extends Controller
                         $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
                         $dataset[$idx]['bold']['val']          = false;
                         $dataset[$idx]['juraian']['val']       = '<td></td>';
-                        //$dataset[$idx]['rekposition']['val'] = 'rek_kelompok_jenis_obj';
                         $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
                         for ($j = 1; $j <= 12; $j++) {
-                            $jumlah_rinci = Tmpendapatan::select('jumlah')
+                            $jumlah_rinci = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_rinci'))
                                 ->where(\DB::raw('MONTH(tanggal_lapor)'), $j)
-                                ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian'])
+                                ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
                                 ->where('tahun', $tahun)
+                                ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
                                 ->first();
-                            $rincian_jumlah                    = ($jumlah_rinci['jumlah']) ? number_format($jumlah_rinci['jumlah'], 0, 0, '.') : '';
+                            $rincian_jumlah                    = ($jumlah_rinci['t_rinci']) ? number_format($jumlah_rinci['t_rinci'], 0, 0, '.') : '';
                             $dataset[$idx]['bulan_' . $j]['val'] = '<td>' . $rincian_jumlah . '</td>';
                         }
                         $idx++;
-                        //by kelompok jenis object rincian sub   
-                        // $rincian_subs = Tmpendapatan::getrekeningbySatker([])
-                        //     ->where('tmrekening_akun_kelompok_jenis_objek_id', $rincian['kd_rek_rincian_obj'])
-                        //     ->groupBy('kd_rek_rincian_obj')
-                        //     ->get();
-                        // foreach ($rincian_subs as $rincian_obj_sub) {
-                        //     $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
-                        //     $dataset[$idx]['nm_rek']['val']       = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
-                        //     $dataset[$idx]['bold']['val']         = false;
-                        //    //$dataset[$idx]['rekposition']['val']   = 'rek_kelompk_jenis_obj_rinci';
-                        //     $dataset[$idx]['table']['val']  = '<td></td><td></td><td></td><td></td>';
-                        //     $idx++;
-                        // }
                     }
                 }
             }
@@ -310,6 +325,7 @@ class ReportController extends Controller
         } else {
             return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
         }
+        DB::connection()->close();
     }
 
 

@@ -155,8 +155,8 @@ class Tmpendapatan extends Model
     {
         $where    = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $par['tmsikd_satker_id']];
         //by jenis 
-  
-        $idx      = 0; 
+
+        $idx      = 0;
         $dari     = $par['dari'];
         $sampai   = $par['sampai'];
         $satkerid = $par['tmsikd_satker_id'];
@@ -166,8 +166,8 @@ class Tmpendapatan extends Model
         $last_to    = $par['speriode'];
 
         $jeniss = Tmpendapatan::getrekeningbySatker([])
-        ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
-        ->groupBy('kd_rek_jenis')->get();
+            ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+            ->groupBy('kd_rek_jenis')->get();
 
         //get pagu total from type by accout object
         // get date range from the filter data
@@ -451,6 +451,15 @@ class Tmpendapatan extends Model
     }
     //get detaool data rekening by  satker login
 
+
+    public static function report_rek()
+    {
+        return  Tmrekening_akun_kelompok_jenis_objek_rincian::join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.id')
+            ->join('tmrekening_akun_kelompok_jenis', 'tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', '=', 'tmrekening_akun_kelompok_jenis.id')
+            ->join('tmrekening_akun_kelompoks', 'tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id', '=', 'tmrekening_akun_kelompoks.id')
+            ->join('tmrekening_akun_kelompok_jenis_objek_rincian_subs', 'tmrekening_akun_kelompok_jenis_objek_rincians.id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincian_subs.tmrekening_akun_kelompok_jenis_objek_rincian_id', 'LEFT');
+         // ->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', 110201)
+    }
 
     public static function getrekeningbySatker($where)
     {

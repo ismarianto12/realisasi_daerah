@@ -25,31 +25,19 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                             <div class="entri_rek"></div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group form-show-validation row">
-                                <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
-                                        class="required-label">*</span></label>
-                                <div class="col-sm-6">
-                                    <select name="tahun_id" id="tahun_id" placeholder=""
-                                        class="form-control select2 r-0 light" autocomplete="off"
-                                        onchange="selectOnChange()">
-                                        <?php $__currentLoopData = $tahuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($tahun->id); ?>" <?php if($tahun_active==$tahun->id): ?>
-                                            selected="selected"<?php endif; ?>><?php echo e($tahun->tahun); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <table class="table table-striped">
                                             <tr>
+                                                <input type="hidden" name="tahun_id" value="<?php echo e($tahun_ang); ?>">
                                                 <input type="hidden" name="tanggal_lapor" value="<?php echo e($tgl_lapor); ?>"
                                                     id="tanggal_lapor">
                                                 <input type="hidden" name="tmsikd_satker_id" value="<?php echo e($fsatker_id); ?>">
-                                                <td>Tanggal Lapor</td>
+                                                <td>Tahun Anggaran</td>
+                                                <td><?php echo e($tahun_ang); ?></td>
+                                                <td>Tanggal Lapor</td> 
                                                 <td><?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?> Jam <?php echo e($jam); ?></td>
                                             </tr>
                                         </table>
@@ -57,7 +45,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                                     href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
                                                     title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
                                         </h2>
-                                        
+
                                         <table class="table striped">
                                             <?php $__currentLoopData = $rekenings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
