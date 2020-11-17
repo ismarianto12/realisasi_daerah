@@ -12,7 +12,6 @@
             width 100%;
             border 0.1pt dashed #000;
         }
-
         th,
         td {
             text-align left;

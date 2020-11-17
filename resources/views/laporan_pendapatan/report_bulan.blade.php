@@ -12,7 +12,6 @@
             width 100%;
             border 0.1pt dashed #000;
         }
-
         th,
         td {
             text-align left;
@@ -31,7 +30,7 @@
         }
     </style>
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width 60%;height60%;margin-top25px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width 60px;height60px;margin-top25px">
     </div>
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
