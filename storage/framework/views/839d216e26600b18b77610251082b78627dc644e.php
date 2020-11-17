@@ -57,32 +57,17 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                                     href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
                                                     title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
                                         </h2>
-                                        <table class="table table-striped">
+                                        
+                                        <table class="table striped">
+                                            <?php $__currentLoopData = $rekenings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>Kelompok Jenis Rekening</td>
-                                                <td>[<?php echo e($rekeningdatas['kd_rek_jenis']); ?>] -
-                                                    <?php echo e($rekeningdatas['nm_rek_jenis']); ?></td>
-                                            </tr>
+                                                <td><?php echo e($item['keterangan']['val']); ?></td>
+                                                <td>[<?php echo e($item['kode_rek']['val']); ?>] - <?php echo e($item['nm_rekening']['val']); ?>
 
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object</td>
-                                                <td>[<?php echo e($rekeningdatas['kd_rek_obj']); ?>] -
-                                                    <?php echo e($rekeningdatas['nm_rek_obj']); ?></td>
+                                                </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian</td>
-                                                <td>[<?php echo e($rekeningdatas['kd_rek_rincian_obj']); ?>] -
-                                                    <?php echo e($rekeningdatas['nm_rek_rincian_obj']); ?></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian Sub</td>
-                                                <td>[<?php echo e($rekeningdatas['kd_rek_rincian_objek_sub']); ?>] -
-                                                    <?php echo e($rekeningdatas['kd_rek_rincian_objek_sub']); ?></td>
-                                            </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </table>
-
 
                                     </div>
                                 </div>

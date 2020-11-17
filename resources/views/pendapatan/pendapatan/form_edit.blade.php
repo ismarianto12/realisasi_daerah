@@ -25,31 +25,19 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                             <div class="entri_rek"></div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group form-show-validation row">
-                                <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
-                                        class="required-label">*</span></label>
-                                <div class="col-sm-6">
-                                    <select name="tahun_id" id="tahun_id" placeholder=""
-                                        class="form-control select2 r-0 light" autocomplete="off"
-                                        onchange="selectOnChange()">
-                                        @foreach ($tahuns as $tahun)
-                                        <option value="{{$tahun->id}}" @if($tahun_active==$tahun->id)
-                                            selected="selected"@endif>{{$tahun->tahun}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <table class="table table-striped">
                                             <tr>
+                                                <input type="hidden" name="tahun_id" value="{{ $tahun_ang }}">
                                                 <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}"
                                                     id="tanggal_lapor">
                                                 <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}">
-                                                <td>Tanggal Lapor</td>
+                                                <td>Tahun Anggaran</td>
+                                                <td>{{ $tahun_ang }}</td>
+                                                <td>Tanggal Lapor</td> 
                                                 <td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
                                             </tr>
                                         </table>
@@ -57,32 +45,16 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                                     href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
                                                     title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
                                         </h2>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td>Kelompok Jenis Rekening</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_jenis'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_jenis'] }}</td>
-                                            </tr>
 
+                                        <table class="table striped">
+                                            @foreach ($rekenings as $item)
                                             <tr>
-                                                <td>Kelompok Rekening Jenis Object</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_obj'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_obj'] }}</td>
+                                                <td>{{ $item['keterangan']['val'] }}</td>
+                                                <td>[{{ $item['kode_rek']['val'] }}] - {{ $item['nm_rekening']['val'] }}
+                                                </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_rincian_obj'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_rincian_obj'] }}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian Sub</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}] -
-                                                    {{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}</td>
-                                            </tr>
+                                            @endforeach
                                         </table>
-
 
                                     </div>
                                 </div>

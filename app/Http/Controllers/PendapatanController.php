@@ -252,8 +252,50 @@ class PendapatanController extends Controller
         ]);
     }
 
+    public function showlistpad($rekening_kelobj, $fsatker_id)
+    {
+
+        $idx = 0;
+        $rek_kelompoks = Tmrekening_akun_kelompok_jenis_objek::where('kd_rek_obj', $rekening_kelobj)->get();
+        foreach ($rek_kelompoks as $rek_kelompok) {
+            $dataset[$idx]['kode_rek']['val']  = $rek_kelompok['kd_rek_obj'];
+            $dataset[$idx]['nm_rekening']['val']  =   $rek_kelompok['nm_rek_obj'];
+            $dataset[$idx]['keterangan']['val'] =   'Kelompok rekening';
+            $idx++;
+
+            $cond = [
+                'tmrekening_akun_kelompok_jenis_objek_id' => $rekening_kelobj,
+            ];
+            $rekening_rincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
+                ->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+                ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
+                ->groupby('tmrekening_akun_kelompok_jenis_objek_rincians.id')
+                ->get();
+
+            foreach ($rekening_rincians as $data) {
+                $rekening_sub_rinci = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(\DB::raw('LOCATE(' . $fsatker_id . ',tmsikd_satkers_id)'), '>', 0)
+                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['kd_rek_rincian_obj'])
+                    ->get();
+                // check income by rincian object rekenign  pendapatan 
+
+                $dataset[$idx]['kode_rek']['val']  = $data['kd_rek_rincian_obj'];
+                $dataset[$idx]['nm_rekening']['val']  =   $data['nm_rek_rincian_obj'];
+                $dataset[$idx]['keterangan']['val'] =   'Rekening Rincian Object';
+                $idx++;
+                foreach ($rekening_sub_rinci as $data_sub) {
+                    $dataset[$idx]['kode_rek']['val']              = $data_sub['kd_rek_rincian_objek_sub'];
+                    $dataset[$idx]['nm_rekening']['val']              = $data_sub['nm_rek_rincian_objek_sub'];
+                    $dataset[$idx]['keterangan']['val']          = "Rekening Sub Rincian Object";
+                    $idx++;
+                }
+            }
+        }
+        return $dataset;
+    }
+
     public function create(Request $request, $id)
     {    // * 
+
 
         $title   = 'Laporan Pendapatan | ' . $this->title;
         $route   =  $this->route;
@@ -300,6 +342,13 @@ class PendapatanController extends Controller
         $action       =  route($this->route . 'store');
         $method_field =  method_field('post');
 
+        $getkelompok  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
+
+        $rekenings = self::showlistpad($getkelompok['tmrekening_akun_kelompok_jenis_objek_id'], $fsatker_id);
+        
+        $tahun_ang  = $this->tahun;
+
+
         return view($this->view . 'form_add', compact(
             'action',
             'method_field',
@@ -307,6 +356,8 @@ class PendapatanController extends Controller
             'tahun_active',
             'rekeningdatas',
             'jam',
+            'tahun_ang',
+            'rekenings',
             'tgl_lapor',
             'kd_rek_obj',
             'route',
@@ -459,6 +510,11 @@ class PendapatanController extends Controller
         $action       =  route($this->route . 'update', $id);
         // $method_field =  method_field('put');
         $id           =  $id;
+        //get list information detail as views blde;
+        $getkelompok  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
+        $rekenings = $this->showlistpad($getkelompok['tmrekening_akun_kelompok_jenis_objek_id'], $fsatker_id);
+        // dd($getkelompok['tmrekening_akun_kelompok_jenis_objek_id']);
+
         return view($this->view . 'form_edit', compact(
             'title',
             'route',
@@ -466,6 +522,7 @@ class PendapatanController extends Controller
             //'method_field',
             'toolbar',
             'rekeningdatas',
+            'rekenings',
             'rincianid',
             'jumlahmax',
             'tgl_lapor',

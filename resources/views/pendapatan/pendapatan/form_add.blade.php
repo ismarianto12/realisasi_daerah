@@ -26,26 +26,22 @@ $pagetitle = 'Tambah Pelaporan Pad';
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group form-show-validation row">
-                                <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
-                                        class="required-label">*</span></label>
-                                <div class="col-sm-6">
-                                    <select name="tahun_id" id="tahun_id" placeholder=""
-                                        class="form-control select2 r-0 light" autocomplete="off"
-                                        onchange="selectOnChange()">
-                                        @foreach ($tahuns as $tahun)
-                                        <option value="{{$tahun->id}}" @if($tahun_active==$tahun->id)
-                                            selected="selected"@endif>{{$tahun->tahun}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <div class="card-body">
                                 <div class="form-row form-inline">
                                     <div class="col-md-12">
                                         <table class="table table-striped">
+                                            <tr>
+                                                <input type="hidden" name="tahun_id" value="{{ $tahun_ang }}">
+                                                <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}"
+                                                    id="tanggal_lapor">
+                                                <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}">
+                                                <td>Tahun Anggaran</td>
+                                                <td>{{ $tahun_ang }}</td>
+                                                <td>Tanggal Lapor</td>
+                                                <td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
+                                            </tr>
+
                                             <tr>
                                                 <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}"
                                                     id="tanggal_lapor">
@@ -58,32 +54,16 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                                     href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
                                                     title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
                                         </h2>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td>Kelompok Jenis Rekening</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_jenis'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_jenis'] }}</td>
-                                            </tr>
 
+                                        <table class="table striped">
+                                            @foreach ($rekenings as $item)
                                             <tr>
-                                                <td>Kelompok Rekening Jenis Object</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_obj'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_obj'] }}</td>
+                                                <td>{{ $item['keterangan']['val'] }}</td>
+                                                <td>[{{ $item['kode_rek']['val'] }}] - {{ $item['nm_rekening']['val'] }}
+                                                </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_rincian_obj'] }}] -
-                                                    {{ $rekeningdatas['nm_rek_rincian_obj'] }}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Kelompok Rekening Jenis Object Rincian Sub</td>
-                                                <td>[{{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}] -
-                                                    {{ $rekeningdatas['kd_rek_rincian_objek_sub'] }}</td>
-                                            </tr>
+                                            @endforeach
                                         </table>
-
 
                                     </div>
                                 </div>
@@ -239,17 +219,7 @@ add();
     }
   });
  
-  {{-- $("#jumlah_mak").live('keypress', function (event) {
-    var alpha = new Array();
-    alpha = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\{", "\}", "\[", "\]", "=", "+", "-", "_", "|", "\\", "/", ",", "'", "?", "\"", ":", ";", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","."];
-    var charpressed = String.fromCharCode(event.which);    
-    if ($.inArray(charpressed, alpha) > -1) {
-        return false;
-    }
-}); --}}
-
-  
-
+   
 
 </script>
 @endsection
