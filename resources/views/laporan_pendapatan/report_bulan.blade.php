@@ -30,7 +30,8 @@
         }
     </style>
     <div style="floatleft">
-     </div>
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width 60px;height60px;margin-top25px">
+    </div>
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
         <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>

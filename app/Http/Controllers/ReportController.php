@@ -207,7 +207,7 @@ class ReportController extends Controller
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
             $pdf = PDF::loadView($this->view . 'report_bulan', compact('getdatayears', 'tahun'))
-            ->setPaper($customPaper, 'landscape');
+                ->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
             // return view($this->view . 'report_bulan', compact('getdatayears', 'tahun'));
         }
@@ -215,18 +215,18 @@ class ReportController extends Controller
 
     public function reportperyears($tahun)
     {
-        set_time_limit(0); 
-        $idx = 0; 
+        set_time_limit(0);
+        $idx = 0;
         $rekenings = Tmrekening_akun::groupBy('kd_rekening')->get();
         foreach ($rekenings as $rekening) {
-            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>'.$rekening['kd_rek_akun'].'<b></td>';
-            $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>'.$rekening['nm_rek_akun'].'<b></td>';
+            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
+            $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
             $dataset[$idx]['bold']['val']          = true;
             //$dataset[$idx]['rekposition']['val']   = 'rek';
-            $dataset[$idx]['juraian']['val']  = '<td></td>';            
+            $dataset[$idx]['juraian']['val']  = '<td></td>';
             $dataset[$idx]['table']['val']  = '';
             for ($j = 1; $j <= 12; $j++) {
-                $dataset[$idx]['bulan_'.$j]['val']     = '<td></td>';
+                $dataset[$idx]['bulan_' . $j]['val']     = '<td></td>';
             }
             $idx++;
             //by kelompok jenis obj     
@@ -235,13 +235,13 @@ class ReportController extends Controller
                 ->groupBy('kd_rek_jenis')
                 ->get();
             foreach ($jeniss as $jenis) {
-                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>'.$jenis['kd_rek_jenis'].'<b></td>';
-                $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>'.$jenis['nm_rek_jenis'].'<b></td>';
+                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $jenis['kd_rek_jenis'] . '<b></td>';
+                $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $jenis['nm_rek_jenis'] . '<b></td>';
                 $dataset[$idx]['bold']['val']          = true;
-                $dataset[$idx]['juraian']['val']       = '<td></td>';            
+                $dataset[$idx]['juraian']['val']       = '<td></td>';
                 $dataset[$idx]['table']['val']         = '<td></td>';
                 for ($j = 1; $j <= 12; $j++) {
-                    $dataset[$idx]['bulan_'.$j]['val']     = '<td></td>';
+                    $dataset[$idx]['bulan_' . $j]['val']     = '<td></td>';
                 }
                 $idx++;
                 //by kelompok jenis obj    
@@ -251,15 +251,15 @@ class ReportController extends Controller
                     ->get();
 
                 foreach ($rek_objs as $rek_obj) {
-                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>'.$rek_obj['kd_rek_obj'].'</b></td>';
-                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>'.$rek_obj['nm_rek_obj'].'</b></td>';
+                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_obj['kd_rek_obj'] . '</b></td>';
+                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_obj['nm_rek_obj'] . '</b></td>';
                     $dataset[$idx]['bold']['val']         = true;
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
-                    $dataset[$idx]['juraian']['val']  = '<td></td>';            
+                    $dataset[$idx]['juraian']['val']  = '<td></td>';
                     $dataset[$idx]['table']['val']    = '<td></td><td></td>';
                     for ($j = 1; $j <= 12; $j++) {
                         // $jumlah = Tmpendapatan::tbykelompok_object($rek_obj['kd_rek_obj'],$j);
-                        $dataset[$idx]['bulan_'.$j]['val'] = '<td></td>';
+                        $dataset[$idx]['bulan_' . $j]['val'] = '<td></td>';
                     }
                     $idx++;
                     //by kelompok jenis rincian obj   
@@ -269,19 +269,20 @@ class ReportController extends Controller
                         ->get();
                     foreach ($rincians as $rincian) {
                         //get subrincian rek 
-                        $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>'.$rincian['kd_rek_rincian_obj'].'</td>';
-                        $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>'.$rincian['nm_rek_rincian_obj'].'</td>';
+                        $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>' . $rincian['kd_rek_rincian_obj'] . '</td>';
+                        $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
                         $dataset[$idx]['bold']['val']          = false;
-                        $dataset[$idx]['juraian']['val']       = '<td></td>';            
+                        $dataset[$idx]['juraian']['val']       = '<td></td>';
                         //$dataset[$idx]['rekposition']['val'] = 'rek_kelompok_jenis_obj';
                         $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
                         for ($j = 1; $j <= 12; $j++) {
                             $jumlah_rinci = Tmpendapatan::select('jumlah')
-                                ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id',$rincian['kd_rek_rincian'])
-                                ->where('tahun',$tahun)
+                                ->where(\DB::raw('MONTH(tanggal_lapor)'), $j)
+                                ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian'])
+                                ->where('tahun', $tahun)
                                 ->first();
-                            $rincian_jumlah                    = ($jumlah_rinci['jumlah']) ? number_format($jumlah_rinci['jumlah'],0,0,'.') : ''; 
-                            $dataset[$idx]['bulan_'.$j]['val'] = '<td>'.$rincian_jumlah.'</td>';
+                            $rincian_jumlah                    = ($jumlah_rinci['jumlah']) ? number_format($jumlah_rinci['jumlah'], 0, 0, '.') : '';
+                            $dataset[$idx]['bulan_' . $j]['val'] = '<td>' . $rincian_jumlah . '</td>';
                         }
                         $idx++;
                         //by kelompok jenis object rincian sub   

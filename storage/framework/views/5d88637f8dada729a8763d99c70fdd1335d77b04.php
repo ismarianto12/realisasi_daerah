@@ -30,7 +30,7 @@
         }
     </style>
     <div style="floatleft">
-        <img src="<?php echo e(asset('assets/template/img/tangsel.png')); ?>" style="width 60%;height60%;margin-top25px">
+        <img src="<?php echo e(asset('assets/template/img/tangsel.png')); ?>" style="width 60px;height60px;margin-top25px">
     </div>
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
