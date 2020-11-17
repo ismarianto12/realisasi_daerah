@@ -216,6 +216,8 @@ class ReportController extends Controller
     public function reportperyears($tahun)
     {
         set_time_limit(0);
+        DB::connection()->disableQueryLog();
+
         $idx = 0;
         $rekenings = Tmrekening_akun::groupBy('kd_rekening')->get();
         foreach ($rekenings as $rekening) {

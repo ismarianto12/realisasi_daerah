@@ -37,7 +37,7 @@
         <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th colspan="5">URAIAN</th>
