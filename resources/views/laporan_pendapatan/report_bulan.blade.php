@@ -5,35 +5,14 @@
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style type='text/css'>
-        body {
-            font-family: arial;
-            font-size: 11pt;
-            padding: 0;
-            margin: 0;
-        }
-
-        a {
-            color: #0000FF
-        }
-
-        a:hover {
-            text-decoration: underline
-        }
-
-        table {
-            border-collapse: collapse;
-            border: 0.5px;
-            table-layout: fixed
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:25px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:15px">
     </div>
 
     <center>
