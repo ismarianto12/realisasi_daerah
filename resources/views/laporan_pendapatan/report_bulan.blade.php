@@ -47,18 +47,18 @@
             <tr>
                 <th colspan="5">URAIAN</th>
                 <th>APBD {{ $tahun }}</th>
-                <th>JANUARI</th>
-                <th>FEBRUARI</th>
-                <th>MARET</th>
-                <th>APRIL</th>
+                <th>JAN</th>
+                <th>FEB</th>
+                <th>MAR</th>
+                <th>APR</th>
                 <th>MEI</th>
-                <th>JUNI</th>
-                <th>JULI</th>
-                <th>AGUSTUS</th>
-                <th>SEPTEMBER</th>
-                <th>OKTOBER</th>
-                <th>NOVEMBER</th>
-                <th>DESEMBER</th>
+                <th>JUN</th>
+                <th>JUL</th>
+                <th>AGUS</th>
+                <th>SEPT</th>
+                <th>OKT</th>
+                <th>NOV</th>
+                <th>DES</th>
             </tr>
             <tr>
                 <td colspan="5"></td>
