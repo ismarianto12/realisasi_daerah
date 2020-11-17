@@ -2,21 +2,46 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran <?php echo e($tahun); ?></title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type='text/css'>
+        body {
+            font-family: arial;
+            font-size: 11pt;
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            color: #0000FF
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 0.5px;
+            table-layout: fixed
+        }
+    </style>
+
 </head>
 
 <body>
-   <div style="floatleft">
+
+    <div style="floatleft">
         <img src="<?php echo e(asset('assets/template/img/tangsel.png')); ?>" style="width:60px;height:60px;margin-top:25px">
     </div>
-   
+
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
         <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD <?php echo e($tahun); ?></h3>
         <h4>SAMPAI DENGAN DESEMBER <?php echo e($tahun); ?></h4>
     </center>
-   
+
     <table>
         <thead>
             <tr>

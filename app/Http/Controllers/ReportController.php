@@ -204,8 +204,10 @@ class ReportController extends Controller
             ]);
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
-            $pdf = PDF::loadView($this->view . 'report_bulan', compact('getdatayears', 'tahun'))
-                ->setPaper($customPaper, 'landscape');
+            $pdf = PDF::loadView(
+                $this->view . 'report_bulan',
+                ['getdatayears' => $getdatayears, 'tahun' => $tahun]
+            )->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
             // return view(
             //     $this->view . 'report_bulan',
