@@ -10,7 +10,7 @@
 <body>
 
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:35px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:-35px">
     </div>
 
     <center>
@@ -21,8 +21,8 @@
 
     <table style="border: 0.5px dotted #000">
         <thead>
-            <tr style="color: royalblue">
-                <th colspan="5">URAIAN</th>
+            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
+                <th colspan=" 5">URAIAN</th>
                 <th>APBD {{ $tahun }}</th>
                 <th>JAN</th>
                 <th>FEB</th>
@@ -37,7 +37,7 @@
                 <th>NOV</th>
                 <th>DES</th>
             </tr>
-            <tr>
+            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <td colspan="5"></td>
                 <td></td>
                 @for($a=1; $a <= 12; $a++) <td style="text-align:center">
@@ -46,7 +46,7 @@
                     @endfor
             </tr>
         </thead>
-        <tbody>
+        <tbody style="border: 0.5px dotted #000">
             @foreach ($getdatayears as $list)
             <tr>
                 @php echo $list['table']['val'] @endphp
