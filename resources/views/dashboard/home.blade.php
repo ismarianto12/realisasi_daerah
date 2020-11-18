@@ -13,7 +13,7 @@ $username = Auth::user()->username;
         }) 
 </script>
 @endif
- 
+
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -57,7 +57,7 @@ $username = Auth::user()->username;
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
 
     <div class="row row-card-no-pd">
@@ -98,8 +98,8 @@ $username = Auth::user()->username;
                     </div>
                 </div>
             </div>
-        </div> 
-    </div>   
+        </div>
+    </div>
 </div>
 
 
@@ -144,13 +144,17 @@ $username = Auth::user()->username;
             type: 'bar'
         },
         title: {
-            text:'Penerimaan pad daerah (Retribusi)'
+            text:'Penerimaan pad daerah'
         },
         subtitle: {
             text: 'Sumber : Pendapatan Asli Daerah .'
         },
         xAxis: {
-            categories: ['Retribusi Jasa Umum', 'Retribusi Jasa usaha', 'Retribusi Perizinan tertentu'],
+            categories: [
+                @foreach ($graf_pad as $item)
+                    '{{ $item['nm_rek']['nil'] }}',
+                @endforeach
+            ],
             title: {
                 text: null
             }
@@ -190,16 +194,16 @@ $username = Auth::user()->username;
         credits: {
             enabled: false
         },
-        series: [{
-            name: 'Year 1800',
-            data: [107, 31, 635, 203, 2]
-        }, {
-            name: 'Year 1900',
-            data: [133, 156, 947, 408, 6]
-        }, {
-            name: 'Year 2000',
-            data: [814, 841, 3714, 727, 31]
-        }]
+        series: [
+        @foreach ($graf_pad as $item)
+        
+        {
+            name: "@php echo $item['kd_rek']['nil'] @endphp - @php echo $item['nm_rek']['nil'] @endphp",
+            data: [@php echo $item['jumlah']['nil'] @endphp]
+        },  
+        
+        @endforeach
+      ]
     });
 
         $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
