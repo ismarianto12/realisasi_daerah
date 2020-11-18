@@ -18,7 +18,7 @@
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
 
-    <table style="border: 0.5px dotted #000">
+    <table border="0.5">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <th colspan=" 5">URAIAN</th>
