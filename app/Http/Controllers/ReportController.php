@@ -197,7 +197,7 @@ class ReportController extends Controller
             // return Excel::download($data, $namaFile . '.xlsx');
             // $customPaper = array(0, 0, 567.00, 1200);
             header("Content-Type: application/vnd.ms-excel");
-            header("Expires: 0"); 
+            header("Expires: 0");
             header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
             return view(
                 $this->view . 'report_excel_bulan',
@@ -235,12 +235,21 @@ class ReportController extends Controller
             'kd_rek_akun',
             'nm_rek_akun'
         )->groupBy('kd_rekening')->get();
+
         foreach ($rekenings as $rekening) {
+
+            $jklakuns = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                ->where(\DB::raw('LOCATE(' . $rekening['kd_rek_akun'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                ->where('tahun', $tahun)
+                ->first();
+            $jklakun = ($jklakuns['total']) ? number_format($jklakuns['total'], 0, 0, '.') : 0;
+
+
             $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
             $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
             $dataset[$idx]['bold']['val']          = true;
             //$dataset[$idx]['rekposition']['val']   = 'rek';
-            $dataset[$idx]['juraian']['val']  = '<td></td>';
+            $dataset[$idx]['juraian']['val']  = '<td>' . $jklakun . '</td>';
             $dataset[$idx]['table']['val']  = '';
             for ($t = 1; $t <= 12; $t++) {
                 $padtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
@@ -261,10 +270,18 @@ class ReportController extends Controller
                 ->get();
 
             foreach ($kelompoks as $kelompok) {
+
+                $jklompokurs = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                    ->where(\DB::raw('LOCATE(' . $kelompok['kd_rek_kelompok'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                    ->where('tahun', $tahun)
+                    ->first();
+                $jklompokur = ($jklompokurs['total']) ? number_format($jklompokurs['total'], 0, 0, '.') : 0;
+
+
                 $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $kelompok['kd_rek_kelompok'] . '<b></td>';
                 $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $kelompok['nm_rek_kelompok'] . '<b></td>';
                 $dataset[$idx]['bold']['val']          = true;
-                $dataset[$idx]['juraian']['val']       = '<td></td>';
+                $dataset[$idx]['juraian']['val']       = '<td>' . $jklompokur . '</td>';
                 $dataset[$idx]['table']['val']         = '<td></td>';
                 for ($y = 1; $y <= 12; $y++) {
                     $kpadtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
@@ -285,11 +302,19 @@ class ReportController extends Controller
                     ->get();
 
                 foreach ($rek_jeniss as $rek_jenis) {
+                    $rekjeniss = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                        ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                        ->where('tahun', $tahun)
+                        ->first();
+                    $trekjenis   = ($rekjeniss['total']) ? number_format($rekjeniss['total'], 0, 0, '.') : 0;
+
+
+
                     $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_jenis['kd_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_jenis['nm_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['bold']['val']         = true;
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
-                    $dataset[$idx]['juraian']['val']  = '<td></td>';
+                    $dataset[$idx]['juraian']['val']  = '<td>'.$trekjenis.'</td>';
                     $dataset[$idx]['table']['val']    = '<td></td><td></td>';
                     for ($g = 1; $g <= 12; $g++) {
                         $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))

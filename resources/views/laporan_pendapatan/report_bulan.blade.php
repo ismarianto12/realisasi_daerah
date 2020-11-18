@@ -7,6 +7,11 @@
 
 </head>
 <style type="text/css">
+    table {
+        table-layout: auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
     td {
         border: 0.1px dotted black;
         border-collapse: collapse;
