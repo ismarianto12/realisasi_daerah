@@ -61,11 +61,14 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         );
     } 
 
-    public function reportperyears($tahun)
+    public static function reportperyears($tahun)
     {
-        DB::connection()->disableQueryLog();
+
         $idx = 0;
-        $rekenings = Tmrekening_akun::groupBy('kd_rekening')->get();
+        $rekenings = Tmrekening_akun::select(
+            'kd_rek_akun',
+            'nm_rek_akun'
+        )->groupBy('kd_rekening')->get();
         foreach ($rekenings as $rekening) {
             $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
             $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
@@ -74,10 +77,9 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
             $dataset[$idx]['juraian']['val']  = '<td></td>';
             $dataset[$idx]['table']['val']  = '';
             for ($t = 1; $t <= 12; $t++) {
-
                 $padtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
                     ->where(\DB::raw('MONTH(tanggal_lapor)'), $t)
-                    ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,1)'), $rekening['kd_rek_akun'])
+                    ->where(\DB::raw('LOCATE(' . $rekening['kd_rek_akun'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tahun', $tahun)
                     ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                     ->first();
@@ -87,20 +89,21 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
 
             $idx++;
             //by kelompok jenis obj     
-            $jeniss = Tmpendapatan::getrekeningbySatker([])
+            $kelompoks = Tmrekening_akun_kelompok::select('kd_rek_kelompok', 'nm_rek_kelompok')
                 ->where('tmrekening_akun_id', $rekening['kd_rek_akun'])
-                ->groupBy('kd_rek_jenis')
+                ->groupBy('kd_rek_kelompok')
                 ->get();
-            foreach ($jeniss as $jenis) {
-                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $jenis['kd_rek_jenis'] . '<b></td>';
-                $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $jenis['nm_rek_jenis'] . '<b></td>';
+
+            foreach ($kelompoks as $kelompok) {
+                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $kelompok['kd_rek_kelompok'] . '<b></td>';
+                $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $kelompok['nm_rek_kelompok'] . '<b></td>';
                 $dataset[$idx]['bold']['val']          = true;
                 $dataset[$idx]['juraian']['val']       = '<td></td>';
                 $dataset[$idx]['table']['val']         = '<td></td>';
                 for ($y = 1; $y <= 12; $y++) {
                     $kpadtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
                         ->where(\DB::raw('MONTH(tanggal_lapor)'), $y)
-                        ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])
+                        ->where(\DB::raw('LOCATE(' . $kelompok['kd_rek_kelompok'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                         ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                         ->where('tahun', $tahun)
                         ->first();
@@ -108,15 +111,16 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                     $dataset[$idx]['bulan_' . $y]['val'] = '<td>' . $pad . '</td>';
                 }
                 $idx++;
-                //by kelompok jenis obj    
-                $rek_objs = Tmpendapatan::getrekeningbySatker([])
-                    ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $jenis['kd_rek_jenis'])
-                    ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
+
+                //by kelompok jenis obj   
+                $rek_jeniss = Tmrekening_akun_kelompok_jenis::select('kd_rek_jenis', 'nm_rek_jenis')
+                    ->where('tmrekening_akun_kelompok_id', $kelompok['kd_rek_kelompok'])
+                    ->groupBy('kd_rek_jenis')
                     ->get();
 
-                foreach ($rek_objs as $rek_obj) {
-                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_obj['kd_rek_obj'] . '</b></td>';
-                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_obj['nm_rek_obj'] . '</b></td>';
+                foreach ($rek_jeniss as $rek_jenis) {
+                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_jenis['kd_rek_jenis'] . '</b></td>';
+                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_jenis['nm_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['bold']['val']         = true;
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
                     $dataset[$idx]['juraian']['val']  = '<td></td>';
@@ -124,7 +128,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                     for ($g = 1; $g <= 12; $g++) {
                         $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
                             ->where(\DB::raw('MONTH(tanggal_lapor)'), $g)
-                            ->where(\DB::raw('substr(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'), $rek_obj['kd_rek_obj'])
+                            ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                             ->where('tahun', $tahun)
                             ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
                             ->first();
@@ -132,29 +136,55 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                         $dataset[$idx]['bulan_' . $g]['val'] = '<td>' . $obj_jumlah . '</td>';
                     }
                     $idx++;
-                    //by kelompok jenis rincian obj   
-                    $rincians = Tmpendapatan::getrekeningbySatker([])
-                        ->where('tmrekening_akun_kelompok_jenis_objek_id', $rek_obj['kd_rek_obj'])
-                        ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
+
+                    //by kelompok jenis obj   
+                    $rekobjeks = Tmrekening_akun_kelompok_jenis_objek::select('kd_rek_obj', 'nm_rek_obj')
+                        ->where('tmrekening_akun_kelompok_jenis_id', $rek_jenis['kd_rek_jenis'])
+                        ->groupBy('kd_rek_obj')
                         ->get();
-                    foreach ($rincians as $rincian) {
-                        //get subrincian rek 
-                        $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>' . $rincian['kd_rek_rincian_obj'] . '</td>';
-                        $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
-                        $dataset[$idx]['bold']['val']          = false;
-                        $dataset[$idx]['juraian']['val']       = '<td></td>';
-                        $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
-                        for ($j = 1; $j <= 12; $j++) {
-                            $jumlah_rinci = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_rinci'))
-                                ->where(\DB::raw('MONTH(tanggal_lapor)'), $j)
-                                ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
+
+                    foreach ($rekobjeks as $rekobjek) {
+                        $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rekobjek['kd_rek_obj'] . '</b></td>';
+                        $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rekobjek['nm_rek_obj'] . '</b></td>';
+                        $dataset[$idx]['bold']['val']         = true;
+                        //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
+                        $dataset[$idx]['juraian']['val']  = '<td></td>';
+                        $dataset[$idx]['table']['val']    = '<td></td><td></td>';
+                        for ($g = 1; $g <= 12; $g++) {
+                            $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
+                                ->where(\DB::raw('MONTH(tanggal_lapor)'), $g)
+                                ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_obj'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                                 ->where('tahun', $tahun)
                                 ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
                                 ->first();
-                            $rincian_jumlah                    = ($jumlah_rinci['t_rinci']) ? number_format($jumlah_rinci['t_rinci'], 0, 0, '.') : '';
-                            $dataset[$idx]['bulan_' . $j]['val'] = '<td>' . $rincian_jumlah . '</td>';
+                            $obj_jumlah                    = ($obj_data['t_obj']) ? number_format($obj_data['t_obj'], 0, 0, '.') : '';
+                            $dataset[$idx]['bulan_' . $g]['val'] = '<td>' . $obj_jumlah . '</td>';
                         }
                         $idx++;
+
+                        //by kelompok jenis rincian obj   
+                        $rincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where('tmrekening_akun_kelompok_jenis_objek_id', $rekobjek['kd_rek_obj'])
+                            ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
+                            ->get();
+                        foreach ($rincians as $rincian) {
+                            //get subrincian rek 
+                            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>' . $rincian['kd_rek_rincian_obj'] . '</td>';
+                            $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
+                            $dataset[$idx]['bold']['val']          = false;
+                            $dataset[$idx]['juraian']['val']       = '<td></td>';
+                            $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
+                            for ($j = 1; $j <= 12; $j++) {
+                                $jumlah_rinci = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_rinci'))
+                                    ->where(\DB::raw('MONTH(tanggal_lapor)'), $j)
+                                    ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
+                                    ->where('tahun', $tahun)
+                                    ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
+                                    ->first();
+                                $rincian_jumlah                    = ($jumlah_rinci['t_rinci']) ? number_format($jumlah_rinci['t_rinci'], 0, 0, '.') : '';
+                                $dataset[$idx]['bulan_' . $j]['val'] = '<td>' . $rincian_jumlah . '</td>';
+                            }
+                            $idx++;
+                        }
                     }
                 }
             }
@@ -165,7 +195,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
         } else {
             return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
         }
-        DB::connection()->close();
+        //  DB::connection()->close();
     }
 
 
@@ -213,7 +243,7 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                 );
 
                 $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-                $event->sheet->getStyle('A3:R56')->applyFromArray([
+                $event->sheet->getStyle('A3:R360')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
