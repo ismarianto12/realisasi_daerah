@@ -17,7 +17,7 @@
 
     <table border="1">
         <thead>
-            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
+            <tr style="background: royalblue;color: #fff">
                 <th colspan=" 5">URAIAN</th>
                 <th>APBD {{ $tahun }}</th>
                 <th>JAN</th>
