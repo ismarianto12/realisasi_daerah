@@ -9,13 +9,14 @@
 <style type="text/css">
     td {
         border: 0.1px dotted black;
+        border-collapse: collapse;
     }
 </style>
 
 <body>
 
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:35px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:45px">
 
     </div>
 
