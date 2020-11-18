@@ -150,15 +150,15 @@ class Exportpendapatanbulan implements ShouldAutoSize, FromView, WithEvents, Wit
                         //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
                         $dataset[$idx]['juraian']['val']  = '<td></td>';
                         $dataset[$idx]['table']['val']    = '<td></td><td></td>';
-                        for ($g = 1; $g <= 12; $g++) {
+                        for ($gg = 1; $gg <= 12; $gg++) {
                             $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
-                                ->where(\DB::raw('MONTH(tanggal_lapor)'), $g)
+                                ->where(\DB::raw('MONTH(tanggal_lapor)'), $gg)
                                 ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_obj'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                                 ->where('tahun', $tahun)
                                 ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
                                 ->first();
                             $obj_jumlah                    = ($obj_data['t_obj']) ? number_format($obj_data['t_obj'], 0, 0, '.') : '';
-                            $dataset[$idx]['bulan_' . $g]['val'] = '<td>' . $obj_jumlah . '</td>';
+                            $dataset[$idx]['bulan_' . $gg]['val'] = '<td>' . $obj_jumlah . '</td>';
                         }
                         $idx++;
 
