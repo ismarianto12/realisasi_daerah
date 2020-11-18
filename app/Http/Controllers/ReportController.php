@@ -200,7 +200,7 @@ class ReportController extends Controller
             header("Expires: 0"); 
             header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
             return view(
-                $this->view . 'report_bulan',
+                $this->view . 'report_excel_bulan',
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
             );
         }
