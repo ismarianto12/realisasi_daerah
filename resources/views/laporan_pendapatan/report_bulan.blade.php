@@ -15,7 +15,7 @@
 
 <body>
 
-    <div style="floatleft">
+    <div style="float : left">
         <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:45px">
 
     </div>
@@ -27,8 +27,7 @@
     </center>
 
     <table style="border: 0.5px dotted #000;
-                  border-collapse: collapse;
-    ">
+                  border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <th colspan=" 5">URAIAN</th>
