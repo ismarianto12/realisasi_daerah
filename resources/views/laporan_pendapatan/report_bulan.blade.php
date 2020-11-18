@@ -6,11 +6,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 </head>
+<style type="text/css">
+    td {
+        border: 1px solid black;
+    }
+</style>
 
 <body>
 
     <div style="floatleft">
-     </div>
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:25px">
+
+    </div>
 
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
@@ -18,7 +25,7 @@
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
 
-    <table border="0.5">
+    <table style="border: 0.5px dotted #000">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <th colspan=" 5">URAIAN</th>
