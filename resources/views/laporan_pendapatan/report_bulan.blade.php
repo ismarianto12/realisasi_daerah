@@ -3,7 +3,6 @@
 
 <head>
     <title>Rekap Pelaporan Pendapatan Daerah Tangerang Selatan Tahun anggaran {{ $tahun }}</title>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 </head>
@@ -11,7 +10,7 @@
 <body>
 
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:15px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width:60px;height:60px;margin-top:35px">
     </div>
 
     <center>
@@ -20,9 +19,9 @@
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
 
-    <table>
+    <table style="border: 0.5px dotted #000">
         <thead>
-            <tr>
+            <tr style="color: royalblue">
                 <th colspan="5">URAIAN</th>
                 <th>APBD {{ $tahun }}</th>
                 <th>JAN</th>
@@ -41,7 +40,7 @@
             <tr>
                 <td colspan="5"></td>
                 <td></td>
-                @for($a=1; $a <= 12; $a++) <td>
+                @for($a=1; $a <= 12; $a++) <td style="text-align:center">
                     {{ $a }}
                     </td>
                     @endfor
