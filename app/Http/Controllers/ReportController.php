@@ -229,7 +229,6 @@ class ReportController extends Controller
 
     public static function reportperyears($tahun)
     {
-
         $idx = 0;
         $rekenings = Tmrekening_akun::select(
             'kd_rek_akun',
@@ -308,13 +307,11 @@ class ReportController extends Controller
                         ->first();
                     $trekjenis   = ($rekjeniss['total']) ? number_format($rekjeniss['total'], 0, 0, '.') : 0;
 
-
-
                     $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_jenis['kd_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_jenis['nm_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['bold']['val']         = true;
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
-                    $dataset[$idx]['juraian']['val']  = '<td>'.$trekjenis.'</td>';
+                    $dataset[$idx]['juraian']['val']  = '<td>' . $trekjenis . '</td>';
                     $dataset[$idx]['table']['val']    = '<td></td><td></td>';
                     for ($g = 1; $g <= 12; $g++) {
                         $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
@@ -335,11 +332,19 @@ class ReportController extends Controller
                         ->get();
 
                     foreach ($rekobjeks as $rekobjek) {
+
+                        $jrobjeks = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                            ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                            ->where('tahun', $tahun)
+                            ->first();
+                        $jrobjek   = ($jrobjeks['total']) ? number_format($jrobjeks['total'], 0, 0, '.') : 0;
+
+
                         $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rekobjek['kd_rek_obj'] . '</b></td>';
                         $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rekobjek['nm_rek_obj'] . '</b></td>';
                         $dataset[$idx]['bold']['val']         = true;
                         //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
-                        $dataset[$idx]['juraian']['val']  = '<td></td>';
+                        $dataset[$idx]['juraian']['val']  = '<td>' . $jrobjek . '</td>';
                         $dataset[$idx]['table']['val']    = '<td></td><td></td>';
                         for ($g = 1; $g <= 12; $g++) {
                             $obj_data = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_obj'))
@@ -358,11 +363,18 @@ class ReportController extends Controller
                             ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
                             ->get();
                         foreach ($rincians as $rincian) {
+                            $jrincians = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                                ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                                ->where('tahun', $tahun)
+                                ->first();
+                            $jrincian   = ($jrincians['total']) ? number_format($jrincians['total'], 0, 0, '.') : 0;
+
+
                             //get subrincian rek 
                             $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>' . $rincian['kd_rek_rincian_obj'] . '</td>';
                             $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
                             $dataset[$idx]['bold']['val']          = false;
-                            $dataset[$idx]['juraian']['val']       = '<td></td>';
+                            $dataset[$idx]['juraian']['val']       = '<td>' . $jrincian . '</td>';
                             $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
                             for ($j = 1; $j <= 12; $j++) {
                                 $jumlah_rinci = Tmpendapatan::select(\DB::raw('sum(jumlah) as t_rinci'))
