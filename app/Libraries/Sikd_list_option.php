@@ -31,9 +31,12 @@ class Sikd_list_option
             if ($auth->sikd_satker_id != "")
                 $satker->whereid($auth->sikd_satker_id);
         }
+        $fsatker = $satker->get();
+        // $_satker = $satker->orderByRaw("if(locate('SOTK-LAMA',nama)=0,1,2), kode")->get();
 
-        $_satker = $satker->orderByRaw("if(locate('SOTK-LAMA',nama)=0,1,2), kode")->get();
-        return $_satker;
+        // dd($auth->sikd_satker_id);
+        // dd($fsatker); 
+        return $fsatker;
     }
 
     public static function getSkpd($id)
@@ -96,7 +99,7 @@ class Sikd_list_option
         if ($auth != "") {
             if ($auth->sikd_satker_id != "")
                 $skpkd->whereTmsikd_satker_id($auth->sikd_satker_id);
-        } 
+        }
         if ($skpkd->get()->isEmpty()) {
             return abort(403, "Terdapat masalah pada kode skpkd yang dipilih. Silahkan laporkan masalah ini pada Administrator.");
         }

@@ -75,7 +75,7 @@ class PendapatanController extends Controller
         $t_active     = Tmsikd_setup_tahun_anggaran::where('active', 1)->get();
         $tahun_active = ($t_active->first()->active) ? $t_active->first()->active : 0;
 
-        $tmsikd_satkers   =  Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satkers   =  Sikd_list_option::listSkpd();
         $tmsikd_satker_id =  ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
 
         $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->get();

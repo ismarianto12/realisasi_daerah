@@ -187,6 +187,9 @@ class ReportController extends Controller
         $tahun                = Properti_app::tahun_sekarang();
         $getdatayears         = $this->reportperyears($tahun);
 
+        // return response()->json($getdatayears);
+        // die();
+
         if ($jenis == 'xls') {
             $namaFile  = 'Laporan Pad Tahun - ' . $tahun;
             //   $fnamaFile  = str_replace($namaFile,'-',''); 
@@ -203,12 +206,12 @@ class ReportController extends Controller
                 'datas' => $getdatayears
             ]);
         } else {
-            $customPaper = array(0, 0, 567.00, 1200);
-            $pdf = PDF::loadView(
-                $this->view . 'report_bulan',
-                ['getdatayears' => $getdatayears, 'tahun' => $tahun]
-            )->setPaper($customPaper, 'landscape');
-            return $pdf->stream('Report_perbulan.pdf');
+            // $customPaper = array(0, 0, 567.00, 1200);
+            // $pdf = PDF::loadView(
+            //     $this->view . 'report_bulan',
+            //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
+            // )->setPaper($customPaper, 'landscape');
+            // return $pdf->stream('Report_perbulan.pdf');
             // return view(
             //     $this->view . 'report_bulan',
             //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
@@ -251,6 +254,7 @@ class ReportController extends Controller
                 ->where('tmrekening_akun_id', $rekening['kd_rek_akun'])
                 ->groupBy('kd_rek_jenis')
                 ->get();
+
             foreach ($jeniss as $jenis) {
                 $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $jenis['kd_rek_jenis'] . '<b></td>';
                 $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $jenis['nm_rek_jenis'] . '<b></td>';
@@ -268,6 +272,7 @@ class ReportController extends Controller
                     $dataset[$idx]['bulan_' . $y]['val'] = '<td>' . $pad . '</td>';
                 }
                 $idx++;
+                
                 //by kelompok jenis obj    
                 $rek_objs = Tmpendapatan::report_rek()
                     ->select('kd_rek_obj', 'nm_rek_obj')
