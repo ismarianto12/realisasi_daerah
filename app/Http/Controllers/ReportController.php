@@ -221,7 +221,7 @@ class ReportController extends Controller
 
     public function reportperyears($tahun)
     {
-        DB::connection()->disableQueryLog();
+       // DB::connection()->disableQueryLog();
 
         $idx = 0;
         $rekenings = Tmrekening_akun::select(
@@ -332,7 +332,7 @@ class ReportController extends Controller
         } else {
             return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
         }
-        DB::connection()->close();
+      //  DB::connection()->close();
     }
 
 

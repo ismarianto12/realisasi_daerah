@@ -123,8 +123,8 @@ class IdentitasController extends Controller
                 $r             =  [];
                 $r['image']    = '<img src="' . asset('./file/photo_user/' . Properti_app::propuser('photo')) . '" alt="Tidak ada foto" class="avatar-img rounded-circle"
                 onerror="this.src=\'' . asset('assets/template/img/no-image.png') . '\'">';
-                $r['opd_kode'] = $satker->tmsikd_satker->kode;
-                $r['opn_nm']   = $satker->tmsikd_satker->nama;
+                $r['opd_kode'] = $satker['tmsikd_satker']['kode'];
+                $r['opn_nm']   = $satker['tmsikd_satker']['nama'];
                 $row[]         = $r;
             }
         } 

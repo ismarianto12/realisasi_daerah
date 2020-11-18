@@ -252,7 +252,7 @@ class PendapatanController extends Controller
         ]);
     }
 
-    public function showlistpad($rekening_kelobj, $fsatker_id)
+    public static function showlistpad($rekening_kelobj, $fsatker_id)
     {
 
         $idx = 0;
@@ -345,7 +345,7 @@ class PendapatanController extends Controller
         $getkelompok  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
 
         $rekenings = self::showlistpad($getkelompok['tmrekening_akun_kelompok_jenis_objek_id'], $fsatker_id);
-        
+
         $tahun_ang  = $this->tahun;
 
 
