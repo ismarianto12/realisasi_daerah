@@ -206,12 +206,12 @@ class ReportController extends Controller
                 'datas' => $getdatayears
             ]);
         } else {
-            // $customPaper = array(0, 0, 567.00, 1200);
-            // $pdf = PDF::loadView(
-            //     $this->view . 'report_bulan',
-            //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
-            // )->setPaper($customPaper, 'landscape');
-            // return $pdf->stream('Report_perbulan.pdf');
+            $customPaper = array(0, 0, 567.00, 1200);
+            $pdf = PDF::loadView(
+                $this->view . 'report_bulan',
+                ['getdatayears' => $getdatayears, 'tahun' => $tahun]
+            )->setPaper($customPaper, 'landscape');
+            return $pdf->stream('Report_perbulan.pdf');
             // return view(
             //     $this->view . 'report_bulan',
             //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
