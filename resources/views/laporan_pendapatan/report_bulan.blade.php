@@ -8,10 +8,12 @@
 </head>
 <style type="text/css">
     table {
+        font-size: 12px;
         table-layout: auto;
         border-collapse: collapse;
         width: 100%;
     }
+
     td {
         border: 0.1px dotted black;
         border-collapse: collapse;
@@ -22,12 +24,11 @@
 
     <div style="float : left">
         <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:45px">
-
     </div>
 
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
-        <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>
+        <h3>REALISASI PENDAPATAN APBD {{ $tahun }}</h3>
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
 
@@ -67,4 +68,8 @@
                 @php echo $list['nm_rek']['val'] @endphp
                 @php echo $list['juraian']['val'] @endphp
                 @for ($j = 1; $j <= 12; $j++) @php echo $list['bulan_'.$j]['val'] @endphp @endfor </tr> @endforeach
-                    </tbody> </table> </body> </html>
+                    </tbody> </table> <b>Badan Pendaptan daerah tangerang selatan</b>
+
+</body>
+
+</html>

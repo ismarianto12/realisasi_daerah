@@ -63,6 +63,14 @@
         @endif
     </tbody>
 </table>
+    <table>
+        <tr>
+            <td colspan="3">Total Semua Pad : </td>
+            <td colspan="3"></td> 
+        </tr>
+    </table>
+
+
 <script src="{{ asset('assets/template/js/validate_form.js') }}"></script>
 <script src="{{ asset('assets/template/js/autoNumeric.js') }}"></script>
 
