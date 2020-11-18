@@ -8,14 +8,14 @@
 </head>
 <style type="text/css">
     td {
-        border: 1px solid black;
+        border: 0.1px dotted black;
     }
 </style>
 
 <body>
 
     <div style="floatleft">
-        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:25px">
+        <img src="{{ asset('assets/template/img/tangsel.png') }}" style="width: 60px;height:60px;margin-top:35px">
 
     </div>
 
