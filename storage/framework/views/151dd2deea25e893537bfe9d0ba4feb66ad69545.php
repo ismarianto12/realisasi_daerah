@@ -143,7 +143,7 @@ $username = Auth::user()->username;
             type: 'bar'
         },
         title: {
-            text:'Penerimaan pad daerah (Retribusi)'
+            text:'Penerimaan pad daerah'
         },
         subtitle: {
             text: 'Sumber : Pendapatan Asli Daerah .'
