@@ -334,7 +334,7 @@ class ReportController extends Controller
                     foreach ($rekobjeks as $rekobjek) {
 
                         $jrobjeks = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
-                            ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                            ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_obj'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                             ->where('tahun', $tahun)
                             ->first();
                         $jrobjek   = ($jrobjeks['total']) ? number_format($jrobjeks['total'], 0, 0, '.') : 0;
@@ -364,7 +364,7 @@ class ReportController extends Controller
                             ->get();
                         foreach ($rincians as $rincian) {
                             $jrincians = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
-                                ->where(\DB::raw('LOCATE(' . $rekobjek['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                                ->where(\DB::raw('LOCATE(' . $rincian['kd_rek_rincian_obj'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                                 ->where('tahun', $tahun)
                                 ->first();
                             $jrincian   = ($jrincians['total']) ? number_format($jrincians['total'], 0, 0, '.') : 0;
