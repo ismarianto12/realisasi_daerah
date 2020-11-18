@@ -46,9 +46,9 @@
                     @endfor
             </tr>
         </thead>
-        <tbody style="border: 0.5px dotted #000">
+        <tbody>
             @foreach ($getdatayears as $list)
-            <tr>
+            <tr style="border: 0.5px dotted #000">
                 @php echo $list['table']['val'] @endphp
                 @php echo $list['kd_rek']['val'] @endphp
                 @php echo $list['nm_rek']['val'] @endphp
