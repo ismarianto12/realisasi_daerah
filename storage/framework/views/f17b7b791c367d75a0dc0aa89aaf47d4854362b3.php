@@ -64,6 +64,14 @@
         <?php endif; ?>
     </tbody>
 </table>
+    <table>
+        <tr>
+            <td colspan="3">Total Semua Pad : </td>
+            <td colspan="3"></td> 
+        </tr>
+    </table>
+
+
 <script src="<?php echo e(asset('assets/template/js/validate_form.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/template/js/autoNumeric.js')); ?>"></script>
 

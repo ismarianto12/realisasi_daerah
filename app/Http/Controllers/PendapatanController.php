@@ -205,8 +205,8 @@ class PendapatanController extends Controller
         //$id adalah rincian rekening pendpatan rincian
         $where = [
             'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id' => $request->rincian_id,
-            'tanggal_lapor' => $request->tgl_lapor,
-            'tmsikd_satker_id' => $request->tmsikd_satker_id
+            'tanggal_lapor' => $request->tgl_lapor
+            // 'tmsikd_satker_id' => $request->tmsikd_satker_id
         ];
         $datas   = Tmpendapatan::where($where)->get();
         // $findopd = Tmpendapatan::where($where)->first();
@@ -219,9 +219,8 @@ class PendapatanController extends Controller
             $datar[$i]['nama_rek']['val'] = $rkrinci['nm_rek_rincian_obj'];
             $datar[$i]['jumlah']['val'] = ($data['jumlah'])  ? number_format($data['jumlah'], 0, 0, '.') : 0;
             $datar[$i]['tanggal_lapor']['val'] = $data['tanggal_lapor'];
-
+            $i++;
             $rkrinci_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'])->get();
-
             foreach ($rkrinci_sub as $sub) {
                 $insub   = Tmpendapatan::where(
                     'tmrekening_akun_kelompok_jenis_objek_rincian_id',
@@ -234,7 +233,6 @@ class PendapatanController extends Controller
                 $datar[$i]['tanggal_lapor']['val'] = $insub['tanggal_lapor'];
                 $i++;
             }
-            $i++;
         }
         $fdata = isset($datar) ? $datar : 0;
         if ($fdata != 0) {
