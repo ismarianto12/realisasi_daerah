@@ -470,8 +470,8 @@
             <div class="modal-content" style="width: auto;">
                 <div class="modal-header">
                     <div class="alert alert-success">
-                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwyat Pad yang di
-                            laporkan oleh semua OPD pada tanggal {{ Properti_app::tgl_indo(date('Y-m-d')) }}
+                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang di
+                            laporkan pada tanggal {{ Properti_app::tgl_indo(date('Y-m-d')) }}
                         </h4>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
