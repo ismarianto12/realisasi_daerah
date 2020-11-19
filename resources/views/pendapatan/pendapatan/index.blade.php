@@ -354,11 +354,25 @@ function del(){
         if(c.length == 0){
             $.alert("Silahkan memilih data yang akan dihapus.");
         }else{
-            $.post("{{ route($route.'destroy', ':id') }}", {'_method' : 'DELETE', 'id' : c}, function(data) {
+           // var tgl_lapor = $('input:checked').data('tgl_lapor');
+             var tgl_lapor      =  $('#tgl_lapor').val();   
+            $.post("{{ route($route.'destroy', [':id']) }}&tgl_lapor="+tgl_lapor, {'_method' : 'DELETE', 'id' : c}, function(data) {
+                if(data){
+                    $.each(data, function(index, value){
+                        $('.load_page').html('<center><h3>Info</h3><b>'+data.message+'.</b></center>');
+                        $('#modal_loader').modal('show'); 
+                    }); 
+                }
                 table.api().ajax.reload();
-                 $('#modal_loader').modal('hide');  
-
-            }, "JSON").fail(function(){ 
+                 
+            }, "JSON").fail(function(data){
+                if(data){
+                    $.each(data, function(index, value){
+                        $('.load_page').html('<center><h3>Info</h3><b>'+data.message+'.</b></center>');
+                        $('#modal_loader').modal('show'); 
+                    }); 
+                }
+      
                 reload();
             });
             

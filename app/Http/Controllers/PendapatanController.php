@@ -126,8 +126,8 @@ class PendapatanController extends Controller
 
         ];
         return DataTables::of($data)
-            ->editColumn('id', function ($p) {
-                return "<input type='checkbox' name='cbox[]' value='" . $p->id . "'/>";
+            ->editColumn('id', function ($p) use ($tgl_lapor) {
+                return "<input type='checkbox' name='cbox[]' value='" . $p->kd_rek_rincian_obj . "' data-tgl_lapor= '".$tgl_lapor."'/>";
             })
             ->editColumn('r_kd_rek_obj', function ($p) {
                 return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td></td><td></td><td align="right"></td><td></td><td></td>';
@@ -926,11 +926,30 @@ class PendapatanController extends Controller
         $sekarang = Carbon::now()->format('Y-m-d');
         $lewats   =  date($sekarang, strtotime('-1 day'));
 
+        // 
+        $tanggal_lapor  =  $request->tgl_lapor;
+        // dd($tanggal_lapor);
+
         if (is_array($request->id)) {
-            Tmpendapatan::whereIn('id', $request->id)->delete();
-            return response()->json(
-                ['message' => "Data " . $this->title . " berhasil dihapus."]
-            );
+            // try {
+            $data = Tmpendapatan::whereIn('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->id)
+                ->where('tanggal_lapor', $tanggal_lapor)
+                ->delete();
+            if ($data) {
+                return response()->json(
+                    ['message' => "Data " . $this->title . " data berhasil di hapus."]
+                );
+            } else {
+                return response()->json([
+                    'message' => 'data gagal di hapus '
+                ]);
+            }
+
+            // } catch (\Throwable $th) {
+            //     return response()->json(
+            //         ['message' => "Data " . $this->title . " data gagal di hapus."]
+            //     );
+            // }
 
             // return 
             // if ($level_id == 3) {
@@ -949,7 +968,7 @@ class PendapatanController extends Controller
             //     return ['message' => "Data " . $this->title . " berhasil dihapus."];
             // }
         } else {
-            return ['message' => "Data Bukan Array Gays"];
+            return response()->json(['message' => "Data Bukan Array Gays"]);
         }
     }
 }
