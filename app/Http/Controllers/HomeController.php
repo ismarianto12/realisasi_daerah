@@ -23,7 +23,8 @@ class HomeController extends Controller
         $tahun    = $request->session()->get('year');
         $data     = null;
         $graf_pad = $this->grafik_pad();
-        return view($this->view . 'home', compact('data', 'tahun','graf_pad'));
+        $pad_months = $this->grafik_bymonth();
+        return view($this->view . 'home', compact('data', 'tahun', 'graf_pad', 'pad_months'));
     }
 
     private function grafik_pad()
@@ -48,6 +49,35 @@ class HomeController extends Controller
         }
         return $r;
     }
+
+    private function grafik_bymonth()
+    {
+
+        function hitung($kode_kelompok, $tahun)
+        {
+            for ($c = 1; $c <= 12; $c++) {
+                $kpadtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                    ->where(\DB::raw('LOCATE(' . $kode_kelompok . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                    ->where(\DB::raw('MONTH(tanggal_lapor)'), $c)
+                    ->where('tahun', $tahun)
+                    ->first();
+                $nilai[] = ($kpadtot['total']) ? $kpadtot['total'] : 0;
+            }
+            return implode(',', $nilai);
+        }
+        $ix         = 0;
+        $kelompoks  = Tmrekening_akun_kelompok::get();
+        $tahun      = Properti_app::tahun_sekarang();
+
+        foreach ($kelompoks as $kelompok) {
+            $r[$ix]['kd_pad']['nil'] =  $kelompok['kd_rek_kelompok'];
+            $r[$ix]['nama_pad']['nil'] = $kelompok['nm_rek_kelompok'];
+            $r[$ix]['data_pad']['nil'] = hitung($kelompok['kd_rek_kelompok'], $tahun);
+            $ix++;
+        }
+        return $r;
+    }
+
     function page($params)
     {
         if ($params == '') abort('404', 'halaman yang anda cari tidak di temukan');

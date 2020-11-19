@@ -37,7 +37,7 @@ $username = Auth::user()->username;
             <div class="card full-height">
                 <div class="card-body">
                     <div class="card-title">Statistik</div>
-                    <div id="growthpad"></div>
+                    <div id="pad_chart_graph"></div>
                     <hr />
                 </div>
             </div>
@@ -218,83 +218,42 @@ $username = Auth::user()->username;
 </script>
 
 <script>
-    var chart = Highcharts.chart('growthpad', {
+    Highcharts.chart('pad_chart_graph', {
+    chart: {
+      type: 'line'
+    },
+    title: {
+      text: 'PERTUMBUHAN PENDAPATAN DAERAH TAHUN 2020'
+    },
+    subtitle: {
+      text: 'BADAN PENDAPATAN DAERAH KOTA TANGGERANG SELATAN'
+    },
+    xAxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    yAxis: {
+      title: {
+        text: 'Jumlah Pendaptan Dalam Rupiah (Rp)'
+      }
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: true
+        },
+        enableMouseTracking: false
+      }
+    },
+    series: [
+    @foreach($pad_months as $list) 
+        {
+          name: '{{ $list['kd_pad']['nil'] }} - {{ $list['nama_pad']['nil'] }}',
+          data: [{{ $list['data_pad']['nil'] }}]
+        }, 
+        @endforeach      
+    ]
+  });
 
-        chart: {
-            type: 'column'
-        },
-    
-        title: {
-            text: 'PENDAPATAN BERBANDING TARGET DAN REALISASI'
-        },
-    
-        subtitle: {
-            text: 'Resize the frame or click buttons to change appearance'
-        },
-    
-        legend: {
-            align: 'right',
-            verticalAlign: 'middle',
-            layout: 'vertical'
-        },
-    
-        xAxis: {
-            categories: ['Target PAD', 'Realisasi', 'Selisih'],
-            labels: {
-                x: -10
-            }
-        },
-    
-        yAxis: {
-            allowDecimals: false,
-            title: {
-                text: 'Amount'
-            }
-        },
-    
-        series: [{
-            name: 'Target PAD Tahun 2020',
-            data: [1, 4, 3]
-        }, {
-            name: 'Keseluruhan Realisasi Pad',
-            data: [6, 4, 2]
-        }, {
-            name: 'Selisih Pad & Target',
-            data: [8, 4, 3]
-        }],
-    
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        align: 'center',
-                        verticalAlign: 'bottom',
-                        layout: 'horizontal'
-                    },
-                    yAxis: {
-                        labels: {
-                            align: 'left',
-                            x: 0,
-                            y: -5
-                        },
-                        title: {
-                            text: null
-                        }
-                    },
-                    subtitle: {
-                        text: null
-                    },
-                    credits: {
-                        enabled: false
-                    }
-                }
-            }]
-        }
-    });
-    
     document.getElementById('small').addEventListener('click', function () {
         chart.setSize(400);
     });
