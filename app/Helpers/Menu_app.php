@@ -70,7 +70,15 @@ class Menu_app
         foreach ($query as $ls) {
             switch ($ls->level_id) {
                 case 1:
-                    $menu .= '<li class="nav-item">
+                    $menu .= '
+                         
+                    <li class="nav-section" style="background:#ddd;padding : 10px 10px 10px">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Setting Pad</h4>
+                 </li>
+                    <li class="nav-item">
                     <a data-toggle="collapse" href="#setting">
                         <i class="fas fa-list"></i>
                         <p>Setting Pad </p>
@@ -86,7 +94,14 @@ class Menu_app
                     $menu .= '
                       </ul>
                     </div>
-                </li>';
+                </li>
+                <li class="nav-section">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Rekening Dan Akses </h4>
+						</li>
+                ';
                     $menu .= '<li class="nav-item">
                 <a data-toggle="collapse" href="#rekening">
                     <i class="fas fa-database"></i>
@@ -105,7 +120,14 @@ class Menu_app
                     $menu .= '
                   </ul>
                 </div>
-            </li>'; 
+            </li>
+            <li class="nav-section" style="background:#ddd;padding:10px 10px 10px">
+							<span class="sidebar-mini-icon">
+								<i class="fa fa-ellipsis-h"></i>
+							</span>
+							<h4 class="text-section">Pendapatan Daerah</h4>
+						</li>
+            '; 
                     $menu .= '<li class="nav-item">
             <a data-toggle="collapse" href="#laporan">
                 <i class="fas fa-book"></i>
