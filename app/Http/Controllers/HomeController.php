@@ -6,6 +6,7 @@ use App\Helpers\Properti_app;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
+use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Tmpendapatan;
 
 class HomeController extends Controller
@@ -46,6 +47,23 @@ class HomeController extends Controller
             $r[$ix]['nm_rek']['nil'] = $kelompok['nm_rek_kelompok'];
             $r[$ix]['jumlah']['nil'] = $nilai;
             $ix++;
+
+            $rek_jeniss = Tmrekening_akun_kelompok_jenis::select('kd_rek_jenis', 'nm_rek_jenis')
+                ->where('tmrekening_akun_kelompok_id', $kelompok['kd_rek_kelompok'])
+                ->groupBy('kd_rek_jenis')
+                ->get();
+
+            foreach ($rek_jeniss as $rek_jenis) {
+                $rekjeniss = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                    ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                    ->where('tahun', $tahun)
+                    ->first();
+                $trekjenis   = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
+                $r[$ix]['kd_rek']['nil']  = $rek_jenis['kd_rek_jenis'];
+                $r[$ix]['nm_rek']['nil']  = $rek_jenis['nm_rek_jenis'];
+                $r[$ix]['jumlah']['nil']  = $trekjenis;
+                $ix++;
+            }
         }
         return $r;
     }

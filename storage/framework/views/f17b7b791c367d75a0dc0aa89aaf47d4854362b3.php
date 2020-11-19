@@ -56,7 +56,7 @@
             value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
 
         <input name="kd_rincian_sub[<?php echo e($idx); ?>]" type="hidden" value="<?php echo e($list['kd_rincian_sub']['val']); ?>" />
- 
+
         <input name="cboxInputRinci[<?php echo e($idx); ?>]" id="cboxInputRinci<?php echo e($idx); ?>" type="hidden"
             value="<?php echo e($list['kd_rek_rincian_obj']['val']); ?>" />
         <?php $idx++ ?>
@@ -64,12 +64,15 @@
         <?php endif; ?>
     </tbody>
 </table>
-    <table>
-        <tr>
-            <td colspan="3">Total Semua Pad : </td>
-            <td colspan="3"></td> 
-        </tr>
-    </table>
+<hr />
+<table class="table table-striped">
+    <tr>
+        <td colspan="3" style="text-align: right"><b> Akumulasi Pendapatan : </b></td>
+        <td colspan="3">
+            <div class="get_total"></div>
+        </td>
+    </tr>
+</table>
 
 
 <script src="<?php echo e(asset('assets/template/js/validate_form.js')); ?>"></script>

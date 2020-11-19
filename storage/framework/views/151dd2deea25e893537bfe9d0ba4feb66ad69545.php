@@ -138,73 +138,46 @@ $username = Auth::user()->username;
         })
     });  
 
+
     Highcharts.chart('container', {
         chart: {
             type: 'bar'
         },
         title: {
-            text:'Penerimaan pad daerah'
-        },
-        subtitle: {
-            text: 'Sumber : Pendapatan Asli Daerah .'
+            text: 'Grafik PAD Tahun <?php echo e($tahun); ?>'
         },
         xAxis: {
-            categories: [
-                <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    '<?php echo e($item['nm_rek']['nil']); ?>',
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            ],
-            title: {
-                text: null
-            }
+            categories: [ 
+            <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              '<?php echo e($item['nm_rek']['nil']); ?>',
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            ]
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Pendapatan Dalam (Jutaan)',
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        tooltip: {
-            valueSuffix: ' millions'
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
+                text: 'Total Pendapatan Daerah Tangaerang Selatan Tahun <?php echo e($tahun); ?>'
             }
         },
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 80,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor:
-                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-            shadow: true
+            reversed: true
         },
-        credits: {
-            enabled: false
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
         },
-        series: [
+        series: [ 
         <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        
         {
             name: "<?php echo $item['kd_rek']['nil'] ?> - <?php echo $item['nm_rek']['nil'] ?>",
             data: [<?php echo $item['jumlah']['nil'] ?>]
         },  
-        
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      ]
+        ]
     });
-
+    
+ 
         $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
             type: 'line',
             height: '70',

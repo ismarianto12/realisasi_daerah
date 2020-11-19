@@ -55,7 +55,7 @@
             value="{{ $list['kd_rek_rincian_obj']['val'] }}" />
 
         <input name="kd_rincian_sub[{{ $idx }}]" type="hidden" value="{{ $list['kd_rincian_sub']['val'] }}" />
- 
+
         <input name="cboxInputRinci[{{ $idx }}]" id="cboxInputRinci{{ $idx }}" type="hidden"
             value="{{ $list['kd_rek_rincian_obj']['val'] }}" />
         @php $idx++ @endphp
@@ -63,12 +63,15 @@
         @endif
     </tbody>
 </table>
-    <table>
-        <tr>
-            <td colspan="3">Total Semua Pad : </td>
-            <td colspan="3"></td> 
-        </tr>
-    </table>
+<hr />
+<table class="table table-striped">
+    <tr>
+        <td colspan="3" style="text-align: right"><b> Akumulasi Pendapatan : </b></td>
+        <td colspan="3">
+            <div class="get_total"></div>
+        </td>
+    </tr>
+</table>
 
 
 <script src="{{ asset('assets/template/js/validate_form.js') }}"></script>

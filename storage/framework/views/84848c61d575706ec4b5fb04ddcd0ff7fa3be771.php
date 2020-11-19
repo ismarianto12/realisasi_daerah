@@ -49,9 +49,9 @@ $pagetitle = 'Tambah Pelaporan Pad';
                                                 <td><?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?> Jam <?php echo e($jam); ?></td>
                                             </tr>
                                         </table>
-                                        <h2>Rincian PAD <sup><a
-                                                    href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
-                                                    title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
+                                        <h2>Rincian PAD <sup><a href="#"
+                                                    to="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
+                                                    title="apa itu pad" id="question_ans">[?]</a></sup> yang di laporkan
                                         </h2>
 
                                         <table class="table striped">
@@ -87,95 +87,8 @@ $pagetitle = 'Tambah Pelaporan Pad';
           $('.entri_rek').html(data); 
         }); 
           
-    $('#tmrekening_akun_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value='0'>--Semua Data--</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-            url = "<?php echo e(route('rekening.kodejenis.kodekelompokByKodeakun', ':id')); ?>".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_kelompok +"] " + value.nm_rek_kelompok +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_id").val($("#tmrekening_akun_kelompok_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('#tmrekening_akun_kelompok_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-        $('#tmrekening_akun_kelompok_id').change();
-    });
-
-    $('#tmrekening_akun_kelompok_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value='0'>--Semua Data--</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_jenis_id').html(option);
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-            url = "<?php echo e(route('rekening.kodeobjek.kodejenisByKodekelompok', ':id')); ?>".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                    $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>[" + value.kd_rek_jenis +"] " + value.nm_rek_jenis +"</li>";
-                    });
-                    $('#tmrekening_akun_kelompok_jenis_id').empty().html(option);
-
-                    $("#tmrekening_akun_kelompok_jenis_id").val($("#tmrekening_akun_kelompok_jenis_id option:first").val()).trigger("change.select2");
-                }else{
-                    $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                    $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-        }
-    });
-
-    $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
-        val = $(this).val();
-        option = "<option value='0'>--Semua Data--</option>";
-        if(val == ""){
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-            selectOnChange();
-        }else{
-            $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-            url = "<?php echo e(route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id')); ?>".replace(':id', val);
-            $.get(url, function(data){
-                if(data){
-                 $.each(data, function(index, value){
-                    option += "<option value='" + value.id + "'>[" + value.kd_rek_obj +"] " + value.nm_rek_obj +"</li>";
-                });
-                 $('#tmrekening_akun_kelompok_jenis_objek_id').empty().html(option);
-
-                 $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
-             }else{
-                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                    selectOnChange();
-                }
-            }, 'JSON');
-            
-        }
-    });  
-   
-    $('#tmrekening_akun_kelompok_jenis_objek_id').on('change', function(){
-        var val_id     = $(this).val(); 
-        $('#tmrekening_akun_kelompok_jenis_objek_id option[value="'+val_id+'"]').prop('selected', true);
-   });  
+ 
 }); 
-  
   //save data if true
   function add(){
     save_method = "add";
@@ -218,10 +131,39 @@ add();
       $(this).addClass('was-validated');
     }
   });
- 
+ //to show dialog add question data 
+ $(function(){
+    $('#question_ans').click(function(){
+        var content = $(this).attr('to');
+        $('#content_qa').load(content);
+        $('#modalgoogle').modal('show');
+         
+    });
+ });
    
 
-</script>
+</script>  
+
+<div class="modal fade" id="modalgoogle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="content_qa"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/pendapatan/pendapatan/form_add.blade.php ENDPATH**/ ?>

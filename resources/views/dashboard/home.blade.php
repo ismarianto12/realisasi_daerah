@@ -139,73 +139,46 @@ $username = Auth::user()->username;
         })
     });  
 
+
     Highcharts.chart('container', {
         chart: {
             type: 'bar'
         },
         title: {
-            text:'Penerimaan pad daerah'
-        },
-        subtitle: {
-            text: 'Sumber : Pendapatan Asli Daerah .'
+            text: 'Grafik PAD Tahun {{ $tahun }}'
         },
         xAxis: {
-            categories: [
-                @foreach ($graf_pad as $item)
-                    '{{ $item['nm_rek']['nil'] }}',
-                @endforeach
-            ],
-            title: {
-                text: null
-            }
+            categories: [ 
+            @foreach ($graf_pad as $item)
+              '{{ $item['nm_rek']['nil'] }}',
+            @endforeach
+            ]
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Pendapatan Dalam (Jutaan)',
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        tooltip: {
-            valueSuffix: ' millions'
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true
-                }
+                text: 'Total Pendapatan Daerah Tangaerang Selatan Tahun {{ $tahun }}'
             }
         },
         legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -40,
-            y: 80,
-            floating: true,
-            borderWidth: 1,
-            backgroundColor:
-                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-            shadow: true
+            reversed: true
         },
-        credits: {
-            enabled: false
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
         },
-        series: [
+        series: [ 
         @foreach ($graf_pad as $item)
-        
         {
             name: "@php echo $item['kd_rek']['nil'] @endphp - @php echo $item['nm_rek']['nil'] @endphp",
             data: [@php echo $item['jumlah']['nil'] @endphp]
         },  
-        
         @endforeach
-      ]
+        ]
     });
-
+    
+ 
         $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
             type: 'line',
             height: '70',

@@ -37,15 +37,14 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                                 <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}">
                                                 <td>Tahun Anggaran</td>
                                                 <td>{{ $tahun_ang }}</td>
-                                                <td>Tanggal Lapor</td> 
+                                                <td>Tanggal Lapor</td>
                                                 <td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
                                             </tr>
                                         </table>
-                                        <h2>Rincian PAD <sup><a
-                                                    href="https://www.google.com/search?q=Pad+adalah&oq=Pad+adalah+&aqs=chrome..69i57.1951j0j1&sourceid=chrome&ie=UTF-8"
-                                                    title="apa itu pad" target="_blank">[?]</a></sup> yang di laporkan
-                                        </h2>
-
+                                        <h2>Rincian PAD <sup><a href="#"
+                                                    to="https://news.ddtc.co.id/apa-itu-pad-22664"
+                                                    title="apa itu pad" id="question_ans">[?]</sup> yang di laporkan
+                                        </h2> 
                                         <table class="table striped">
                                             @foreach ($rekenings as $item)
                                             <tr>
@@ -223,9 +222,35 @@ function selectOnChange()
        $(this).addClass('was-validated');
     }
   });
-   
 
+
+  $(function(){
+    $('#question_ans').click(function(){
+        var content = $(this).attr('to');
+        $('#modal_form').load(content);
+        $('#modalgoogle').modal('show'); 
+    });
+ });
 
 </script>
+
+<div class="modal fade" id="modalgoogle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="width: auto;">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="modal_form"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 @endsection

@@ -13,11 +13,11 @@
   <hr />
 </center>
 <div class="alert alert-success">
-  <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang
+  <tt class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang
       di
       laporkan pada tanggal <?php echo e(Properti_app::tgl_indo($sekarang)); ?>
 
-  </h4>
+  </tt>
 </div>
 <?php if($dataset == ''): ?>
 <div class="alert alert-danger"><i class="fa fa-danger"></i> Satker ini belum ada rekening pad </div>

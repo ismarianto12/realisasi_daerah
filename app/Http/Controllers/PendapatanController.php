@@ -608,6 +608,8 @@ class PendapatanController extends Controller
 
     public function show($id)
     {
+
+        return abort(404,'Saat ini halam tidak bisa di tampilkan karena tidak tersedia');
         // *
         $title   = 'Menampilkan | ' . $this->title;
         $route   = $this->route;

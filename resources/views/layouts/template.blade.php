@@ -224,7 +224,8 @@
                                                     <span class="text">Pelaporan PAD</span>
                                                 </div>
                                             </a>
-                                            <a class="col-6 col-md-4 p-0" href="{{ url('laporan/keseluruhan') }}">
+                                            <a class="col-6 col-md-4 p-0" href="{{ url('laporan/perbulan') }}"
+                                                target="_blank">
                                                 <div class="quick-actions-item">
                                                     <div class="avatar-item bg-info rounded-circle">
                                                         <i class="fas fa-file-excel"></i>
@@ -420,7 +421,6 @@
     <!-- Bootstrap Toggle -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js">
     </script>
-
     <!-- jQuery Vector Maps -->
     <script src="{{ asset('/assets/template/') }}/js/plugin/jqvmap/jquery.vmap.min.js"></script>
     <script src="{{ asset('/assets/template/') }}/js/plugin/jqvmap/maps/jquery.vmap.world.js">
@@ -469,7 +469,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="width: auto;">
                 <div class="modal-header">
-                    
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -480,8 +480,8 @@
                         <small> ** ) Untuk merubah tanggal pencarian silahkan klik cari di bawah</small>
                         <form action="#" method="GET" class="form-horizontal" id="cari_tgl">
                             <div class="col-md-5">
-                                <input type="date" name="tanggal_lpr" class="form-control"
-                                    placeholder="cari tanggal .." id="tanggal_lpr">
+                                <input type="date" name="tanggal_lpr" class="form-control" placeholder="cari tanggal .."
+                                    id="tanggal_lpr">
                                 <br />
                                 <button class="btn btn-primary" id="cari_tgl"><i class="fa fa-search"></i>Cari</button>
                             </div>
@@ -535,6 +535,7 @@
          $.get(url,function(data){  
             $('#cari_tgl').submit(function(e){
                 e.preventDefault();
+                $('.contentdata_opd').html('<center><img src="https://i.dlpng.com/static/png/7169791_preview.png" class="image-responsive" style="width:120px;height:120px"></center><h3>Sedang Meload Halaman Silahkan Tunggu .... </h3>'); 
                 var tgl_lpr = $('#tanggal_lpr').val();
                 $.get(url,'tanggal_lapor='+ tgl_lpr,function(g){  
                     $('.contentdata_opd').html(g);                    

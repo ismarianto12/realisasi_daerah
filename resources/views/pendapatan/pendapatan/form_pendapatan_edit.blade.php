@@ -66,12 +66,16 @@
         @endif
     </tbody>
 </table>
-<table>
+<hr />
+<table class="table table-striped">
     <tr>
-        <td colspan="3">Total Semua Pad : </td>
-        <td colspan="3"></td> 
+        <td colspan="3" style="text-align: right"><b> Akumulasi Pendapatan :</b></td>
+        <td colspan="3">
+            <div class="get_total"></div>
+        </td>
     </tr>
 </table>
+
 
 <script src="{{ asset('assets/template/js/autoNumeric.js') }}"></script>
 
