@@ -127,7 +127,7 @@ class PendapatanController extends Controller
         ];
         return DataTables::of($data)
             ->editColumn('id', function ($p) use ($tgl_lapor) {
-                return "<input type='checkbox' name='cbox[]' value='" . $p->kd_rek_rincian_obj . "' data-tgl_lapor= '".$tgl_lapor."'/>";
+                return "<input type='checkbox' name='cbox[]' value='" . $p->kd_rek_rincian_obj . "' data-tgl_lapor= '" . $tgl_lapor . "'/>";
             })
             ->editColumn('r_kd_rek_obj', function ($p) {
                 return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td></td><td></td><td align="right"></td><td></td><td></td>';
@@ -814,7 +814,14 @@ class PendapatanController extends Controller
         $tmopd        = Tmopd::where('kode', $id)->firstOrfail();
         $satker_kd    = $tmopd['kode'];
         $satkernm     = $tmopd['n_opd'];
-        $sekarang     = Carbon::now()->format('Y-m-d');
+
+        // dd($request->tanggal_lapor);
+
+        if ($request->tanggal_lapor != '') {
+            $sekarang = $request->tanggal_lapor;
+        } else {
+            $sekarang     = Carbon::now()->format('Y-m-d');
+        }
         // query data form reekning get count of money all by opd
         $where    = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $satkerid];
         //by jenis 
@@ -913,6 +920,7 @@ class PendapatanController extends Controller
         // dd($dataset);
 
         return view($this->view . 'detailpadopd', compact(
+            'sekarang',
             'satker_kd',
             'dataset',
             'satkernm',

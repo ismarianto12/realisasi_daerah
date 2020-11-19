@@ -469,16 +469,24 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="width: auto;">
                 <div class="modal-header">
-                    <div class="alert alert-success">
-                        <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang di
-                            laporkan pada tanggal {{ Properti_app::tgl_indo(date('Y-m-d')) }}
-                        </h4>
-                    </div>
+                    
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <center>
+                        <hr />
+                        <small> ** ) Untuk merubah tanggal pencarian silahkan klik cari di bawah</small>
+                        <form action="#" method="GET" class="form-horizontal" id="cari_tgl">
+                            <div class="col-md-5">
+                                <input type="date" name="tanggal_lpr" class="form-control"
+                                    placeholder="cari tanggal .." id="tanggal_lpr">
+                                <br />
+                                <button class="btn btn-primary" id="cari_tgl"><i class="fa fa-search"></i>Cari</button>
+                            </div>
+                        </form>
+                    </center>
                     <div class="contentdata_opd"></div>
                 </div>
             </div>
@@ -487,7 +495,7 @@
 
     <script>
         $(function(){
-        $('.notif_opd').html('<div class="alert alert-danger">Loading ..</div>');
+          $('.notif_opd').html('<div class="alert alert-danger">Loading ..</div>');
             url = '{{ route('aplikasi.opdinput') }}';
             $.get(url,function(data){
             hasil = '';  
@@ -517,13 +525,21 @@
             
              $('.js-example-basic-multiple').select2();
 
-        }); 
+        });
+         
 
      function detail_data(n) 
      { 
          var url   = "{{ Url('pendapatan/dapatkanpadopd/:id') }}".replace(':id',n);
          $('.contentdata_opd').html('<div class="alert alert-succcess">Sedang meload halaman harap bersabar ....</div>');   
          $.get(url,function(data){  
+            $('#cari_tgl').submit(function(e){
+                e.preventDefault();
+                var tgl_lpr = $('#tanggal_lpr').val();
+                $.get(url,'tanggal_lapor='+ tgl_lpr,function(g){  
+                    $('.contentdata_opd').html(g);                    
+                })
+            });
             $('.contentdata_opd').html(data);
          }).fail(function(data){
             $('.contentdata').load('Maaf gagal meload halaman karena suatu kesalahan'); 

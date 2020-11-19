@@ -1,5 +1,5 @@
 <?php if(request()->get('print') == 'y'): ?>
- <script>
+<script>
   window.print()
 </script>
 <?php endif; ?>
@@ -8,10 +8,17 @@
 <center>
   <h3>Satuan Kerja / OPD <b>[<?php echo e($satker_kd); ?>] - <?php echo e($satkernm); ?></b></h3>
   <hr />
-  Pertanggal <?php echo e(Properti_app::tgl_indo(date('Y-m-d'))); ?>
+  Pertanggal <?php echo e(Properti_app::tgl_indo($sekarang)); ?>
 
+  <hr />
 </center>
+<div class="alert alert-success">
+  <h4 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang
+      di
+      laporkan pada tanggal <?php echo e(Properti_app::tgl_indo($sekarang)); ?>
 
+  </h4>
+</div>
 <?php if($dataset == ''): ?>
 <div class="alert alert-danger"><i class="fa fa-danger"></i> Satker ini belum ada rekening pad </div>
 <img src="https://image.freepik.com/free-vector/error-404-concept-illustration_114360-1811.jpg" class="img-reponsive">

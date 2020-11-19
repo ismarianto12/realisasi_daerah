@@ -1,5 +1,5 @@
 @if(request()->get('print') == 'y')
- <script>
+<script>
   window.print()
 </script>
 @endif
@@ -8,9 +8,15 @@
 <center>
   <h3>Satuan Kerja / OPD <b>[{{ $satker_kd }}] - {{ $satkernm }}</b></h3>
   <hr />
-  Pertanggal {{ Properti_app::tgl_indo(date('Y-m-d')) }}
+  Pertanggal {{ Properti_app::tgl_indo($sekarang) }}
+  <hr />
 </center>
-
+<div class="alert alert-success">
+  <tt class="modal-title" id="exampleModalLongTitle"><i class="fa fa-check"></i>Riwayat Pad yang
+      di
+      laporkan pada tanggal {{ Properti_app::tgl_indo($sekarang) }}
+  </tt>
+</div>
 @if($dataset == '')
 <div class="alert alert-danger"><i class="fa fa-danger"></i> Satker ini belum ada rekening pad </div>
 <img src="https://image.freepik.com/free-vector/error-404-concept-illustration_114360-1811.jpg" class="img-reponsive">

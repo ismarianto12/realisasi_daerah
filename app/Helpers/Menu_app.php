@@ -72,7 +72,7 @@ class Menu_app
                 case 1:
                     $menu .= '
                          
-                    <li class="nav-section" style="background:#ddd;padding : 10px 10px 10px">
+                    <li class="nav-section" style="background:#ddd;padding : 5px 5px 5px">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
@@ -121,7 +121,7 @@ class Menu_app
                   </ul>
                 </div>
             </li>
-            <li class="nav-section" style="background:#ddd;padding:10px 10px 10px">
+            <li class="nav-section" style="background:#ddd;padding:5px 5px 5px">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
