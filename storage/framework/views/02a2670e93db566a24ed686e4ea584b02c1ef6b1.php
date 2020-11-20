@@ -536,7 +536,7 @@
          $.get(url,function(data){  
             $('#cari_tgl').submit(function(e){
                 e.preventDefault();
-                $('.contentdata_opd').html('<center><img src="https://i.dlpng.com/static/png/7169791_preview.png" class="image-responsive" style="width:120px;height:120px"></center><h3>Sedang Meload Halaman Silahkan Tunggu .... </h3>'); 
+                $('.contentdata_opd').html('<center><img src="https://icon-library.net/images/spinner-icon-gif/spinner-icon-gif-9.jpg" class="image-responsive"></center><h3>Sedang Meload Halaman Silahkan Tunggu .... </h3>'); 
                 var tgl_lpr = $('#tanggal_lpr').val();
                 $.get(url,'tanggal_lapor='+ tgl_lpr,function(g){  
                     $('.contentdata_opd').html(g);                    

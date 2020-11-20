@@ -31,7 +31,9 @@
 <body class="login">
     <div class="wrapper wrapper-login wrapper-login-full p-0">
         <div
-            class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center bg-secondary-gradient">
+            class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center" style="
+            background: url('public/assets/template/img/back.jpg');
+            background-size: cover">
             <h1 class="title fw-bold text-white mb-3">SIPAKDE</h1>
             <p class="subtitle text-white op-7">(SISTEM INFORMASI PELAPORAN KEUANGAN DAERAH)</p>
         </div>
