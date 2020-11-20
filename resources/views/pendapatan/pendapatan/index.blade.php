@@ -341,7 +341,8 @@ $('#datatable').on('click','#detail',function(e){
         $('.load_page').load(page);
         $('#modal_loader').modal('show');  
     }).fail(function(){ 
-        $.alert('halaman tidak bisa di load kesalahan ... ','terjadi ganguan');
+        $.alert('halaman tidak belum bisa di munculkan ... ','karena besaran nilai yang di laporkan masih kosong.');
+        $('#modal_loader').modal('hide');
     });
  });
 
