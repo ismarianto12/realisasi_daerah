@@ -172,14 +172,13 @@
                         @if ($level != 3)
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bell"></i>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data OPD Input Realisasi ,Per jumlah Opd Aktif
+                                <i class="fa fa-user"></i>
                                 <span class="notification">Loading ...</span>
                             </a>
                             <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                 <li>
-                                    <div class="dropdown-title">Status opd yang input pendapatan pada
-                                        {{ Properti_app::tgl_indo(date('Y-m-d')) }}</div>
+                                    <div class="dropdown-title">Status opd yang input pendapatan , Silahkan klik untuk informasi detail</div>
                                 </li>
                                 <li>
                                     <div class="notif-scroll scrollbar-outer">

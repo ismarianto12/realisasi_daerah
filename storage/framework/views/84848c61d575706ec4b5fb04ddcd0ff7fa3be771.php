@@ -108,10 +108,8 @@ add();
       }else{ 
       if ($(this)[0].checkValidity() === false) {
            event.stopPropagation();
-      }else{ 
-          $.alert('Menyimpan Data','Sedang Mengirim Ke server ......');
-
-          $('#alert').html('');
+      }else{          
+          $('#alert').html('<div class="alert alert-info"><i class="fa fa-info"></i>Harap bersabar Sedang Mengirim Ke server ......</div>');
           $('#btnSave').attr('disabled', true);
           url = (save_method == 'add') ? "<?php echo e(route($route.'store')); ?>" : "<?php echo e(route($route.'update', ':id')); ?>".replace(':id', $('#id').val());
           $.post(url, $(this).serialize(), function(data){
