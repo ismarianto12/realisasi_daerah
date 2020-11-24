@@ -153,6 +153,7 @@ class PendapatanController extends Controller
             ->editColumn('volume',  function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmsikd_satker_id',$par['satker_id']); 
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
                 if ($par['level_id'] == 3) {
                     $pad->where('is_deleted', 0);
@@ -166,6 +167,7 @@ class PendapatanController extends Controller
                 $tgl_lapor = $par['tgl_lapor'];
                 $r   = Tmpendapatan::Select(\DB::raw('sum(jumlah) as tot_lapor'))
                     ->where('tanggal_lapor', $tgl_lapor)
+                    ->where('tmsikd_satker_id',$par['satker_id'])
                     ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
                     ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_id')
                     ->first();
@@ -180,7 +182,9 @@ class PendapatanController extends Controller
                 $rincian_id = $p->kd_rek_rincian_obj;
 
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad->where('tmsikd_satker_id',$par['satker_id']);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
+ 
                 if ($par['level_id'] == 3) {
                     $pad->where('is_deleted', 0);
                 } else {
