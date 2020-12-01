@@ -130,7 +130,7 @@ class PendapatanController extends Controller
                 return "<input type='checkbox' name='cbox[]' value='" . $p->kd_rek_rincian_obj . "' data-tgl_lapor= '" . $tgl_lapor . "'/>";
             })
             ->editColumn('r_kd_rek_obj', function ($p) {
-                return '<td><strong>' . $p->kd_rek_obj . '</strong></td><td>' . $p->nm_rek_obj . '</td></td><td></td><td align="right"></td><td></td><td></td>';
+                return '<td style="background:#ddd"><strong>' . $p->kd_rek_obj . '</strong></td><td style="background:#ddd">' . $p->nm_rek_obj . '</td><td style="background:#ddd"></td><td style="background:#ddd" align="right"></td><td style="background:#ddd"></td><td style="background:#ddd"></td>';
             })
             ->editColumn('kd_rek_rincian_obj', function ($p) use ($tgl_lapor) {
                 $rincian_id = $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
@@ -138,8 +138,7 @@ class PendapatanController extends Controller
 
                 return "<a to='" . Url('pendapatan/pendapatandetail/' . $rincian_id . '?rincian_id=' . $rincian_id . '&tgl_lapor=' . $tgl_lapor . '&tmsikd_satker_id=' . $tmsikd_satker_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
-            ->editColumn('tanggal_lapor',  function ($p) use ($par) {
-
+            ->editColumn('tanggal_lapor',  function ($p) use ($par) { 
                 $tgl_lapor = $par['tgl_lapor'];
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
@@ -192,8 +191,7 @@ class PendapatanController extends Controller
                 $r = $pad->first();
                 if ($r['jumlah'] == '' || $r['jumlah'] == NULL) {
                     return '<a href="' . route('pendapatan.create', $rincian_id . '?satker_id=' . $satker_id . '&tgl=' . $tgl_lapor) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
-                  <br />
-                <small>(Klik Tombol Untuk Lapor)</small>
+                
                 <br />';
                 } else {
                     return '<a href="" class="btn btn-primary btn-xs" title="Silahkan Laporkan jumlah Pad"><i class="fa fa-check"></i>Sudah Lapor</a>';
@@ -619,7 +617,7 @@ class PendapatanController extends Controller
         $route   = $this->route;
         $toolbar = ['r', 'u'];
         $where = ['tmrka_mata_anggarans.id' => $id];
-        $r     = Tmrka::list($where)->firstOrFail();
+        // $r     = Tmrka::list($where)->firstOrFail();
 
 
         return view($this->view . 'show', compact(

@@ -442,6 +442,7 @@ class Tmpendapatan extends Model
                 'tmrekening_akun_kelompok_jenis_objek_rincians.id as id_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
+                
                 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
                 'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj'
             )

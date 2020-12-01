@@ -65,43 +65,42 @@
                                             class="fa fa-search"></i>Tampilkan Data</button>
                                 </div>
                             </div>
-
-                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
             </div>
         </div>
     </div>
-</div>
-<div class="card-body">
-</div>
-</div>
-</div>
-<div id="btn_cetak"></div>
-<div class="card">
-    <div class="card-body">
+    <div id="btn_cetak"></div>
+    <div class="card">
         <small>Klik kode rekening untuk melihat rincian .</small>
-        <center>
-            <div class="satker_show"></div>
-        </center>
-        <?php if($tgl_lapor != ''): ?>
-        <div class="alert alert-danger">Data berhasil di tambahkan Silahkan cek rincian pelaporan pada tanggal
-            <?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?></div>
-        <?php endif; ?>
-        <table id="datatable" class="table table-striped no-b" style="width:100%">
-            <thead>
-                <tr>
-                    <th width="5%">&nbsp;</th>
-                    <th width="10%">Kode Rekening</th>
-                    <th width="35%">Uraian</th>
-                    <th width="10%">Volume Transaksi</th>
-                    <th width="15%">Jumlah Transaksi</th>
-                    <th width="15%">Tanggal Lapor</th>
-                    <th width="15%">Status Lapor</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <br />
+        <div class="card-body">
+            <center>
+                <div class="satker_show"></div>
+            </center>
+            <?php if($tgl_lapor != ''): ?>
+            <div class="alert alert-danger">Data berhasil di tambahkan Silahkan cek rincian pelaporan pada tanggal
+                <?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?></div>
+            <?php endif; ?>
+            <table id="datatable" class="table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th width="5%">&nbsp;</th>
+                        <th width="10%">Kode Rekening</th>
+                        <th width="35%">Uraian</th>
+                        <th width="10%">Volume Transaksi</th>
+                        <th width="15%">Jumlah Transaksi</th>
+                        <th width="15%">Tanggal Lapor</th>
+                        <th width="15%">Status Lapor</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 <?php $__env->startSection('script'); ?>
