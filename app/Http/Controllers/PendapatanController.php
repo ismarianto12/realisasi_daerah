@@ -136,7 +136,7 @@ class PendapatanController extends Controller
                 $rincian_id = $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
                 $tmsikd_satker_id = $p['tmsikd_satker_id'];
 
-                return "<a to='" . Url('pendapatan/pendapatandetail/' . $rincian_id . '?rincian_id=' . $rincian_id . '&tgl_lapor=' . $tgl_lapor . '&tmsikd_satker_id=' . $tmsikd_satker_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
+                return "<a style='color: #fff;' to='" . Url('pendapatan/pendapatandetail/' . $rincian_id . '?rincian_id=' . $rincian_id . '&tgl_lapor=' . $tgl_lapor . '&tmsikd_satker_id=' . $tmsikd_satker_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
             ->editColumn('tanggal_lapor',  function ($p) use ($par) { 
                 $tgl_lapor = $par['tgl_lapor'];

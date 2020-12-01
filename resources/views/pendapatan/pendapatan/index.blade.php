@@ -78,7 +78,7 @@
     </div>
     <div id="btn_cetak"></div>
     <div class="card">
-        <small>Klik kode rekening untuk melihat rincian .</small>
+        <center><small>Klik kode rekening untuk melihat rincian .</small></center>
         <br />
         <div class="card-body">
             <center>
