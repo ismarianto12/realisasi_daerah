@@ -28,8 +28,8 @@ class KoderincianobjekController extends Controller
     protected $title      = "Rekening Rincian Objek Mata Anggaran Kegiatan";
 
     public function __construct()
-    { 
-       // $this->middleware('level:|1');
+    {
+        // $this->middleware('level:|1');
     }
 
     public function index()
@@ -136,11 +136,11 @@ class KoderincianobjekController extends Controller
     {
         $request->validate([
             'tmrekening_akun_kelompok_jenis_objek_id' => 'required',
-        ]); 
+        ]);
         $tmrekening_akun_kelompok_jenis_objek_id    = $request->tmrekening_akun_kelompok_jenis_objek_id;
         $kd_rek_rincian_obj                         = $request->kd_rek_rincian_obj;
         $nm_rek_rincian_obj                         = $request->nm_rek_rincian_obj;
-       // $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
+        // $tmsikd_satkers_id                          = $request->tmsikd_satkers_id;
         for ($i = 0; $i < count($kd_rek_rincian_obj); $i++) {
             if ($kd_rek_rincian_obj[$i] != "" && $nm_rek_rincian_obj[$i] != "") {
                 if (Tmrekening_akun_kelompok_jenis_objek_rincian::wherenm_rek_rincian_obj($nm_rek_rincian_obj[$i])->count() > 0) {
@@ -149,7 +149,7 @@ class KoderincianobjekController extends Controller
                     ], 422);
                 } else {
                     $tmrekening_akun_kelompok_jenis_objek_rincian                                           = new Tmrekening_akun_kelompok_jenis_objek_rincian();
-                    $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id  = $tmrekening_akun_kelompok_jenis_objek_id; 
+                    $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id  = $tmrekening_akun_kelompok_jenis_objek_id;
                     $tmrekening_akun_kelompok_jenis_objek_rincian->id                                       = $kd_rek_rincian_obj[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian->kd_rek_rincian_obj                       = $kd_rek_rincian_obj[$i];
                     $tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj                       = $nm_rek_rincian_obj[$i];
@@ -220,7 +220,7 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Edit | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd'];
+        $toolbar    = ['c', 'd', 'u'];
 
         $tmrekening_akun_kelompok_jenis_objek_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::with('tmrekening_akun_kelompok_jenis_objek.tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok.tmrekening_akun')->whereid($id)->firstOrFail();
 
