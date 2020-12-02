@@ -59,93 +59,7 @@
                 </div>
             </div>
 
-            <div class="card mt-2">
-                <div class="card-header">
-                    <h6>Keterkaitan Rekening P64</h6>
-                </div>
-                <div class="card-body no-b">
-                    <div class="form-row form-inline">
-                        <div class="col-md-12">
-                            <div class="form-group m-0">
-                                <label for="tmsikd_rek_rincian_obj_p64_id"
-                                    class="col-form-label s-12 col-md-2"><strong>Rek. LRA P64 :</strong></label>
-                                <div class="col-md-8 p-0 mb-2">
-                                    <select name="tmsikd_rek_rincian_obj_p64_id" id="tmsikd_rek_rincian_obj_p64_id"
-                                        placeholder="" class="form-control r-0 s-12 select2">
-                                        <option value=""></option>
-                                    </select>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mt-2">
-                    <div class="card-header">
-                        <h6>Keterkaitan Rekening SAP</h6>
-                    </div>
-                    <div class="card-body no-b">
-                        <div class="form-row form-inline">
-                            <div class="col-md-12">
-                                <div class="form-group m-0">
-                                    <label for="tmsikd_rekening_lra_id"
-                                        class="col-form-label s-12 col-md-2"><strong>Rek. LRA :</strong></label>
-                                    <div class="col-md-8 p-0 mb-2">
-                                        <select name="tmsikd_rekening_lra_id" id="tmsikd_rekening_lra_id" placeholder=""
-                                            class="form-control r-0 s-12 select2">
-                                            <option value="">&nbsp;</option>
-                                            <?php $__currentLoopData = $tmsikd_rekening_lras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_lra): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($tmsikd_rekening_lra->id); ?>"
-                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_lra_id == $tmsikd_rekening_lra->id): ?>
-                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_lra->kd_rek_lra.'] '.$tmsikd_rekening_lra->nm_rek_lra); ?>
-
-                                            </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmsikd_rekening_lak_id"
-                                        class="col-form-label s-12 col-md-2"><strong>Rek. LAK :</strong></label>
-                                    <div class="col-md-8 p-0 mb-2">
-                                        <select name="tmsikd_rekening_lak_id" id="tmsikd_rekening_lak_id" placeholder=""
-                                            class="form-control r-0 s-12 select2">
-                                            <option value="">&nbsp;</option>
-                                            <?php $__currentLoopData = $tmsikd_rekening_laks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_lak): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($tmsikd_rekening_lak->id); ?>"
-                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_lak_id == $tmsikd_rekening_lak->id): ?>
-                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_lak->kd_rek_lak.'] '.$tmsikd_rekening_lak->nm_rek_lak); ?>
-
-                                            </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group m-0">
-                                    <label for="tmsikd_rekening_neraca_id"
-                                        class="col-form-label s-12 col-md-2"><strong>Rek. Neraca :</strong></label>
-                                    <div class="col-md-8 p-0 mb-2">
-                                        <select name="tmsikd_rekening_neraca_id" id="tmsikd_rekening_neraca_id"
-                                            placeholder="" class="form-control r-0 s-12 select2">
-                                            <option value="">&nbsp;</option>
-                                            <?php $__currentLoopData = $tmsikd_rekening_neracas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_neraca_id): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($tmsikd_rekening_neraca_id->id); ?>"
-                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_neraca_id == $tmsikd_rekening_neraca_id->id): ?>
-                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_neraca_id->kd_rek_neraca.'] '.$tmsikd_rekening_neraca_id->nm_rek_neraca); ?>
-
-                                            </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </form>
     </div>
 </div>
@@ -168,6 +82,7 @@
             url = "<?php echo e(route($route.'update', ':id')); ?>".replace(':id', $('#id').val());
             $.post(url, $(this).serialize(), function(data){
                 $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
+                window.location.href='<?php echo e(route($route.'index')); ?>';
             }, "JSON").fail(function(data){
                 err = ''; respon = data.responseJSON;
                 $.each(respon.errors, function(index, value){
