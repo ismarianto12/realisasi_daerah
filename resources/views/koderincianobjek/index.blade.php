@@ -5,6 +5,9 @@
     @include('layouts._includes.toolbar')
     <div class="container-fluid my-3">
         <div class="card">
+            <center>
+                <small>* ) Klik pada nama rekening rincian jika ada perubahan, atau edit data .</small>
+            </center>
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">

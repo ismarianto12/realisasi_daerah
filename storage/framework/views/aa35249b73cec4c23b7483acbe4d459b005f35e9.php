@@ -4,6 +4,9 @@
     <?php echo $__env->make('layouts._includes.toolbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="container-fluid my-3">
         <div class="card">
+            <center>
+                <small>* ) Klik detail jika ada perubahan .</small>
+            </center>
             <div class="card-body">
                 <div class="form-row form-inline">
                     <div class="col-md-12">
