@@ -1,32 +1,31 @@
-@extends('layouts.template')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="page bg-light">
-    @include('layouts._includes.toolbar')
+    <?php echo $__env->make('layouts._includes.toolbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="container-fluid my-3">
         <div id="alert"></div>
         <form class="needs-validation" id="form" method="POST" novalidate>
-            {{ method_field('PATCH') }}
+            <?php echo e(method_field('PATCH')); ?>
+
             <div class="card">
                 <div class="card-body">
                     <div class="form-row form-inline">
                         <div class="col-md-12">
                             <div class="form-group m-0">
                                 <label class="col-form-label s-12 col-md-2"><strong>Kode Rek. Akun :</strong></label>
-                                <label class="r-0 s-12 col-md-8 tl">{{ $n_rekening_akun }}</label>
+                                <label class="r-0 s-12 col-md-8 tl"><?php echo e($n_rekening_akun); ?></label>
                             </div>
                             <div class="form-group m-0">
                                 <label class="col-form-label s-12 col-md-2"><strong>Kode Rek. Kelompok
                                         :</strong></label>
-                                <label class="r-0 s-12 col-md-8 tl">{{ $n_rekening_akun_kelompok }}</label>
+                                <label class="r-0 s-12 col-md-8 tl"><?php echo e($n_rekening_akun_kelompok); ?></label>
                             </div>
                             <div class="form-group m-0">
                                 <label class="col-form-label s-12 col-md-2"><strong>Kode Rek. Jenis :</strong></label>
-                                <label class="r-0 s-12 col-md-8 tl">{{ $n_rekening_akun_kelompok_jenis }}</label>
+                                <label class="r-0 s-12 col-md-8 tl"><?php echo e($n_rekening_akun_kelompok_jenis); ?></label>
                             </div>
                             <div class="form-group m-0">
                                 <label class="col-form-label s-12 col-md-2"><strong>Kode Rek. Obj :</strong></label>
-                                <label class="r-0 s-12 col-md-8 tl">{{ $n_rekening_akun_kelompok_jenis_objek }}</label>
+                                <label class="r-0 s-12 col-md-8 tl"><?php echo e($n_rekening_akun_kelompok_jenis_objek); ?></label>
                             </div>
                         </div>
                     </div>
@@ -35,7 +34,7 @@
             <div class="card mt-2">
                 <div class="card-body">
                     <input type="hidden" id="id" name="id"
-                        value="{{ $tmrekening_akun_kelompok_jenis_objek_rincian->id }}" />
+                        value="<?php echo e($tmrekening_akun_kelompok_jenis_objek_rincian->id); ?>" />
                     <div class="form-row form-inline">
                         <div class="col-md-12">
 
@@ -44,7 +43,7 @@
                                         Rek. Rincian Obj <span class="text-danger ml-1">*</span> :</strong></label>
                                 <input type="text" name="kd_rek_rincian_obj" id="kd_rek_rincian_obj" placeholder=""
                                     class="form-control r-0 s-12 col-md-5"
-                                    value="{{ $tmrekening_akun_kelompok_jenis_objek_rincian->kd_rek_rincian_obj }}"
+                                    value="<?php echo e($tmrekening_akun_kelompok_jenis_objek_rincian->kd_rek_rincian_obj); ?>"
                                     autocomplete="off" required />
                             </div>
                             <div class="form-group m-0">
@@ -52,7 +51,7 @@
                                         Rek. Rincian Obj <span class="text-danger ml-1">*</span> :</strong></label>
                                 <input type="text" name="nm_rek_rincian_obj" id="nm_rek_rincian_obj" placeholder=""
                                     class="form-control r-0 s-12 col-md-5"
-                                    value="{{ $tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj }}"
+                                    value="<?php echo e($tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj); ?>"
                                     autocomplete="off" required />
                             </div>
                         </div>
@@ -96,13 +95,14 @@
                                         <select name="tmsikd_rekening_lra_id" id="tmsikd_rekening_lra_id" placeholder=""
                                             class="form-control r-0 s-12 select2">
                                             <option value="">&nbsp;</option>
-                                            @foreach($tmsikd_rekening_lras as $key=>$tmsikd_rekening_lra)
-                                            <option value="{{ $tmsikd_rekening_lra->id }}"
-                                                @if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_lra_id == $tmsikd_rekening_lra->id)
-                                                selected="selected"@endif>{{ '['.$tmsikd_rekening_lra->kd_rek_lra.'] '.$tmsikd_rekening_lra->nm_rek_lra }}
+                                            <?php $__currentLoopData = $tmsikd_rekening_lras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_lra): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($tmsikd_rekening_lra->id); ?>"
+                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
+                                                tmsikd_rekening_lra_id == $tmsikd_rekening_lra->id): ?>
+                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_lra->kd_rek_lra.'] '.$tmsikd_rekening_lra->nm_rek_lra); ?>
+
                                             </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -113,13 +113,14 @@
                                         <select name="tmsikd_rekening_lak_id" id="tmsikd_rekening_lak_id" placeholder=""
                                             class="form-control r-0 s-12 select2">
                                             <option value="">&nbsp;</option>
-                                            @foreach($tmsikd_rekening_laks as $key=>$tmsikd_rekening_lak)
-                                            <option value="{{ $tmsikd_rekening_lak->id }}"
-                                                @if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_lak_id == $tmsikd_rekening_lak->id)
-                                                selected="selected"@endif>{{ '['.$tmsikd_rekening_lak->kd_rek_lak.'] '.$tmsikd_rekening_lak->nm_rek_lak }}
+                                            <?php $__currentLoopData = $tmsikd_rekening_laks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_lak): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($tmsikd_rekening_lak->id); ?>"
+                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
+                                                tmsikd_rekening_lak_id == $tmsikd_rekening_lak->id): ?>
+                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_lak->kd_rek_lak.'] '.$tmsikd_rekening_lak->nm_rek_lak); ?>
+
                                             </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -130,13 +131,14 @@
                                         <select name="tmsikd_rekening_neraca_id" id="tmsikd_rekening_neraca_id"
                                             placeholder="" class="form-control r-0 s-12 select2">
                                             <option value="">&nbsp;</option>
-                                            @foreach($tmsikd_rekening_neracas as $key=>$tmsikd_rekening_neraca_id)
-                                            <option value="{{ $tmsikd_rekening_neraca_id->id }}"
-                                                @if($tmrekening_akun_kelompok_jenis_objek_rincian->
-                                                tmsikd_rekening_neraca_id == $tmsikd_rekening_neraca_id->id)
-                                                selected="selected"@endif>{{ '['.$tmsikd_rekening_neraca_id->kd_rek_neraca.'] '.$tmsikd_rekening_neraca_id->nm_rek_neraca }}
+                                            <?php $__currentLoopData = $tmsikd_rekening_neracas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmsikd_rekening_neraca_id): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($tmsikd_rekening_neraca_id->id); ?>"
+                                                <?php if($tmrekening_akun_kelompok_jenis_objek_rincian->
+                                                tmsikd_rekening_neraca_id == $tmsikd_rekening_neraca_id->id): ?>
+                                                selected="selected"<?php endif; ?>><?php echo e('['.$tmsikd_rekening_neraca_id->kd_rek_neraca.'] '.$tmsikd_rekening_neraca_id->nm_rek_neraca); ?>
+
                                             </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -147,9 +149,9 @@
         </form>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script type="text/javascript">
     $('#txtSave').html("Perubahan");
     $('#kd_rek_akun').focus();
@@ -163,7 +165,7 @@
             $('#alert').html('');
             $('#btnSave').attr('disabled', true);
 
-            url = "{{ route($route.'update', ':id') }}".replace(':id', $('#id').val());
+            url = "<?php echo e(route($route.'update', ':id')); ?>".replace(':id', $('#id').val());
             $.post(url, $(this).serialize(), function(data){
                 $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong> " + data.message + "</div>");
             }, "JSON").fail(function(data){
@@ -180,4 +182,5 @@
         $(this).addClass('was-validated');
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp64\www\retribusi\resources\views/koderincianobjek/form_edit.blade.php ENDPATH**/ ?>

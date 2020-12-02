@@ -209,7 +209,7 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Menampilkan | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd'];
+        $toolbar    = ['c', 'd','u'];
 
         $tmrekening_akun_kelompok_jenis_objek_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::with('tmrekening_akun_kelompok_jenis_objek.tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok.tmrekening_akun')->whereid($id)->firstOrFail();
 
@@ -220,7 +220,7 @@ class KoderincianobjekController extends Controller
     {
         $title      = 'Edit | ' . $this->title;
         $route      = $this->route;
-        $toolbar    = ['c', 'd', 'u'];
+        $toolbar    = ['c', 'd', 'save'];
 
         $tmrekening_akun_kelompok_jenis_objek_rincian = Tmrekening_akun_kelompok_jenis_objek_rincian::with('tmrekening_akun_kelompok_jenis_objek.tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok.tmrekening_akun')->whereid($id)->firstOrFail();
 
@@ -230,15 +230,15 @@ class KoderincianobjekController extends Controller
         $n_rekening_akun_kelompok_jenis_objek   = '[ ' . $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek->kd_rek_obj . ' ] ' . $tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek->nm_rek_obj;
 
         $rek        = new Tmrekening_akun_kelompok_jenis_objek_rincian();
-        $rekAkruals = $rek->rekAkruals();
-        $rekAsets   = $rek->rekAsets();
-        $rekUtangs  = $rek->rekUtangs();
+        // $rekAkruals = $rek->rekAkruals();
+        // $rekAsets   = $rek->rekAsets();
+        // $rekUtangs  = $rek->rekUtangs();
 
         $tmsikd_rekening_lras       = Tmsikd_rekening_lra::select('id', 'kd_rek_lra', 'nm_rek_lra')->orderBy('kd_rek_lra')->get();
         $tmsikd_rekening_laks       = Tmsikd_rekening_lak::select('id', 'kd_rek_lak', 'nm_rek_lak')->orderBy('kd_rek_lak')->get();
         $tmsikd_rekening_neracas    = Tmsikd_rekening_neraca::select('id', 'kd_rek_neraca', 'nm_rek_neraca')->orderBy('kd_rek_neraca')->get();
 
-        return view($this->view . 'form_edit', compact('title', 'route', 'toolbar', 'id', 'tmrekening_akun_kelompok_jenis_objek_rincian', 'n_rekening_akun', 'n_rekening_akun_kelompok', 'n_rekening_akun_kelompok_jenis', 'n_rekening_akun_kelompok_jenis_objek', 'tmsikd_rekening_lras', 'tmsikd_rekening_laks', 'tmsikd_rekening_neracas', 'rekAkruals', 'rekAsets', 'rekUtangs'));
+        return view($this->view . 'form_edit', compact('title', 'route', 'toolbar', 'id', 'tmrekening_akun_kelompok_jenis_objek_rincian', 'n_rekening_akun', 'n_rekening_akun_kelompok', 'n_rekening_akun_kelompok_jenis', 'n_rekening_akun_kelompok_jenis_objek', 'tmsikd_rekening_lras', 'tmsikd_rekening_laks', 'tmsikd_rekening_neracas'));
     }
 
     public function update(Request $request, $id)
