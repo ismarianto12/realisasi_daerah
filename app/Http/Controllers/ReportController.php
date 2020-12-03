@@ -383,7 +383,7 @@ class ReportController extends Controller
                                     ->where('tahun', $tahun)
                                     ->groupBy(\DB::raw('MONTH(tanggal_lapor)'))
                                     ->first();
-                                $rincian_jumlah                    = ($jumlah_rinci['t_rinci']) ? number_format($jumlah_rinci['t_rinci'], 0, 0, '.') : '';
+                                $rincian_jumlah                     = ($jumlah_rinci['t_rinci']) ? number_format($jumlah_rinci['t_rinci'], 0, 0, '.') : '';
                                 $dataset[$idx]['bulan_' . $j]['val'] = '<td>' . $rincian_jumlah . '</td>';
                             }
                             $idx++;

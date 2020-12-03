@@ -192,8 +192,9 @@ class Tmpendapatan extends Model
                 ->first();
 
             $kurleb_kjenis      = ($pagu_kjenis['total'] - $periode_ini_kjenis['total']);
-            $persen_kjenis      = 0;
             $total_kjenis       = ($periode_ini_kjenis['total'] + $periodel_kjenis['trlalu']);
+            $persen_kjenis      = ((int)$pagu_kjenis['total'] / (int)$total_kjenis) * 100;
+
 
             $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
             $dataset[$idx]['nm_rek']['val']       = $jenis['nm_rek_jenis'];
@@ -202,7 +203,7 @@ class Tmpendapatan extends Model
             $dataset[$idx]['periode_ini']['val']  = ($periode_ini_kjenis['total']) ? Html_number::decimal($periode_ini_kjenis['total']) : 0;
             $dataset[$idx]['total']['val']        = Html_number::decimal($total_kjenis);
             $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_kjenis);
-            $dataset[$idx]['persen']['val']       = 0;
+            $dataset[$idx]['persen']['val']       = round($persen_kjenis,PHP_ROUND_HALF_UP);
             $dataset[$idx]['bold']['val']         = true;
             $idx++;
             //by kelompok jenis obj    
@@ -230,8 +231,8 @@ class Tmpendapatan extends Model
                 // $persen_jobj      = 0;
 
                 $kurleb_jobj      = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
-                $persen_jobj      = 0;
                 $total_jobj       = ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
+                $persen_jobj      =  ((int)$pagu_jobj['total'] / (int)$total_jobj) * 100;
 
                 $dataset[$idx]['kd_rek']['val']       = $rek_obj['kd_rek_obj'];
                 $dataset[$idx]['nm_rek']['val']       = $rek_obj['nm_rek_obj'];
@@ -240,7 +241,7 @@ class Tmpendapatan extends Model
                 $dataset[$idx]['periode_ini']['val']  = ($periode_ini_jobj['total']) ? Html_number::decimal($periode_ini_jobj['total']) : 0;
                 $dataset[$idx]['total']['val']        = Html_number::decimal($total_jobj);
                 $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_jobj);
-                $dataset[$idx]['persen']['val']       = Html_number::decimal($persen_jobj);
+                $dataset[$idx]['persen']['val']       = round($persen_jobj,PHP_ROUND_HALF_UP);
                 $dataset[$idx]['bold']['val']         = true;
                 $idx++;
 
@@ -250,7 +251,7 @@ class Tmpendapatan extends Model
                     ->where('tmrekening_akun_kelompok_jenis_objek_id', $rek_obj['kd_rek_obj'])
                     ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj')
                     ->get();
-                    
+
                 foreach ($rincians as $rincian) {
                     //get subrincian rek 
                     $pagu_rincian        = TmpendapatantargetModel::select(\DB::raw('sum(jumlah) as total'))->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])->first();
@@ -271,8 +272,9 @@ class Tmpendapatan extends Model
                         ->first();
 
                     $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['ftotal']);
-                    $persen_rincian      = 0;
+                    // $persen_rincian      = ;
                     $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
+                    $persen_rincian      =  ((int)$pagu_rincian['total'] / (int)$total_rincian) * 100;
 
 
                     $dataset[$idx]['kd_rek']['val']        = $rincian['kd_rek_rincian_obj'];
@@ -282,7 +284,7 @@ class Tmpendapatan extends Model
                     $dataset[$idx]['periode_ini']['val']   = ($periode_rincian['total']) ? Html_number::decimal($periode_rincian['total']) : 0;
                     $dataset[$idx]['total']['val']         = Html_number::decimal($total_rincian);
                     $dataset[$idx]['divide']['val']        = Html_number::decimal($kurleb_rincian);
-                    $dataset[$idx]['persen']['val']        = 0;
+                    $dataset[$idx]['persen']['val']        = round($persen_rincian,PHP_ROUND_HALF_UP);
                     $dataset[$idx]['bold']['val']          = false;
                     $idx++;
                     //by kelompok jenis object rincian sub   
@@ -313,6 +315,7 @@ class Tmpendapatan extends Model
                             ->whereBetween('tanggal_lapor', [$dari, $sampai])
                             ->first();
 
+                            // silentline
                         $pagu_objsub        = 0;
                         $periodel_objsub    = 0;
                         $periode_ini_objsub = 0;
@@ -442,7 +445,7 @@ class Tmpendapatan extends Model
                 'tmrekening_akun_kelompok_jenis_objek_rincians.id as id_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj',
                 'tmrekening_akun_kelompok_jenis_objek_rincians.nm_rek_rincian_obj',
-                
+
                 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj',
                 'tmrekening_akun_kelompok_jenis_objeks.nm_rek_obj'
             )
