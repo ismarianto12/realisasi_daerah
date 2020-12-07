@@ -1,18 +1,18 @@
-  @extends('layouts.template')
-@section('title','Halaman depan aplikasi')
-@section('content')
-@php
+  
+<?php $__env->startSection('title','Halaman depan aplikasi'); ?>
+<?php $__env->startSection('content'); ?>
+<?php
 $level_id = Properti_app::getlevel();
 $username = Auth::user()->username;
-@endphp
-@if($level_id == 3)
+?>
+<?php if($level_id == 3): ?>
 <script>
     $(function(){
-            $.confirm({title : 'Hy {{ $username }} silahkan laporkan pendpatan hari ini',
-                       content : 'Pendapatan yang belum di laporkan : Pada {{ date('Y-m-d') }}'});
+            $.confirm({title : 'Hy <?php echo e($username); ?> silahkan laporkan pendpatan hari ini',
+                       content : 'Pendapatan yang belum di laporkan : Pada <?php echo e(date('Y-m-d')); ?>'});
         }) 
 </script>
-@endif
+<?php endif; ?>
 
 
 <div class="panel-header bg-primary-gradient">
@@ -20,11 +20,11 @@ $username = Auth::user()->username;
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
                 <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-                <h5 class="text-white op-7 mb-2">@php echo Properti_app::getsatker(); echo str_replace('_','
-                    ',env('app_instansi')) @endphp</h5>
+                <h5 class="text-white op-7 mb-2"><?php echo Properti_app::getsatker(); echo str_replace('_','
+                    ',env('app_instansi')) ?></h5>
             </div>
             <div class="ml-md-auto py-2 py-md-0">
-                <a href="#" class="btn btn-white btn-border btn-round mr-2">Hy {{ Auth::user()->username }}</a>
+                <a href="#" class="btn btn-white btn-border btn-round mr-2">Hy <?php echo e(Auth::user()->username); ?></a>
                 <a href="#" class="btn btn-secondary btn-round">Selamat datang kembali di halaman administrasi
                     pendapatan daerah .</a>
             </div>
@@ -45,14 +45,10 @@ $username = Auth::user()->username;
         <div class="col-md-6">
             <div class="card full-height">
                 <div class="card-body">
-                    <div class="card-title">Pertumbuhan Pendapatan tahun {{ Properti_app::getTahun() }}.</div>
+                    <div class="card-title">Pertumbuhan Pendapatan tahun <?php echo e(Properti_app::getTahun()); ?>.</div>
                     <div class="row py-3">
                         <div class="col-md-12">
-                            {{-- <div id="chart-container">
-                                <figure class="highcharts-figure">
-                                    <div id="container"></div>
-                                </figure>
-                                </div> --}}
+                            
                             <div id="chart-container">
                             <div id="canvas"></div>                            
                             </div>   
@@ -75,7 +71,7 @@ $username = Auth::user()->username;
                         </div>
                         <div class="col-7 col-stats">
                             <div class="numbers">
-                                <p class="card-category">TOTAL PAD TAHUN {{ Properti_app::getTahun() }}</p>
+                                <p class="card-category">TOTAL PAD TAHUN <?php echo e(Properti_app::getTahun()); ?></p>
                                 <h4 class="card-title tpadtahun"></h4>
                             </div>
                         </div>
@@ -107,21 +103,21 @@ $username = Auth::user()->username;
 
 
 
-@section('script')
+<?php $__env->startSection('script'); ?>
 
 
-<script src="{{ asset('assets/plugins/hight-cart') }}/highcharts.js"></script>
-<script src="{{ asset('assets/plugins/hight-cart') }}/exporting.js"></script>
-<script src="{{ asset('assets/plugins/hight-cart') }}/export-data.js"></script>
-<script src="{{ asset('assets/plugins/hight-cart') }}/accessibility.js"></script>
+<script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/highcharts.js"></script>
+<script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/exporting.js"></script>
+<script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/export-data.js"></script>
+<script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/accessibility.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
 
 
 <script>
-var labelsarr = [{{ $namarekening }}];
+var labelsarr = [<?php echo e($namarekening); ?>];
                  
-var values = [{{$jumlahpad}}];
+var values = [<?php echo e($jumlahpad); ?>];
 
 var ctx = document.getElementById('canvas').getContext('2d');
 var chart = new Chart(ctx, {
@@ -167,14 +163,14 @@ var chart = new Chart(ctx, {
 <script>
     $(function(){     
         //jumlah tahun ini
-        $.getJSON('{{ Url("api_grafik/total_pad") }}',function(data){
+        $.getJSON('<?php echo e(Url("api_grafik/total_pad")); ?>',function(data){
             $('.tpadtahun').text(data.total);
         }); 
         
         //jumlmah hari ini
      })
     
-    $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=3") }}',function(data){
+    $.getJSON('<?php echo e(Url("api_grafik/jumlah_rek?jenis=3")); ?>',function(data){
         rek_jenis_sub = data.data;  
         Circles.create({
             id: 'circles-3',
@@ -198,19 +194,19 @@ var chart = new Chart(ctx, {
             type: 'bar'
         },
         title: {
-            text: 'Grafik PAD Tahun {{ $tahun }}'
+            text: 'Grafik PAD Tahun <?php echo e($tahun); ?>'
         },
         xAxis: {
             categories: [ 
-            @foreach ($graf_pad as $item)
-              '{{ $item['nm_rek']['nil'] }}',
-            @endforeach
+            <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              '<?php echo e($item['nm_rek']['nil']); ?>',
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             ]
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Total Pendapatan Daerah Tangaerang Selatan Tahun {{ $tahun }}'
+                text: 'Total Pendapatan Daerah Tangaerang Selatan Tahun <?php echo e($tahun); ?>'
             }
         },
         legend: {
@@ -222,12 +218,12 @@ var chart = new Chart(ctx, {
             }
         },
         series: [ 
-        @foreach ($graf_pad as $item)
+        <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         {
-            name: "@php echo $item['kd_rek']['nil'] @endphp - @php echo $item['nm_rek']['nil'] @endphp",
-            data: [@php echo $item['jumlah']['nil'] @endphp]
+            name: "<?php echo $item['kd_rek']['nil'] ?> - <?php echo $item['nm_rek']['nil'] ?>",
+            data: [<?php echo $item['jumlah']['nil'] ?>]
         },  
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         ]
     });
     
@@ -271,12 +267,12 @@ var chart = new Chart(ctx, {
       }
     },
     series: [
-    @foreach($pad_months as $list) 
+    <?php $__currentLoopData = $pad_months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
         {
-          name: '{{ $list['kd_pad']['nil'] }} - {{ $list['nama_pad']['nil'] }}',
-          data: [{{ $list['data_pad']['nil'] }}]
+          name: '<?php echo e($list['kd_pad']['nil']); ?> - <?php echo e($list['nama_pad']['nil']); ?>',
+          data: [<?php echo e($list['data_pad']['nil']); ?>]
         }, 
-        @endforeach      
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>      
     ]
   });
 
@@ -298,5 +294,6 @@ var chart = new Chart(ctx, {
 
 
 
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\realisasi_daerah\resources\views/dashboard/home.blade.php ENDPATH**/ ?>

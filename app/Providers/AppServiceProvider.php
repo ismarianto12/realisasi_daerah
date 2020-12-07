@@ -18,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         Sheet::macro('styleCells', function (Sheet $sheet, string $cellRange, array $style) {
             $sheet->getDelegate()->getStyle($cellRange)->applyFromArray($style);
         });
+
+        // $this->app->bind('path.public', function () {
+        //     return realpath(base_path() . '/../public');
+        // });
     }
 
     /**

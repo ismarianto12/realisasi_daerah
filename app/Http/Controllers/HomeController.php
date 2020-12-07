@@ -25,7 +25,29 @@ class HomeController extends Controller
         $data     = null;
         $graf_pad = $this->grafik_pad();
         $pad_months = $this->grafik_bymonth();
-        return view($this->view . 'home', compact('data', 'tahun', 'graf_pad', 'pad_months'));
+
+        if (count($graf_pad) > 0) {
+            $lsgrafpad = [];
+            // dd($graf_pad);
+            foreach ($graf_pad as $graf_padf) {
+                //get rekening first data  
+                $koderekenings[] = '\'' . $graf_padf['kd_rek']['nil'] . '\'';
+                $namarekenings[] =  '\'' . $graf_padf['nm_rek']['nil'] . '\'';
+                // get value rekening data jumlah
+                $jumlahpendapatans[] = $graf_padf['jumlah']['nil'];
+            }
+            $kode_rek = implode(',', $koderekenings);
+            $namarekening = implode(',', $namarekenings);
+            $jumlahpad = implode(',', $jumlahpendapatans);
+        } else {
+            $kode_rek  = [];
+            $namarekening = [];
+            $jumlahpad = [];
+        }
+        return view(
+            $this->view . 'home',
+            compact('data', 'namarekening', 'kode_rek', 'jumlahpad', 'tahun', 'graf_pad', 'pad_months')
+        );
     }
 
     private function grafik_pad()
