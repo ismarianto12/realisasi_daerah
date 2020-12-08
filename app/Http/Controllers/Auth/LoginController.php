@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Symfony\Component\HttpFoundation\Request;
+// use Symfony\Component\HttpFoundation\Session\Session;
+use Session;
+use App\Helpers\Properti_app;
+use Config;
 
 class LoginController extends Controller
 {
@@ -48,21 +52,31 @@ class LoginController extends Controller
     {
         return 'username';
     }
- 
+
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
             $this->username() => 'required|string',
-                                  'password' => 'required|string',
-                                  'year' => 'required|string'
+            'password' => 'required|string',
+            'year' => 'required|string'
         ]);
     }
 
     protected function authenticated(Request $request, $user)
     {
-        $this->setYear($request->input('year'));
-        $this->setPath();
-        $request->session()->put('year', $request->input('year'));
-        return redirect()->intended('/');
+        if ($request->input('year')) {
+            $dbname = trim(Properti_app::getDb() . $request->input('year'));
+            $value_setting = [
+                'DB_DATABASE'   => $dbname,
+                'TAHUN_ANGGARAN' => $request->input('year')
+            ];
+            Properti_app::changeEnv($value_setting);
+            $request->session()->put('dbname', $dbname);
+            $request->session()->put('year', $request->input('year'));
+            $this->setYear($request->input('year'));
+            $this->setPath();
+
+            return redirect()->intended('/');
+        }
     }
 }

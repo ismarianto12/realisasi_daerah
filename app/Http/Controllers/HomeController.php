@@ -20,6 +20,8 @@ class HomeController extends Controller
 
     function index(Request $request)
     {
+
+        // dd(Config::get('database.connections.mysql'));
         //print_r($request->session()->get('year'));
         $tahun    = $request->session()->get('year');
         $data     = null;
@@ -63,7 +65,7 @@ class HomeController extends Controller
                 ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                 ->where('tahun', $tahun)
                 ->first();
-
+            if ($kpadtot == '') return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
             $nilai = ($kpadtot['total']) ? ($kpadtot['total']) : 0;
             $r[$ix]['kd_rek']['nil'] = $kelompok['kd_rek_kelompok'];
             $r[$ix]['nm_rek']['nil'] = $kelompok['nm_rek_kelompok'];
@@ -80,14 +82,26 @@ class HomeController extends Controller
                     ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tahun', $tahun)
                     ->first();
-                $trekjenis   = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
-                $r[$ix]['kd_rek']['nil']  = $rek_jenis['kd_rek_jenis'];
-                $r[$ix]['nm_rek']['nil']  = $rek_jenis['nm_rek_jenis'];
-                $r[$ix]['jumlah']['nil']  = $trekjenis;
-                $ix++;
+                if ($rek_jeniss == '') {
+                    return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+                } else {
+
+                    $trekjenis   = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
+                    $r[$ix]['kd_rek']['nil']  = $rek_jenis['kd_rek_jenis'];
+                    $r[$ix]['nm_rek']['nil']  = $rek_jenis['nm_rek_jenis'];
+                    $r[$ix]['jumlah']['nil']  = $trekjenis;
+                    $ix++;
+                }
             }
         }
         return $r;
+
+        $result = isset($r) ? $r : 0;
+        if ($result != 0) {
+            return $r;
+        } else {
+            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+        }
     }
 
     private function grafik_bymonth()

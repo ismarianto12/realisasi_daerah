@@ -21,14 +21,13 @@ class SetupTahunAnggaranController extends Controller
 
     public function __construct()
     {
-  
     }
 
     public function index()
     {
         $title   = $this->title;
         $route   = $this->route;
-        $toolbar = ['d','c','l'];
+        $toolbar = ['d', 'c', 'l'];
         return view($this->view . 'index', compact('title', 'route', 'toolbar'));
     }
 
@@ -125,8 +124,8 @@ class SetupTahunAnggaranController extends Controller
             })
             ->editColumn('ket', function ($p) {
                 return "Keterangan";
-            })            
-            ->rawColumns(['id', 'tahun','ket'])
+            })
+            ->rawColumns(['id', 'tahun', 'ket'])
             ->toJson();
     }
 }

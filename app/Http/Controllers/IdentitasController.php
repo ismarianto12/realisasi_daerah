@@ -100,7 +100,7 @@ class IdentitasController extends Controller
         //
     }
 
-    //get api data 
+    //get api data
 
     public function notifopd(Request $request)
     {
@@ -127,7 +127,7 @@ class IdentitasController extends Controller
                 $r['opn_nm']   = $satker['tmsikd_satker']['nama'];
                 $row[]         = $r;
             }
-        } 
+        }
         if ($request->total != '') {
             return response()->json(count($row));
         } else {

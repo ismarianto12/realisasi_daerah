@@ -23,9 +23,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group form-show-validation row">
-                        <?php
-                        echo __('Not Found');
-                        ?>
+                        <b>
+                            <?php
+                            echo __($exception->getMessage() ?: 'Forbidden');
+                            ?>
+                        </b>
                         <hr />
                         <a href="javascript:history.go(-1)" class="btn btn-primary">Ke Halaman sebelumny</a>
                     </div>
@@ -36,4 +38,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\realisasi_daerah\resources\views/errors/404.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\realisasi_daerah\resources\views/errors/403.blade.php ENDPATH**/ ?>

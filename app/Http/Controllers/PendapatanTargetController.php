@@ -61,8 +61,9 @@ class PendapatanTargetController extends Controller
         if ($levelid == 3) {
             $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', $satkerid);
         }
-        if ($request->tmrekening_akun_kelompok_jenis_objek_id != 0) {
-            $rincian_rek_id =  $request->tmrekening_akun_kelompok_jenis_objek_id;
+        $kelompok_jenis_object_id = isset($request->tmrekening_akun_kelompok_jenis_objek_id) ? $request->tmrekening_akun_kelompok_jenis_objek_id : 0;
+        if ($kelompok_jenis_object_id != 0) {
+            $rincian_rek_id = $kelompok_jenis_object_id;
             $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian_rek_id);
         }
         return DataTables::of($ls)

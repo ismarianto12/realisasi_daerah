@@ -1,4 +1,3 @@
-  
 <?php $__env->startSection('title','Halaman depan aplikasi'); ?>
 <?php $__env->startSection('content'); ?>
 <?php
@@ -10,7 +9,7 @@ $username = Auth::user()->username;
     $(function(){
             $.confirm({title : 'Hy <?php echo e($username); ?> silahkan laporkan pendpatan hari ini',
                        content : 'Pendapatan yang belum di laporkan : Pada <?php echo e(date('Y-m-d')); ?>'});
-        }) 
+        })
 </script>
 <?php endif; ?>
 
@@ -45,13 +44,14 @@ $username = Auth::user()->username;
         <div class="col-md-6">
             <div class="card full-height">
                 <div class="card-body">
-                    <div class="card-title">Pertumbuhan Pendapatan tahun <?php echo e(Properti_app::getTahun()); ?>.</div>
+                    <div class="card-title">Pertumbuhan Pendapatan dalam satu tahun.</div>
                     <div class="row py-3">
                         <div class="col-md-12">
-                            
                             <div id="chart-container">
-                            <div id="canvas"></div>                            
-                            </div>   
+                                <figure class="highcharts-figure">
+                                    <div id="container"></div>
+                                </figure>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,73 +105,23 @@ $username = Auth::user()->username;
 
 <?php $__env->startSection('script'); ?>
 
-
 <script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/highcharts.js"></script>
 <script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/exporting.js"></script>
 <script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/export-data.js"></script>
 <script src="<?php echo e(asset('assets/plugins/hight-cart')); ?>/accessibility.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-
-
 
 <script>
-var labelsarr = [<?php echo e($namarekening); ?>];
-                 
-var values = [<?php echo e($jumlahpad); ?>];
-
-var ctx = document.getElementById('canvas').getContext('2d');
-var chart = new Chart(ctx, {
-   type: 'bar',
-   data: {
-      labels: labelsarr,
-      datasets: [
-     {
-         label: 'Amount',
-         data: values,
-         backgroundColor: 'rgba(0, 119, 204, 0.8)',
-      }
-]
-   },
-   options: {
-      tooltips: {
-         callbacks: {
-            label: function(t, d) {
-               var xLabel = d.datasets[t.datasetIndex].label;
-               var yLabel = t.yLabel >= 1000 ? '$' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
-               return xLabel + ': ' + yLabel;
-            }
-         }
-      },
-      scales: {
-         yAxes: [{
-            ticks: {
-               callback: function(value, index, values) {
-                  if (parseInt(value) >= 1000) {
-                     return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                  } else {
-                     return '$' + value;
-                  }
-               }
-            }
-         }]
-      }
-   }
-});   
-
-</script>
-
-<script>
-    $(function(){     
+    $(function(){
         //jumlah tahun ini
         $.getJSON('<?php echo e(Url("api_grafik/total_pad")); ?>',function(data){
             $('.tpadtahun').text(data.total);
-        }); 
-        
+        });
+
         //jumlmah hari ini
      })
-    
+
     $.getJSON('<?php echo e(Url("api_grafik/jumlah_rek?jenis=3")); ?>',function(data){
-        rek_jenis_sub = data.data;  
+        rek_jenis_sub = data.data;
         Circles.create({
             id: 'circles-3',
             radius: 45,
@@ -186,7 +136,7 @@ var chart = new Chart(ctx, {
             styleWrapper: true,
             styleText: true
         })
-    });  
+    });
 
 
     Highcharts.chart('container', {
@@ -197,7 +147,7 @@ var chart = new Chart(ctx, {
             text: 'Grafik PAD Tahun <?php echo e($tahun); ?>'
         },
         xAxis: {
-            categories: [ 
+            categories: [
             <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               '<?php echo e($item['nm_rek']['nil']); ?>',
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -217,17 +167,17 @@ var chart = new Chart(ctx, {
                 stacking: 'normal'
             }
         },
-        series: [ 
+        series: [
         <?php $__currentLoopData = $graf_pad; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         {
             name: "<?php echo $item['kd_rek']['nil'] ?> - <?php echo $item['nm_rek']['nil'] ?>",
             data: [<?php echo $item['jumlah']['nil'] ?>]
-        },  
+        },
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         ]
     });
-    
- 
+
+
         $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
             type: 'line',
             height: '70',
@@ -236,7 +186,7 @@ var chart = new Chart(ctx, {
             lineColor: '#ffa534',
             fillColor: 'rgba(255, 165, 52, .14)'
         });
-     
+
 </script>
 
 <script>
@@ -267,33 +217,31 @@ var chart = new Chart(ctx, {
       }
     },
     series: [
-    <?php $__currentLoopData = $pad_months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+    <?php $__currentLoopData = $pad_months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         {
           name: '<?php echo e($list['kd_pad']['nil']); ?> - <?php echo e($list['nama_pad']['nil']); ?>',
           data: [<?php echo e($list['data_pad']['nil']); ?>]
-        }, 
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>      
+        },
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     ]
   });
 
     document.getElementById('small').addEventListener('click', function () {
         chart.setSize(400);
     });
-    
+
     document.getElementById('large').addEventListener('click', function () {
         chart.setSize(600);
     });
-    
+
     document.getElementById('auto').addEventListener('click', function () {
         chart.setSize(null);
     });
-    
+
 
 </script>
 
-
-
-
 <?php $__env->stopSection(); ?>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\realisasi_daerah\resources\views/dashboard/home.blade.php ENDPATH**/ ?>
