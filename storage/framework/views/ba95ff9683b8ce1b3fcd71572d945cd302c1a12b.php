@@ -138,7 +138,11 @@ $username = Auth::user()->username;
         })
     });
 
-
+    Highcharts.setOptions({
+  lang: {
+    numericSymbols: ['Juta / lebih', 'Juta/lebih', 'Juta/lebih', 'Juta/lebih']
+  }
+});
     Highcharts.chart('container', {
         chart: {
             type: 'bar'
@@ -190,6 +194,13 @@ $username = Auth::user()->username;
 </script>
 
 <script>
+
+Highcharts.setOptions({
+  lang: {
+    numericSymbols: ['D.Juta / lebih', 'D.Juta / lebih', 'D.Juta / lebih', 'D.Juta / lebih']
+  }
+});
+
     Highcharts.chart('pad_chart_graph', {
     chart: {
       type: 'line'
@@ -220,7 +231,8 @@ $username = Auth::user()->username;
     <?php $__currentLoopData = $pad_months; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         {
           name: '<?php echo e($list['kd_pad']['nil']); ?> - <?php echo e($list['nama_pad']['nil']); ?>',
-          data: [<?php echo e($list['data_pad']['nil']); ?>]
+          data: [<?php echo e($list['data_pad']['nil']); ?>],
+        
         },
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     ]

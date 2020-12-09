@@ -139,7 +139,11 @@ $username = Auth::user()->username;
         })
     });
 
-
+    Highcharts.setOptions({
+  lang: {
+    numericSymbols: ['Juta / lebih', 'Juta/lebih', 'Juta/lebih', 'Juta/lebih']
+  }
+});
     Highcharts.chart('container', {
         chart: {
             type: 'bar'
@@ -191,6 +195,13 @@ $username = Auth::user()->username;
 </script>
 
 <script>
+
+Highcharts.setOptions({
+  lang: {
+    numericSymbols: ['D.Juta / lebih', 'D.Juta / lebih', 'D.Juta / lebih', 'D.Juta / lebih']
+  }
+});
+
     Highcharts.chart('pad_chart_graph', {
     chart: {
       type: 'line'
@@ -221,7 +232,8 @@ $username = Auth::user()->username;
     @foreach($pad_months as $list)
         {
           name: '{{ $list['kd_pad']['nil'] }} - {{ $list['nama_pad']['nil'] }}',
-          data: [{{ $list['data_pad']['nil'] }}]
+          data: [{{ $list['data_pad']['nil'] }}],
+        
         },
         @endforeach
     ]
