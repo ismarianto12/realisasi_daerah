@@ -80,12 +80,12 @@ class PendapatanTargetController extends Controller
             })
             ->editColumn('jenis_pad', function ($p) use ($exrincian) {
                 if ($exrincian == '' || $exrincian == 0) {
-                    // return 'Loading data ...';
-                    $id_kelompok_rincian = $p->tmrekening_akun_kelompok_jenis_objek_rincian_id;
-                    $get_idjenis  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id_kelompok_rincian)->first();
-                    $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::where('kd_rek_obj', $get_idjenis['tmrekening_akun_kelompok_jenis_objek_id'])->first();
-                    // dd($pad_jenis->nm_rek_obj); 
-                    return '<b>[' . $pad_jenis->kd_rek_obj . ']' . $pad_jenis->nm_rek_obj . '</b>';
+                    return 'Loading data ...';
+                    // $id_kelompok_rincian = $p->tmrekening_akun_kelompok_jenis_objek_rincian_id;
+                    // $get_idjenis  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id_kelompok_rincian)->first();
+                    // $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::where('kd_rek_obj', $get_idjenis['tmrekening_akun_kelompok_jenis_objek_id'])->first();
+                    // // dd($pad_jenis->nm_rek_obj); 
+                    // return '<b>[' . $pad_jenis->kd_rek_obj . ']' . $pad_jenis->nm_rek_obj . '</b>';
                 } else {
                     $id_kelompok_rincian = $p->Tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id;
                     $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::find($id_kelompok_rincian);
