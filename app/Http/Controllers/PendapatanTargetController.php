@@ -44,7 +44,7 @@ class PendapatanTargetController extends Controller
         return view($this->view . 'index', [
             'route'            => $this->route,
             'toolbar'          => ['c', 'd'],
-            'title'            => 'Setting Target Pendpatan',
+            'title'            => 'Setting Target Pendapatan',
             'tmrekening_akuns' => Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get(),
         ]);
     }
@@ -55,25 +55,43 @@ class PendapatanTargetController extends Controller
      */
     public function api(Request $request)
     {
-        $ls       = TmpendapatantargetModel::with(['Tmrekening_akun_kelompok_jenis_objek_rincian'])->get();
+        $ls       = TmpendapatantargetModel::with('Tmrekening_akun_kelompok_jenis_objek_rincian');
+        // => function ($join) {
+        // $join->join('tmrekening_akun_kelompok_jenis_objeks', 'tmrekening_akun_kelompok_jenis_objek_rincians.tmrekening_akun_kelompok_jenis_objek_id', '=', 'tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj');
+        // }  
+
         $levelid  = Properti_app::getlevel();
         $satkerid = Auth::user()->sikd_satker_id;
         if ($levelid == 3) {
             $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', $satkerid);
         }
-        $kelompok_jenis_object_id = isset($request->tmrekening_akun_kelompok_jenis_objek_id) ? $request->tmrekening_akun_kelompok_jenis_objek_id : 0;
-        if ($kelompok_jenis_object_id != 0) {
-            $rincian_rek_id = $kelompok_jenis_object_id;
-            $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian_rek_id);
+        $rekening_rincian_id = isset($request['tmrekening_akun_kelompok_jenis_objek_rincian_id']) ? $request['tmrekening_akun_kelompok_jenis_objek_rincian_id'] : 0;
+        if ($rekening_rincian_id == 0) {
+        } else {
+            $frekening_rincian_id = $rekening_rincian_id;
+            $ls = $ls->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $frekening_rincian_id);
         }
-        return DataTables::of($ls)
+        $rls = $ls->get();
+        // dd($rls);
+        $exrincian = $rekening_rincian_id;
+        return DataTables::of($rls)
             ->editColumn('id', function ($p) {
                 return "<input type='checkbox' name='cbox[]' value='" . $p->id . "' />";
             })
-            ->editColumn('jenis_pad', function ($p) {
-                $id_rincian = $p->Tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id;
-                $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::find($id_rincian);
-                return '<b>' . $pad_jenis['nm_rek_obj'] . '</b>';
+            ->editColumn('jenis_pad', function ($p) use ($exrincian) {
+                if ($exrincian == '' || $exrincian == 0) {
+                    // return 'Loading data ...';
+                    $id_kelompok_rincian = $p->tmrekening_akun_kelompok_jenis_objek_rincian_id;
+                    $get_idjenis  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id_kelompok_rincian)->first();
+                    $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::where('kd_rek_obj', $get_idjenis['tmrekening_akun_kelompok_jenis_objek_id'])->first();
+                    // dd($pad_jenis->nm_rek_obj); 
+                    return '<b>[' . $pad_jenis->kd_rek_obj . ']' . $pad_jenis->nm_rek_obj . '</b>';
+                } else {
+                    $id_kelompok_rincian = $p->Tmrekening_akun_kelompok_jenis_objek_rincian->tmrekening_akun_kelompok_jenis_objek_id;
+                    $pad_jenis  = Tmrekening_akun_kelompok_jenis_objek::find($id_kelompok_rincian);
+                    // dd($pad_jenis->nm_rek_obj); 
+                    return '<b>[' . $pad_jenis->kd_rek_obj . ']' . $pad_jenis->nm_rek_obj . '</b>';
+                }
             })
             ->editColumn('djumlah', function ($p) {
                 return "<b><a href='" . route($this->route . 'edit', $p->tmrekening_akun_kelompok_jenis_objek_rincian_id) . "' class='btn btn-success btn-xs'> " . number_format($p->jumlah, 0, 0, '.') . "</a></b>";
@@ -81,11 +99,15 @@ class PendapatanTargetController extends Controller
             ->editColumn('djumlah_perubahan', function ($p) {
                 return "<b>" . number_format($p->jumlah, 0, 0, '.') . "</b>";
             })
-            ->editColumn('rincian', function ($p) {
-                return '<b>' . $p->Tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj . '</b>';
+            ->editColumn('rincian', function ($p) use ($exrincian) {
+                if ($exrincian == '' || $exrincian == 0) {
+                    return 'Loading data ...';
+                } else {
+                    return '<b>' . $p->Tmrekening_akun_kelompok_jenis_objek_rincian->nm_rek_rincian_obj . '</b>';
+                }
             })
             ->addIndexColumn()
-            ->rawColumns(['id', 'jenis_pad', 'rincian', 'djumlah', 'djumlah_perubahan'])
+            ->rawColumns(['id', 'jenis_pad', 'rincian', 'djumlah', 'djumlah_perubahan', 'rincian'])
             ->toJson();
     }
 

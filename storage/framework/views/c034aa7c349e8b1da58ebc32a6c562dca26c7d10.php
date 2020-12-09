@@ -12,7 +12,7 @@
 
         </td>
         <td>
-          <input type="text" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
+          <input type="number" onkeyup="gettarget()" name="bulan_<?php echo e($i); ?>" id="bulan_<?php echo e($f); ?>" class="form-control"
             placeholder="Bulan ke  .. <?php echo e($f); ?>" value="0">
         </td>
         </tr>
@@ -34,7 +34,7 @@
         </td>
 
         <td>
-          <input type="text" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($r); ?>" class="form-control"
+          <input type="number" onkeyup="getperubahan()" name="tpbulan_<?php echo e($i); ?>" id="tpbulan_<?php echo e($r); ?>" class="form-control"
             placeholder="Target Perubahan Bulan ke  .. <?php echo e($r); ?>" value="0">
         </td>
         </tr>
@@ -57,8 +57,8 @@
       $j = $i+1;   
    ?>
   $("#bulan_<?php echo e($j); ?>").on('keyup', function(){
-    var n = parseInt($(this).val().replace(/\D/g,''),10);
-    $(this).val(n.toLocaleString()); 
+    // var n = parseInt($(this).val().replace(/\D/g,''),10);
+    // $(this).val(n.toLocaleString()); 
  });
  <?php endfor; ?>
 
@@ -67,8 +67,8 @@
    $js = $i+1;   
  ?>
  $("#tpbulan_<?php echo e($js); ?>").on('keyup', function(){
-  var n = parseInt($(this).val().replace(/\D/g,''),10);
-  $(this).val(n.toLocaleString()); 
+//   var n = parseInt($(this).val().replace(/\D/g,''),10);
+//   $(this).val(n.toLocaleString()); 
 });
 <?php endfor; ?>
    
@@ -84,7 +84,7 @@
 
      total = total + Number(jnilai);
     }
-     result.value = nformat(total);
+     result.value = total;
       if(document.getElementById('pbulan_total').value =="" && document.getElementById('pbulan_total').value =="" && document.getElementById('pbulan_total').value =="" ){
       result.value = 0;
      } 
@@ -104,21 +104,23 @@ function getperubahan(){
 
   total_perubahan = total_perubahan + Number(fjnilai);
  }
- result.value = nformat(total_perubahan);
+ result.value = total_perubahan;
    if(document.getElementById('tperubahan').value =="" && document.getElementById('tperubahan').value =="" && document.getElementById('tperubahan').value =="" ){
    result.value = 0;
   } 
 }
-
+function parseCurrency( num ) {
+    return parseFloat( num.replace( /,/g, '') );
+}
  function hitung_bersih(){ 
    $(function(){   
    var tbersih = $('#pbulan_total').val();
    var ctotal  = $('#tperubahan').val();
 
-   var rtbersih = tbersih.replace(/,/g,'');
-   var rctotal   = ctotal.replace(/,/g,'');
+   var rtbersih = tbersih;
+   var rctotal  = ctotal;
 
-   var jumlahkan = Number(rtbersih) + Number(rctotal);
+   var jumlahkan =  parseInt(tbersih) + parseInt(rctotal);
    $('#tpendapatan').val(jumlahkan);  
 
   }); 
