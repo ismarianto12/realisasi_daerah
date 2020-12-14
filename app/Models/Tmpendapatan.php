@@ -227,13 +227,23 @@ class Tmpendapatan extends Model
                     ->whereBetween('tanggal_lapor', [$dari, $sampai])
                     ->first();
 
-                // $kurleb_jobj      = 0;
-                // $persen_jobj      = 0;
 
-                $kurleb_jobj      = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
-                $total_jobj       = ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
-                $persen_jobj      =  ((int)$pagu_jobj['total'] / (int)$total_jobj) * 100;
+                if ($pagu_jobj['total'] != 0) {
+                    $kurleb_jobj  = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
+                } else {
+                    $kurleb_jobj = 0;
+                }
 
+                if ($periode_ini_jobj['total'] != 0) {
+                    $total_jobj  =   ($periode_ini_jobj['total'] + $periodel_jobj['trlalu']);
+                } else {
+                    $total_jobj  = 0;
+                }
+                if ($pagu_jobj['total'] != 0) {
+                    $persen_jobj      =  ((int)$pagu_jobj['total'] / (int)$total_jobj) * 100;
+                } else {
+                    $persen_jobj = 0;
+                }
                 $dataset[$idx]['kd_rek']['val']       = $rek_obj['kd_rek_obj'];
                 $dataset[$idx]['nm_rek']['val']       = $rek_obj['nm_rek_obj'];
                 $dataset[$idx]['pagu']['val']         = ($pagu_jobj['total']) ? Html_number::decimal($pagu_jobj['total']) : 0;
@@ -266,12 +276,23 @@ class Tmpendapatan extends Model
 
                         ->whereBetween('tanggal_lapor', [$dari, $sampai])
                         ->first();
-
-                    $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['ftotal']);
+                    if ($pagu_rincian['total'] != 0) {
+                        $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['ftotal']);
+                    } else {
+                        $kurleb_rincian = 0;
+                    }
                     // $persen_rincian      = ;
-                    $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
-                    $persen_rincian      =  ((int)$pagu_rincian['total'] / (int)$total_rincian) * 100;
+                    if ($periode_rincian['total'] != 0) {
 
+                        $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
+                    } else {
+                        $total_rincian = 0;
+                    }
+                    if ($pagu_rincian['total'] != 0 && $total_rincian != 0) {
+                        $persen_rincian  =  ((int)$pagu_rincian['total'] / (int)$total_rincian) * 100;
+                    } else {
+                        $persen_rincian = 0;
+                    }
 
                     $dataset[$idx]['kd_rek']['val']        = $rincian['kd_rek_rincian_obj'];
                     $dataset[$idx]['nm_rek']['val']        = $rincian['nm_rek_rincian_obj'];
