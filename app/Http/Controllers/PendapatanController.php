@@ -116,9 +116,8 @@ class PendapatanController extends Controller
         } else {
             $satker_id = $request->tmsikd_satker_id;
         }
-        $data        = Tmpendapatan::datatable($satker_id)->get();
-        $tgl_lapor = $request->tgl_lapor;
-
+        $data      = Tmpendapatan::datatable($satker_id)->get();
+        $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor  : ''; 
         $par = [
             'tgl_lapor' => $tgl_lapor,
             'level_id' => $level_id = Properti_app::getlevel(),
