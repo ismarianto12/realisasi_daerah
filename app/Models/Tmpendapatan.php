@@ -203,7 +203,7 @@ class Tmpendapatan extends Model
             $dataset[$idx]['periode_ini']['val']  = ($periode_ini_kjenis['total']) ? Html_number::decimal($periode_ini_kjenis['total']) : 0;
             $dataset[$idx]['total']['val']        = Html_number::decimal($total_kjenis);
             $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_kjenis);
-            $dataset[$idx]['persen']['val']       = round($persen_kjenis,PHP_ROUND_HALF_UP);
+            $dataset[$idx]['persen']['val']       = round($persen_kjenis, PHP_ROUND_HALF_UP);
             $dataset[$idx]['bold']['val']         = true;
             $idx++;
             //by kelompok jenis obj    
@@ -241,7 +241,7 @@ class Tmpendapatan extends Model
                 $dataset[$idx]['periode_ini']['val']  = ($periode_ini_jobj['total']) ? Html_number::decimal($periode_ini_jobj['total']) : 0;
                 $dataset[$idx]['total']['val']        = Html_number::decimal($total_jobj);
                 $dataset[$idx]['divide']['val']       = Html_number::decimal($kurleb_jobj);
-                $dataset[$idx]['persen']['val']       = round($persen_jobj,PHP_ROUND_HALF_UP);
+                $dataset[$idx]['persen']['val']       = round($persen_jobj, PHP_ROUND_HALF_UP);
                 $dataset[$idx]['bold']['val']         = true;
                 $idx++;
 
@@ -258,16 +258,12 @@ class Tmpendapatan extends Model
                     $periodel_rincian    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
                         ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
                         ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-                        // ->where('tanggal_lapor', '>=', $par['dperiode'])
-                        // ->where('tanggal_lapor', '<=', $par['speriode'])
                         ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                         ->first();
                     $periode_rincian = Tmpendapatan::select(\DB::raw('sum(jumlah) as ftotal'))
                         ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
                         ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
 
-                        // ->where('tanggal_lapor', '>=', $par['dari'])
-                        // ->where('tanggal_lapor', '<=', $par['sampai'])
                         ->whereBetween('tanggal_lapor', [$dari, $sampai])
                         ->first();
 
@@ -284,7 +280,7 @@ class Tmpendapatan extends Model
                     $dataset[$idx]['periode_ini']['val']   = ($periode_rincian['total']) ? Html_number::decimal($periode_rincian['total']) : 0;
                     $dataset[$idx]['total']['val']         = Html_number::decimal($total_rincian);
                     $dataset[$idx]['divide']['val']        = Html_number::decimal($kurleb_rincian);
-                    $dataset[$idx]['persen']['val']        = round($persen_rincian,PHP_ROUND_HALF_UP);
+                    $dataset[$idx]['persen']['val']        = round($persen_rincian, PHP_ROUND_HALF_UP);
                     $dataset[$idx]['bold']['val']          = false;
                     $idx++;
                     //by kelompok jenis object rincian sub   
@@ -300,22 +296,16 @@ class Tmpendapatan extends Model
                         $periodel_rincian_sub    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
                             ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $rincian_obj_sub['kd_rek_rincian_objek_sub'])
                             ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-
-                            // ->where('tanggal_lapor', '>=', $par['dperiode'])
-                            // ->where('tanggal_lapor', '<=', $par['speriode'])
                             ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                             ->first();
 
                         $periode_rincian_sub    = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
                             ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', $rincian_obj_sub['kd_rek_rincian_objek_sub'])
                             ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-
-                            // ->where('tanggal_lapor', '>=', $par['dari'])
-                            // ->where('tanggal_lapor', '<=', $par['sampai'])
                             ->whereBetween('tanggal_lapor', [$dari, $sampai])
                             ->first();
 
-                            // silentline
+                        // silentline
                         $pagu_objsub        = 0;
                         $periodel_objsub    = 0;
                         $periode_ini_objsub = 0;
