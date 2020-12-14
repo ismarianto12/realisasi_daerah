@@ -138,40 +138,32 @@ class PendapatanController extends Controller
 
                 return "<a style='color: #fff;' to='" . Url('pendapatan/pendapatandetail/' . $rincian_id . '?rincian_id=' . $rincian_id . '&tgl_lapor=' . $tgl_lapor . '&tmsikd_satker_id=' . $tmsikd_satker_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
-            ->editColumn('tanggal_lapor',  function ($p) use ($par) { 
+            ->editColumn('tanggal_lapor',  function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
-                if ($par['level_id'] == 3) {
-                    $pad->where('is_deleted', 0);
-                } else {
-                }
+
                 $r = $pad->first();
                 return ($r['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($r->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
             })
             ->editColumn('volume',  function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
-                $pad->where('tmsikd_satker_id',$par['satker_id']); 
+                $pad->where('tmsikd_satker_id', $par['satker_id']);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
-                if ($par['level_id'] == 3) {
-                    $pad->where('is_deleted', 0);
-                } else {
-                }
                 $r = $pad->first();
                 return ($r['volume'] == 0 ? '' : Html_number::decimal($r['volume']));
             })
             ->editColumn('jumlah_lapor', function ($p) use ($par) {
-
                 $tgl_lapor = $par['tgl_lapor'];
-                $r   = Tmpendapatan::Select(\DB::raw('sum(jumlah) as tot_lapor'))
+                $rf   = Tmpendapatan::Select(\DB::raw('sum(jumlah) as tot_lapor'))
                     ->where('tanggal_lapor', $tgl_lapor)
-                    ->where('tmsikd_satker_id',$par['satker_id'])
+                    ->where('tmsikd_satker_id', $par['satker_id'])
                     ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
                     ->groupBy('tmrekening_akun_kelompok_jenis_objek_rincian_id')
                     ->first();
 
-                return ($r['tot_lapor']) ? Html_number::decimal($r['tot_lapor']) : '<b>Kosong. </b>';
+                return ($rf['tot_lapor']) ? Html_number::decimal($rf['tot_lapor']) : '<b>Kosong. </b>';
             })
             ->editColumn('action', function ($p) use ($par) {
 
@@ -181,9 +173,9 @@ class PendapatanController extends Controller
                 $rincian_id = $p->kd_rek_rincian_obj;
 
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
-                $pad->where('tmsikd_satker_id',$par['satker_id']);
+                $pad->where('tmsikd_satker_id', $par['satker_id']);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
- 
+
                 if ($par['level_id'] == 3) {
                     $pad->where('is_deleted', 0);
                 } else {
@@ -611,7 +603,7 @@ class PendapatanController extends Controller
     public function show($id)
     {
 
-        return abort(404,'Saat ini halam tidak bisa di tampilkan karena tidak tersedia');
+        return abort(404, 'Saat ini halam tidak bisa di tampilkan karena tidak tersedia');
         // *
         $title   = 'Menampilkan | ' . $this->title;
         $route   = $this->route;

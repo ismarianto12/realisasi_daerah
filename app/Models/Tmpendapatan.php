@@ -273,9 +273,11 @@ class Tmpendapatan extends Model
                     $periode_rincian = Tmpendapatan::select(\DB::raw('sum(jumlah) as ftotal'))
                         ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
                         ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
-
                         ->whereBetween('tanggal_lapor', [$dari, $sampai])
                         ->first();
+
+                    // dd($periode_rincian);
+
                     if ($pagu_rincian['total'] != 0) {
                         $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['ftotal']);
                     } else {
