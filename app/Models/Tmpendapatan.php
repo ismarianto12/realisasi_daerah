@@ -166,7 +166,7 @@ class Tmpendapatan extends Model
         $last_to    = $par['speriode'];
 
         $jeniss = Tmpendapatan::getrekeningbySatker([])
-            ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+            ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '=', 1)
             ->groupBy('kd_rek_jenis')->get();
 
         //get pagu total from type by accout object
@@ -193,7 +193,7 @@ class Tmpendapatan extends Model
 
             $kurleb_kjenis      = ($pagu_kjenis['total'] - $periode_ini_kjenis['total']);
             $total_kjenis       = ($periode_ini_kjenis['total'] + $periodel_kjenis['trlalu']);
-            $persen_kjenis      = ((int)$pagu_kjenis['total'] / (int)$total_kjenis) * 100;
+            $persen_kjenis      = 0; //((int)$pagu_kjenis['total'] / (int)$total_kjenis) * 100;
 
 
             $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
@@ -222,11 +222,11 @@ class Tmpendapatan extends Model
                     ->first();
 
                 $periode_ini_jobj = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
-                    ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,5)'), $rek_obj['kd_rek_obj'])
+                    // ->where(\DB::raw(' $rek_obj['kd_rek_obj'].',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), $rek_obj['kd_rek_obj'])
+                    ->where(\DB::raw('LOCATE(' . $rek_obj['kd_rek_obj'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
                     ->whereBetween('tanggal_lapor', [$dari, $sampai])
                     ->first();
-
 
                 if ($pagu_jobj['total'] != 0) {
                     $kurleb_jobj  = ($pagu_jobj['total'] - $periode_ini_jobj['total']);
@@ -240,7 +240,7 @@ class Tmpendapatan extends Model
                     $total_jobj  = 0;
                 }
                 if ($pagu_jobj['total'] != 0) {
-                    $persen_jobj      =  ((int)$pagu_jobj['total'] / (int)$total_jobj) * 100;
+                    $persen_jobj      = 0; //((int)$pagu_jobj['total'] / (int)$total_jobj) * 100;
                 } else {
                     $persen_jobj = 0;
                 }
@@ -270,23 +270,27 @@ class Tmpendapatan extends Model
                         ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
                         ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                         ->first();
-                    $periode_rincian = Tmpendapatan::select(\DB::raw('sum(jumlah) as ftotal'))
-                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
-                        ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
+
+                    $periode_rincian =  Tmpendapatan::select(\DB::raw('jumlah as rtotal'))
+                        ->join('tmrekening_akun_kelompok_jenis_objek_rincians', function ($join) {
+                            $join->on('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
+                        })
                         ->whereBetween('tanggal_lapor', [$dari, $sampai])
+                        ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $rincian['kd_rek_rincian_obj'])
+                        ->where('tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id', '=', $par['tmsikd_satker_id'])
                         ->first();
 
                     // dd($periode_rincian);
 
                     if ($pagu_rincian['total'] != 0) {
-                        $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['ftotal']);
+                        $kurleb_rincian      = ($pagu_rincian['total'] - $periode_rincian['rtotal']);
                     } else {
                         $kurleb_rincian = 0;
                     }
                     // $persen_rincian      = ;
-                    if ($periode_rincian['total'] != 0) {
+                    if ($periode_rincian['rtotal'] != 0) {
 
-                        $total_rincian       = ($periode_rincian['total'] + $periodel_rincian['trlalu']);
+                        $total_rincian       = ($periode_rincian['rtotal'] + $periodel_rincian['trlalu']);
                     } else {
                         $total_rincian = 0;
                     }
@@ -300,7 +304,7 @@ class Tmpendapatan extends Model
                     $dataset[$idx]['nm_rek']['val']        = $rincian['nm_rek_rincian_obj'];
                     $dataset[$idx]['pagu']['val']          = ($pagu_rincian['total']) ? Html_number::decimal($pagu_rincian['total']) : 0;
                     $dataset[$idx]['periode_lalu']['val']  = ($periodel_rincian['trlalu']) ? Html_number::decimal($periodel_rincian['trlalu']) : 0;
-                    $dataset[$idx]['periode_ini']['val']   = ($periode_rincian['total']) ? Html_number::decimal($periode_rincian['total']) : 0;
+                    $dataset[$idx]['periode_ini']['val']   = ($periode_rincian['rtotal']) ? Html_number::decimal($periode_rincian['rtotal']) : 0;
                     $dataset[$idx]['total']['val']         = Html_number::decimal($total_rincian);
                     $dataset[$idx]['divide']['val']        = Html_number::decimal($kurleb_rincian);
                     $dataset[$idx]['persen']['val']        = round($persen_rincian, PHP_ROUND_HALF_UP);

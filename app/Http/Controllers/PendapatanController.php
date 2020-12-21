@@ -117,7 +117,7 @@ class PendapatanController extends Controller
             $satker_id = $request->tmsikd_satker_id;
         }
         $data      = Tmpendapatan::datatable($satker_id)->get();
-        $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor  : ''; 
+        $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor  : 0; 
         $par = [
             'tgl_lapor' => $tgl_lapor,
             'level_id' => $level_id = Properti_app::getlevel(),
@@ -142,8 +142,8 @@ class PendapatanController extends Controller
                 $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
 
-                $r = $pad->first();
-                return ($r['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($r->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+                $f = $pad->first();
+                return ($f['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($f->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
             })
             ->editColumn('volume',  function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];

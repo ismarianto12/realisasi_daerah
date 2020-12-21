@@ -116,7 +116,8 @@ class HomeController extends Controller
                     ->where('tahun', $tahun)
                     ->first();
                 $nilai[] = ($kpadtot['total']) ? $kpadtot['total'] : 0;
-            }
+             }
+// dd($nilai);
             return implode(',', $nilai);
         }
         $ix         = 0;
