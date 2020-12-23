@@ -20,7 +20,6 @@ class HomeController extends Controller
 
     function index(Request $request)
     {
-
         // dd(Config::get('database.connections.mysql'));
         //print_r($request->session()->get('year'));
         $tahun    = $request->session()->get('year');
@@ -46,10 +45,63 @@ class HomeController extends Controller
             $namarekening = [];
             $jumlahpad = [];
         }
+        $kelompoks  = Tmrekening_akun_kelompok::get();
+        $PadsPie = $this->PadsPie();
         return view(
             $this->view . 'home',
-            compact('data', 'namarekening', 'kode_rek', 'jumlahpad', 'tahun', 'graf_pad', 'pad_months')
+            compact('data', 'kelompoks','PadsPie', 'namarekening', 'kode_rek', 'jumlahpad', 'tahun', 'graf_pad', 'pad_months')
         );
+    }
+
+    private function PadsPie()
+    {
+        $ix         = 0;
+        $kelompoks  = Tmrekening_akun_kelompok::get();
+        $tahun      = Properti_app::tahun_sekarang();
+
+        foreach ($kelompoks as $kelompok) {
+            $kpadtot = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                ->where(\DB::raw('LOCATE(' . $kelompok['kd_rek_kelompok'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
+                ->where('tahun', $tahun)
+                ->first();
+            if ($kpadtot == '') return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+            $nilai = ($kpadtot['total']) ? ($kpadtot['total']) : 0;
+            $r[$ix]['kd_rek']['nil'] = $kelompok['kd_rek_kelompok'];
+            $r[$ix]['nm_rek']['nil'] = $kelompok['nm_rek_kelompok'];
+            $r[$ix]['jumlah']['nil'] = $nilai;
+            $ix++;
+
+            $rek_jeniss = Tmrekening_akun_kelompok_jenis::select('kd_rek_jenis', 'nm_rek_jenis')
+                ->where('tmrekening_akun_kelompok_id', $kelompok['kd_rek_kelompok'])
+                ->groupBy('kd_rek_jenis')
+                ->get();
+
+            foreach ($rek_jeniss as $rek_jenis) {
+                $rekjeniss = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                    ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
+                    ->where('tahun', $tahun)
+                    ->first();
+                if ($rek_jeniss == '') {
+                    return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+                } else {
+
+                    $trekjenis   = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
+                    $r[$ix]['kd_rek']['nil']  = $rek_jenis['kd_rek_jenis'];
+                    $r[$ix]['nm_rek']['nil']  = $rek_jenis['nm_rek_jenis'];
+                    $r[$ix]['jumlah']['nil']  = $trekjenis;
+                    $ix++;
+                }
+            }
+        }
+        return $r;
+
+        $result = isset($r) ? $r : 0;
+        if ($result != 0) {
+            return $r;
+        } else {
+            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+        }
     }
 
     private function grafik_pad()
@@ -116,8 +168,8 @@ class HomeController extends Controller
                     ->where('tahun', $tahun)
                     ->first();
                 $nilai[] = ($kpadtot['total']) ? $kpadtot['total'] : 0;
-             }
-// dd($nilai);
+            }
+            // dd($nilai);
             return implode(',', $nilai);
         }
         $ix         = 0;

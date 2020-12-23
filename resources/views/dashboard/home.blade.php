@@ -50,7 +50,7 @@ $username = Auth::user()->username;
                         <div class="col-md-12">
                             <div id="chart-container">
                                 <figure class="highcharts-figure">
-                                    <div id="container"></div>
+                                    <div id="pie_persentase"></div>
                                 </figure>
                             </div>
                         </div>
@@ -144,46 +144,131 @@ $username = Auth::user()->username;
     numericSymbols: ['Juta >', 'Juta > ', 'Juta > ', 'Juta >']
   }
 });
-    Highcharts.chart('container', {
-        chart: {
-            type: 'bar'
+ 
+ var colors = Highcharts.getOptions().colors,
+ @foreach($kelompoks as $fkelompok)
+           @php $implodeKelompok[]= '\'' . $fkelompok['nm_rek_kelompok'] . '\''; @endphp
+        @endforeach 
+ @php
+      $rkelompok = implode(',',$implodeKelompok);  @endphp
+  categories = [ @php echo $rkelompok @endphp],
+    data = [
+//data pendapatapan was here   
+@php $j=1; @endphp     
+@foreach($PadsPie as $listPad) 
+{
+            y: {{ $listPad['jumlah']['nil'] }},
+            color: colors[{{ $j }}],
+            drilldown: {
+                name: '{{ $listPad['nm_rek']['nil'] }}',
+                categories: [
+                    '{{ $listPad['nm_rek']['nil'] }}',
+                ],
+                data: [
+                  {{ $listPad['jumlah']['nil'] }},
+                ]
+            }  
         },
-        title: {
-            text: 'Grafik PAD Tahun {{ $tahun }}'
-        },
-        xAxis: {
-            categories: [
-            @foreach ($graf_pad as $item)
-              '{{ $item['nm_rek']['nil'] }}',
-            @endforeach
-            ]
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Total Pendapatan Daerah Tangaerang Selatan Tahun {{ $tahun }}'
-            }
-        },
-        legend: {
-            reversed: true
-        },
-        plotOptions: {
-            series: {
-                stacking: 'normal'
-            }
-        },
-        series: [
-        @foreach ($graf_pad as $item)
-        {
-            name: "@php echo $item['kd_rek']['nil'] @endphp - @php echo $item['nm_rek']['nil'] @endphp",
-            data: [@php echo $item['jumlah']['nil'] @endphp]
-        },
-        @endforeach
-        ]
+@php $j++; @endphp     
+
+@endforeach
+
+    ],
+    browserData = [],
+    versionsData = [],
+    i,
+    j,
+    dataLen = data.length,
+    drillDataLen,
+    brightness;
+
+
+// Build the data arrays
+for (i = 0; i < dataLen; i += 1) {
+
+    // add browser data
+    browserData.push({
+        name: categories[i],
+        y: data[i].y,
+        color: data[i].color
     });
 
+    // add version data
+    drillDataLen = data[i].drilldown.data.length;
+    for (j = 0; j < drillDataLen; j += 1) {
+        brightness = 0.2 - (j / drillDataLen) / 5;
+        versionsData.push({
+            name: data[i].drilldown.categories[j],
+            y: data[i].drilldown.data[j],
+            color: Highcharts.color(data[i].color).brighten(brightness).get()
+        });
+    }
+}
 
-        $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
+// Create the chart
+Highcharts.chart('pie_persentase', {
+    chart: {
+        type: 'pie'
+    },
+    title: {
+        text: 'Realisasi Pendapatan {{ Properti_app::getTahun() }}'
+    },
+    subtitle: {
+        text: 'Sumber badan pendapatan daerah Tangerang Selatan Kota'
+    },
+    plotOptions: {
+        pie: {
+            shadow: false,
+            center: ['50%', '50%']
+        }
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    series: [{
+        name: 'Pendapatan Daerah',
+        data: browserData,
+        size: '60%',
+        dataLabels: {
+            formatter: function () {
+                return this.y > 5 ? this.point.name : null;
+            },
+            color: '#ffffff',
+            distance: -30
+        }
+    }, {
+        name: 'Jumlah : ',
+        data: versionsData,
+        size: '80%',
+        innerSize: '60%',
+        dataLabels: {
+            formatter: function () {
+                // display only if larger than 1
+                return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
+                    this.y + '' : null;
+            }
+        },
+        id: 'versions'
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 400
+            },
+            chartOptions: {
+                series: [{
+                }, {
+                    id: 'versions',
+                    dataLabels: {
+                        enabled: false
+                    }
+                }]
+            }
+        }]
+    }
+});
+
+ $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
             type: 'line',
             height: '70',
             width: '100%',
