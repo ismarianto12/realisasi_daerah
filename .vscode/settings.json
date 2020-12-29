@@ -1,5 +1,6 @@
 {
     "workbench.preferredLightColorTheme": "Default Dark+",
     "workbench.preferredHighContrastColorTheme": "Default Dark+",
-    "workbench.colorTheme": "One Dark Pro"
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.editor.scrollToSwitchTabs": true
 }

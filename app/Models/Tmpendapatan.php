@@ -271,7 +271,7 @@ class Tmpendapatan extends Model
                         ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                         ->first();
 
-                    $periode_rincian =  Tmpendapatan::select(\DB::raw('jumlah as rtotal'))
+                    $periode_rincian =  Tmpendapatan::select(\DB::raw('sum(jumlah) as rtotal'))
                         ->join('tmrekening_akun_kelompok_jenis_objek_rincians', function ($join) {
                             $join->on('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
                         })

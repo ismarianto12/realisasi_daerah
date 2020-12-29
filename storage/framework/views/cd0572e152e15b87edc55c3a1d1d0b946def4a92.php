@@ -1,7 +1,5 @@
-@extends('layouts.template')
-
-@section('title','Pendapatan Daerah')
-@section('content')
+<?php $__env->startSection('title','Pendapatan Daerah'); ?>
+<?php $__env->startSection('content'); ?>
 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
@@ -27,9 +25,9 @@
                     <div class="col-sm-6">
                         <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
                             autocomplete="off" onchange="selectOnChange()">
-                            @foreach ($tahuns as $tahun)
-                            <option value="{{$tahun->id}}">{{$tahun->tahun}}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $tahuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($tahun->id); ?>"><?php echo e($tahun->tahun); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -39,20 +37,21 @@
                     <div class="col-sm-6">
                         <select name="tmsikd_satker_id" id="tmsikd_satker_id" class="form-control select2 " required
                             onchange="selectOnChange('tmsikd_satker_id')">
-                            @php
+                            <?php
                             $level = Properti_app::getlevel();
-                            @endphp
-                            @if($level == 3)
-                            @else
+                            ?>
+                            <?php if($level == 3): ?>
+                            <?php else: ?>
                             <option value="0">Semua Satuan kerja</option>
-                            @endif
+                            <?php endif; ?>
 
-                            @foreach($tmsikd_satkers as $tmsikd_satker)
-                            <option value="{{ $tmsikd_satker->id }}" @if($tmsikd_satker_id==$tmsikd_satker->id)
-                                selected="selected"@endif>
-                                [{{ $tmsikd_satker->kode }}] &nbsp; {{ $tmsikd_satker->nama }}
+                            <?php $__currentLoopData = $tmsikd_satkers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tmsikd_satker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($tmsikd_satker->id); ?>" <?php if($tmsikd_satker_id==$tmsikd_satker->id): ?>
+                                selected="selected"<?php endif; ?>>
+                                [<?php echo e($tmsikd_satker->kode); ?>] &nbsp; <?php echo e($tmsikd_satker->nama); ?>
+
                             </option>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                 </div>
@@ -67,12 +66,12 @@
                                         class="required-label">*</span></label>
                                 <div class="col-sm-4">
                                     <input type="text" id="dari" class="datepicker form-control" placeholder="Dari .."
-                                        value="{{ $dari }}">
+                                        value="<?php echo e($dari); ?>">
                                 </div>
                                 S /D
                                 <div class="col-sm-4">
                                     <input type="text" class="datepicker form-control" id="sampai"
-                                        placeholder="Sampai dengan" value="{{ $sampai }}">
+                                        placeholder="Sampai dengan" value="<?php echo e($sampai); ?>">
                                 </div>
                             </div>
 
@@ -84,11 +83,12 @@
                                         <select name="tmrekening_akun_id" class="form-control select2"
                                             id="tmrekening_akun_id">
                                             <option value="0">--Pilih Rekening Akun--</option>
-                                            @foreach($tmrekening_akuns as $key=>$tmrekening_akun)
-                                            <option value="{{ $tmrekening_akun->id }}">
-                                                {{ '['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun }}
+                                            <?php $__currentLoopData = $tmrekening_akuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$tmrekening_akun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($tmrekening_akun->id); ?>">
+                                                <?php echo e('['.$tmrekening_akun->kd_rek_akun.'] '.$tmrekening_akun->nm_rek_akun); ?>
+
                                             </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
     </div>
     <div id="btn_cetak"></div>
 </div>
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
     $(function(){
 
@@ -150,7 +150,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.kodejenis.kodekelompokByKodeakun', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -179,7 +179,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.kodeobjek.kodejenisByKodekelompok', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -205,7 +205,7 @@
                 selectOnChange();
             }else{
                 $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
+                url = "<?php echo e(route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id')); ?>".replace(':id', val);
                 $.get(url, function(data){
                     if(data){
                         $.each(data, function(index, value){
@@ -245,9 +245,9 @@
             $.alert('Pilih jenis File ');
         }else{
             if(jenis == 'pdf'){
-                window.open("{{ route('laporan.action_all') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');
+                window.open("<?php echo e(route('laporan.action_all')); ?>?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');
             }else{
-               window.location.href= "{{ route('laporan.action_all') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis;
+               window.location.href= "<?php echo e(route('laporan.action_all')); ?>?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis;
            }
        }
    }
@@ -261,5 +261,7 @@ function selectOnChange()
 
 </script>
 
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/laporan_pendapatan//report_peropd.blade.php ENDPATH**/ ?>

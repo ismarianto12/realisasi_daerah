@@ -1,67 +1,55 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
-use DataTables;
-use Html_number;
-use Sikd_list_option;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-
-use App\Models\Setupsikd\Tmsikd_bidang;
-use App\Models\Setupsikd\Tmsikd_satker;
-use App\Models\Setupsikd\Tmsikd_sub_skpd;
-use App\Models\Setupsikd\Tmsikd_sumber_anggaran;
-use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
-
-use App\Models\Tmpendapatan;
-use App\Models\Setupsikd\Tmrekening_akun_kelompok;
+use App\Helpers\Properti_app;
 use App\Models\Setupsikd\Tmrekening_akun;
-use App\Models\Tmrapbd;
-
-use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
-
-use App\Helpers\Properti_app;
-use App\Libraries\List_pendapatan;
+use App\Models\Setupsikd\Tmsikd_bidang;
+use App\Models\Setupsikd\Tmsikd_setup_tahun_anggaran;
+use App\Models\Setupsikd\Tmsikd_sub_skpd;
+use App\Models\Setupsikd\Tmsikd_sumber_anggaran;
 use App\Models\Tmopd;
-use App\Models\Tmpenerimaan;
+use App\Models\Tmpendapatan;
+use App\Models\Tmrapbd;
+use DataTables;
+use Html_number;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
-
+use Illuminate\Support\Facades\Auth;
+use Sikd_list_option;
 
 class PendapatanController extends Controller
 {
-    protected $route      = 'pendapatan.';
-    protected $view       = 'pendapatan.pendapatan.';
-    protected $title      = 'Pendapatan SKPD';
-    protected $type       = "RKAPendapatan";
-    protected $jdl        = "Pendapatan";
-    public $tahun         = '';
+    protected $route = 'pendapatan.';
+    protected $view = 'pendapatan.pendapatan.';
+    protected $title = 'Pendapatan SKPD';
+    protected $type = "RKAPendapatan";
+    protected $jdl = "Pendapatan";
+    public $tahun = '';
 
     public function __construct()
     {
         $ftahun = Carbon::now()->format('Y');
-        $tskrg  = Properti_app::tahun_sekarang();
-        $tahun =  ($tskrg) ? $tskrg : $ftahun;
+        $tskrg = Properti_app::tahun_sekarang();
+        $tahun = ($tskrg) ? $tskrg : $ftahun;
         $this->tahun = $tahun;
     }
 
     public function index(Request $request)
     {
 
-        $title   = 'Entri Pendapatan  |' . $this->title;
-        $route   =  $this->route;
-        $toolbar =  ['r', 'd'];
+        $title = 'Entri Pendapatan  |' . $this->title;
+        $route = $this->route;
+        $toolbar = ['r', 'd'];
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
-        $level_id  = Properti_app::getlevel();
+        $level_id = Properti_app::getlevel();
 
-        //jika akses satker berbeda 
+        //jika akses satker berbeda
         if ($satker_id == '' && $level_id != 3) {
             $satker_id = isset($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         } else {
@@ -70,17 +58,17 @@ class PendapatanController extends Controller
             // }
         }
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
-        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        $tahuns = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
 
-        $t_active     = Tmsikd_setup_tahun_anggaran::where('active', 1)->get();
+        $t_active = Tmsikd_setup_tahun_anggaran::where('active', 1)->get();
         $tahun_active = ($t_active->first()->active) ? $t_active->first()->active : 0;
 
-        $tmsikd_satkers   =  Sikd_list_option::listSkpd();
-        $tmsikd_satker_id =  ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
+        $tmsikd_satkers = Sikd_list_option::listSkpd();
+        $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
 
         $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->get();
-        $tmsikd_bidangs   = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
-        $tmrapbds         = Tmrapbd::select('id', 'jenis')->get();
+        $tmsikd_bidangs = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
+        $tmrapbds = Tmrapbd::select('id', 'jenis')->get();
 
         // Sumber Anggaran
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
@@ -88,10 +76,10 @@ class PendapatanController extends Controller
         $nowdate = strtotime("1 day", strtotime(date('Y-m-d')));
         $new_date = date("Y-m-d", $nowdate);
 
-        $dari             = date('Y-m-d');
-        $sampai           = $new_date;
-        //if request available 
-        $tgl_lapor        = $request->tgl_lapor;
+        $dari = date('Y-m-d');
+        $sampai = $new_date;
+        //if request available
+        $tgl_lapor = $request->tgl_lapor;
         //dd($tahuns);
         return view($this->view . 'index', compact(
             'title',
@@ -116,12 +104,12 @@ class PendapatanController extends Controller
         } else {
             $satker_id = $request->tmsikd_satker_id;
         }
-        $data      = Tmpendapatan::datatable($satker_id)->get();
-        $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor  : 0; 
+        $data = Tmpendapatan::datatable($satker_id)->get();
+        $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor : 0;
         $par = [
             'tgl_lapor' => $tgl_lapor,
             'level_id' => $level_id = Properti_app::getlevel(),
-            'satker_id' => $satker_id
+            'satker_id' => $satker_id,
 
         ];
         return DataTables::of($data)
@@ -137,17 +125,17 @@ class PendapatanController extends Controller
 
                 return "<a style='color: #fff;' to='" . Url('pendapatan/pendapatandetail/' . $rincian_id . '?rincian_id=' . $rincian_id . '&tgl_lapor=' . $tgl_lapor . '&tmsikd_satker_id=' . $tmsikd_satker_id) . "' class='btn btn-primary btn-xs' id='detail' target='_self'>" . $p->kd_rek_rincian_obj . "</a>";
             })
-            ->editColumn('tanggal_lapor',  function ($p) use ($par) {
+            ->editColumn('tanggal_lapor', function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
-                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
 
                 $f = $pad->first();
-                return ($f['tanggal_lapor']) ?  '<b>' . Properti_app::tgl_indo($f->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
+                return ($f['tanggal_lapor']) ? '<b>' . Properti_app::tgl_indo($f->tanggal_lapor) . '</b>' : '<b>Kosong</b>';
             })
-            ->editColumn('volume',  function ($p) use ($par) {
+            ->editColumn('volume', function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
-                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmsikd_satker_id', $par['satker_id']);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
                 $r = $pad->first();
@@ -155,7 +143,7 @@ class PendapatanController extends Controller
             })
             ->editColumn('jumlah_lapor', function ($p) use ($par) {
                 $tgl_lapor = $par['tgl_lapor'];
-                $rf   = Tmpendapatan::Select(\DB::raw('sum(jumlah) as tot_lapor'))
+                $rf = Tmpendapatan::Select(\DB::raw('sum(jumlah) as tot_lapor'))
                     ->where('tanggal_lapor', $tgl_lapor)
                     ->where('tmsikd_satker_id', $par['satker_id'])
                     ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id'])
@@ -166,12 +154,12 @@ class PendapatanController extends Controller
             })
             ->editColumn('action', function ($p) use ($par) {
 
-                $tgl_lapor  = $par['tgl_lapor'];
-                $satker_id  = $par['satker_id'];
+                $tgl_lapor = $par['tgl_lapor'];
+                $satker_id = $par['satker_id'];
 
                 $rincian_id = $p->kd_rek_rincian_obj;
 
-                $pad       = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
+                $pad = Tmpendapatan::where('tanggal_lapor', $tgl_lapor);
                 $pad->where('tmsikd_satker_id', $par['satker_id']);
                 $pad->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $p['tmrekening_akun_kelompok_jenis_objek_rincian_id']);
 
@@ -180,9 +168,9 @@ class PendapatanController extends Controller
                 } else {
                 }
                 $r = $pad->first();
-                if ($r['jumlah'] == '' || $r['jumlah'] == NULL) {
+                if ($r['jumlah'] == '' || $r['jumlah'] == null) {
                     return '<a href="' . route('pendapatan.create', $rincian_id . '?satker_id=' . $satker_id . '&tgl=' . $tgl_lapor) . '" class="btn btn-danger btn-xs"><i class="fa fa-info fa-spin"></i>Belum Lapor </a>
-                
+
                 <br />';
                 } else {
                     return '<a href="" class="btn btn-primary btn-xs" title="Silahkan Laporkan jumlah Pad"><i class="fa fa-check"></i>Sudah Lapor</a>';
@@ -192,46 +180,45 @@ class PendapatanController extends Controller
             ->toJson();
     }
 
-
-    function pendapatandetail($id, Request $request)
+    public function pendapatandetail($id, Request $request)
     {
         //$id adalah rincian rekening pendpatan rincian
         $where = [
             'tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id' => $request->rincian_id,
-            'tanggal_lapor' => $request->tgl_lapor
+            'tanggal_lapor' => $request->tgl_lapor,
             // 'tmsikd_satker_id' => $request->tmsikd_satker_id
         ];
-        $datas   = Tmpendapatan::where($where)->get();
+        $datas = Tmpendapatan::where($where)->get();
         // $findopd = Tmpendapatan::where($where)->first();
-        $opd     = Tmopd::where('kode', $request->tmsikd_satker_id)->first();
+        $opd = Tmopd::where('kode', $request->tmsikd_satker_id)->first();
 
         $i = 0;
         foreach ($datas as $data) {
             $rkrinci = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $data['tmrekening_akun_kelompok_jenis_objek_rincian_id'])->first();
             $datar[$i]['kode_rek']['val'] = $data['tmrekening_akun_kelompok_jenis_objek_rincian_id'];
             $datar[$i]['nama_rek']['val'] = $rkrinci['nm_rek_rincian_obj'];
-            $datar[$i]['jumlah']['val'] = ($data['jumlah'])  ? number_format($data['jumlah'], 0, 0, '.') : 0;
+            $datar[$i]['jumlah']['val'] = ($data['jumlah']) ? number_format($data['jumlah'], 0, 0, '.') : 0;
             $datar[$i]['tanggal_lapor']['val'] = $data['tanggal_lapor'];
             $i++;
             $rkrinci_sub = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id'])->get();
             foreach ($rkrinci_sub as $sub) {
-                $insub   = Tmpendapatan::where(
+                $insub = Tmpendapatan::where(
                     'tmrekening_akun_kelompok_jenis_objek_rincian_id',
                     $sub['kd_rek_rincian_objek_sub']
                 )->first();
 
                 $datar[$i]['kode_rek']['val'] = $sub['kd_rek_rincian_objek_sub'];
                 $datar[$i]['nama_rek']['val'] = $sub['nm_rek_rincian_objek_sub'];
-                $datar[$i]['jumlah']['val'] = ($insub['jumlah'])  ? number_format($insub['jumlah'], 0, 0, '.') : 0;
+                $datar[$i]['jumlah']['val'] = ($insub['jumlah']) ? number_format($insub['jumlah'], 0, 0, '.') : 0;
                 $datar[$i]['tanggal_lapor']['val'] = $insub['tanggal_lapor'];
                 $i++;
             }
         }
         $fdata = isset($datar) ? $datar : 0;
         if ($fdata != 0) {
-            $hasdata =  $datar;
+            $hasdata = $datar;
         } else {
-            $hasdata =  0;
+            $hasdata = 0;
         }
 
         return view($this->view . 'pendapatandetail', [
@@ -239,7 +226,7 @@ class PendapatanController extends Controller
             'datas' => $hasdata,
             'pendapatan_id' => $request->rincian_id,
             'tanggal_lapor' => $request->tgl_lapor,
-            'opd' => $opd
+            'opd' => $opd,
         ]);
     }
 
@@ -249,9 +236,9 @@ class PendapatanController extends Controller
         $idx = 0;
         $rek_kelompoks = Tmrekening_akun_kelompok_jenis_objek::where('kd_rek_obj', $rekening_kelobj)->get();
         foreach ($rek_kelompoks as $rek_kelompok) {
-            $dataset[$idx]['kode_rek']['val']  = $rek_kelompok['kd_rek_obj'];
-            $dataset[$idx]['nm_rekening']['val']  =   $rek_kelompok['nm_rek_obj'];
-            $dataset[$idx]['keterangan']['val'] =   'Kelompok rekening';
+            $dataset[$idx]['kode_rek']['val'] = $rek_kelompok['kd_rek_obj'];
+            $dataset[$idx]['nm_rekening']['val'] = $rek_kelompok['nm_rek_obj'];
+            $dataset[$idx]['keterangan']['val'] = 'Kelompok rekening';
             $idx++;
 
             $cond = [
@@ -267,16 +254,16 @@ class PendapatanController extends Controller
                 $rekening_sub_rinci = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(\DB::raw('LOCATE(' . $fsatker_id . ',tmsikd_satkers_id)'), '>', 0)
                     ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['kd_rek_rincian_obj'])
                     ->get();
-                // check income by rincian object rekenign  pendapatan 
+                // check income by rincian object rekenign  pendapatan
 
-                $dataset[$idx]['kode_rek']['val']  = $data['kd_rek_rincian_obj'];
-                $dataset[$idx]['nm_rekening']['val']  =   $data['nm_rek_rincian_obj'];
-                $dataset[$idx]['keterangan']['val'] =   'Rekening Rincian Object';
+                $dataset[$idx]['kode_rek']['val'] = $data['kd_rek_rincian_obj'];
+                $dataset[$idx]['nm_rekening']['val'] = $data['nm_rek_rincian_obj'];
+                $dataset[$idx]['keterangan']['val'] = 'Rekening Rincian Object';
                 $idx++;
                 foreach ($rekening_sub_rinci as $data_sub) {
-                    $dataset[$idx]['kode_rek']['val']              = $data_sub['kd_rek_rincian_objek_sub'];
-                    $dataset[$idx]['nm_rekening']['val']              = $data_sub['nm_rek_rincian_objek_sub'];
-                    $dataset[$idx]['keterangan']['val']          = "Rekening Sub Rincian Object";
+                    $dataset[$idx]['kode_rek']['val'] = $data_sub['kd_rek_rincian_objek_sub'];
+                    $dataset[$idx]['nm_rekening']['val'] = $data_sub['nm_rek_rincian_objek_sub'];
+                    $dataset[$idx]['keterangan']['val'] = "Rekening Sub Rincian Object";
                     $idx++;
                 }
             }
@@ -285,18 +272,19 @@ class PendapatanController extends Controller
     }
 
     public function create(Request $request, $id)
-    {    // * 
+    { // *
 
-
-        $title   = 'Laporan Pendapatan | ' . $this->title;
-        $route   =  $this->route;
-        $toolbar =  ['r', 'save'];
+        $title = 'Laporan Pendapatan | ' . $this->title;
+        $route = $this->route;
+        $toolbar = ['r', 'save'];
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
-        $level_id  = Properti_app::getlevel();
-        if ($request->satker_id == '' || $request->tgl == '') return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : ' . md5('ismarianto'));
+        $level_id = Properti_app::getlevel();
+        if ($request->satker_id == '' || $request->tgl == '') {
+            return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : ' . md5('ismarianto'));
+        }
 
-        //jika akses satker berbeda 
+        //jika akses satker berbeda
         if ($satker_id == '' && $level_id != 3) {
             $satker_id = isset($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         } else {
@@ -305,40 +293,38 @@ class PendapatanController extends Controller
             // }
         }
 
-        $tahuns  = Tmsikd_setup_tahun_anggaran::get();
+        $tahuns = Tmsikd_setup_tahun_anggaran::get();
         $tahun_active = Properti_app::getTahun();
 
-        $nowdate          = strtotime("1 day", strtotime(date('Y-m-d')));
-        $new_date         = date("Y-m-d", $nowdate);
-        $dari             = date('Y-m-d');
-        $sampai           = $new_date;
+        $nowdate = strtotime("1 day", strtotime(date('Y-m-d')));
+        $new_date = date("Y-m-d", $nowdate);
+        $dari = date('Y-m-d');
+        $sampai = $new_date;
 
-        $idrincian        = $request->id;
-        $tgl_lapor        = $request->tgl;
-
+        $idrincian = $request->id;
+        $tgl_lapor = $request->tgl;
 
         if ($level_id == 3) {
             $fsatker_id = $satker_id;
         } else {
             $fsatker_id = $request->satker_id;
         }
-        $whre  = [
-            //id adalah jenis object rincian 
+        $whre = [
+            //id adalah jenis object rincian
             'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj' => $id,
         ];
-        $kd_rek_obj     = $id;
-        $rekeningdatas  = Tmpendapatan::getrekeningbySatker($whre)->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)->first();
-        $jam            = Carbon::now()->format('H:i:s');
+        $kd_rek_obj = $id;
+        $rekeningdatas = Tmpendapatan::getrekeningbySatker($whre)->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)->first();
+        $jam = Carbon::now()->format('H:i:s');
 
-        $action       =  route($this->route . 'store');
-        $method_field =  method_field('post');
+        $action = route($this->route . 'store');
+        $method_field = method_field('post');
 
-        $getkelompok  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
+        $getkelompok = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
 
         $rekenings = self::showlistpad($getkelompok['tmrekening_akun_kelompok_jenis_objek_id'], $fsatker_id);
 
-        $tahun_ang  = $this->tahun;
-
+        $tahun_ang = $this->tahun;
 
         return view($this->view . 'form_add', compact(
             'action',
@@ -365,35 +351,35 @@ class PendapatanController extends Controller
         $request->validate([
             'tmsikd_satker_id' => 'required',
             'cboxInputRinci' => 'required',
-            'tanggal_lapor'    => 'required'
+            'tanggal_lapor' => 'required',
         ]);
 
         $ftahun = Carbon::now()->format('Y');
-        $tskrg  = Properti_app::tahun_sekarang();
-        $tahun =  ($tskrg) ? $tskrg : $ftahun;
+        $tskrg = Properti_app::tahun_sekarang();
+        $tahun = ($tskrg) ? $tskrg : $ftahun;
 
-        $level_id      = Properti_app::getlevel();
-        if ($level_id  == 3) {
+        $level_id = Properti_app::getlevel();
+        if ($level_id == 3) {
             $satker_id = Auth::user()->sikd_satker_id;
         } else {
             $satker_id = $request->tmsikd_satker_id;
         }
 
-        $cboxInput      = $request->cboxInput;
-        $cboxInputVal   = $request->cboxInputVal;
+        $cboxInput = $request->cboxInput;
+        $cboxInputVal = $request->cboxInputVal;
         $cboxInputRinci = $request->cboxInputRinci;
-        $kd_rekening    = $request->kd_rekening;
+        $kd_rekening = $request->kd_rekening;
 
-        $kd_rekening_sub   = $request->kd_rekening_sub;
-        $volume            = $request->volume;
-        $satuan            = $request->satuan;
-        $jumlah            = $request->jumlah;
-        $harga             = $request->harga;
-        $tanggal_lapor     = $request->tanggal_lapor;
+        $kd_rekening_sub = $request->kd_rekening_sub;
+        $volume = $request->volume;
+        $satuan = $request->satuan;
+        $jumlah = $request->jumlah;
+        $harga = $request->harga;
+        $tanggal_lapor = $request->tanggal_lapor;
 
-
-        if ($cboxInput == null)
+        if ($cboxInput == null) {
             return response()->json(['message' => "Tidak ada data list pendapatan yang dipilih."], 422);
+        }
 
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
@@ -409,27 +395,28 @@ class PendapatanController extends Controller
                 'jumlah' => $jumlah[$key],
                 'tanggal_lapor' => $tanggal_lapor,
                 'is_deleted' => 0,
-                'tahun' => $tahun
+                'tahun' => $tahun,
             ]);
         }
         return response()->json([
-            'message' => "Data " . $this->title . " Berhasil Tersimpan"
+            'message' => "Data " . $this->title . " Berhasil Tersimpan",
         ]);
     }
 
-
-    //edit data pendpatan 
+    //edit data pendpatan
     public function edit(Request $request, $id)
     {
-        $title   = 'Edit data pendapatan daerah';
-        $route   =  $this->route;
-        $toolbar =  ['r', 'save'];
+        $title = 'Edit data pendapatan daerah';
+        $route = $this->route;
+        $toolbar = ['r', 'save'];
         // Validasi
         $satker_id = Auth::user()->sikd_satker_id;
-        $level_id  = Properti_app::getlevel();
-        if ($request->satker_id == '' || $request->tgl == '') return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : ' . md5('ismarianto'));
+        $level_id = Properti_app::getlevel();
+        if ($request->satker_id == '' || $request->tgl == '') {
+            return abort(403, 'Paramter Salahsilahkan kembali pada halaman sebelumnya  : ' . md5('ismarianto'));
+        }
 
-        //jika akses satker berbeda 
+        //jika akses satker berbeda
         if ($satker_id == '' && $level_id != 3) {
             $satker_id = isset($request->tmsikd_satker_id) ? $request->tmsikd_satker_id : 0;
         } else {
@@ -438,39 +425,39 @@ class PendapatanController extends Controller
             // }
         }
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
-        $tahuns           = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
+        $tahuns = Tmsikd_setup_tahun_anggaran::select('id', 'tahun')->get();
 
-        $t_active     = Tmsikd_setup_tahun_anggaran::where('active', 1)->get();
+        $t_active = Tmsikd_setup_tahun_anggaran::where('active', 1)->get();
         $tahun_active = ($t_active->first()->active) ? $t_active->first()->active : 0;
 
-        $tmsikd_satkers   =  Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
-        $tmsikd_satker_id =  ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
+        $tmsikd_satkers = Sikd_list_option::listSkpd()->whereNotIn('kode', 300202);
+        $tmsikd_satker_id = ($request->tmsikd_satker_id == '' ? $tmsikd_satkers->first()->id : $request->tmsikd_satker_id);
 
         $tmsikd_sub_skpds = Tmsikd_sub_skpd::select('id', 'kode', 'nama')->get();
-        $tmsikd_bidangs   = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
-        $tmrapbds         = Tmrapbd::select('id', 'jenis')->get();
+        $tmsikd_bidangs = Tmsikd_bidang::select('id', 'kd_bidang', 'nm_bidang')->get();
+        $tmrapbds = Tmrapbd::select('id', 'jenis')->get();
 
         // Sumber Anggaran
         $tmsikd_sumber_anggarans = Tmsikd_sumber_anggaran::select('id', 'kd_sumber_anggaran', 'nm_sumber_anggaran')->wheretmtype_anggaran_id(4)->get();
 
-        $nowdate          = strtotime("1 day", strtotime(date('Y-m-d')));
-        $new_date         = date("Y-m-d", $nowdate);
-        $dari             = date('Y-m-d');
-        $sampai           = $new_date;
+        $nowdate = strtotime("1 day", strtotime(date('Y-m-d')));
+        $new_date = date("Y-m-d", $nowdate);
+        $dari = date('Y-m-d');
+        $sampai = $new_date;
 
-        $idrincian        = $request->id;
-        $tanggal_lapor    = $request->tanggal_lapor;
-        //id adalah rekening obj rincian 
-        $jumlahMax    = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+        $idrincian = $request->id;
+        $tanggal_lapor = $request->tanggal_lapor;
+        //id adalah rekening obj rincian
+        $jumlahMax = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
             ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->id)
             ->where('tanggal_lapor', $tanggal_lapor)
             ->first();
 
-        $raction      = 'edit';
-        $where_data   = [
+        $raction = 'edit';
+        $where_data = [
             'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $request->id,
         ];
-        $rows   = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where($where_data)->first();
+        $rows = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where($where_data)->first();
         if ($rows == '') {
             $row = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $request->id)->first();
         } else {
@@ -478,31 +465,31 @@ class PendapatanController extends Controller
         }
         $kd_rek_rincian_obj = $row['kd_rek_rincian_obj'];
         $nm_rek_rincian_obj = $row['nm_rek_rincian_obj'];
-        $nmtitledit   = '[' . $kd_rek_rincian_obj . '] ' . $nm_rek_rincian_obj;
+        $nmtitledit = '[' . $kd_rek_rincian_obj . '] ' . $nm_rek_rincian_obj;
 
-        $rincianid    = $request->id;
-        $jumlahmax    = $jumlahMax['total'];
-        $satkerid     = $request->satker_id;
+        $rincianid = $request->id;
+        $jumlahmax = $jumlahMax['total'];
+        $satkerid = $request->satker_id;
 
-        //opert variable daa 
+        //opert variable daa
         if ($level_id == 3) {
             $fsatker_id = $satker_id;
         } else {
             $fsatker_id = $request->satker_id;
         }
-        $whred  = [
-            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id
+        $whred = [
+            'tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $fsatker_id,
         ];
         $rekeningdatas = Tmpendapatan::getrekeningbySatker($whred)->first();
 
-        $tgl_lapor        = $request->tgl;
-        $jam              = Carbon::now()->format('s:i:s');
-        $tahun_ang        = $this->tahun;
-        $action       =  route($this->route . 'update', $id);
+        $tgl_lapor = $request->tgl;
+        $jam = Carbon::now()->format('s:i:s');
+        $tahun_ang = $this->tahun;
+        $action = route($this->route . 'update', $id);
         // $method_field =  method_field('put');
-        $id           =  $id;
+        $id = $id;
         //get list information detail as views blde;
-        $getkelompok  = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
+        $getkelompok = Tmrekening_akun_kelompok_jenis_objek_rincian::where('kd_rek_rincian_obj', $id)->first();
         $rekenings = $this->showlistpad($getkelompok['tmrekening_akun_kelompok_jenis_objek_id'], $fsatker_id);
         // dd($getkelompok['tmrekening_akun_kelompok_jenis_objek_id']);
 
@@ -540,35 +527,35 @@ class PendapatanController extends Controller
         $request->validate([
             'tmsikd_satker_id' => 'required',
             'cboxInputRinci' => 'required',
-            'tanggal_lapor'    => 'required'
+            'tanggal_lapor' => 'required',
         ]);
 
         $ftahun = Carbon::now()->format('Y');
-        $tskrg  = Properti_app::tahun_sekarang();
-        $tahun =  ($tskrg) ? $tskrg : $ftahun;
+        $tskrg = Properti_app::tahun_sekarang();
+        $tahun = ($tskrg) ? $tskrg : $ftahun;
 
-        $level_id      = Properti_app::getlevel();
-        if ($level_id  == 3) {
+        $level_id = Properti_app::getlevel();
+        if ($level_id == 3) {
             $satker_id = Auth::user()->sikd_satker_id;
         } else {
             $satker_id = $request->tmsikd_satker_id;
         }
 
-        $cboxInput      = $request->cboxInput;
-        $cboxInputVal   = $request->cboxInputVal;
+        $cboxInput = $request->cboxInput;
+        $cboxInputVal = $request->cboxInputVal;
         $cboxInputRinci = $request->cboxInputRinci;
-        $kd_rekening    = $request->kd_rekening;
+        $kd_rekening = $request->kd_rekening;
 
-        $kd_rekening_sub   = $request->kd_rekening_sub;
-        $volume            = $request->volume;
-        $satuan            = $request->satuan;
-        $jumlah            = $request->jumlah;
-        $harga             = $request->harga;
-        $tanggal_lapor     = $request->tanggal_lapor;
+        $kd_rekening_sub = $request->kd_rekening_sub;
+        $volume = $request->volume;
+        $satuan = $request->satuan;
+        $jumlah = $request->jumlah;
+        $harga = $request->harga;
+        $tanggal_lapor = $request->tanggal_lapor;
 
-
-        if ($cboxInput == null)
+        if ($cboxInput == null) {
             return response()->json(['message' => "Tidak ada data list pendapatan yang dipilih."], 422);
+        }
 
         for ($i = 0; $i < count($cboxInput); $i++) {
             $key = $i;
@@ -577,7 +564,7 @@ class PendapatanController extends Controller
 
             $where = [
                 'tmpendapatan.tanggal_lapor' => $request->tanggal_lapor,
-                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id
+                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $id,
             ];
             Tmpendapatan::where($where)->update([
                 'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $sub_rek,
@@ -589,27 +576,25 @@ class PendapatanController extends Controller
                 'jumlah' => $jumlah[$key],
                 'tanggal_lapor' => $tanggal_lapor,
                 'is_deleted' => 0,
-                'tahun' => $tahun
+                'tahun' => $tahun,
             ]);
         }
 
         return response()->json([
-            'message' => "Data " . $this->title . " Berhasil Tersimpan"
+            'message' => "Data " . $this->title . " Berhasil Tersimpan",
         ]);
     }
-
 
     public function show($id)
     {
 
         return abort(404, 'Saat ini halam tidak bisa di tampilkan karena tidak tersedia');
         // *
-        $title   = 'Menampilkan | ' . $this->title;
-        $route   = $this->route;
+        $title = 'Menampilkan | ' . $this->title;
+        $route = $this->route;
         $toolbar = ['r', 'u'];
         $where = ['tmrka_mata_anggarans.id' => $id];
         // $r     = Tmrka::list($where)->firstOrFail();
-
 
         return view($this->view . 'show', compact(
             'title',
@@ -624,17 +609,19 @@ class PendapatanController extends Controller
         ));
     }
 
-
     //get forim isian rincian ketika satker mengisi jumlah pendapatan pada app
     public function form_pendapatan(Request $request, $id)
     {
-        //dd($jenis_object); 
-        if ($request->satker_id == '') return abort(403, 'Satker tidak di temukan');
-        $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
-        $level_id  = Properti_app::getlevel();
+        //dd($jenis_object);
+        if ($request->satker_id == '') {
+            return abort(403, 'Satker tidak di temukan');
+        }
+
+        $data = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
+        $level_id = Properti_app::getlevel();
 
         $rsatker_id = Auth::user()->sikd_satker_id;
-        if ($rsatker_id == NULL || $rsatker_id == 0) {
+        if ($rsatker_id == null || $rsatker_id == 0) {
             $fsatker_id = $request->satker_id;
         } else {
             $fsatker_id = $rsatker_id;
@@ -645,8 +632,8 @@ class PendapatanController extends Controller
         ];
 
         $pendapatandata = $data;
-        //model tmpendapatan 
-        $tmpendapatan   = new Tmpendapatan;
+        //model tmpendapatan
+        $tmpendapatan = new Tmpendapatan;
         $rekrincian_sub = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 
         $idx = 0;
@@ -660,21 +647,21 @@ class PendapatanController extends Controller
             $rekening_sub_rinci = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(\DB::raw('LOCATE(' . $fsatker_id . ',tmsikd_satkers_id)'), '>', 0)
                 ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['kd_rek_rincian_obj'])
                 ->get();
-            // check income by rincian object rekenign  pendapatan 
+            // check income by rincian object rekenign  pendapatan
             $income = Tmpendapatan::where([
                 'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $data['kd_rek_rincian_obj'],
                 'tahun' => $this->tahun,
             ])->first();
 
-            $dataset[$idx]['kd_rek']['val']  = $data['kd_rek_rincian_obj'];
-            $dataset[$idx]['nm_rek']['val']  =   $data['nm_rek_rincian_obj'];
-            $dataset[$idx]['kd_rek_rincian_obj']['val'] =   $data['kd_rek_rincian_obj'];
-            $dataset[$idx]['kd_rincian_sub']['val'] =  null;
+            $dataset[$idx]['kd_rek']['val'] = $data['kd_rek_rincian_obj'];
+            $dataset[$idx]['nm_rek']['val'] = $data['nm_rek_rincian_obj'];
+            $dataset[$idx]['kd_rek_rincian_obj']['val'] = $data['kd_rek_rincian_obj'];
+            $dataset[$idx]['kd_rincian_sub']['val'] = null;
             $dataset[$idx]['style']['val'] = '';
 
-            $dataset[$idx]['rvolume']['val']  = $income['volume'];
-            $dataset[$idx]['rsatuan']['val']  = $income['satuan'];
-            $dataset[$idx]['jumlah']['val']   = $income['jumlah'];
+            $dataset[$idx]['rvolume']['val'] = $income['volume'];
+            $dataset[$idx]['rsatuan']['val'] = $income['satuan'];
+            $dataset[$idx]['jumlah']['val'] = $income['jumlah'];
             $idx++;
             foreach ($rekening_sub_rinci as $data_sub) {
                 $income_sub = Tmpendapatan::where([
@@ -682,19 +669,19 @@ class PendapatanController extends Controller
                     'tahun' => $this->tahun,
                 ])->first();
 
-                $dataset[$idx]['kd_rek']['val']              = $data_sub['kd_rek_rincian_objek_sub'];
-                $dataset[$idx]['nm_rek']['val']              = $data_sub['nm_rek_rincian_objek_sub'];
-                $dataset[$idx]['kd_rek_rincian_obj']['val']  = $data['kd_rek_rincian_obj'];
-                $dataset[$idx]['kd_rincian_sub']['val']      = $data_sub['kd_rek_rincian_objek_sub'];
-                $dataset[$idx]['style']['val']               = '';
+                $dataset[$idx]['kd_rek']['val'] = $data_sub['kd_rek_rincian_objek_sub'];
+                $dataset[$idx]['nm_rek']['val'] = $data_sub['nm_rek_rincian_objek_sub'];
+                $dataset[$idx]['kd_rek_rincian_obj']['val'] = $data['kd_rek_rincian_obj'];
+                $dataset[$idx]['kd_rincian_sub']['val'] = $data_sub['kd_rek_rincian_objek_sub'];
+                $dataset[$idx]['style']['val'] = '';
 
-                $dataset[$idx]['rvolume']['val']             = $income_sub['volume'];
-                $dataset[$idx]['rsatuan']['val']             = $income_sub['satuan'];
-                $dataset[$idx]['jumlah']['val']              = $income_sub['jumlah'];
+                $dataset[$idx]['rvolume']['val'] = $income_sub['volume'];
+                $dataset[$idx]['rsatuan']['val'] = $income_sub['satuan'];
+                $dataset[$idx]['jumlah']['val'] = $income_sub['jumlah'];
                 $idx++;
             }
         }
-        $rdataset =  isset($dataset) ? $dataset : 0;
+        $rdataset = isset($dataset) ? $dataset : 0;
         if ($rdataset != 0) {
             $fdataset = $dataset;
         } else {
@@ -711,16 +698,19 @@ class PendapatanController extends Controller
         );
     }
 
-    //form pendapatan edit jika request data nya adlah edit 
+    //form pendapatan edit jika request data nya adlah edit
     public function form_pendapatan_edit($jenis_object, Request $request)
     {
-        // dd($this->tahun); 
-        if ($request->satker_id == '') return abort(403, 'Satker tidak di temukan');
-        $data      = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
-        $level_id  = Properti_app::getlevel();
+        // dd($this->tahun);
+        if ($request->satker_id == '') {
+            return abort(403, 'Satker tidak di temukan');
+        }
+
+        $data = Tmpendapatan::Where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $request->pendapatanid)->first();
+        $level_id = Properti_app::getlevel();
 
         $rsatker_id = Auth::user()->sikd_satker_id;
-        if ($rsatker_id == NULL || $rsatker_id == 0) {
+        if ($rsatker_id == null || $rsatker_id == 0) {
             $fsatker_id = $request->satker_id;
         } else {
             $fsatker_id = $rsatker_id;
@@ -730,63 +720,65 @@ class PendapatanController extends Controller
             'kd_rek_rincian_obj' => $jenis_object,
         ];
         $pendapatandata = $data;
-        //model tmpendapatan 
-        $tmpendapatan   = new Tmpendapatan;
+        //model tmpendapatan
+        $tmpendapatan = new Tmpendapatan;
         $rekrincian_sub = new Tmrekening_akun_kelompok_jenis_objek_rincian_sub;
 
         $idx = 0;
         $rekening_rincians = Tmrekening_akun_kelompok_jenis_objek_rincian::where($cond)
-            ->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+            ->where(\DB::raw('LOCATE(' . $fsatker_id . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '=', 1)
             ->select('id', 'kd_rek_rincian_obj', 'nm_rek_rincian_obj')
             ->groupby('tmrekening_akun_kelompok_jenis_objek_rincians.id')
             ->get();
 
         foreach ($rekening_rincians as $data) {
-            $rekening_sub_rinci = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(\DB::raw('LOCATE(' . $fsatker_id . ',tmsikd_satkers_id)'), '>', 0)
+            $rekening_sub_rinci = Tmrekening_akun_kelompok_jenis_objek_rincian_sub::where(\DB::raw('LOCATE(' . $fsatker_id . ',tmsikd_satkers_id)'), '=', 1)
                 ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', $data['kd_rek_rincian_obj'])
                 ->get();
-            // check income by rincian object rekenign  pendapatan 
-            $income = Tmpendapatan::where([
-                'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $jenis_object,
-                'tahun' => $this->tahun,
-                'tanggal_lapor' => $request->tanggal_lapor
-            ])->first();
+            // check income by rincian object rekenign  pendapatan
+            $income = Tmpendapatan::select('volume', 'satuan', 'jumlah')
+                ->where([
+                    'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $data['kd_rek_rincian_obj'],
+                    'tahun' => $this->tahun,
+                    'tanggal_lapor' => $request->tanggal_lapor,
+                ])->first();
 
-            $dataset[$idx]['kd_rek']['val']  = $data['kd_rek_rincian_obj'];
-            $dataset[$idx]['nm_rek']['val']  =   $data['nm_rek_rincian_obj'];
-            $dataset[$idx]['kd_rek_rincian_obj']['val'] =   $data['kd_rek_rincian_obj'];
-            $dataset[$idx]['kd_rincian_sub']['val'] =  null;
+            $dataset[$idx]['kd_rek']['val'] = $data['kd_rek_rincian_obj'];
+            $dataset[$idx]['nm_rek']['val'] = $data['nm_rek_rincian_obj'];
+            $dataset[$idx]['kd_rek_rincian_obj']['val'] = $data['kd_rek_rincian_obj'];
+            $dataset[$idx]['kd_rincian_sub']['val'] = null;
             $dataset[$idx]['style']['val'] = '';
 
-            $dataset[$idx]['rvolume']['val']  = $income['volume'];
-            $dataset[$idx]['rsatuan']['val']  = $income['satuan'];
-            $dataset[$idx]['jumlah']['val']   = $income['jumlah'];
+            $dataset[$idx]['rvolume']['val'] = $income['volume'];
+            $dataset[$idx]['rsatuan']['val'] = $income['satuan'];
+            $dataset[$idx]['jumlah']['val'] = $income['jumlah'];
             $idx++;
             foreach ($rekening_sub_rinci as $data_sub) {
                 $income_sub = Tmpendapatan::where([
                     'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $data_sub['kd_rek_rincian_objek_sub'],
                     'tahun' => $this->tahun,
-                    'tanggal_lapor' => $request->tanggal_lapor
+                    'tanggal_lapor' => $request->tanggal_lapor,
                 ])->first();
 
-                $dataset[$idx]['kd_rek']['val']              = $data_sub['kd_rek_rincian_objek_sub'];
-                $dataset[$idx]['nm_rek']['val']              = $data_sub['nm_rek_rincian_objek_sub'];
-                $dataset[$idx]['kd_rek_rincian_obj']['val']  = $data['kd_rek_rincian_obj'];
-                $dataset[$idx]['kd_rincian_sub']['val']      = $data_sub['kd_rek_rincian_objek_sub'];
-                $dataset[$idx]['style']['val']               = '';
+                $dataset[$idx]['kd_rek']['val'] = $data_sub['kd_rek_rincian_objek_sub'];
+                $dataset[$idx]['nm_rek']['val'] = $data_sub['nm_rek_rincian_objek_sub'];
+                $dataset[$idx]['kd_rek_rincian_obj']['val'] = $data['kd_rek_rincian_obj'];
+                $dataset[$idx]['kd_rincian_sub']['val'] = $data_sub['kd_rek_rincian_objek_sub'];
+                $dataset[$idx]['style']['val'] = '';
 
-                $dataset[$idx]['rvolume']['val']             = $income_sub['volume'];
-                $dataset[$idx]['rsatuan']['val']             = $income_sub['satuan'];
-                $dataset[$idx]['jumlah']['val']              = $income_sub['jumlah'];
+                $dataset[$idx]['rvolume']['val'] = $income_sub['volume'];
+                $dataset[$idx]['rsatuan']['val'] = $income_sub['satuan'];
+                $dataset[$idx]['jumlah']['val'] = $income_sub['jumlah'];
                 $idx++;
             }
         }
-        $rdataset =  isset($dataset) ? $dataset : 0;
+        $rdataset = isset($dataset) ? $dataset : 0;
         if ($rdataset != 0) {
             $fdataset = $dataset;
         } else {
             $fdataset = 0;
         }
+        // dd($fdataset);
         return view(
             $this->view . 'form_pendapatan_edit',
             compact(
@@ -800,56 +792,56 @@ class PendapatanController extends Controller
 
     public function dapatkanpadopd(Request $request, $id)
     {
-        $level_id     = Properti_app::getlevel();
+        $level_id = Properti_app::getlevel();
         if ($level_id == 3) {
             $satkerid = Auth::user()->sikd_satker_id;
         } else {
-            $satkerid  = $id;
+            $satkerid = $id;
         }
-        $tmopd        = Tmopd::where('kode', $id)->firstOrfail();
-        $satker_kd    = $tmopd['kode'];
-        $satkernm     = $tmopd['n_opd'];
+        $tmopd = Tmopd::where('kode', $id)->firstOrfail();
+        $satker_kd = $tmopd['kode'];
+        $satkernm = $tmopd['n_opd'];
 
         // dd($request->tanggal_lapor);
 
         if ($request->tanggal_lapor != '') {
             $sekarang = $request->tanggal_lapor;
         } else {
-            $sekarang     = Carbon::now()->format('Y-m-d');
+            $sekarang = Carbon::now()->format('Y-m-d');
         }
         // query data form reekning get count of money all by opd
-        $where    = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $satkerid];
-        //by jenis 
+        $where = ['tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id' => $satkerid];
+        //by jenis
         $jeniss = Tmpendapatan::getrekeningbySatker([])
             ->where(\DB::raw('FIND_IN_SET(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
             ->groupBy('kd_rek_jenis')->get();
-        $idx    = 0;
-        //get pagu total from type by accout object 
+        $idx = 0;
+        //get pagu total from type by accout object
 
         foreach ($jeniss as $jenis) {
-            $dataset[$idx]['kd_rek']['val']       = $jenis['kd_rek_jenis'];
-            $dataset[$idx]['nm_rek']['val']       = $jenis['nm_rek_jenis'];
-            $dataset[$idx]['persen']['val']       = 0;
-            $dataset[$idx]['bold']['val']         = true;
-            $dataset[$idx]['lapor']['val']        = '';
+            $dataset[$idx]['kd_rek']['val'] = $jenis['kd_rek_jenis'];
+            $dataset[$idx]['nm_rek']['val'] = $jenis['nm_rek_jenis'];
+            $dataset[$idx]['persen']['val'] = 0;
+            $dataset[$idx]['bold']['val'] = true;
+            $dataset[$idx]['lapor']['val'] = '';
             $idx++;
-            //by kelompok jenis obj    
+            //by kelompok jenis obj
             $rek_objs = Tmpendapatan::getrekeningbySatker([])
                 ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
                 ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $jenis['kd_rek_jenis'])
                 ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
                 ->get();
             foreach ($rek_objs as $rek_obj) {
-                $dataset[$idx]['kd_rek']['val']       = $rek_obj['kd_rek_obj'];
-                $dataset[$idx]['nm_rek']['val']       = $rek_obj['nm_rek_obj'];
-                $dataset[$idx]['lapor']['val']        = '';
-                $dataset[$idx]['bold']['val']         = true;
+                $dataset[$idx]['kd_rek']['val'] = $rek_obj['kd_rek_obj'];
+                $dataset[$idx]['nm_rek']['val'] = $rek_obj['nm_rek_obj'];
+                $dataset[$idx]['lapor']['val'] = '';
+                $dataset[$idx]['bold']['val'] = true;
                 $idx++;
-                //by kelompok jenis rincian obj   
+                //by kelompok jenis rincian obj
                 for ($a = 0; $a <= 2; $a++) {
-                    $hasil[] =  $satkerid;
+                    $hasil[] = $satkerid;
                 }
-                $explode  = implode(',', $hasil);
+                $explode = implode(',', $hasil);
                 // dd($rek_obj);
                 $rincians = Tmpendapatan::getrekeningbySatker([])
                     ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
@@ -859,26 +851,26 @@ class PendapatanController extends Controller
                 foreach ($rincians as $rincian) {
                     $incomedet = Tmpendapatan::where([
                         'tmrekening_akun_kelompok_jenis_objek_rincian_id' => $rek_obj['kd_rek_rincian_obj'],
-                        'tanggal_lapor' => $sekarang
+                        'tanggal_lapor' => $sekarang,
                     ])
                         ->where('tmrekening_akun_kelompok_jenis_objek_rincian_id', '!=', 0)
                         ->first();
 
                     if ($rincian['kd_rek_rincian_obj'] == $incomedet['tmrekening_akun_kelompok_jenis_objek_rincian_id']) {
-                        $lapor     = ($incomedet['jumlah']) ? '<a class="btn btn-primary">' . number_format($incomedet['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
+                        $lapor = ($incomedet['jumlah']) ? '<a class="btn btn-primary">' . number_format($incomedet['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
                     } else {
                         $lapor = '<a class="btn btn-danger">Belum Lapor</a>';
-                        //get subrincian rek  
+                        //get subrincian rek
                     }
-                    $dataset[$idx]['kd_rek']['val']        = $rincian['kd_rek_rincian_obj'];
-                    $dataset[$idx]['nm_rek']['val']        = $rincian['nm_rek_rincian_obj'];
+                    $dataset[$idx]['kd_rek']['val'] = $rincian['kd_rek_rincian_obj'];
+                    $dataset[$idx]['nm_rek']['val'] = $rincian['nm_rek_rincian_obj'];
 
-                    $dataset[$idx]['lapor']['val']        = $lapor;
-                    $dataset[$idx]['bold']['val']         = false;
+                    $dataset[$idx]['lapor']['val'] = $lapor;
+                    $dataset[$idx]['bold']['val'] = false;
                     $idx++;
-                    //by kelompok jenis object rincian sub   
+                    //by kelompok jenis object rincian sub
 
-                    // dd($rincian); 
+                    // dd($rincian);
                     $rincian_subs = Tmpendapatan::getrekeningbySatker([])
                         ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
                         ->where('tmrekening_akun_kelompok_jenis_objek_id', $rincian['kd_rek_rincian_obj'])
@@ -887,19 +879,19 @@ class PendapatanController extends Controller
                     foreach ($rincian_subs as $rincian_obj_sub) {
                         $incomedetsub = Tmpendapatan::where([
                             'tmrekening_akun_kelompok_jenis_objek_rincian_sub_id' => $rek_obj['kd_rek_rincian_objek_sub'],
-                            'tanggal_lapor' => $sekarang
+                            'tanggal_lapor' => $sekarang,
                         ])
                             ->where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', 0)
                             ->first();
                         if ($rincian_obj_sub['kd_rek_rincian_objek_sub'] == $incomedetsub['tmrekening_akun_kelompok_jenis_objek_rincian_sub_id']) {
-                            $laporsub     = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
+                            $laporsub = ($incomedetsub['jumlah']) ? '<a class="btn btn-primary btn-xs">' . number_format($incomedetsub['jumlah'], 0, 0, '.') . '</a>' : '<a class="btn btn-danger">Belum Lapor</a>';
                         } else {
-                            $laporsub    =  '<a class="btn btn-danger">Belum Lapor</a>';
+                            $laporsub = '<a class="btn btn-danger">Belum Lapor</a>';
                         }
-                        $dataset[$idx]['kd_rek']['val']       = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
-                        $dataset[$idx]['nm_rek']['val']       = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
-                        $dataset[$idx]['lapor']['val']        = $laporsub;
-                        $dataset[$idx]['bold']['val']         = false;
+                        $dataset[$idx]['kd_rek']['val'] = $rincian_obj_sub['kd_rek_rincian_objek_sub'];
+                        $dataset[$idx]['nm_rek']['val'] = $rincian_obj_sub['nm_rek_rincian_objek_sub'];
+                        $dataset[$idx]['lapor']['val'] = $laporsub;
+                        $dataset[$idx]['bold']['val'] = false;
                         $idx++;
                     }
                 }
@@ -927,10 +919,10 @@ class PendapatanController extends Controller
     {
         $level_id = Properti_app::getlevel();
         $sekarang = Carbon::now()->format('Y-m-d');
-        $lewats   =  date($sekarang, strtotime('-1 day'));
+        $lewats = date($sekarang, strtotime('-1 day'));
 
-        // 
-        $tanggal_lapor  =  $request->tgl_lapor;
+        //
+        $tanggal_lapor = $request->tgl_lapor;
         // dd($tanggal_lapor);
 
         if (is_array($request->id)) {
@@ -944,7 +936,7 @@ class PendapatanController extends Controller
                 );
             } else {
                 return response()->json([
-                    'message' => 'data gagal di hapus '
+                    'message' => 'data gagal di hapus ',
                 ]);
             }
 
@@ -954,7 +946,7 @@ class PendapatanController extends Controller
             //     );
             // }
 
-            // return 
+            // return
             // if ($level_id == 3) {
             //     $check = Tmpendapatan::where([
             //         'tanggal_lapor' => $lewats,

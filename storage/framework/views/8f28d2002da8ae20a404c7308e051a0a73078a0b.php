@@ -1,17 +1,17 @@
-@extends('layouts.template')
-@section('content')
-@php
+<?php $__env->startSection('content'); ?>
+<?php
 
 $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'. $nmtitledit;
-@endphp
+?>
 
-@section('title', $pagetitle)
+<?php $__env->startSection('title', $pagetitle); ?>
 <div class="page bg-light">
-    @include('layouts._includes.toolbar')
+    <?php echo $__env->make('layouts._includes.toolbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="container-fluid my-3">
         <div id="alert"></div>
         <form class="needs-validation" id="form" method="POST" novalidate>
-            {{ method_field('PATCH') }}
+            <?php echo e(method_field('PATCH')); ?>
+
             <div class="page bg-light">
                 <div class="container-fluid my-3">
                     <div class="card">
@@ -31,14 +31,14 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                     <div class="col-md-12">
                                         <table class="table table-striped">
                                             <tr>
-                                                <input type="hidden" name="tahun_id" value="{{ $tahun_ang }}">
-                                                <input type="hidden" name="tanggal_lapor" value="{{ $tgl_lapor }}"
+                                                <input type="hidden" name="tahun_id" value="<?php echo e($tahun_ang); ?>">
+                                                <input type="hidden" name="tanggal_lapor" value="<?php echo e($tgl_lapor); ?>"
                                                     id="tanggal_lapor">
-                                                <input type="hidden" name="tmsikd_satker_id" value="{{ $fsatker_id }}">
+                                                <input type="hidden" name="tmsikd_satker_id" value="<?php echo e($fsatker_id); ?>">
                                                 <td>Tahun Anggaran</td>
-                                                <td>{{ $tahun_ang }}</td>
+                                                <td><?php echo e($tahun_ang); ?></td>
                                                 <td>Tanggal Lapor</td>
-                                                <td>{{ Properti_app::tgl_indo($tgl_lapor) }} Jam {{ $jam }}</td>
+                                                <td><?php echo e(Properti_app::tgl_indo($tgl_lapor)); ?> Jam <?php echo e($jam); ?></td>
                                             </tr>
                                         </table>
                                         <h2>Rincian PAD <sup><a href="#"
@@ -46,13 +46,14 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
                                                     title="apa itu pad" id="question_ans">[?]</sup> yang di laporkan
                                         </h2>
                                         <table class="table striped">
-                                            @foreach ($rekenings as $item)
+                                            <?php $__currentLoopData = $rekenings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td>{{ $item['keterangan']['val'] }}</td>
-                                                <td>[{{ $item['kode_rek']['val'] }}] - {{ $item['nm_rekening']['val'] }}
+                                                <td><?php echo e($item['keterangan']['val']); ?></td>
+                                                <td>[<?php echo e($item['kode_rek']['val']); ?>] - <?php echo e($item['nm_rekening']['val']); ?>
+
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </table>
 
                                     </div>
@@ -66,18 +67,18 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
         </form>
     </div>
 </div>
-@section('script')
+<?php $__env->startSection('script'); ?>
 <script>
     $(function(){
-        @if($raction == 'edit')
-        var id_rincian = {{ $rincianid }};
-        var satker_id  = {{ $satkerid }};
-        var tgl_lapor  = "{{ $tgl_lapor }}";
-        var form_url = "{{ route('pendapatan.edit_pendapatan_form',':id') }}".replace(':id',id_rincian);
+        <?php if($raction == 'edit'): ?>
+        var id_rincian = <?php echo e($rincianid); ?>;
+        var satker_id  = <?php echo e($satkerid); ?>;
+        var tgl_lapor  = "<?php echo e($tgl_lapor); ?>";
+        var form_url = "<?php echo e(route('pendapatan.edit_pendapatan_form',':id')); ?>".replace(':id',id_rincian);
           $.get(form_url,{tanggal_lapor : tgl_lapor, satker_id : satker_id },function(data){
           $('.entri_rek').html(data);
         });
-     @endif
+     <?php endif; ?>
 
     $('.entri_rek').html('<div class="alert alert-success">Sedang meload data ...</div>');
     $('#tmrekening_akun_id').on('change', function(){
@@ -90,7 +91,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
+            url = "<?php echo e(route('rekening.kodejenis.kodekelompokByKodeakun', ':id')); ?>".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
@@ -119,7 +120,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
+            url = "<?php echo e(route('rekening.kodeobjek.kodejenisByKodekelompok', ':id')); ?>".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
@@ -145,7 +146,7 @@ $pagetitle = ($raction == 'add') ? 'Tambah Pelaporan Pad' : 'Edit Pelaporan Pad'
             selectOnChange();
         }else{
             $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-            url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
+            url = "<?php echo e(route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id')); ?>".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                  $.each(data, function(index, value){
@@ -188,7 +189,7 @@ function selectOnChange()
       }else{
           $('#alert').html('');
           $('#btnSave').attr('disabled', true);
-          url = "{{ route('pendapatan.updateas', $id) }}";
+          url = "<?php echo e(route('pendapatan.updateas', $id)); ?>";
           $.ajax({
              type   : 'POST',
              url    : url,
@@ -196,7 +197,7 @@ function selectOnChange()
              success:function(data){
               //  $('#alert').html(data);
               $('#alert').html("<div role='alert' class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><strong>Success!</strong>Data berhasil di edit </div>");
-              document.location.href = "{{ url('pendapatan') }}?tgl_lapor="+tanggal_lapor;
+              document.location.href = "<?php echo e(url('pendapatan')); ?>?tgl_lapor="+tanggal_lapor;
            },error:function(data){
               err = ''; respon = data.responseJSON;
               $.each(respon.errors, function(index, value){
@@ -239,5 +240,7 @@ function selectOnChange()
 </div>
 
 
-@endsection
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/pendapatan/pendapatan/form_edit.blade.php ENDPATH**/ ?>
