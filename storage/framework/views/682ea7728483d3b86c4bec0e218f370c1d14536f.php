@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-    <link rel="icon" href="<?php echo e(asset('assets\template\img/icon.ico')); ?>" />
-
+    <link rel="icon" href="<?php echo e(asset('assets\template\img/icon.ico')); ?>" /> 
     <script src="<?php echo e(asset('/assets/template/')); ?>/js/plugin/webfont/webfont.min.js"></script>
     <script>
         WebFont.load({
@@ -35,6 +34,7 @@
         <div class="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center" style="
             background: url('public/assets/template/img/back.jpg');
             background-size: cover">
+            <img src="<?php echo e(asset('/assets/template/img/tangsel.png')); ?>" class="img-responsive" style="width: 80px;height:80px;">
             <h1 class="title fw-bold text-white mb-3">SIPAKDE</h1>
             <p class="subtitle text-white op-7">(SISTEM INFORMASI PELAPORAN KEUANGAN DAERAH)</p>
         </div>
