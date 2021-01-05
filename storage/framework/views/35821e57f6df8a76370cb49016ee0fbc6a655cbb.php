@@ -366,11 +366,11 @@
                                     Help
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     Licenses
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </nav>
                     <div class="copyright ml-auto">

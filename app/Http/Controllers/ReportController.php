@@ -40,7 +40,6 @@ use Illuminate\Support\Facades\DB;
 use function PHPSTORM_META\map;
 use Barryvdh\DomPDF\Facade as PDF;
 use Excel;
-use RPDF;
 
 use App\Export\Exportpendapatan;
 use App\Export\Exportpendapatanbulan;
@@ -197,9 +196,9 @@ class ReportController extends Controller
             // $data      = new Exportpendapatanbulan($request);
             // return Excel::download($data, $namaFile . '.xlsx');
             // $customPaper = array(0, 0, 567.00, 1200);
-            // header("Content-Type: application/vnd.ms-excel");
-            // header("Expires: 0");
-            // header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Expires: 0");
+            header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
             return view(
                 $this->view . 'report_excel_bulan',
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
@@ -216,7 +215,7 @@ class ReportController extends Controller
             ]);
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
-            $pdf = RPDF::loadView(
+            $pdf = PDF::loadView(
                 $this->view . 'report_bulan',
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
             )->setPaper($customPaper, 'landscape');

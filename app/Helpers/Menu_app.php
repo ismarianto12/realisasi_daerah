@@ -72,7 +72,7 @@ class Menu_app
                 case 1:
                     $menu .= '
                          
-                    <li class="nav-section" style="background:#ddd;padding : 5px 5px 5px">
+                    <li class="nav-section" style="background:#ddd;padding : 1px 0px 2px">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
