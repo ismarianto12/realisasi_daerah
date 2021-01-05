@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\DB;
 use function PHPSTORM_META\map;
 use Barryvdh\DomPDF\Facade as PDF;
 use Excel;
+use RPDF;
 
 use App\Export\Exportpendapatan;
 use App\Export\Exportpendapatanbulan;
@@ -215,7 +216,7 @@ class ReportController extends Controller
             ]);
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
-            $pdf = PDF::loadView(
+            $pdf = RPDF::loadView(
                 $this->view . 'report_bulan',
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
             )->setPaper($customPaper, 'landscape');

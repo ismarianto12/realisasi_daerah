@@ -178,6 +178,7 @@ return [
         PHPJasper\PHPJasperServiceProvider::class, 
         App\Providers\PHPExcelMacroServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        
 
     ],
 
@@ -239,6 +240,8 @@ return [
         'Properti_app' => App\Helpers\Properti_app::class,
         'Obj' => App\Helpers\Obj::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,    
-        'PDF' => Barryvdh\DomPDF\Facade::class
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'RPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class
     ],
 ];

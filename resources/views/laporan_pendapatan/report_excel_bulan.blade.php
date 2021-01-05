@@ -7,15 +7,14 @@
 
 </head>
 
-<body>
-
+<body> 
     <center>
         <h2>PEMERINTAH KOTA TANGERANG SELATAN</h2>
         <h3>REALISASI PENDAPATAN & RETRIBUSI DAERAH APBD {{ $tahun }}</h3>
         <h4>SAMPAI DENGAN DESEMBER {{ $tahun }}</h4>
     </center>
 
-    <table border="1">
+    <table border="1" style="table-layout:fixed;">
         <thead>
             <tr style="background: royalblue;color: #fff">
                 <th colspan=" 5">URAIAN</th>
