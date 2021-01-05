@@ -32,7 +32,7 @@
                 <th>NOV</th>
                 <th>DES</th>
             </tr>
-            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
+            <tr style="table-layout:fixed;background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <td colspan="5"></td>
                 <td></td>
                 @for($a=1; $a <= 12; $a++) <td style="text-align:center">

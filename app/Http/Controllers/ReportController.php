@@ -197,9 +197,9 @@ class ReportController extends Controller
             // $data      = new Exportpendapatanbulan($request);
             // return Excel::download($data, $namaFile . '.xlsx');
             // $customPaper = array(0, 0, 567.00, 1200);
-            header("Content-Type: application/vnd.ms-excel");
-            header("Expires: 0");
-            header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
+            // header("Content-Type: application/vnd.ms-excel");
+            // header("Expires: 0");
+            // header("content-disposition: attachment;filename=Report Pendapatan tahun $tahun.xls");
             return view(
                 $this->view . 'report_excel_bulan',
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
