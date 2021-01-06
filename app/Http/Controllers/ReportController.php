@@ -401,17 +401,18 @@ class ReportController extends Controller
         $rData  = array();  
         foreach ($dataset as $list) {
             $row  = array();
-            $row[] = htmlEntities('<tr>'. $list['table']['val']); 
-            $row[] = htmlEntities($list['kd_rek']['val']); 
-            $row[] = htmlEntities($list['nm_rek']['val']);  
-            $row[] = htmlEntities($list['juraian']['val']);
+            $row[] = '<tr>'. $list['table']['val']; 
+            $row[] = $list['kd_rek']['val']; 
+            $row[] = $list['nm_rek']['val'];  
+            $row[] = $list['juraian']['val'];
             
             for ($j = 1; $j <= 12; $j++){ 
-                $row[]=  htmlEntities($list['bulan_'.$j]['val'].'</tr>'); 
+                $row[]=  $list['bulan_'.$j]['val'].'</tr>'; 
             }
             $rData[] = $row;
         }
-        return DataTables::of($rData)->make(TRUE);
+        $render = htmlentities($rData, ENT_QUOTES | ENT_IGNORE, "UTF-8");
+        return DataTables::of($render)->toJson();
         \DB::connection()->close();
             // $result = isset($dataset) ? $dataset : 0;
             // if ($result != 0) {
