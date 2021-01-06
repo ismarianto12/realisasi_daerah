@@ -228,14 +228,39 @@ class ReportController extends Controller
                 ['getdatayears' => $getdatayears, 'tahun' => $tahun]
             )->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
-          
+            // return view(
+            //     $this->view . 'report_bulan',
+            //     ['getdatayears' => $getdatayears, 'tahun' => $tahun]
+            // );
         }
     }
-
-    public static function reportperyears()
+    public function api(Request $request)
     {
-        header('Content-type: application/json; charset=utf-8');
-        $tahun = Properti_app::getTahun();
+        $years = Properti_app::getTahun();
+        $getdatayears = $this->reportperyears($years);
+        $n = [];
+        foreach ($getdatayears as $list) { 
+            $html = [];
+              $html[] =  '<tr>'.$list['table']['val'];  
+              $html[] = $list['kd_rek']['val'];
+              $html[] = $list['nm_rek']['val'];
+              $html[] = $list['juraian']['val'];
+            for ($j = 1; $j <= 12; $j++) {
+                $html[] =  $list['bulan_'.$j]['val'];
+            }  
+            $html[] =  "</tr>"; 
+            $n[] = $html;
+        } 
+          $json_data = array(
+            "draw" => intval($request->draw),
+            "recordsTotal" => intval(count($n)),
+            "recordsFiltered" => intval(count($n)),
+            "data" => $n,
+          );
+          return response()->json($json_data);
+    }
+    public static function reportperyears($tahun)
+    {
         $idx = 0;
         $rekenings = Tmrekening_akun::select(
             'kd_rek_akun',
@@ -249,6 +274,7 @@ class ReportController extends Controller
                 ->where('tahun', $tahun)
                 ->first();
             $jklakun = ($jklakuns['total']) ? number_format($jklakuns['total'], 0, 0, '.') : 0;
+
 
             $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
             $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
@@ -397,30 +423,14 @@ class ReportController extends Controller
                     }
                 }
             }
-        } 
-        $rData  = array();  
-        foreach ($dataset as $list) {
-            $row  = array();
-            $row[] = htmlspecialchars_decode('<tr>'. $list['table']['val']); 
-            $row[] = htmlspecialchars_decode($list['kd_rek']['val']); 
-            $row[] = htmlspecialchars_decode($list['nm_rek']['val']);  
-            $row[] = htmlspecialchars_decode($list['juraian']['val']);
-            
-            for ($j = 1; $j <= 12; $j++){ 
-                $row[]=  htmlspecialchars_decode($list['bulan_'.$j]['val'].'</tr>'); 
-            }
-            $rData[] = $row;
         }
-        // $render = html_entity_decode($rData,ENT_HTML5); 
-        return DataTables::of($rData)->toJson();
-        \DB::connection()->close();
-            // $result = isset($dataset) ? $dataset : 0;
-            // if ($result != 0) {
-            //     return $dataset;
-            // } else {
-            //     return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
-            // }
-            //  DB::connection()->close();
+        $result = isset($dataset) ? $dataset : 0;
+        if ($result != 0) {
+            return $dataset;
+        } else {
+            return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
+        }
+        //  DB::connection()->close();
     }
 
 
@@ -458,7 +468,7 @@ class ReportController extends Controller
     }
 
 
-            //get total pad 
+        //get total pad 
     function total_pad(Request $request)
     {
 
