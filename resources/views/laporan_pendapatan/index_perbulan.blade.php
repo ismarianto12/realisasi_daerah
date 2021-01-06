@@ -19,7 +19,7 @@
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="overflow:auto">
               <div class="form-group form-show-validation row">
                  <input type="hidden" name="tahun_id" id="tahun_id" value="{{ Properti_app::tahun_sekarang() }}">
                  <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
@@ -30,7 +30,7 @@
                 </div>
             </div>
            <div class="card-body" style="overflow:auto">
-            <table id="tableReport" style="border: 0.5px dotted #000;
+            <table class="table table-striped" id="tableReport" style="border: 0.5px dotted #000;
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">

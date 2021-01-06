@@ -117,10 +117,7 @@ class ReportController extends Controller
             'dperiode' => $dperiode,
             'speriode' => $speriode
         ];
-        $rpendapatan = Tmpendapatan::report_pendapatan($par);
-        // dd($rpendapatan);
-
-
+        $rpendapatan = Tmpendapatan::report_pendapatan($par);   
         $opd = Sikd_satker::find($request->tmsikd_satker_id);
         //report per rekening jenis 
         $jenis    = $request->jenis;
@@ -162,8 +159,6 @@ class ReportController extends Controller
             return $pdf->stream('report_pad');
         }
     }
-
-
 
     public function perbulan(Request $request)
     {
