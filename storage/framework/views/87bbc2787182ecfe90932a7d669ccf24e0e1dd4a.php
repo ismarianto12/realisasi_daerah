@@ -90,20 +90,21 @@
         className: 'btn btn-success',
           text: 'Cetak Excel <i class="fa fa-print"></i>',
           action: function ( e, dt, button, config ) {
-          window.location = '<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=xls';
+          window.open('<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=xls','_blank');
       }
     },
         {
         className: 'btn btn-warning',
           text: 'Cetak PDF <i class="fa fa-print"></i>',
           action: function ( e, dt, button, config ) {
-          window.location = '<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=pdf';
+          window.open('<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=pdf','_blank');
       } 
      },
          ],
              "processing": true,
-             "pageLength": 100,
+             "pageLength": 500,
              "serverSide": true, 
+             "bPaginate": false,
              "ajax": {
                  url: "<?php echo e(route('laporan.api_report')); ?>",
                  type: "GET",
