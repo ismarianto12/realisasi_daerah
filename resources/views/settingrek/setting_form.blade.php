@@ -85,8 +85,7 @@
                         <thead>
                             <th width="30"></th>
                             <th width="130">Kode Rek. Rincian Obj</th>
-                            <th>Nama Rek. Rincian Obj</th>
-                            <th width="120">Klasifikasi</th>
+                            <th>Nama Rek. Rincian Obj</th> 
                             <th width="120">Level akses opd</th>
                         </thead>
                         <tbody></tbody>
@@ -132,7 +131,7 @@
             {data: 'id', name: 'id', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'kd_rek_rincian_obj', name: 'kd_rek_rincian_obj'},
             {data: 'nm_rek_rincian_obj', name: 'nm_rek_rincian_obj'},
-            {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
+            // {data: 'klasifikasi_rek', name: 'klasifikasi_rek'},
             {data: 'nm_satker', name: 'nm_satker',orderable: false, searchable: false},
          
         ]
