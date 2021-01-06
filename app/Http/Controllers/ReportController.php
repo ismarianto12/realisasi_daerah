@@ -411,7 +411,7 @@ class ReportController extends Controller
             }
             $rData[] = $row;
         }
-        return DataTables::of($rData)->toJson();
+        return DataTables::of($rData)->make(TRUE);
         \DB::connection()->close();
             // $result = isset($dataset) ? $dataset : 0;
             // if ($result != 0) {
