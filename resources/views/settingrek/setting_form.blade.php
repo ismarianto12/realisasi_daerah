@@ -76,6 +76,8 @@
                 </div>
             </div>
         </div>
+
+        <a href="/settingrek" class="btn btn-primary">Kembali Ke menu awal</a>
         <div class="card mt-2">
             <div class="card-body no-b">
                 <div id="alert"></div>

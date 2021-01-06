@@ -29,149 +29,83 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="col-md-6">
-                    <div class="form-group m-0">
-                        <select class="form-control select2" id="type_params">
-                            <option value="0">--Pilih Jenis Dokument--</option>
-                            <option value="pdf">PDF</option>
-                            <option value="rtf">WORD (RTF)</option>
-                            <option value="xls">XLS</option>
-                        </select>
-                        <hr />
-                        <button id="tampilkan" class="btn btn-primary"><i class="fa fa-search"></i>Tampilkan</button>
-                    </div>
-                </div>
-            </div>
+           <div class="card-body" style="overflow:auto">
+            <table id="tableReport" class="table table-striped" style="border: 0.5px dotted #000;
+                  border-collapse: collapse">
+        <thead>
+            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
+                <th colspan=" 5">URAIAN</th>
+                <th>APBD </th>
+                <th>JAN</th>
+                <th>FEB</th>
+                <th>MAR</th>
+                <th>APR</th>
+                <th>MEI</th>
+                <th>JUN</th>
+                <th>JUL</th>
+                <th>AGUS</th>
+                <th>SEPT</th>
+                <th>OKT</th>
+                <th>NOV</th>
+                <th>DES</th>
+            </tr>
+            <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
+                <td colspan="5"></td>
+                <td></td>
+                @for($a=1; $a <= 12; $a++) <td style="text-align:center">
+                    {{ $a }}
+                    </td>
+                    @endfor
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+         </table>
+         </div> 
         </div>
-    </div>
-    <div id="btn_cetak"></div>
+    </div> 
 </div>
 @section('script')
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
+</script>
+
+<script type="text/javascript"
+    src="{{  asset('assets/template/js/plugin/datatables/button/dataTables.buttons.min.js') }}"></script>
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/jszip.min.js') }}"></script>
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/pdfmake.min.js') }}">
+</script>
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/vfs_fonts.js') }}"></script>
+<script type="text/javascript" src="{{  asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js') }}">
+</script>
 <script>
-    $(function(){
-
-        $('#tmrekening_akun_id').on('change', function(){
-            val = $(this).val();
-            option = "<option value='0'>--Semua Data--</option>";
-            if(val == ""){
-                $('#tmrekening_akun_kelompok_id').html(option);
-                $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                selectOnChange();
-            }else{
-                $('#tmrekening_akun_kelompok_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodejenis.kodekelompokByKodeakun', ':id') }}".replace(':id', val);
-                $.get(url, function(data){
-                    if(data){
-                        $.each(data, function(index, value){
-                            option += "<option value='" + value.id + "'>[" + value.kd_rek_kelompok +"] " + value.nm_rek_kelompok +"</li>";
-                        });
-                        $('#tmrekening_akun_kelompok_id').empty().html(option);
-
-                        $("#tmrekening_akun_kelompok_id").val($("#tmrekening_akun_kelompok_id option:first").val()).trigger("change.select2");
-                    }else{
-                        $('#tmrekening_akun_kelompok_id').html(option);
-                        $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                        selectOnChange();
-                    }
-                }, 'JSON');
-            }
-            $('#tmrekening_akun_kelompok_id').change();
+     $(document).ready(function() {
+         
+         var dataTable = $('#tableReport').DataTable({
+            dom: 'Bfrtip',
+        buttons: [
+        {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
+        {extend:'excelHtml5', className: 'btn btn-success btn-xs'},
+        {extend:'csvHtml5', className: 'btn btn-warning btn-xs'},
+        {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
+        ],
+             "processing": true,
+             "serverSide": true,
+             "ajax": {
+                 url: "{{ route('laporan.api_report') }}",
+                 type: "post",
+                 data: function(data) {
+                     searchby = $('#searchby').val();
+                     data.searchby = searchby;
+                 },
+                 error: function() {
+                     $(".dataku-error").html("");
+                     $("#tableReport").append('<tbody class="dataku-error"><tr><th colspan="19">Tidak ada data untuk ditampilkan</th></tr></tbody>');
+                     $("#dataku-error-proses").css("display", "none");
+                 }
+             }
+         });
         });
-
-        $('#tmrekening_akun_kelompok_id').on('change', function(){
-            val = $(this).val();
-            option = "<option value='0'>--Semua Data--</option>";
-            if(val == ""){
-                $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                selectOnChange();
-            }else{
-                $('#tmrekening_akun_kelompok_jenis_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.kodeobjek.kodejenisByKodekelompok', ':id') }}".replace(':id', val);
-                $.get(url, function(data){
-                    if(data){
-                        $.each(data, function(index, value){
-                            option += "<option value='" + value.id + "'>[" + value.kd_rek_jenis +"] " + value.nm_rek_jenis +"</li>";
-                        });
-                        $('#tmrekening_akun_kelompok_jenis_id').empty().html(option);
-
-                        $("#tmrekening_akun_kelompok_jenis_id").val($("#tmrekening_akun_kelompok_jenis_id option:first").val()).trigger("change.select2");
-                    }else{
-                        $('#tmrekening_akun_kelompok_jenis_id').html(option);
-                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                        selectOnChange();
-                    }
-                }, 'JSON');
-            }
-        });
-
-        $('#tmrekening_akun_kelompok_jenis_id').on('change', function(){
-            val = $(this).val();
-            option = "<option value='0'>--Semua Data--</option>";
-            if(val == ""){
-                $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                selectOnChange();
-            }else{
-                $('#tmrekening_akun_kelompok_jenis_objek_id').html("<option value=''>Loading...</option>");
-                url = "{{ route('rekening.koderincianobjek.kodeobjekByKodejenis', ':id') }}".replace(':id', val);
-                $.get(url, function(data){
-                    if(data){
-                        $.each(data, function(index, value){
-                            option += "<option value='" + value.id + "'>[" + value.kd_rek_obj +"] " + value.nm_rek_obj +"</li>";
-                        });
-                        $('#tmrekening_akun_kelompok_jenis_objek_id').empty().html(option);
-
-                        $("#tmrekening_akun_kelompok_jenis_objek_id").val($("#tmrekening_akun_kelompok_jenis_objek_id option:first").val()).trigger("change.select2");
-                    }else{
-                        $('#tmrekening_akun_kelompok_jenis_objek_id').html(option);
-                        selectOnChange();
-                    }
-                }, 'JSON');
-            }
-        });
-
-        $('#tampilkan').click(function(e){
-         e.preventDefault(); 
-         var tahun_id  = $('#tahun_id').val();
-         var tmsikd_satker_id  = $('#tmsikd_satker_id').val();
-         var dari  = $('#dari').val();
-         var sampai  = $('#sampai').val();
-         var rekjenis_id  = $('#tmrekening_akun_kelompok_jenis_id').val();
-
-         if(tahun_id == ''){ 
-            $.alert('tahun anggaran boleh kosong');
-        }
-        if(tmsikd_satker_id == ''){
-            $.alert('Satuan kerja tidak boleh kosong');
-        }else if(dari == ''){
-            $.alert('tanggal awal tidak boleh kosong');
-        }else if(sampai == ''){
-            $.alert('tanggal akhir tidak boleh kosong');
-        }else if(rekjenis_id == ''){
-            $.alert('rekening jenis object tidak boleh kosong');
-        }else{ 
-         var jenis = $('#type_params').val();
-         if(jenis == '' || jenis == 0){
-            $.alert('jenis laporan tidak boleh kosong');
-        }else{ 
-            if(jenis == 'pdf'){
-                window.open("{{ route('laporan.action_bulan') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis,'_blank');
-            }else{ 
-               window.location.href= "{{ route('laporan.action_bulan') }}?tahun_id="+tahun_id+"&tmsikd_satker_id="+tmsikd_satker_id+"&dari="+dari+"&sampai="+sampai+"&rekjenis_id="+rekjenis_id+'&jenis='+jenis;
-           } 
-       } 
-   }
-}) 
-
-    });
-function selectOnChange()
-{
-
-}
-
 </script>
 
 @endsection

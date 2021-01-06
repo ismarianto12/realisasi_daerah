@@ -68,7 +68,7 @@
                 @php echo $list['nm_rek']['val'] @endphp
                 @php echo $list['juraian']['val'] @endphp
                 @for ($j = 1; $j <= 12; $j++) @php echo $list['bulan_'.$j]['val'] @endphp @endfor </tr> @endforeach
-                    </tbody> </table> <b>Badan Pendaptan daerah tangerang selatan</b>
+          </tbody> </table> <b>Badan Pendaptan daerah tangerang selatan</b>
 
 </body>
 
