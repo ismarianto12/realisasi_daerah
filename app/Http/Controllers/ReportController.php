@@ -411,7 +411,7 @@ class ReportController extends Controller
             }
             $rData[] = $row;
         }
-        $render = htmlentities($rData, ENT_QUOTES | ENT_IGNORE, "UTF-8");
+        $render = strip_tags(htmlspecialchars_decode($rData)); 
         return DataTables::of($render)->toJson();
         \DB::connection()->close();
             // $result = isset($dataset) ? $dataset : 0;
