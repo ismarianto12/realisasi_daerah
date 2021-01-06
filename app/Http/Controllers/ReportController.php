@@ -411,7 +411,7 @@ class ReportController extends Controller
             }
             $rData[] = $row;
         }
-        $render = strip_tags(htmlspecialchars_decode($rData)); 
+        $render = strip_tags($rData); 
         return DataTables::of($render)->toJson();
         \DB::connection()->close();
             // $result = isset($dataset) ? $dataset : 0;
