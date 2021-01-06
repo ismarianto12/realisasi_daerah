@@ -18,7 +18,7 @@
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="overflow:auto">
               <div class="form-group form-show-validation row">
                  <input type="hidden" name="tahun_id" id="tahun_id" value="<?php echo e(Properti_app::tahun_sekarang()); ?>">
                  <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
@@ -29,7 +29,7 @@
                 </div>
             </div>
            <div class="card-body" style="overflow:auto">
-            <table id="tableReport" style="border: 0.5px dotted #000;
+            <table class="table table-striped" id="tableReport" style="border: 0.5px dotted #000;
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
@@ -85,11 +85,22 @@
             oLanguage: {sProcessing: "<b>Sedang Meload Data Harap Bersabar ...</b>"},
             dom: 'Bfrtip',
         buttons: [
-        {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
-        {extend:'excelHtml5', className: 'btn btn-success btn-xs'},
-        {extend:'csvHtml5', className: 'btn btn-warning btn-xs'},
-        {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
-        ],
+        {extend:'copyHtml5', className: 'btn btn-info'},
+        {
+        className: 'btn btn-success',
+          text: 'Cetak Excel <i class="fa fa-print"></i>',
+          action: function ( e, dt, button, config ) {
+          window.location = '<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=xls';
+      }
+    },
+        {
+        className: 'btn btn-warning',
+          text: 'Cetak PDF <i class="fa fa-print"></i>',
+          action: function ( e, dt, button, config ) {
+          window.location = '<?php echo e(route('laporan.action_bulan')); ?>?tahun_id=1jenis=pdf';
+      } 
+     },
+         ],
              "processing": true,
              "pageLength": 100,
              "serverSide": true, 

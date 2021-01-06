@@ -85,11 +85,22 @@
             oLanguage: {sProcessing: "<b>Sedang Meload Data Harap Bersabar ...</b>"},
             dom: 'Bfrtip',
         buttons: [
-        {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
-        {extend:'excelHtml5', className: 'btn btn-success btn-xs'},
-        {extend:'csvHtml5', className: 'btn btn-warning btn-xs'},
-        {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
-        ],
+        {extend:'copyHtml5', className: 'btn btn-info'},
+        {
+        className: 'btn btn-success',
+          text: 'Cetak Excel <i class="fa fa-print"></i>',
+          action: function ( e, dt, button, config ) {
+          window.location = '{{ route('laporan.action_bulan') }}?tahun_id=1jenis=xls';
+      }
+    },
+        {
+        className: 'btn btn-warning',
+          text: 'Cetak PDF <i class="fa fa-print"></i>',
+          action: function ( e, dt, button, config ) {
+          window.location = '{{ route('laporan.action_bulan') }}?tahun_id=1jenis=pdf';
+      } 
+     },
+         ],
              "processing": true,
              "pageLength": 100,
              "serverSide": true, 
