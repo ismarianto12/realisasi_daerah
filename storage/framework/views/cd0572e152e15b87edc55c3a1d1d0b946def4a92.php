@@ -21,7 +21,7 @@
             <div class="card-body">
                 <div class="form-group form-show-validation row">
                  <input type="hidden" name="tahun_id" id="tahun_id" value="<?php echo e(Properti_app::tahun_sekarang()); ?>">
-             <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
+                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
                             class="required-label">*</span></label>
                     <div class="col-sm-6">
                           <b> <?php echo e(Properti_app::tahun_sekarang()); ?> </b>

@@ -45,7 +45,7 @@ class SettingrekeningController extends Controller
         $tmsikd_satkers     = Sikd_list_option::listSkpd();
         $title              = $this->title;
         $route              = $this->route;
-        $toolbar            = ['list','c','u','d'];
+        $toolbar            = ['list','c','d'];
         $tmrekening_akuns   = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         return view($this->view . 'index', compact(
             'title',

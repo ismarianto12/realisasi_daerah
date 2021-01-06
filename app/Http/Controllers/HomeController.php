@@ -80,7 +80,7 @@ class HomeController extends Controller
                 ->get();
 
             foreach ($rek_jeniss as $rek_jenis) {
-                $rekjeniss = Tmpendapatan::select(\DB::raw('sum(jumlah) as total'))
+                $rekjeniss = Tmpendapatan::select(\DB::raw('jumlah as total'))
                     ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tahun', $tahun)
                     ->first();
