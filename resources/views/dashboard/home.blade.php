@@ -8,13 +8,12 @@ $username = Auth::user()->username;
 @if($level_id == 3)
 <script>
     $(function(){
-            $.confirm({title : 'Hy {{ $username }} silahkan laporkan pendpatan hari ini',
+            $.confirm({title :'Hy {{ $username }} silahkan laporkan pendpatan hari ini',
                        content : 'Pendapatan yang belum di laporkan : Pada {{ date('Y-m-d') }}'});
-        })
+        });
 </script>
 @endif
-
-
+ 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">

@@ -168,13 +168,13 @@
 </script>
 
 <script type="text/javascript">
-    $('#btnCreate').on('click', function(){
-        if($('#tmrekening_akun_id').val() == 0 || $('#tmrekening_akun_kelompok_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_objek_id').val() == 0) {
-            event.preventDefault();
-            event.stopPropagation();
-            $.alert("Silahkan memilih <strong>Rek. Akun</strong>, <strong>Rek. Kelompok</strong>, <strong>Rek. Jenis</strong> dan <strong>Rek. Obj</strong> yang akan ditambah.");
-        }
-    });
+    // $('#btnCreate').on('click', function(){
+    //     if($('#tmrekening_akun_id').val() == 0 || $('#tmrekening_akun_kelompok_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_id').val() == 0 || $('#tmrekening_akun_kelompok_jenis_objek_id').val() == 0) {
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //         $.alert("Silahkan memilih <strong>Rek. Akun</strong>, <strong>Rek. Kelompok</strong>, <strong>Rek. Jenis</strong> dan <strong>Rek. Obj</strong> yang akan ditambah.");
+    //     }
+    // });
 
     var table = $('#datatable').DataTable({
         processing: true,
