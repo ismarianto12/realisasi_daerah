@@ -27,7 +27,7 @@ class SetupTahunAnggaranController extends Controller
     {
         $title   = $this->title;
         $route   = $this->route;
-        $toolbar = ['d', 'c', 'l'];
+        $toolbar = ['l'];
         return view($this->view . 'index', compact('title', 'route', 'toolbar'));
     }
 
