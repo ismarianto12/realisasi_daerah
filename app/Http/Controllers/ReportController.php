@@ -409,7 +409,7 @@ class ReportController extends Controller
             for ($j = 1; $j <= 12; $j++){ 
                 $row[]=  $list['bulan_'.$j]['val'].'</tr>'; 
             }
-            $rData = $row;
+            $rData[] = $row;
         }
         return DataTables::of($rData)->toJson();
         \DB::connection()->close();
