@@ -67,7 +67,8 @@ class ReportController extends Controller
         $sampai           = date(date('Y-m-d'), strtotime('+1 day'));
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
 
-        return view($this->view . '.report_peropd', [
+        return view(
+            $this->view . '.report_peropd', [
             'tahun_id' => $tahuns,
             'tahuns' => $tahuns,
             'tmrekening_akuns' => $tmrekening_akuns,
@@ -75,7 +76,8 @@ class ReportController extends Controller
             'tmsikd_satker_id' => $tmsikd_satker_id,
             'dari' => $dari,
             'sampai' => $sampai
-        ]);
+            ]
+        );
     }
 
     //function download
@@ -132,7 +134,8 @@ class ReportController extends Controller
             $this->headerdownload($namaFile);
         }
         if ($jenis == 'rtf') {
-            return view($this->view . 'jenis_object', [
+            return view(
+                $this->view . 'jenis_object', [
                 'tahun' => $tahun,
                 'dari' => $dari,
                 'opd' => $opd,
@@ -140,7 +143,8 @@ class ReportController extends Controller
                 'tahun_id' => $tahun_id,
                 'sampai' => $sampai,
                 'render' => $rpendapatan,
-            ]);
+                ]
+            );
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
             $pdf = PDF::loadView(
@@ -170,7 +174,8 @@ class ReportController extends Controller
         $sampai           = $request->sampai;
         $tmrekening_akuns = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         $tmpendapatan   = new Tmpendapatan;
-        return view($this->view . '.index_perbulan', [
+        return view(
+            $this->view . '.index_perbulan', [
             'tahun_id' => $tahuns,
             'tahuns' => $tahuns,
             'tmrekening_akuns' => $tmrekening_akuns,
@@ -178,7 +183,8 @@ class ReportController extends Controller
             'tmsikd_satker_id' => $tmsikd_satker_id,
             'dari' => $dari,
             'sampai' => $sampai
-        ]);
+            ]
+        );
     }
 
     public function action_bulan(Request $request)
@@ -209,10 +215,12 @@ class ReportController extends Controller
             $this->headerdownload($namaFile);
         }
         if ($jenis == 'rtf' || $jenis == 'xls') {
-            return view($this->view . 'report_bulan', [
+            return view(
+                $this->view . 'report_bulan', [
                 'tahun' => $tahun,
                 'datas' => $getdatayears
-            ]);
+                ]
+            );
         } else {
             $customPaper = array(0, 0, 567.00, 1200);
             $pdf = PDF::loadView(
@@ -389,15 +397,29 @@ class ReportController extends Controller
                     }
                 }
             }
+        } 
+        $rData  = array();  
+        foreach ($dataset as $list) {
+            $row  = array();
+            $row[] = '<tr>'. $list['table']['val']; 
+            $row[] = $list['kd_rek']['val']; 
+            $row[] = $list['nm_rek']['val'];  
+            $row[] = $list['juraian']['val'];
+            
+            for ($j = 1; $j <= 12; $j++){ 
+                $row[]=  $list['bulan_'.$j]['val'].'</tr>'; 
+            }
+            $rData = $row;
         }
-        return DataTables::of($dataset)->toJson();
-        // $result = isset($dataset) ? $dataset : 0;
-        // if ($result != 0) {
-        //     return $dataset;
-        // } else {
-        //     return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
-        // }
-        //  DB::connection()->close();
+        return DataTables::of($rData)->toJson();
+        \DB::connection()->close();
+            // $result = isset($dataset) ? $dataset : 0;
+            // if ($result != 0) {
+            //     return $dataset;
+            // } else {
+            //     return abort(403, 'MAAF DATA TIDAK ADA SATUAN KERJ OPD TIDAK TERDAFTAR PADA PENCARIAN PAD YANG DI MAKSUD');
+            // }
+            //  DB::connection()->close();
     }
 
 
@@ -412,7 +434,7 @@ class ReportController extends Controller
 
         $tsekarang      = Properti_app::tahun_sekarang();
         $par = [
-            'tahun' => $tsekarang
+        'tahun' => $tsekarang
         ];
         //get kelompok rekening terlebih dahulu 
         $kelompok           = Tmrekening_akun_kelompok_jenis::find($rek_kelompok_id);
@@ -435,7 +457,7 @@ class ReportController extends Controller
     }
 
 
-    //get total pad 
+            //get total pad 
     function total_pad(Request $request)
     {
 
@@ -446,11 +468,11 @@ class ReportController extends Controller
             $par = ['tanggal_lapor' => $sekarang];
             $data = Tmpendapatan::select(\DB::raw('SUM(jumlah) as total'))
                 ->where($par)
-                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', NULL)
+                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', null)
                 ->get();
         } else {
             $data = Tmpendapatan::select(\DB::raw('SUM(jumlah) as total'))
-                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', NULL)
+                ->Where('tmrekening_akun_kelompok_jenis_objek_rincian_sub_id', '!=', null)
                 ->get();
         }
         $result  = ($data->first()->total) ? number_format($data->first()->total, 0, 0, '.') : 0;
@@ -462,7 +484,7 @@ class ReportController extends Controller
         //1 rekening object
         //2 rekening jenis 
         //3 rekening rincian_sub 
-        if ($request->jenis == 0 || $request->jenis == NULL) {
+        if ($request->jenis == 0 || $request->jenis == null) {
             return abort('404', 'Response tidak benar');
         }
         $jenis = $request->jenis;
