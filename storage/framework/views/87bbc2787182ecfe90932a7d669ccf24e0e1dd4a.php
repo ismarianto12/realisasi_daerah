@@ -19,16 +19,12 @@
     <div class="container-fluid my-3">
         <div class="card">
             <div class="card-body">
-                <div class="form-group form-show-validation row">
-                    <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
+              <div class="form-group form-show-validation row">
+                 <input type="hidden" name="tahun_id" id="tahun_id" value="<?php echo e(Properti_app::tahun_sekarang()); ?>">
+                 <label for="name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Tahun <span
                             class="required-label">*</span></label>
                     <div class="col-sm-6">
-                        <select name="tahun_id" id="tahun_id" placeholder="" class="form-control select2 r-0 light"
-                            autocomplete="off" onchange="selectOnChange()">
-                            <?php $__currentLoopData = $tahuns; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($tahun->id); ?>"><?php echo e($tahun->tahun); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
+                          <b> <?php echo e(Properti_app::tahun_sekarang()); ?> </b>
                     </div>
                 </div>
             </div>
