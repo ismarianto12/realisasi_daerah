@@ -205,7 +205,6 @@ for (i = 0; i < dataLen; i += 1) {
     }
 }
 
-// Create the chart
 Highcharts.chart('pie_persentase', {
     chart: {
         type: 'pie'
@@ -237,7 +236,7 @@ Highcharts.chart('pie_persentase', {
             distance: -30
         }
     }, {
-        name: 'Jumlah : ',
+        name: 'Jumlah: ',
         data: versionsData,
         size: '80%',
         innerSize: '60%',
