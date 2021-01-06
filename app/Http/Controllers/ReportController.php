@@ -224,9 +224,10 @@ class ReportController extends Controller
         }
     }
 
-    public static function reportperyears($tahun)
+    public static function reportperyears()
     {
         header('Content-type: application/json; charset=utf-8');
+        $tahun = Properti_app::getTahun();
         $idx = 0;
         $rekenings = Tmrekening_akun::select(
             'kd_rek_akun',

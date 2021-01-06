@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('laporan')->name('laporan.')->group(function () {
 		Route::get('', 'ReportController@index')->name('');
 		Route::get('action_all', 'ReportController@action_all')->name('action_all');
-		Route::post('api_report', 'ReportController@reportperyears')->name('api_report');
+		Route::get('api_report', 'ReportController@reportperyears')->name('api_report');
 			//resource data perbulan 
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');

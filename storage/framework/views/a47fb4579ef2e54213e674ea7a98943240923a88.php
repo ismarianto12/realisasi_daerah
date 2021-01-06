@@ -7,13 +7,12 @@ $username = Auth::user()->username;
 <?php if($level_id == 3): ?>
 <script>
     $(function(){
-            $.confirm({title : 'Hy <?php echo e($username); ?> silahkan laporkan pendpatan hari ini',
+            $.confirm({title :'Hy <?php echo e($username); ?> silahkan laporkan pendpatan hari ini',
                        content : 'Pendapatan yang belum di laporkan : Pada <?php echo e(date('Y-m-d')); ?>'});
-        })
+        });
 </script>
 <?php endif; ?>
-
-
+ 
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">

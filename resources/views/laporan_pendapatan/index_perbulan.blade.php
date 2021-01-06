@@ -30,7 +30,7 @@
                 </div>
             </div>
            <div class="card-body" style="overflow:auto">
-            <table id="tableReport" class="table table-striped" style="border: 0.5px dotted #000;
+            <table id="tableReport" style="border: 0.5px dotted #000;
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
@@ -82,6 +82,7 @@
      $(document).ready(function() {
          
          var dataTable = $('#tableReport').DataTable({
+            oLanguage: {sProcessing: "<b>Sedang Meload Data Harap Bersabar ...</b>"},
             dom: 'Bfrtip',
         buttons: [
         {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
@@ -90,10 +91,10 @@
         {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
         ],
              "processing": true,
-             "serverSide": true,
+             "serverSide": true, 
              "ajax": {
                  url: "{{ route('laporan.api_report') }}",
-                 type: "post",
+                 type: "GET",
                  data: function(data) {
                      searchby = $('#searchby').val();
                      data.searchby = searchby;

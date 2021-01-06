@@ -29,7 +29,7 @@
                 </div>
             </div>
            <div class="card-body" style="overflow:auto">
-            <table id="tableReport" class="table table-striped" style="border: 0.5px dotted #000;
+            <table id="tableReport" style="border: 0.5px dotted #000;
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
@@ -82,6 +82,7 @@
      $(document).ready(function() {
          
          var dataTable = $('#tableReport').DataTable({
+            oLanguage: {sProcessing: "<b>Sedang Meload Data Harap Bersabar ...</b>"},
             dom: 'Bfrtip',
         buttons: [
         {extend:'copyHtml5', className: 'btn btn-info btn-xs'},
@@ -91,16 +92,17 @@
         ],
              "processing": true,
              "serverSide": true,
+             
              "ajax": {
                  url: "<?php echo e(route('laporan.api_report')); ?>",
-                 type: "post",
+                 type: "GET",
                  data: function(data) {
                      searchby = $('#searchby').val();
                      data.searchby = searchby;
                  },
                  error: function() {
                      $(".dataku-error").html("");
-                     $("#tableReport").append('<tbody class="dataku-error"><tr><th colspan="12">Tidak ada data untuk ditampilkan</th></tr></tbody>');
+                     $("#tableReport").append('<tbody class="dataku-error"><tr><th colspan="19">Tidak ada data untuk ditampilkan</th></tr></tbody>');
                      $("#dataku-error-proses").css("display", "none");
                  }
              }
