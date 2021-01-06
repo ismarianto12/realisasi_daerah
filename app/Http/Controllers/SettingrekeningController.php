@@ -215,13 +215,14 @@ class SettingrekeningController extends Controller
         $title              = $this->title;
         $route              = $this->route;
         $rincian_id         = $id;
-        $toolbar            = ['list'];
+        $toolbar            = ['list','u'];
         $tmrekening_akuns   = Tmrekening_akun::select('id', 'kd_rek_akun', 'nm_rek_akun')->get();
         return view($this->view . 'index_rincian', compact(
             'title',
             'nama_rincian',
             'rincian_id',
             'route',
+            'id',
             'toolbar',
             'tmrekening_akuns',
             'tmsikd_satkers'

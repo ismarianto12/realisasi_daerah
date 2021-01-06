@@ -1,6 +1,6 @@
 <?php $__env->startSection('title', 'Setting Rekening Sub Rincian Object , Nama Rincian Object'); ?>
 <?php $__env->startSection('content'); ?>  
- 
+<?php echo $__env->make('layouts._includes.toolbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="alert alert-danger">  Setting sub rekening rincian sub rincian object .<?php echo e($nama_rincian); ?></div>

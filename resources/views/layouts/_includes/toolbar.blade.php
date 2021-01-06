@@ -32,7 +32,7 @@
                 @if(in_array('c', $toolbar))
                 <a class="btn btn-outline-secondary btn-info btn-sm" title="Masukan Data Baru"
                     href="{{ route($route.'create') }}" id="btnCreate" style="
-                    color: #fff;
+                    color: #fff;background: green
                 "><i class="fa fa-plus"></i> Tambah</a>
                 @endif
                 @if(in_array('u', $toolbar))

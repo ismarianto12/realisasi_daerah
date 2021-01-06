@@ -2,7 +2,7 @@
 
 @section('title', 'Setting Rekening Sub Rincian Object , Nama Rincian Object')
 @section('content')  
- 
+@include('layouts._includes.toolbar')
 <div class="page bg-light">
     <div class="container-fluid my-3">
         <div class="alert alert-danger">  Setting sub rekening rincian sub rincian object .{{ $nama_rincian }}</div>
