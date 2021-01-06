@@ -401,13 +401,13 @@ class ReportController extends Controller
         $rData  = array();  
         foreach ($dataset as $list) {
             $row  = array();
-            $row[] = '<tr>'. $list['table']['val']; 
-            $row[] = $list['kd_rek']['val']; 
-            $row[] = $list['nm_rek']['val'];  
-            $row[] = $list['juraian']['val'];
+            $row[] = htmlspecialchars_decode('<tr>'. $list['table']['val']); 
+            $row[] = htmlspecialchars_decode($list['kd_rek']['val']); 
+            $row[] = htmlspecialchars_decode($list['nm_rek']['val']);  
+            $row[] = htmlspecialchars_decode($list['juraian']['val']);
             
             for ($j = 1; $j <= 12; $j++){ 
-                $row[]=  $list['bulan_'.$j]['val'].'</tr>'; 
+                $row[]=  htmlspecialchars_decode($list['bulan_'.$j]['val'].'</tr>'); 
             }
             $rData[] = $row;
         }

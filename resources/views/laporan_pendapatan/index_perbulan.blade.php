@@ -91,6 +91,7 @@
         {extend:'pdfHtml5', className: 'btn btn-prirmay btn-xs'}
         ],
              "processing": true,
+             "pageLength": 100,
              "serverSide": true, 
              "ajax": {
                  url: "{{ route('laporan.api_report') }}",
