@@ -276,8 +276,8 @@ class ReportController extends Controller
             $jklakun = ($jklakuns['total']) ? number_format($jklakuns['total'], 0, 0, '.') : 0;
 
 
-            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $rekening['kd_rek_akun'] . '<b></td>';
-            $dataset[$idx]['nm_rek']['val']        = '<td colspan=3><b>' . $rekening['nm_rek_akun'] . '<b></td>';
+            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=\'2\'><b>' . $rekening['kd_rek_akun'] . '<b></td>';
+            $dataset[$idx]['nm_rek']['val']        = '<td colspan=\'3\'><b>' . $rekening['nm_rek_akun'] . '<b></td>';
             $dataset[$idx]['bold']['val']          = true;
             //$dataset[$idx]['rekposition']['val']   = 'rek';
             $dataset[$idx]['juraian']['val']  = '<td>' . $jklakun . '</td>';
@@ -309,8 +309,8 @@ class ReportController extends Controller
                 $jklompokur = ($jklompokurs['total']) ? number_format($jklompokurs['total'], 0, 0, '.') : 0;
 
 
-                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=2><b>' . $kelompok['kd_rek_kelompok'] . '<b></td>';
-                $dataset[$idx]['nm_rek']['val']        = '<td colspan=2><b>' . $kelompok['nm_rek_kelompok'] . '<b></td>';
+                $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=\'2\'><b>' . $kelompok['kd_rek_kelompok'] . '<b></td>';
+                $dataset[$idx]['nm_rek']['val']        = '<td colspan=\'2\'><b>' . $kelompok['nm_rek_kelompok'] . '<b></td>';
                 $dataset[$idx]['bold']['val']          = true;
                 $dataset[$idx]['juraian']['val']       = '<td>' . $jklompokur . '</td>';
                 $dataset[$idx]['table']['val']         = '<td></td>';
@@ -339,8 +339,8 @@ class ReportController extends Controller
                         ->first();
                     $trekjenis   = ($rekjeniss['total']) ? number_format($rekjeniss['total'], 0, 0, '.') : 0;
 
-                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=2><b>' . $rek_jenis['kd_rek_jenis'] . '</b></td>';
-                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=1><b>' . $rek_jenis['nm_rek_jenis'] . '</b></td>';
+                    $dataset[$idx]['kd_rek']['val']       = '<td style="text-align:left" colspan=\'2\'><b>' . $rek_jenis['kd_rek_jenis'] . '</b></td>';
+                    $dataset[$idx]['nm_rek']['val']       = '<td colspan=\'1\'><b>' . $rek_jenis['nm_rek_jenis'] . '</b></td>';
                     $dataset[$idx]['bold']['val']         = true;
                     //$dataset[$idx]['rekposition']['val']   = 'rek_kelompok_jenis';
                     $dataset[$idx]['juraian']['val']  = '<td>' . $trekjenis . '</td>';
@@ -403,8 +403,8 @@ class ReportController extends Controller
 
 
                             //get subrincian rek 
-                            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=1>' . $rincian['kd_rek_rincian_obj'] . '</td>';
-                            $dataset[$idx]['nm_rek']['val']        = '<td colspan=1>' . $rincian['nm_rek_rincian_obj'] . '</td>';
+                            $dataset[$idx]['kd_rek']['val']        = '<td style="text-align:left" colspan=\'1\'>' . $rincian['kd_rek_rincian_obj'] . '</td>';
+                            $dataset[$idx]['nm_rek']['val']        = '<td colspan=\'1\'>' . $rincian['nm_rek_rincian_obj'] . '</td>';
                             $dataset[$idx]['bold']['val']          = false;
                             $dataset[$idx]['juraian']['val']       = '<td>' . $jrincian . '</td>';
                             $dataset[$idx]['table']['val']         = '<td></td><td></td><td></td>';
