@@ -3,7 +3,8 @@
 // @aplication build at 2020  
 
 use Illuminate\Support\Facades\Route;
-Route::get('/', 'HomeController@index')->middleware('auth')->name('/');
+
+Route::get('', 'HomeController@index')->middleware('auth')->name('/');
 Route::get('/logout', function () {
 	return redirect('/');
 })->middleware('auth');
@@ -11,7 +12,7 @@ Route::get('/logout', function () {
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('home', 'HomeController@index')->name('home');
 
-	Route::get('page/{id}', 'HomeController@page')->name('page');
+	// Route::get('page/{id}', 'HomeController@page')->name('page');
 
 	Route::resource('bidang', 'TmbidangController');
 	Route::get('bidang_datatable', 'TmbidangController@api')->name('bidang_datatable');
@@ -61,8 +62,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('laporan')->name('laporan.')->group(function () {
 		Route::get('', 'ReportController@index')->name('');
 		Route::get('action_all', 'ReportController@action_all')->name('action_all');
-		Route::get('api_report', 'ReportController@api')->name('api_report');
-			//resource data perbulan 
+		Route::get('api_report', 'ReportAll@api')->name('api_report');
+		Route::get('ff', 'ReportAll@apiPendapatan')->name('ff');
+
+		//resource data perbulan 
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
 		// grafik pendapatan  
@@ -71,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('grafik')->name('grafik.')->group(function () {
 		Route::get('', 'GrafikController@index')->name('/');
 		Route::get('perrekjenis', 'GrafikController@tampilgrafik')->name('perrekjenis');
-	});  
+	});
 	Route::prefix('setting')->name('seeting.')->group(function () {
 		Route::resource('', 'SettingController');
 	});

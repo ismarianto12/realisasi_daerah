@@ -14,14 +14,13 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->view = 'dashboard.';
-        //  $this->middleware('level:admin|satker');
     }
 
     public function index(Request $request)
     {
         // dd(Config::get('database.connections.mysql'));
         //print_r($request->session()->get('year'));
-        $tahun = $request->session()->get('year');
+        $tahun = Properti_app::getTahun();
         $data = null;
         $graf_pad = $this->grafik_pad();
         $pad_months = $this->grafik_bymonth();
@@ -64,8 +63,9 @@ class HomeController extends Controller
                 ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                 ->where('tahun', $tahun)
                 ->first();
+
             if ($kpadtot == '') {
-                return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+                return abort(403, '<h4><p>SELAMAT DATANG DI TAHUN ' . Properti_app::getTahun() . ' SAAT INI BELUM ADA PANDAPATAN SILAHKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p></h4>');
             }
 
             $nilai = ($kpadtot['total']) ? ($kpadtot['total']) : 0;
@@ -84,10 +84,9 @@ class HomeController extends Controller
                     ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tahun', $tahun)
                     ->first();
-                if ($rek_jeniss == '') {
+                if ($rek_jenis == '') {
                     return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
                 } else {
-
                     $trekjenis = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
                     $r[$ix]['kd_rek']['nil'] = $rek_jenis['kd_rek_jenis'];
                     $r[$ix]['nm_rek']['nil'] = $rek_jenis['nm_rek_jenis'];
@@ -102,7 +101,7 @@ class HomeController extends Controller
         if ($result != 0) {
             return $r;
         } else {
-            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
         }
     }
 
@@ -119,8 +118,9 @@ class HomeController extends Controller
                 ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                 ->where('tahun', $tahun)
                 ->first();
-            if ($kpadtot == '') {
-                return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+
+            if ($kpadtot['total'] == 0) {
+                // return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
             }
 
             $nilai = ($kpadtot['total']) ? ($kpadtot['total']) : 0;
@@ -157,7 +157,7 @@ class HomeController extends Controller
         if ($result != 0) {
             return $r;
         } else {
-            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHAKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
         }
     }
 
@@ -173,7 +173,7 @@ class HomeController extends Controller
                     ->first();
                 $nilai[] = ($kpadtot['total']) ? $kpadtot['total'] : 0;
             }
-            // dd($nilai);
+
             return implode(',', $nilai);
         }
         $ix = 0;

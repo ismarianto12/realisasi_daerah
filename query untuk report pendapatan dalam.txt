@@ -1,0 +1,6 @@
+query untuk report pendapatan dalam 
+
+
+select sum(jumlah) as jml from (select b.kd_rek_rincian_obj,a.jumlah from tmpendapatan a inner JOIN tmrekening_akun_kelompok_jenis_objek_rincians b on a.tmrekening_akun_kelompok_jenis_objek_rincian_id = b.kd_rek_rincian_obj) a  
+union 
+select sum(jumlah) as jml from (select b.kd_rek_rincian_obj,a.jumlah from tmpendapatan a inner JOIN tmrekening_akun_kelompok_jenis_objek_rincians b on a.tmrekening_akun_kelompok_jenis_objek_rincian_id = b.kd_rek_rincian_obj) a 

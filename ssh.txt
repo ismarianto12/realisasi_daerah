@@ -8,3 +8,21 @@ asd123818013910989787aMM12
 
 https://www.facebook.com/Ramoxzyass/
 @ismarianto12
+
+
+
+//
+
+SELECT 
+  (SELECT sum(jumlah) from  tmrekening_akuns,
+ 	 tmpendapatan
+	   WHERE LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 AND MONTH(tanggal_lapor) = 1) as januari,
+		 (SELECT sum(jumlah) from  tmrekening_akuns,
+ 	 tmpendapatan
+	   WHERE LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 AND MONTH(tanggal_lapor) = 2) as februari
+FROM
+	 tmrekening_akuns,
+ 	 tmpendapatan
+	   WHERE LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1   
+		 and tanggal_lapor != "0000-00-00"
+	   group by januari asc

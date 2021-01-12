@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendapatan" printOrder="Horizontal" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="da0a8dc8-629a-471b-aae2-9d6d39db1593">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DATABASE BAPENDA"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="356f79f1-aad1-4ba8-9633-33b363e05bf3">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="Dataset2" uuid="7a9ef233-4848-4781-a0b4-4afa31236975">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DATABASE BAPENDA"/>
+		<queryString language="SQL">
+			<![CDATA[ SELECT * from tmpendapatan]]>
+		</queryString>
+		<field name="tahun" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="tahun"/>
+			<property name="com.jaspersoft.studio.field.label" value="tahun"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="tanggal_lapor" class="java.sql.Date">
+			<property name="com.jaspersoft.studio.field.name" value="tanggal_lapor"/>
+			<property name="com.jaspersoft.studio.field.label" value="tanggal_lapor"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="satuan" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="satuan"/>
+			<property name="com.jaspersoft.studio.field.label" value="satuan"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="volume" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="volume"/>
+			<property name="com.jaspersoft.studio.field.label" value="volume"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="kd_rekening" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="kd_rekening"/>
+			<property name="com.jaspersoft.studio.field.label" value="kd_rekening"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="jumlah" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="jumlah"/>
+			<property name="com.jaspersoft.studio.field.label" value="jumlah"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="tahun">
+			<groupExpression><![CDATA[$F{tahun}]]></groupExpression>
+		</group>
+		<group name="satuan">
+			<groupExpression><![CDATA[$F{satuan}]]></groupExpression>
+		</group>
+		<group name="tanggal_lapor">
+			<groupExpression><![CDATA[$F{tanggal_lapor}]]></groupExpression>
+		</group>
+		<group name="kd_rekening">
+			<groupExpression><![CDATA[$F{kd_rekening}]]></groupExpression>
+		</group>
+		<group name="volume">
+			<groupExpression><![CDATA[$F{volume}]]></groupExpression>
+		</group>
+		<group name="jumlah">
+			<groupExpression><![CDATA[$F{jumlah}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM  tmpendapatan]]>
+	</queryString>
+	<field name="jumlah" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="jumlah"/>
+		<property name="com.jaspersoft.studio.field.label" value="jumlah"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kd_rekening" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="kd_rekening"/>
+		<property name="com.jaspersoft.studio.field.label" value="kd_rekening"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tahun" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tahun"/>
+		<property name="com.jaspersoft.studio.field.label" value="tahun"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tmrekening_akun_kelompok_jenis_objek_rincian_sub_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tmrekening_akun_kelompok_jenis_objek_rincian_sub_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="tmrekening_akun_kelompok_jenis_objek_rincian_sub_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tmrekening_akun_kelompok_jenis_objek_rincian_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tmrekening_akun_kelompok_jenis_objek_rincian_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="tmrekening_akun_kelompok_jenis_objek_rincian_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tmpendapatan"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="jumlah1" class="java.lang.Double" resetType="Column" calculation="StandardDeviation">
+		<variableExpression><![CDATA[$F{jumlah}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="320" y="40" width="330" height="21" uuid="a9448e27-c2b2-44bc-bd5a-f29543c1d631"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PEMERINTAH  KOTA TANGERANG SELATAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="64" width="330" height="21" uuid="0fb9451f-3326-4236-a5a5-1267984079a9"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BADAN PENDAPATAN DAERAH]]></text>
+			</staticText>
+			<image>
+				<reportElement x="190" y="30" width="50" height="50" uuid="c76e88fa-8a6a-4922-9009-8031bbabdafb"/>
+				<imageExpression><![CDATA["C:/wamp64/www/realisasi_daerah/public/assets/template/img/tangsel.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="65" splitType="Stretch">
+			<line>
+				<reportElement x="-20" y="0" width="1008" height="1" uuid="c33ee0cb-5d1e-4b64-8cc7-7e195f7ee7d6"/>
+			</line>
+			<staticText>
+				<reportElement x="38" y="0" width="100" height="11" uuid="1f1aa076-3b37-4664-a3bf-848d4bece1e0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0d002a3f-9393-4a6d-ac3f-61310b628635"/>
+				</reportElement>
+				<text><![CDATA[kd_rekening]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="100" height="30" uuid="99a82c0b-3c64-4605-a5b4-14479aadd83f"/>
+				<text><![CDATA[Kod Rek]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<textField>
+				<reportElement x="0" y="2" width="100" height="20" uuid="f928cb82-9432-41e6-86a4-bbb6b17697be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a75ff49c-e327-4154-b7aa-bcd3bd93490d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{kd_rekening}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="22" width="260" height="1" uuid="80a935ba-5390-432b-822f-305e273032ad"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="280" height="1" uuid="8e9480a9-b91b-49c1-b806-4b63b55e6b42"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

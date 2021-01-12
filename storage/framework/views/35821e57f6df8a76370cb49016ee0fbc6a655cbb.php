@@ -18,14 +18,13 @@
                 "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular",
                     "Font Awesome 5 Brands", "simple-line-icons"
                 ],
-                urls: ['<?php echo e(asset('/assets/template/')); ?>/css/fonts.min.css']
+                urls: ["<?php echo e(asset('/assets/template/')); ?>/css/fonts.min.css"]
             },
-            active: function () {
+            active: function() {
                 sessionStorage.fonts = true;
             }
         });
-        
-    <!--- Ismarianto Github io --->
+
     </script>
 
     <!-- CSS Files -->
@@ -170,29 +169,31 @@
                         $level = ($flevel) ? $flevel : 3;
                         ?>
                         <?php if($level != 3): ?>
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data OPD Input Realisasi ,Per jumlah Opd Aktif
-                                <i class="fa fa-user"></i>
-                                <span class="notification">Loading ...</span>
-                            </a>
-                            <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-                                <li>
-                                    <div class="dropdown-title">Status opd yang input pendapatan , Silahkan klik untuk informasi detail</div>
-                                </li>
-                                <li>
-                                    <div class="notif-scroll scrollbar-outer">
-                                        <div class="notif-center">
-                                            <div class="notif_opd"></div>
+                            <li class="nav-item dropdown hidden-caret">
+                                <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Data OPD Input
+                                    Realisasi ,Per jumlah Opd Aktif
+                                    <i class="fa fa-user"></i>
+                                    <span class="notification">Loading ...</span>
+                                </a>
+                                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                                    <li>
+                                        <div class="dropdown-title">Status opd yang input pendapatan , Silahkan klik
+                                            untuk informasi detail</div>
+                                    </li>
+                                    <li>
+                                        <div class="notif-scroll scrollbar-outer">
+                                            <div class="notif-center">
+                                                <div class="notif_opd"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="see-all" href="<?php echo e(route('pendapatan.index')); ?>">Lihat Semua Pendapatan .<i
-                                            class="fa fa-angle-right"></i> </a>
-                                </li>
-                            </ul>
-                        </li>
+                                    </li>
+                                    <li>
+                                        <a class="see-all" href="<?php echo e(route('pendapatan.index')); ?>">Lihat Semua Pendapatan
+                                            .<i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </li>
                         <?php endif; ?>
 
                         <li class="nav-item dropdown hidden-caret">
@@ -494,60 +495,68 @@
     </div>
 
     <script>
-        $(function(){
-          $('.notif_opd').html('<div class="alert alert-danger">Loading ..</div>');
-            url = '<?php echo e(route('aplikasi.opdinput')); ?>';
-            $.get(url,function(data){
-            hasil = '';  
-            $.each(data, function(index, value){
-                hasil += '<a href="#" onfocus="detail_data('+value.opd_kode+')"><div class="notif-img">'+value.image+'</div> <div class="notif-content"><span class="block">'+value.opd_kode+'</span><span class="time">'+value.opn_nm+'</span></div></a>';
-             });
-             $('.notif_opd').html('<li>'+hasil+'</li>'); 
-           },'JSON');     
-          //
-           url = '<?php echo e(route('aplikasi.opdinput')); ?>?total=1';
-          $.get(url,function(data){
-            $('.notification').html(data);
-         },'JSON'); 
-      }); 
+        $(function() {
+            $('.notif_opd').html('<div class="alert alert-danger">Loading ..</div>');
+            url = "<?php echo e(route('aplikasi.opdinput')); ?>";
+            $.get(url, function(data) {
+                hasil = '';
+                $.each(data, function(index, value) {
+                    hasil += '<a href="#" onfocus="detail_data(' + value.opd_kode +
+                        ')"><div class="notif-img">' + value.image +
+                        '</div> <div class="notif-content"><span class="block">' + value
+                        .opd_kode + '</span><span class="time">' + value.opn_nm +
+                        '</span></div></a>';
+                });
+                $('.notif_opd').html('<li>' + hasil + '</li>');
+            }, 'JSON');
+            //
+            url = "<?php echo e(route('aplikasi.opdinput')); ?>?total=1";
+            $.get(url, function(data) {
+                $('.notification').html(data);
+            }, 'JSON');
+        });
+
     </script>
     <script>
-        $(function(){
-            $('.modal_opd').on('click',function(e){
+        $(function() {
+            $('.modal_opd').on('click', function(e) {
                 e.preventDefault();
-                $('#modalopdetail').modal('show'); 
+                $('#modalopdetail').modal('show');
             });
 
             $('.select2').select2({
-                dropdownAutoWidth : true,
+                dropdownAutoWidth: true,
                 width: 'auto'
             });
-            
-             $('.js-example-basic-multiple').select2();
+
+            $('.js-example-basic-multiple').select2();
 
         });
-         
 
-     function detail_data(n) 
-     { 
-         var url   = "<?php echo e(Url('pendapatan/dapatkanpadopd/:id')); ?>".replace(':id',n);
-         $('.contentdata_opd').html('<div class="alert alert-succcess">Sedang meload halaman harap bersabar ....</div>');   
-         $.get(url,function(data){  
-            $('#cari_tgl').submit(function(e){
-                e.preventDefault();
-                $('.contentdata_opd').html('<center><img src="https://icon-library.net/images/spinner-icon-gif/spinner-icon-gif-9.jpg" class="image-responsive"></center><h3>Sedang Meload Halaman Silahkan Tunggu .... </h3>'); 
-                var tgl_lpr = $('#tanggal_lpr').val();
-                $.get(url,'tanggal_lapor='+ tgl_lpr,function(g){  
-                    $('.contentdata_opd').html(g);                    
-                })
+
+        function detail_data(n) {
+            var url = "<?php echo e(Url('pendapatan/dapatkanpadopd/:id')); ?>".replace(':id', n);
+            $('.contentdata_opd').html(
+                '<div class="alert alert-succcess">Sedang meload halaman harap bersabar ....</div>');
+            $.get(url, function(data) {
+                $('#cari_tgl').submit(function(e) {
+                    e.preventDefault();
+                    $('.contentdata_opd').html(
+                        '<center><img src="https://icon-library.net/images/spinner-icon-gif/spinner-icon-gif-9.jpg" class="image-responsive"></center><h3>Sedang Meload Halaman Silahkan Tunggu .... </h3>'
+                    );
+                    var tgl_lpr = $('#tanggal_lpr').val();
+                    $.get(url, 'tanggal_lapor=' + tgl_lpr, function(g) {
+                        $('.contentdata_opd').html(g);
+                    })
+                });
+                $('.contentdata_opd').html(data);
+            }).fail(function(data) {
+                $('.contentdata').load('Maaf gagal meload halaman karena suatu kesalahan');
             });
-            $('.contentdata_opd').html(data);
-         }).fail(function(data){
-            $('.contentdata').load('Maaf gagal meload halaman karena suatu kesalahan'); 
-         });
-         $('#modalopdetail').modal('show');
-         $('.nav-item dropdown hidden-caret submenu').attr('open');
-     }
+            $('#modalopdetail').modal('show');
+            $('.nav-item dropdown hidden-caret submenu').attr('open');
+        }
+
     </script>
     <script src="<?php echo e(asset('/assets/template/')); ?>/js/core/popper.min.js"></script>
 
@@ -556,4 +565,5 @@
 
 </body>
 
-</html><?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/layouts/template.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/layouts/template.blade.php ENDPATH**/ ?>

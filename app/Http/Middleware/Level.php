@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Support\Facades\Auth;
-use Closure; 
+use Closure;
 use App\Helpers\Properti_app;
 
 class Level
@@ -16,8 +16,10 @@ class Level
      * @return mixed
      */
     public function handle($request, \Closure $next, $permission)
-    { 
-        $levelAuth = Properti_app::getlevel();  
+    {
+
+        // dd(\Auth::user());
+        $levelAuth = Properti_app::getlevel();
 
         $level = explode('|', $permission);
         // dd($levelAuth);

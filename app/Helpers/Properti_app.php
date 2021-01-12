@@ -61,13 +61,19 @@ class Properti_app
 
     public static function getlevel()
     {
-        $user_id = Auth::user()->id;
-        $query   = DB::table('user')
-            ->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
-            ->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
-            ->where('user.id', $user_id)
-            ->first();
-        return $query->level_id;
+        $ff = Auth::user();
+        // dd($user_id);
+        if ($ff != null) {
+            $user_id = $ff->id;
+            $query   = DB::table('user')
+                ->select('user.id', 'user.username', 'tmuser_level.description', 'tmuser_level.mapping_sie', 'tmuser_level.id as level_id')
+                ->join('tmuser_level', 'user.tmuser_level_id', '=', 'tmuser_level.id')
+                ->where('user.id', $user_id)
+                ->first();
+            return $query->level_id;
+        } else {
+            return null;
+        }
     }
 
 
@@ -113,12 +119,26 @@ class Properti_app
         }
     }
 
+    public static function UserSess()
+    {
+        $ff = Auth::user();
+        if ($ff != null) {
+            return $ff->username;
+        } else {
+            return null;
+        }
+    }
+
     public static function propuser($params)
     {
-        $userid = Auth::user()->id;
-        $data   = User::find($userid);
-        if ($data != '') {
-            return $data[$params];
+        $ff = Auth::user();
+        if ($ff != null) {
+            $data   = User::find($ff->id);
+            if ($data != '') {
+                return $data[$params];
+            } else {
+                return NULL;
+            }
         } else {
             return NULL;
         }
