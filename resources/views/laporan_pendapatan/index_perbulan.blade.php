@@ -30,7 +30,10 @@
                     </div>
                 </div>
                 <div class="card-body" style="overflow:auto"> <small>Untuk Melihat Hasil Report Silahkan Klik Tampilkan
-                        Semua </small>
+                        Semua
+                        <br />
+                        Lebih Kurang Dan Persentase Penerimaan Belum Di Hitung.
+                    </small>
                     <hr />
 
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
