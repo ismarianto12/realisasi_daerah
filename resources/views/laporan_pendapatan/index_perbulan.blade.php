@@ -89,6 +89,7 @@
     <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js') }}">
     </script>
     <script>
+        $.fn.dataTable.ext.errMode = 'throw';
         $('#tableReport').DataTable({
             select: true,
             dom: 'Blfrtip',
