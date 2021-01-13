@@ -159,7 +159,7 @@ class KodejenisController extends Controller
     {
         $kd_rek_jenis = $request->kd_rek_jenis;
         $request->validate([
-            'kd_rek_jenis' => 'required|max:4|unique:mysql2.tmrekening_akun_kelompok_jenis,kd_rek_jenis,' . $id,
+            'kd_rek_jenis' => 'required|max:4|unique:tmrekening_akun_kelompok_jenis,kd_rek_jenis,' . $id,
             'nm_rek_jenis' => 'required|max:30'
         ]);
 
