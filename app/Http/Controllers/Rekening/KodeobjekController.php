@@ -179,7 +179,7 @@ class KodeobjekController extends Controller
         $kd_rek_obj = $request->kd_rek_obj;
         $request->validate([
             'kd_rek_obj' => 'required|max:6|unique:tmrekening_akun_kelompok_jenis_objeks,kd_rek_obj,' . $id,
-            'nm_rek_obj' => 'required|max:30'
+            'nm_rek_obj' => 'required|max:100'
         ]);
 
         $input = $request->all();
