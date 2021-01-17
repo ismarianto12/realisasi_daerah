@@ -16,75 +16,98 @@ class Rpendapatan extends Model
         $query = "SELECT
         kd_rek_akun,
         nm_rek_akun,
-        sum(jumlah) as jumlah,
-        '' as ganti
-   FROM
-       tmrekening_akuns,
-       tmpendapatan 
-   WHERE
-       LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.  tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-       AND MONTH ( tanggal_lapor ) = '$bulan'  
-        GROUP BY kd_rek_akun
+        (
+        SELECT
+            sum( jumlah ) AS jumlah 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            AND MONTH ( tanggal_lapor ) = '$bulan' 
+         ) AS jumlah,
+        '' AS ganti 
+    FROM
+        tmrekening_akuns 
+    GROUP BY
+        kd_rek_akun 
         
-    UNION
         
+        UNION
     SELECT
-        kd_rek_kelompok,
+        kd_rek_kelompok as kd_rek_akun,
         nm_rek_kelompok,
-        sum(jumlah) as jumlah,
-        '' as ganti
-
-   FROM
-       tmrekening_akun_kelompoks,
-       tmpendapatan 
-   WHERE
-       LOCATE( tmrekening_akun_kelompoks.kd_rek_kelompok, tmpendapatan.  tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-       AND MONTH ( tanggal_lapor ) = '$bulan'  
-        GROUP BY kd_rek_kelompok
-UNION 
-
-SELECT
-        kd_rek_jenis,
+        (
+        SELECT
+            sum( jumlah ) AS jumlah 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompoks.kd_rek_kelompok, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            AND MONTH ( tanggal_lapor ) = '$bulan' 
+        GROUP BY
+            kd_rek_kelompok 
+        ) AS jumlah,
+        '' AS ganti 
+    FROM
+        tmrekening_akun_kelompoks 
+    GROUP BY
+        kd_rek_kelompok UNION
+    SELECT
+        kd_rek_jenis as kd_rek_akun,
         nm_rek_jenis,
-        sum(jumlah) as bulan_keljenis,
-              '-' as ganti
-   FROM
-       tmrekening_akun_kelompok_jenis,
-       tmpendapatan 
-   WHERE
-       LOCATE( tmrekening_akun_kelompok_jenis.kd_rek_jenis, tmpendapatan.  tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-       AND MONTH ( tanggal_lapor ) = '$bulan'
-   GROUP BY kd_rek_jenis
-   UNION  
-   SELECT
-        kd_rek_obj,
+        (
+        SELECT
+            sum( jumlah ) AS bulan_keljenis 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompok_jenis.kd_rek_jenis, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            AND MONTH ( tanggal_lapor ) = '$bulan' 
+        GROUP BY
+            kd_rek_jenis 
+        ) AS jum,
+        '-' AS ganti 
+    FROM
+        tmrekening_akun_kelompok_jenis 
+    GROUP BY
+        kd_rek_jenis UNION
+    SELECT
+        kd_rek_obj as kd_rek_akun,
         nm_rek_obj,
-        sum(jumlah) as jenis_obj_bulan,
-              '--' as ganti
-   FROM
-       tmrekening_akun_kelompok_jenis_objeks, 
-       tmpendapatan 
-
-   WHERE
-       LOCATE( tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj, tmpendapatan.  tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-       AND MONTH ( tanggal_lapor ) =  '$bulan'
-   GROUP BY kd_rek_obj
-
-   UNION 
-
-   SELECT
-        kd_rek_rincian_obj,
+        (
+        SELECT
+            sum( jumlah ) AS jenis_obj_bulan 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            AND MONTH ( tanggal_lapor ) = '$bulan' 
+        GROUP BY
+            kd_rek_obj 
+        ) AS jenis_obj_bulan,
+        '--' AS ganti 
+    FROM
+        tmrekening_akun_kelompok_jenis_objeks 
+    GROUP BY
+        kd_rek_obj UNION
+    SELECT
+        kd_rek_rincian_obj as kd_rek_akun,
         nm_rek_rincian_obj,
-        sum(jumlah) as rincian,
-              '---' as ganti
-   FROM
-       tmrekening_akun_kelompok_jenis_objek_rincians,
-       tmpendapatan 
-   WHERE
-       LOCATE( tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj, tmpendapatan.  tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-       AND MONTH ( tanggal_lapor ) =  '$bulan'
-   GROUP BY kd_rek_rincian_obj 
-   ORDER BY kd_rek_akun";
+        sum( jumlah ) AS rincian,
+        '---' AS ganti 
+    FROM
+        tmrekening_akun_kelompok_jenis_objek_rincians,
+        tmpendapatan 
+    WHERE
+        LOCATE( tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+        AND MONTH ( tanggal_lapor ) = '$bulan' 
+    GROUP BY
+        kd_rek_rincian_obj 
+     
+				 ORDER BY CASE 
+    WHEN jumlah IS NOT NULL THEN jumlah
+END desc 
+		";
         return DB::select($query);
     }
 

@@ -29,7 +29,10 @@
                     </div>
                 </div>
                 <div class="card-body" style="overflow:auto"> <small>Untuk Melihat Hasil Report Silahkan Klik Tampilkan
-                        Semua </small>
+                        Semua
+                        <br />
+                        Lebih Kurang Dan Persentase Penerimaan Belum Di Hitung.
+                    </small>
                     <hr />
 
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
@@ -85,6 +88,7 @@
     <script type="text/javascript" src="<?php echo e(asset('assets/template/js/plugin/datatables/button/buttons.html5.min.js')); ?>">
     </script>
     <script>
+        // $.fn.dataTable.ext.errMode = 'throw';
         $('#tableReport').DataTable({
             select: true,
             dom: 'Blfrtip',
@@ -127,23 +131,23 @@
             },
             columns: [{
                     data: 'kd_rek',
-                    name: 'kd_rek',
                     orderable: false,
-                    searchable: false,
-                    className: 'text-center'
+                    name: 'kd_rek'
                 },
                 {
                     data: 'nama_rek',
+                    orderable: false,
                     name: 'nama_rek'
+
                 },
                 {
                     data: 'tot',
+                    orderable: false,
                     name: 'tot'
                 },
                 {
                     data: 'jlbulan_1',
                     name: 'jlbulan_1',
-                    className: 'text-right',
                     orderable: false,
                     searchable: false
                 },

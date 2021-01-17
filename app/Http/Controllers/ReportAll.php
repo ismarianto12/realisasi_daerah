@@ -139,6 +139,7 @@ class ReportAll extends Controller
 
     public function apiPendapatan()
     {
+        header('Content-Type: application/json');
         $data = $this->dataApi();
         return DataTables::of($data)
             ->editColumn('nama_rek', function ($p) {
