@@ -99,7 +99,6 @@
     <script>
         // $.fn.dataTable.ext.errMode = 'throw';
         $('#tableReport').DataTable({
-            $.fn.dataTable.ext.classes.sLengthSelect = 'btn btn-warning';
             select: true,
             dom: 'Blfrtip',
             lengthMenu: [

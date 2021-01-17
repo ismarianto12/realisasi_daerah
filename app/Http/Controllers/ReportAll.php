@@ -53,6 +53,13 @@ use App\Models\Rpendapatan;
 class ReportAll extends Controller
 {
 
+    function __construct()
+    {
+        $this->serverDir =  $_SERVER['DOCUMENT_ROOT'];
+        // dd($_SERVER);
+
+    }
+
     public function api(Request $request)
     {
         $level_id = Properti_app::getlevel();
@@ -69,10 +76,10 @@ class ReportAll extends Controller
     public function jasperRp()
     {
         $jasper = new PHPJasper;
-        require  'C:\wamp64\www\realisasi_daerah\vendor\autoload.php';
-        $input = 'C:\wamp64\www\realisasi_daerah\public\Report\pendapatan.jasper';
-        $output = 'C:\wamp64\www\realisasi_daerah\public\Repor';
-        $data_file = 'C:\wamp64\www\realisasi_daerah\public\pendapatan.jrxml';
+        require  $this->serverDir . '/vendor/autoload.php';
+        $input = $this->serverDir . '/public/Report/pendapatan.jasper';
+        $output = $this->serverDir . '/public/Repor';
+        $data_file = $this->serverDir . '/public/pendapatan.jrxml';
 
         $options = [
             'format' => ['pdf'],
@@ -87,8 +94,6 @@ class ReportAll extends Controller
                 'port' => '3306'
             ]
         ];
-
-
         $jasper->process(
             $input,
             $output,

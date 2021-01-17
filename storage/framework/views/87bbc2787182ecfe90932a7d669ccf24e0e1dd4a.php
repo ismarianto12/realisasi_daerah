@@ -125,10 +125,7 @@
                     },
                     text: '<i class="fas fa-file-excel" aria-hidden="true"> Download  EXCEL</i>'
                 },
-                extend: 'pageLength',
-                className: "btn btn-warning",
-                text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Setting  Halaman</i>',
-
+                'pageLength'
             ],
             processing: true,
             serverSide: true,
