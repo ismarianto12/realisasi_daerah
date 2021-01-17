@@ -76,6 +76,14 @@
         </div>
     </div>
 @section('script')
+
+
+    <style>
+        .dt-buttons {
+            margin: 0px 0px 40px
+        }
+
+    </style>
     <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js') }}">
     </script>
@@ -91,6 +99,7 @@
     <script>
         // $.fn.dataTable.ext.errMode = 'throw';
         $('#tableReport').DataTable({
+            $.fn.dataTable.ext.classes.sLengthSelect = 'btn btn-warning';
             select: true,
             dom: 'Blfrtip',
             lengthMenu: [

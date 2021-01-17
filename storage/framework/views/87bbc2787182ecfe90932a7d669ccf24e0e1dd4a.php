@@ -75,6 +75,14 @@
         </div>
     </div>
 <?php $__env->startSection('script'); ?>
+
+
+    <style>
+        .dt-buttons {
+            margin: 0px 0px 40px
+        }
+
+    </style>
     <script type="text/javascript" src="<?php echo e(asset('assets/template/js/plugin/datatables/datatables.min.js')); ?>"></script>
     <script type="text/javascript" src="<?php echo e(asset('assets/template/js/plugin/datatables/dataTables.rowGroup.min.js')); ?>">
     </script>
@@ -117,7 +125,10 @@
                     },
                     text: '<i class="fas fa-file-excel" aria-hidden="true"> Download  EXCEL</i>'
                 },
-                'pageLength'
+                extend: 'pageLength',
+                className: "btn btn-warning",
+                text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Setting  Halaman</i>',
+
             ],
             processing: true,
             serverSide: true,
