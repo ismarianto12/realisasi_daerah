@@ -45,9 +45,19 @@ class HomeController extends Controller
         }
         $kelompoks = Tmrekening_akun_kelompok::get();
         $PadsPie = $this->PadsPie();
+
+        // untuk nilai yang piee
+        // $fPie = array();
+        foreach ($pad_months as $rPie) {
+            $nil = array();
+            $fPie[] = '\'' . $rPie['nama_pad']['nil'] . '\'';
+        }
+        // dd($fPie);
+
+        $frPie = implode(',', $fPie);
         return view(
             $this->view . 'home',
-            compact('data', 'kelompoks', 'PadsPie', 'namarekening', 'kode_rek', 'jumlahpad', 'tahun', 'graf_pad', 'pad_months')
+            compact('data', 'kelompoks', 'frPie', 'PadsPie', 'namarekening', 'kode_rek', 'jumlahpad', 'tahun', 'graf_pad', 'pad_months')
         );
     }
 
@@ -63,10 +73,6 @@ class HomeController extends Controller
                 ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                 ->where('tahun', $tahun)
                 ->first();
-
-            if ($kpadtot == '') {
-                return abort(403, '<h4><p>SELAMAT DATANG DI TAHUN ' . Properti_app::getTahun() . ' SAAT INI BELUM ADA PANDAPATAN SILAHKN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p></h4>');
-            }
 
             $nilai = ($kpadtot['total']) ? ($kpadtot['total']) : 0;
             $r[$ix]['kd_rek']['nil'] = $kelompok['kd_rek_kelompok'];
@@ -84,25 +90,18 @@ class HomeController extends Controller
                     ->where(\DB::raw('LOCATE(' . $rek_jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                     ->where('tahun', $tahun)
                     ->first();
-                if ($rek_jenis == '') {
-                    return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
-                } else {
-                    $trekjenis = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
-                    $r[$ix]['kd_rek']['nil'] = $rek_jenis['kd_rek_jenis'];
-                    $r[$ix]['nm_rek']['nil'] = $rek_jenis['nm_rek_jenis'];
-                    $r[$ix]['jumlah']['nil'] = $trekjenis;
-                    $ix++;
-                }
+                // if ($rek_jenis['total'] == '') {
+                //     return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
+                // } else {
+                $trekjenis = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
+                $r[$ix]['kd_rek']['nil'] = $rek_jenis['kd_rek_jenis'];
+                $r[$ix]['nm_rek']['nil'] = $rek_jenis['nm_rek_jenis'];
+                $r[$ix]['jumlah']['nil'] = $trekjenis;
+                $ix++;
+                // }
             }
         }
         return $r;
-
-        $result = isset($r) ? $r : 0;
-        if ($result != 0) {
-            return $r;
-        } else {
-            return abort(403, '<p>SELAMT DATANG DI TAHUN' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
-        }
     }
 
     private function grafik_pad()
@@ -142,7 +141,6 @@ class HomeController extends Controller
                 if ($rek_jeniss == '') {
                     return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
                 } else {
-
                     $trekjenis = ($rekjeniss['total']) ? $rekjeniss['total'] : 0;
                     $r[$ix]['kd_rek']['nil'] = $rek_jenis['kd_rek_jenis'];
                     $r[$ix]['nm_rek']['nil'] = $rek_jenis['nm_rek_jenis'];
@@ -152,7 +150,6 @@ class HomeController extends Controller
             }
         }
         return $r;
-
         $result = isset($r) ? $r : 0;
         if ($result != 0) {
             return $r;

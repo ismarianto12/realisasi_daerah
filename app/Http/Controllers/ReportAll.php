@@ -57,7 +57,6 @@ class ReportAll extends Controller
     {
         $this->serverDir =  $_SERVER['DOCUMENT_ROOT'];
         // dd($_SERVER);
-
     }
 
     public function api(Request $request)

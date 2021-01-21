@@ -18,10 +18,9 @@ class RetribusiExport implements ShouldAutoSize, FromView, WithEvents
     use Exportable;
     public function view(): View
     {
-        //$report = Report::find($this->id);
         return view('penerimaan.excel_penerimaan');
     }
-     
+
     public function registerEvents(): array
     {
         return [
@@ -29,7 +28,7 @@ class RetribusiExport implements ShouldAutoSize, FromView, WithEvents
                 $event->writer->setCreator('Ismarianto');
             },
             AfterSheet::class    => function (AfterSheet $event) {
-                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE); 
+                $event->sheet->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $event->sheet->getStyle('A1:H1')->applyFromArray([
                     'borders' => [
                         'allBorders' => [
@@ -38,8 +37,7 @@ class RetribusiExport implements ShouldAutoSize, FromView, WithEvents
                         ],
                     ],
                 ]);
-                $event->sheet->mergeCells('A1:H1');    
-                
+                $event->sheet->mergeCells('A1:H1');
             },
         ];
     }

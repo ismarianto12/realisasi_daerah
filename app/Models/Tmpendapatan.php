@@ -183,7 +183,7 @@ class Tmpendapatan extends Model
             $tot_account_obj   = $pagu_rincian['total'];
 
             $periodel_kjenis    = Tmpendapatan::select(\DB::raw('sum(jumlah) as trlalu'))
-                ->where(\DB::raw('SUBSTR(tmrekening_akun_kelompok_jenis_objek_rincian_id,1,3)'), $jenis['kd_rek_jenis'])
+                ->where(\DB::raw('LOCATE(' . $jenis['kd_rek_jenis'] . ',tmrekening_akun_kelompok_jenis_objek_rincian_id)'), '=', 1)
                 ->where('tmpendapatan.tmsikd_satker_id', $par['tmsikd_satker_id'])
                 ->whereBetween('tanggal_lapor', [$last_from, $last_to])
                 ->first();
@@ -212,7 +212,7 @@ class Tmpendapatan extends Model
             $idx++;
             //by kelompok jenis obj    
             $rek_objs = Tmpendapatan::getrekeningbySatker([])
-                ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '>', 0)
+                ->where(\DB::raw('LOCATE(' . $satkerid . ',tmrekening_akun_kelompok_jenis_objek_rincians.tmsikd_satkers_id)'), '=', 1)
                 ->where('tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id', $jenis['kd_rek_jenis'])
                 ->groupBy('tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj')
                 ->get();
@@ -277,7 +277,8 @@ class Tmpendapatan extends Model
 
                     $periode_rincian =  Tmpendapatan::select(\DB::raw('sum(jumlah) as rtotal'))
                         ->join(
-                            'tmrekening_akun_kelompok_jenis_objek_rincians', function ($join) {
+                            'tmrekening_akun_kelompok_jenis_objek_rincians',
+                            function ($join) {
                                 $join->on('tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id', '=', 'tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj');
                             }
                         )
@@ -293,7 +294,7 @@ class Tmpendapatan extends Model
                         $kurleb_rincian = 0;
                     }
                     // $persen_rincian      = ;
-                    if ($periode_rincian['rtotal'] != 0) { 
+                    if ($periode_rincian['rtotal'] != 0) {
                         $total_rincian       = ($periode_rincian['rtotal'] + $periodel_rincian['trlalu']);
                     } else {
                         $total_rincian = 0;

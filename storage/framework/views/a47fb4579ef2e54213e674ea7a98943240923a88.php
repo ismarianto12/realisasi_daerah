@@ -24,8 +24,8 @@ $username = Auth::user()->username;
             <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="btn btn-white btn-border btn-round mr-2">Hy <?php echo e(Auth::user()->username); ?></a>
                 <a href="#" class="btn btn-secondary btn-round">Selamat datang kembali di halaman administrasi
-                    pendapatan daerah .</a>
-            </div>
+                        pendapatan daerah .</a>
+                </div>
         </div>
     </div>
 </div>
@@ -43,7 +43,7 @@ $username = Auth::user()->username;
         <div class="col-md-6">
             <div class="card full-height">
                 <div class="card-body">
-                    <div class="card-title">Pertumbuhan Pendapatan dalam satu tahun.</div>
+                    <div class="card-title">Perbandingan pendapatan berbanding realisasi dan target.</div>
                     <div class="row py-3">
                         <div class="col-md-12">
                             <div id="chart-container">
@@ -202,16 +202,77 @@ for (i = 0; i < dataLen; i += 1) {
         });
     }
 }
+// perbandingan penpatan berbanding realisasi dan target 
+var colors = Highcharts.getOptions().colors,
+    categories = [
+      <?php echo $frPie ?>  
+    ],
+    data = [
+    <?php 
+    $no =1;
+    ?> 
 
+    <?php $__currentLoopData = $PadsPie; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $istPads): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
+    <?php $jn = ($no%2); ?>
+        {
+            y: <?php echo $istPads['jumlah']['nil'] ?>,
+            color: colors[$jn],
+            drilldown: {
+                name: '<?php echo $istPads["nm_rek"]["nil"] ?>',
+                categories: [
+                   <?php echo '\''.$istPads['nm_rek']['nil'].'\'';  ?>,
+                ],
+                data: [
+                    <?php echo $istPads['jumlah']['nil'] ?>
+                ]
+            }
+        },
+        <?php $no++;  ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+
+           
+     ],
+    browserData = [],
+    versionsData = [],
+    i,
+    j,
+    dataLen = data.length,
+    drillDataLen,
+    brightness;
+
+
+// Build the data arrays
+for (i = 0; i < dataLen; i += 1) {
+
+    // add browser data
+    browserData.push({
+        name: categories[i],
+        y: data[i].y,
+        color: data[i].color
+    });
+
+    // add version data
+    drillDataLen = data[i].drilldown.data.length;
+    for (j = 0; j < drillDataLen; j += 1) {
+        brightness = 0.2 - (j / drillDataLen) / 5;
+        versionsData.push({
+            name: data[i].drilldown.categories[j],
+            y: data[i].drilldown.data[j],
+            color: Highcharts.color(data[i].color).brighten(brightness).get()
+        });
+    }
+}
+
+// Create the chart
 Highcharts.chart('pie_persentase', {
     chart: {
         type: 'pie'
     },
     title: {
-        text: 'Realisasi Pendapatan <?php echo e(Properti_app::getTahun()); ?>'
+        text: 'Browser market share, January, 2018'
     },
     subtitle: {
-        text: 'Sumber badan pendapatan daerah Tangerang Selatan Kota'
+        text: 'Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
     },
     plotOptions: {
         pie: {
@@ -220,10 +281,10 @@ Highcharts.chart('pie_persentase', {
         }
     },
     tooltip: {
-        valueSuffix: ''
+        valueSuffix: '%'
     },
     series: [{
-        name: 'Pendapatan Daerah',
+        name: 'Browsers',
         data: browserData,
         size: '60%',
         dataLabels: {
@@ -234,7 +295,7 @@ Highcharts.chart('pie_persentase', {
             distance: -30
         }
     }, {
-        name: 'Jumlah: ',
+        name: 'Versions',
         data: versionsData,
         size: '80%',
         innerSize: '60%',
@@ -242,7 +303,7 @@ Highcharts.chart('pie_persentase', {
             formatter: function () {
                 // display only if larger than 1
                 return this.y > 1 ? '<b>' + this.point.name + ':</b> ' +
-                    this.y + '' : null;
+                    this.y + '%' : null;
             }
         },
         id: 'versions'
@@ -264,6 +325,7 @@ Highcharts.chart('pie_persentase', {
         }]
     }
 });
+// end function chart
 
  $('#lineChart').sparkline([105, 103, 123, 100, 95, 105, 115], {
             type: 'line',
