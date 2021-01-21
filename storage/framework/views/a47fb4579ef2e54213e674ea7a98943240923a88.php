@@ -216,7 +216,7 @@ var colors = Highcharts.getOptions().colors,
     <?php $jn = ($no%2); ?>
         {
             y: <?php echo $istPads['jumlah']['nil'] ?>,
-            color: colors[$jn],
+            color: colors[ <?php echo $jn  ?>],
             drilldown: {
                 name: '<?php echo $istPads["nm_rek"]["nil"] ?>',
                 categories: [
