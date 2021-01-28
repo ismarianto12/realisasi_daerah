@@ -1,5 +1,12 @@
 <?php $__env->startSection('title', 'Pendapatan Daerah'); ?>
 <?php $__env->startSection('content'); ?>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+    </style>
+
 
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -36,7 +43,10 @@
                     <hr />
 
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
-                        <thead>
+                        <thead style="
+                                background: #4373cc;
+                                color: #fff;
+                            ">
                             <tr>
                                 <th>Kode</th>
                                 <th>URAIAN</th>

@@ -69,7 +69,7 @@ class ReportAll extends Controller
         }
         $data = Rpendapatan::getAll(1);
         $tgl_lapor = ($request->tgl_lapor) ? $request->tgl_lapor : 0;
-        return DataTables::of($data)->toJson();
+        return \DataTables::of($data)->toJson();
     }
 
     public function jasperRp()
@@ -105,33 +105,54 @@ class ReportAll extends Controller
     public static function dataApi()
     {
         $fms   = Rpendapatan::getAll(1);
-        $i = 1;
+        $gg = 1;
         foreach ($fms as $fm) {
-            $arr[$i]['kd_rek'] =  $fm->kd_rek_akun;
-            $arr[$i]['nama_rek'] = $fm->nm_rek_akun;
-            $arr[$i]['ganti'] = $fm->ganti;
-            $arr[$i]['tot'] = 0;
-            $i++;
+            $arr[$gg]['kd_rek'] =  $fm->kd_rek_akun;
+            $arr[$gg]['nama_rek'] = $fm->nm_rek_akun;
+            $arr[$gg]['ganti'] = $fm->ganti;
+            $arr[$gg]['tot'] = 0;
+            $gg++;
         }
         for ($j = 1; $j <= 12; $j++) {
             $m   = Rpendapatan::getAll($j);
-            $i = 1;
+            $i   = 1;
+            $kj  = 0;
             foreach ($m as $list) {
+                // return $j;
+                // exit; 
                 $arr[$i]['jlbulan_' . $j] = ($list->jumlah) ? number_format($list->jumlah, 0, 0, '.') : 0;
+                $arr[$i]['slbulan_' . $j] = $list->jumlah;
+
                 if ($j == 3) {
-                    $arr[$i]['rl_1'] =  0;
+                    $rl_1     = $arr[$i]['slbulan_1'] + $arr[$i]['slbulan_2'] + $arr[$i]['slbulan_3'];
+                    $kurleb_1 = '';
+                    $pr_1     = '';
+
+                    $arr[$i]['rl_1']     = number_format($rl_1, 0, 0, '.');
                     $arr[$i]['kurleb_1'] = 0;
-                    $arr[$i]['pr_1'] = 0;
+                    $arr[$i]['pr_1']     = 0;
                 } else if ($j == 6) {
-                    $arr[$i]['rl_2'] =  0;
+                    $rl_2     = $arr[$i]['slbulan_4'] + $arr[$i]['slbulan_5'] + $arr[$i]['slbulan_6'];
+                    $kurleb_2 = '';
+                    $pr_2     = '';
+
+                    $arr[$i]['rl_2'] = number_format($rl_2, 0, 0, '.');
                     $arr[$i]['kurleb_2'] = 0;
                     $arr[$i]['pr_2'] = 0;
                 } else if ($j == 9) {
-                    $arr[$i]['rl_3'] =  0;
+                    $rl_3     = $arr[$i]['slbulan_7'] + $arr[$i]['slbulan_8'] + $arr[$i]['slbulan_9'];
+                    $kurleb_3 = '';
+                    $pr_3     = '';
+
+                    $arr[$i]['rl_3'] = $rl_3;
                     $arr[$i]['kurleb_3'] = 0;
                     $arr[$i]['pr_3'] = 0;
                 } else if ($j == 12) {
-                    $arr[$i]['rl_4'] =  0;
+                    $rl_4     = $arr[$i]['slbulan_10'] + 0 + $arr[$i]['slbulan_12'];
+                    $kurleb_4 = '';
+                    $pr_4  =   '';
+
+                    $arr[$i]['rl_4'] =  number_format($rl_4, 0, 0, '.');
                     $arr[$i]['kurleb_4'] = 0;
                     $arr[$i]['pr_4'] = 0;
                 }
@@ -141,13 +162,14 @@ class ReportAll extends Controller
         return $arr;
     }
 
+
     public function apiPendapatan()
     {
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         $data = $this->dataApi();
         return DataTables::of($data)
             ->editColumn('nama_rek', function ($p) {
-                if ($p['ganti'] == '' || $p['ganti'] == '--') {
+                if ($p['ganti'] == '' || $p['ganti'] == '--' || $p['ganti'] == '-') {
                     return '<b>' . $p['nama_rek'] . '</b>';
                 } else {
                     return $p['nama_rek'];

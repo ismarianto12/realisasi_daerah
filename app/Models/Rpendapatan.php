@@ -31,11 +31,10 @@ class Rpendapatan extends Model
     GROUP BY
         kd_rek_akun 
         
-        
         UNION
     SELECT
         kd_rek_kelompok as kd_rek_akun,
-        nm_rek_kelompok,
+        nm_rek_kelompok as nm_rek_akun,
         (
         SELECT
             sum( jumlah ) AS jumlah 
@@ -54,7 +53,7 @@ class Rpendapatan extends Model
         kd_rek_kelompok UNION
     SELECT
         kd_rek_jenis as kd_rek_akun,
-        nm_rek_jenis,
+        nm_rek_jenis as nm_rek_akun,
         (
         SELECT
             sum( jumlah ) AS bulan_keljenis 
@@ -73,7 +72,7 @@ class Rpendapatan extends Model
         kd_rek_jenis UNION
     SELECT
         kd_rek_obj as kd_rek_akun,
-        nm_rek_obj,
+        nm_rek_obj  as nm_rek_akun,
         (
         SELECT
             sum( jumlah ) AS jenis_obj_bulan 
@@ -92,7 +91,7 @@ class Rpendapatan extends Model
         kd_rek_obj UNION
     SELECT
         kd_rek_rincian_obj as kd_rek_akun,
-        nm_rek_rincian_obj,
+        nm_rek_rincian_obj as nm_rek_akun,
         sum( jumlah ) AS rincian,
         '---' AS ganti 
     FROM
@@ -102,11 +101,10 @@ class Rpendapatan extends Model
         LOCATE( tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
         AND MONTH ( tanggal_lapor ) = '$bulan' 
     GROUP BY
-        kd_rek_rincian_obj 
-     
-				 ORDER BY CASE 
-    WHEN jumlah IS NOT NULL THEN jumlah
-END desc 
+        kd_rek_akun   
+    ORDER BY CASE 
+        WHEN jumlah IS NOT NULL THEN jumlah
+    END DESC,kd_rek_akun
 		";
         return DB::select($query);
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Access;
 use DataTables;
-use Sikd_list_option;
+// use Sikd_list_option;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -45,6 +45,7 @@ use App\Export\Exportpendapatan;
 use App\Export\Exportpendapatanbulan;
 use App\Libraries\Html\Html_number;
 use Yajra\DataTables\Contracts\DataTable;
+use App\Libraries\Sikd_list_option;
 
 use App\Models\Rpendapatan;
 
@@ -57,8 +58,14 @@ class ReportController extends Controller
     protected $type       = "RKAPendapatan";
     protected $jdl        = "Report Pendapatan";
 
-    function __construct()
+    protected $request    = '';
+    protected $tahun      = '';
+
+
+    function __construct(Request $request)
     {
+        $this->request = $request;
+        $this->tahun   = Properti_app::tahun_sekarang();
     }
 
     function index(Request $request)
