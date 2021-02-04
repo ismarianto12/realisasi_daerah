@@ -67,7 +67,7 @@ class Rpendapatan extends Model
         ) AS jum,
         '-' AS ganti 
     FROM
-        tmrekening_akun_kelompok_jenis 
+        tmrekening_akun_kelompok_jenis INNER JOIN tmrekening_akun_kelompoks on tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id = tmrekening_akun_kelompoks.kd_rek_kelompok
     GROUP BY
         kd_rek_jenis UNION
     SELECT
@@ -86,26 +86,9 @@ class Rpendapatan extends Model
         ) AS jenis_obj_bulan,
         '--' AS ganti 
     FROM
-        tmrekening_akun_kelompok_jenis_objeks 
-    GROUP BY
-        kd_rek_obj UNION
-    SELECT
-        kd_rek_rincian_obj as kd_rek_akun,
-        nm_rek_rincian_obj as nm_rek_akun,
-        sum( jumlah ) AS rincian,
-        '---' AS ganti 
-    FROM
-        tmrekening_akun_kelompok_jenis_objek_rincians,
-        tmpendapatan 
-    WHERE
-        LOCATE( tmrekening_akun_kelompok_jenis_objek_rincians.kd_rek_rincian_obj, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
-        AND MONTH ( tanggal_lapor ) = '$bulan' 
-    GROUP BY
-        kd_rek_akun   
-    ORDER BY CASE 
-        WHEN jumlah IS NOT NULL THEN jumlah
-    END DESC,kd_rek_akun
-		";
+        tmrekening_akun_kelompok_jenis_objeks INNER JOIN tmrekening_akun_kelompok_jenis on  tmrekening_akun_kelompok_jenis.kd_rek_jenis = tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id
+    ORDER BY   
+         kd_rek_akun";
         return DB::select($query);
     }
 
