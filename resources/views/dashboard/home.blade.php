@@ -117,7 +117,8 @@ $username = Auth::user()->username;
             $('.tpadharini').html('<b>'+data.total+'</b>');
         });
 
-        $('#Lispersentase').load('{{ route('homeAll') }}');
+
+        $('#Lispersentase').html("<center><img src='https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-9.jpg' class='img-responsive'></center>").load('{{ route('homeAll') }}');
      })
 
     $.getJSON('{{ Url("api_grafik/jumlah_rek?jenis=3") }}',function(data){
