@@ -74,7 +74,7 @@
                                 <?php
                                     $nexyear = date('Y');
                                 ?>
-                                <?php $__currentLoopData = range(++$nexyear, 2020); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lstahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = range(2020, ++$nexyear); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lstahun): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($lstahun); ?>">
                                         <?php echo e($lstahun); ?>
 

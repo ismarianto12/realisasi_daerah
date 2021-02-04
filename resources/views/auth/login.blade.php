@@ -74,7 +74,7 @@
                                 @php
                                     $nexyear = date('Y');
                                 @endphp
-                                @foreach (range(++$nexyear, 2020) as $lstahun)
+                                @foreach (range(2020, ++$nexyear) as $lstahun)
                                     <option value="{{ $lstahun }}">
                                         {{ $lstahun }}
                                     </option>
