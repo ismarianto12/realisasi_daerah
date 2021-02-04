@@ -43,14 +43,10 @@ $username = Auth::user()->username;
         <div class="col-md-6">
             <div class="card full-height">
                 <div class="card-body">
-                    <div class="card-title">Perbandingan pendapatan berbanding realisasi dan target.</div>
+                    <div class="card-title">Realisasi <?php echo e(Properti_app::getTahun()); ?></div>
                     <div class="row py-3">
                         <div class="col-md-12">
-                            <div id="chart-container">
-                                <figure class="highcharts-figure">
-                                    <div id="pie_persentase"></div>
-                                </figure>
-                            </div>
+                           <div id="Lispersentase"></div> 
                         </div>
                     </div>
                 </div>
@@ -119,6 +115,8 @@ $username = Auth::user()->username;
         $.getJSON('<?php echo e(Url("pad/today")); ?>',function(data){
             $('.tpadharini').html('<b>'+data.total+'</b>');
         });
+
+        $('#Lispersentase').load('<?php echo e(route('homeAll')); ?>');
      })
 
     $.getJSON('<?php echo e(Url("api_grafik/jumlah_rek?jenis=3")); ?>',function(data){
@@ -353,7 +351,7 @@ Highcharts.setOptions({
       type: 'line'
     },
     title: {
-      text: 'PERTUMBUHAN PENDAPATAN DAERAH TAHUN 2020'
+      text: 'PERTUMBUHAN PENDAPATAN DAERAH TAHUN  <?php echo e(Properti_app::getTahun()); ?>'
     },
     subtitle: {
       text: 'BADAN PENDAPATAN DAERAH KOTA TANGGERANG SELATAN'

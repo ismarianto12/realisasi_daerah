@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Properti_app;
+use App\Models\Rpendapatan;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Tmpendapatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-  
+
 class HomeController extends Controller
 {
 
@@ -212,5 +213,12 @@ class HomeController extends Controller
             ->where('tanggal_lapor', $sekarang)
             ->first();
         return response()->json(['total' => number_format($data->total, 0, 0, '.')]);
+    }
+
+    public function homeAll(Rpendapatan $rpendapatan)
+    {
+        # code...
+        $data = Rpendapatan::homeDatatable();
+        return view($this->view . 'listhometable', compact('data'));
     }
 }

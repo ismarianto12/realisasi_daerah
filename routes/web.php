@@ -186,6 +186,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::prefix('pad')->group(function () {
 		Route::get('today', 'HomeController@today')->name('today');
+		Route::get('homeAll', 'HomeController@homeAll')->name('homeAll');
 	});
 });
 Auth::routes();

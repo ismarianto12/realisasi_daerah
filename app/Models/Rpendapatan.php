@@ -92,6 +92,89 @@ class Rpendapatan extends Model
         return DB::select($query);
     }
 
+    // tampilkan realisasi di halaman depan
+    public static function homeDatatable()
+    {
+        $qr = "SELECT
+        kd_rek_akun,
+        nm_rek_akun,
+        (
+        SELECT
+            sum( jumlah ) AS jumlah 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akuns.kd_rek_akun, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            
+         ) AS jumlah,
+        '' AS ganti 
+    FROM
+        tmrekening_akuns 
+    GROUP BY
+        kd_rek_akun 
+        
+        UNION
+    SELECT
+        kd_rek_kelompok as kd_rek_akun,
+        nm_rek_kelompok as nm_rek_akun,
+        (
+        SELECT
+            sum( jumlah ) AS jumlah 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompoks.kd_rek_kelompok, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            
+        GROUP BY
+            kd_rek_kelompok 
+        ) AS jumlah,
+        '' AS ganti 
+    FROM
+        tmrekening_akun_kelompoks 
+    GROUP BY
+        kd_rek_kelompok UNION
+    SELECT
+        kd_rek_jenis as kd_rek_akun,
+        nm_rek_jenis as nm_rek_akun,
+        (
+        SELECT
+            sum( jumlah ) AS bulan_keljenis 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompok_jenis.kd_rek_jenis, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            
+        GROUP BY
+            kd_rek_jenis 
+        ) AS jum,
+        '-' AS ganti 
+    FROM
+        tmrekening_akun_kelompok_jenis INNER JOIN tmrekening_akun_kelompoks on tmrekening_akun_kelompok_jenis.tmrekening_akun_kelompok_id = tmrekening_akun_kelompoks.kd_rek_kelompok
+    GROUP BY
+        kd_rek_jenis UNION
+    SELECT
+        kd_rek_obj as kd_rek_akun,
+        nm_rek_obj  as nm_rek_akun,
+        (
+        SELECT
+            sum( jumlah ) AS jenis_obj_bulan 
+        FROM
+            tmpendapatan 
+        WHERE
+            LOCATE( tmrekening_akun_kelompok_jenis_objeks.kd_rek_obj, tmpendapatan.tmrekening_akun_kelompok_jenis_objek_rincian_id ) = 1 
+            
+        GROUP BY
+            kd_rek_obj 
+        ) AS jenis_obj_bulan,
+        '--' AS ganti 
+    FROM
+        tmrekening_akun_kelompok_jenis_objeks INNER JOIN tmrekening_akun_kelompok_jenis on  tmrekening_akun_kelompok_jenis.kd_rek_jenis = tmrekening_akun_kelompok_jenis_objeks.tmrekening_akun_kelompok_jenis_id
+ 
+    ORDER BY   
+         kd_rek_akun";
+        return DB::select($qr);
+    }
+
     public static function pertahun()
     {
         return Tmpendapatan::select(
