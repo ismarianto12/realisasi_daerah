@@ -7,7 +7,9 @@ use App\Models\Setupsikd\Tmrekening_akun_kelompok;
 use App\Models\Setupsikd\Tmrekening_akun_kelompok_jenis;
 use App\Models\Tmpendapatan;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+  
 class HomeController extends Controller
 {
 
@@ -200,5 +202,15 @@ class HomeController extends Controller
     {
         $title = 'halaman di batasi hak akses tidak di izinkan';
         return view('restrict', compact('title'));
+    }
+
+    // 
+    public function today(Tmpendapatan $tmpendapatan)
+    {
+        $sekarang = Carbon::now()->format('Y-m-d');
+        $data     = $tmpendapatan::select(\DB::raw('SUM(jumlah) as total'))
+            ->where('tanggal_lapor', $sekarang)
+            ->first();
+        return response()->json(['total' => number_format($data->total, 0, 0, '.')]);
     }
 }

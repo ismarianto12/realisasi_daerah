@@ -115,8 +115,10 @@ $username = Auth::user()->username;
         $.getJSON('<?php echo e(Url("api_grafik/total_pad")); ?>',function(data){
             $('.tpadtahun').text(data.total);
         });
-
         //jumlmah hari ini
+        $.getJSON('<?php echo e(Url("pad/today")); ?>',function(data){
+            $('.tpadharini').html('<b>'+data.total+'</b>');
+        });
      })
 
     $.getJSON('<?php echo e(Url("api_grafik/jumlah_rek?jenis=3")); ?>',function(data){
@@ -269,10 +271,10 @@ Highcharts.chart('pie_persentase', {
         type: 'pie'
     },
     title: {
-        text: 'Browser market share, January, 2018'
+        text: 'BADAN PENDAPATAN DAERAH TANGERANG SELATAN <?php echo e(now()); ?>'
     },
     subtitle: {
-        text: 'Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+        text: ''
     },
     plotOptions: {
         pie: {

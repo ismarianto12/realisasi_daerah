@@ -18,6 +18,7 @@
         border: 0.1px dotted black;
         border-collapse: collapse;
     }
+
 </style>
 
 <body>
@@ -36,39 +37,71 @@
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
-                <th colspan=" 5">URAIAN</th>
-                <th>APBD {{ $tahun }}</th>
+                <th>Kode</th>
+                <th>URAIAN</th>
+                <th>APBD <b> {{ Properti_app::tahun_sekarang() }} </b> </th>
                 <th>JAN</th>
                 <th>FEB</th>
                 <th>MAR</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>APR</th>
                 <th>MEI</th>
                 <th>JUN</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>JUL</th>
                 <th>AGUS</th>
                 <th>SEPT</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>OKT</th>
                 <th>NOV</th>
                 <th>DES</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
             </tr>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <td colspan="5"></td>
                 <td></td>
-                @for($a=1; $a <= 12; $a++) <td style="text-align:center">
-                    {{ $a }}
+                @for ($a = 1; $a <= 12; $a++)
+                    <td style="text-align:center">
+                        {{ $a }}
                     </td>
-                    @endfor
+                @endfor
             </tr>
         </thead>
         <tbody>
+            @php
+                $n = 1;
+            @endphp
             @foreach ($getdatayears as $list)
-            <tr>
-                @php echo $list['table']['val'] @endphp
-                @php echo $list['kd_rek']['val'] @endphp
-                @php echo $list['nm_rek']['val'] @endphp
-                @php echo $list['juraian']['val'] @endphp
-                @for ($j = 1; $j <= 12; $j++) @php echo $list['bulan_'.$j]['val'] @endphp @endfor </tr> @endforeach
-          </tbody> </table> <b>Badan Pendaptan daerah tangerang selatan</b>
+                <tr>
+                    <td>@php echo $list['kd_rek'] @endphp</td>
+                    <td>@php echo $list['nama_rek'] @endphp</td>
+                    <td>@php echo $list['tot'] @endphp</td>
+                    @for ($j = 1; $j <= 12; $j++)
+                        <td>
+                            @php
+                                echo $list['jlbulan_1'];
+                            @endphp
+                        </td>
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    @endfor
+                </tr>
+                @php  $n++; @endphp
+            @endforeach
+        </tbody>
+    </table> <b>Badan Pendaptan daerah tangerang selatan</b>
 
 </body>
 

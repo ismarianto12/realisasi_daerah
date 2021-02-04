@@ -18,6 +18,7 @@
         border: 0.1px dotted black;
         border-collapse: collapse;
     }
+
 </style>
 
 <body>
@@ -36,41 +37,74 @@
                   border-collapse: collapse">
         <thead>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
-                <th colspan=" 5">URAIAN</th>
-                <th>APBD <?php echo e($tahun); ?></th>
+                <th>Kode</th>
+                <th>URAIAN</th>
+                <th>APBD <b> <?php echo e(Properti_app::tahun_sekarang()); ?> </b> </th>
                 <th>JAN</th>
                 <th>FEB</th>
                 <th>MAR</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>APR</th>
                 <th>MEI</th>
                 <th>JUN</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>JUL</th>
                 <th>AGUS</th>
                 <th>SEPT</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
                 <th>OKT</th>
                 <th>NOV</th>
                 <th>DES</th>
+                <th>Realisasi</th>
+                <th>Lebih/Kurang</th>
+                <th>Persentase</th>
             </tr>
             <tr style="background: royalblue;color: #fff; border: 0.5px dotted #000">
                 <td colspan="5"></td>
                 <td></td>
-                <?php for($a=1; $a <= 12; $a++): ?> <td style="text-align:center">
-                    <?php echo e($a); ?>
+                <?php for($a = 1; $a <= 12; $a++): ?>
+                    <td style="text-align:center">
+                        <?php echo e($a); ?>
 
                     </td>
-                    <?php endfor; ?>
+                <?php endfor; ?>
             </tr>
         </thead>
         <tbody>
+            <?php
+                $n = 1;
+            ?>
             <?php $__currentLoopData = $getdatayears; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $list): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <tr>
-                <?php echo $list['table']['val'] ?>
-                <?php echo $list['kd_rek']['val'] ?>
-                <?php echo $list['nm_rek']['val'] ?>
-                <?php echo $list['juraian']['val'] ?>
-                <?php for($j = 1; $j <= 12; $j++): ?> <?php echo $list['bulan_'.$j]['val'] ?> <?php endfor; ?> </tr> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-          </tbody> </table> <b>Badan Pendaptan daerah tangerang selatan</b>
+                <tr>
+                    <td><?php echo $list['kd_rek'] ?></td>
+                    <td><?php echo $list['nama_rek'] ?></td>
+                    <td><?php echo $list['tot'] ?></td>
+                    <?php for($j = 1; $j <= 12; $j++): ?>
+                        <td>
+                            <?php
+                                echo $list['jlbulan_1'];
+                            ?>
+                        </td>
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    <?php endfor; ?>
+                </tr>
+                <?php  $n++; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </tbody>
+    </table> <b>Badan Pendaptan daerah tangerang selatan</b>
 
 </body>
 
-</html><?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/laporan_pendapatan/report_bulan.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\wamp64\www\realisasi_daerah\resources\views/laporan_pendapatan/report_bulan.blade.php ENDPATH**/ ?>

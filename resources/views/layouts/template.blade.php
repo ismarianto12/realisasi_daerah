@@ -4,7 +4,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ Properti_app::getTahun() }}</title>
+    <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ trim(Properti_app::getTahun() )}}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{ asset('assets\template\img/icon.ico') }}" />
     <!-- Fonts and icons -->

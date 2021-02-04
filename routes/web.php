@@ -64,12 +64,12 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('action_all', 'ReportController@action_all')->name('action_all');
 		Route::get('api_report', 'ReportAll@api')->name('api_report');
 		Route::get('ff', 'ReportAll@apiPendapatan')->name('ff');
-
 		//resource data perbulan 
 		Route::get('perbulan', 'ReportController@perbulan')->name('perbulan');
 		Route::get('action_bulan', 'ReportController@action_bulan')->name('action_bulan');
 		// grafik pendapatan  
-
+		// income report newest that is line 
+		Route::get('yearaction/{id}', 'ReportAll@reportBy')->name('yearaction');
 	});
 	Route::prefix('grafik')->name('grafik.')->group(function () {
 		Route::get('', 'GrafikController@index')->name('/');
@@ -183,5 +183,9 @@ Route::group(['middleware' => 'auth'], function () {
 	});
 	//restrict 
 	Route::get('restrict', 'HomeController@restrict')->name('restrict');
+
+	Route::prefix('pad')->group(function () {
+		Route::get('today', 'HomeController@today')->name('today');
+	});
 });
 Auth::routes();

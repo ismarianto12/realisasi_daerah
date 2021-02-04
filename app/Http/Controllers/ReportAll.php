@@ -52,10 +52,15 @@ use App\Models\Rpendapatan;
 
 class ReportAll extends Controller
 {
+    protected $serverDir;
+    protected $tahunSekarang;
+    protected $view;
 
     function __construct()
     {
-        $this->serverDir =  $_SERVER['DOCUMENT_ROOT'];
+        $this->serverDir     =  $_SERVER['DOCUMENT_ROOT'];
+        $this->tahunSekarang = Properti_app::getTahun();
+        $this->view          = 'laporan_pendapatan.report_bulan';
         // dd($_SERVER);
     }
 
@@ -117,9 +122,12 @@ class ReportAll extends Controller
             $m   = Rpendapatan::getAll($j);
             $i   = 1;
             $kj  = 0;
-            foreach ($m as $list) {
+            foreach ($m as $t => $list) {
                 // return $j;
                 // exit; 
+                // dd($j);
+                // exit;
+
                 $arr[$i]['jlbulan_' . $j] = ($list->jumlah) ? number_format($list->jumlah, 0, 0, '.') : 0;
                 $arr[$i]['slbulan_' . $j] = $list->jumlah;
 
@@ -185,5 +193,23 @@ class ReportAll extends Controller
             })
             ->rawColumns(['nama_rek', 'kd_rek'])
             ->toJson();
+    }
+
+    // report to excel with border 
+
+    public function reportBy($par)
+    {
+        $data = $this->dataApi();
+      // dd($data['rl_4']);
+
+        if ($par == 'pdf') {
+            $customPaper = array(0, 0, 567.00, 1200);
+            $pdf = PDF::loadView(
+                $this->view,
+                ['getdatayears' => $data, 'tahun' => $this->tahunSekarang]
+            )->setPaper($customPaper, 'landscape');
+            return $pdf->stream('Report_perbulan.pdf');
+        } else {
+        }
     }
 }

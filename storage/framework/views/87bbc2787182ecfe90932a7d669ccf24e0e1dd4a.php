@@ -7,6 +7,13 @@
 
     </style>
 
+    <script>
+        $(function() {
+            $.alert('Kolom persen kurang lebih belum bisa di hitung karena besaran target belum di isi.');
+        });
+
+    </script>
+
 
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -44,9 +51,9 @@
 
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
                         <thead style="
-                                background: #4373cc;
-                                color: #fff;
-                            ">
+                                            background: #4373cc;
+                                            color: #fff;
+                                        ">
                             <tr>
                                 <th>Kode</th>
                                 <th>URAIAN</th>
