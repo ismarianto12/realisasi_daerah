@@ -114,6 +114,7 @@ class ReportController extends Controller
         $jreport           = 1;
         $rekjenis_id       = $request->rekjenis_id;
 
+        if ($tahun_id == '' && $tmsikd_satker_id == '' && $dari == '' && $sampai  == '') return abort(404, 'paramter tidak lengkap halaman tidak di temukan');
         $tahun             = Properti_app::tahun_sekarang();
         //get periode lalu 
         $dperiode          = $tahun . '-01-01';

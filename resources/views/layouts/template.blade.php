@@ -4,7 +4,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ trim(Properti_app::getTahun() )}}</title>
+    <title>BADAN PENDAPATAN DAERAH - PELAPORAN PENDAPATAPAN {{ trim(Properti_app::getTahun()) }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{ asset('assets\template\img/icon.ico') }}" />
     <!-- Fonts and icons -->
@@ -165,8 +165,8 @@
                             </ul>
                         </li> -->
                         @php
-                        $flevel = Properti_app::getlevel();
-                        $level = ($flevel) ? $flevel : 3;
+                            $flevel = Properti_app::getlevel();
+                            $level = $flevel ? $flevel : 3;
                         @endphp
                         @if ($level != 3)
                             <li class="nav-item dropdown hidden-caret">
@@ -189,7 +189,8 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="see-all" href="{{ route('pendapatan.index') }}">Lihat Semua Pendapatan
+                                        <a class="see-all" href="{{ route('pendapatan.index') }}">Lihat Semua
+                                            Pendapatan
                                             .<i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
@@ -248,8 +249,7 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
-                                        alt="..." class="avatar-img rounded-circle"
+                                    <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..." class="avatar-img rounded-circle"
                                         onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                 </div>
                             </a>
@@ -257,9 +257,8 @@
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img
-                                                    src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
-                                                    alt="image profile" class="avatar-img rounded"
+                                            <div class="avatar-lg"><img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="image profile"
+                                                    class="avatar-img rounded"
                                                     onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                                             </div>
                                             <div class="u-text">
@@ -300,8 +299,7 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp"
-                                alt="..." class="avatar-img rounded-circle"
+                            <img src="@php echo asset('./file/photo_user/'.Properti_app::propuser('photo')) @endphp" alt="..." class="avatar-img rounded-circle"
                                 onerror="this.src='{{ asset('assets/template/img/no-image.png') }}'">
                         </div>
                         <div class="info">
@@ -376,8 +374,9 @@
                     </nav>
                     <div class="copyright ml-auto">
                         @php
-                        echo date('Y')
-                        @endphp <i class="fa fa-heart heart text-danger"></i> by <a href="#"> copyright {{ date('Y') }}
+                            echo date('Y');
+                        @endphp <i class="fa fa-heart heart text-danger"></i> by <a href="#"> copyright
+                            {{ date('Y') }}
                             BADAN PENDAPATAN DAERAH TANGERANG SELATAN</a>
                     </div>
                 </div>

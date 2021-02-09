@@ -51,10 +51,11 @@
                     <hr />
 
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
-                        <thead style="
-                                            background: #4373cc;
-                                            color: #fff;
-                                        ">
+                        <thead
+                            style="
+                                                                                                                                                                                                            background: #4373cc;
+                                                                                                                                                                                                            color: #fff;
+                                                                                                                                                                                                        ">
                             <tr>
                                 <th>Kode</th>
                                 <th>URAIAN</th>
@@ -124,10 +125,21 @@
             ],
             buttons: [{
                     extend: 'pdf',
+                    className: "btn btn-info",
+                    text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Download  XLS</i>',
+                    action: function(e, dt, button, config) {
+                        var query = dt.search();
+                        window.open("{{ Url('laporan/yearaction/') }}/xls");
+                    }
+                },
+                {
+                    extend: 'pdf',
                     className: "btn btn-warning",
                     text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Download  PDF</i>',
-                    orientation: 'landscape',
-                    pageSize: 'LETTER'
+                    action: function(e, dt, button, config) {
+                        var query = dt.search();
+                        window.open("{{ Url('laporan/yearaction/') }}/pdf");
+                    }
                 },
                 {
                     extend: 'csv',

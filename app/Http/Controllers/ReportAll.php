@@ -200,16 +200,31 @@ class ReportAll extends Controller
     public function reportBy($par)
     {
         $data = $this->dataApi();
-      // dd($data['rl_4']);
+        // dd($data['rl_4']);
 
         if ($par == 'pdf') {
-            $customPaper = array(0, 0, 567.00, 1200);
+
+            // dd(Properti_app::getTahun());
+
+            $customPaper = array(0, 0, 767.00, 2000);
             $pdf = PDF::loadView(
                 $this->view,
-                ['getdatayears' => $data, 'tahun' => $this->tahunSekarang]
+                ['getdatayears' => $data, 'tahun' => $this->tahunSekarang, 'type' => $par]
             )->setPaper($customPaper, 'landscape');
             return $pdf->stream('Report_perbulan.pdf');
         } else {
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+            header("Content-Type: application/force-download");
+            header("Content-Type: application/octet-stream");
+            header("Content-Type: application/download");
+            header("Content-Disposition: attachment;filename=PAD-TANGERANG-SELATAN.xls");
+            header("Content-Transfer-Encoding: binary ");
+            return view(
+                $this->view,
+                ['getdatayears' => $data, 'tahun' => $this->tahunSekarang, 'type' => $par]
+            );
         }
     }
 }

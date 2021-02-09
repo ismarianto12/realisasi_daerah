@@ -3,6 +3,7 @@
     td,
     th {
         border: 0.1px solid black;
+        padding: 0px 20px 0px;
     }
 
     table {
@@ -24,9 +25,19 @@
             $j = 1;
         @endphp
         @foreach ($data as $ls)
-
             @php
-                $bold = $ls->ganti == '' ? 'background: #d2c7c7;font-weight: bold;' : '';
+                if ($ls->ganti == '') {
+                    $bold = 'background: #d2c7c7;font-weight: bold;';
+                } else {
+                    $bold = '';
+                }
+                //  elseif ($ls->ganti == '-') {
+                //     $bold = 'background: #d2c7c7;font-weight: bold;';
+                // }
+                
+                // elseif ($ls->ganti == '--') {
+                //     $bold = 'background: #d2c7c7;font-weight: bold;';
+                // }
             @endphp
             <tr style="{{ $bold }}">
                 <td>{{ $j }}</td>
