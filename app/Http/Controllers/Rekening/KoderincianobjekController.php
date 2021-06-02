@@ -266,7 +266,6 @@ class KoderincianobjekController extends Controller
             Tmrekening_akun_kelompok_jenis_objek_rincian::whereIn('id', $request->id)->delete();
         else
             Tmrekening_akun_kelompok_jenis_objek_rincian::whereid($request->id)->delete();
-
         return ['message' => "Data rekening kode rincian objek berhasil dihapus."];
     }
 }

@@ -120,8 +120,8 @@ class HomeController extends Controller
                 ->GroupBy(\DB::raw('MONTH(tanggal_lapor)'))
                 ->where('tahun', $tahun)
                 ->first();
-
-            if ($kpadtot['total'] == 0) {
+            // dd($kpadtot);
+            if ($kpadtot == '') {
                 // return abort(403, '<p>SELAMT DATANG DI TAHUN ' . Properti_app::getTahun() . 'SAAT INI BELUM ADA PANDAPATAN SILAHKAN SETTING REKENING PENDAPATAN TERLEBIH DAHULU</p>');
             }
 

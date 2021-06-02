@@ -52,9 +52,9 @@
                     <table class="table table-striped" id="tableReport" border-collapse: collapse">
                         <thead
                             style="
-                                                                                                                                                                                                    background: #4373cc;
-                                                                                                                                                                                                    color: #fff;
-                                                                                                                                                                                                ">
+                                                                                                                                                                                                            background: #4373cc;
+                                                                                                                                                                                                            color: #fff;
+                                                                                                                                                                                                        ">
                             <tr>
                                 <th>Kode</th>
                                 <th>URAIAN</th>

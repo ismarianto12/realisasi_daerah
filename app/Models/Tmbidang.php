@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tmbidang extends Model
 {
-     
-    
     protected $table        = 'tmbidang';
     protected $incrementing = TRUE;
     protected $guarded      = [];
